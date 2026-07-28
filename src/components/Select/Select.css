@@ -1,0 +1,65 @@
+.droppy-Select {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--ds-space-sm);
+}
+
+.droppy-Select-label {
+  color: var(--ds-color-text-label);
+  font-family: var(--ds-type-family-body);
+  font-size: var(--ds-type-size-md);
+  font-weight: var(--ds-type-weight-regular);
+  padding-bottom: var(--ds-space-2xs);
+}
+
+.droppy-Select-label::first-letter {
+  text-transform: uppercase;
+}
+
+.droppy-Select-controlWrapper {
+  position: relative;
+  display: flex;
+}
+
+.droppy-Select-control {
+  box-sizing: border-box;
+  flex: 1;
+  margin: 0;
+  /* Right padding clears the chevron so long option text never runs under it. */
+  padding: 13px 2.5rem 13px 16px;
+  appearance: none;
+  border: none;
+  border-radius: var(--ds-radius-control);
+  outline: none;
+  color: var(--ds-color-text-primary);
+  background-color: var(--ds-color-surface-sunken);
+}
+
+/* The chevron is a mask, not a background image: a data-URL SVG bakes in a
+   literal fill colour, and colours inside SVG XML cannot read custom
+   properties — so it would not follow the theme into dark mode. Masking a
+   token-coloured layer does. */
+.droppy-Select-controlWrapper::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+  background-color: var(--ds-color-icon-default);
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'><path d='M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z'/></svg>")
+    no-repeat center / contain;
+}
+
+.droppy-Select-control:focus {
+  box-shadow: var(--ds-shadow-focus);
+}
+
+/* The label sits before the control in the DOM — the order a screen reader
+   wants — so the focus highlight needs `:has()` rather than a sibling
+   combinator. */
+.droppy-Select:has(.droppy-Select-control:focus) .droppy-Select-label {
+  color: var(--ds-color-text-label-active);
+}

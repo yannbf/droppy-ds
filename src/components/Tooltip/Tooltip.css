@@ -1,0 +1,5 @@
+/* Above sticky page chrome — a tip anchored to a header button is useless if
+   the header paints over it. */
+.droppy-Tooltip {
+  z-index: 3;
+}

@@ -1,0 +1,21 @@
+.droppy-Field label {
+  font-size: var(--ds-type-size-md);
+}
+
+.droppy-Input {
+  /* Entered values are set in the display face — it reads at small sizes and
+     distinguishes user input from the surrounding label copy. */
+  font-family: var(--ds-type-family-heading);
+  /* Validity is communicated by the error message, not a border colour, so the
+     theme's transparent placeholder border is removed. */
+  border: none;
+}
+
+/* The slot is always mounted; reserving its height keeps the form from
+   jumping when a message appears, and the bottom margin is what spaces one
+   field from the next. */
+.droppy-Field-error {
+  font-size: var(--ds-type-size-2xs);
+  min-height: 16px;
+  margin-bottom: 12px;
+}

@@ -1,0 +1,93 @@
+{
+  "name": "@droppy/design-system",
+  "version": "0.1.0",
+  "description": "Droppy design system — React components built on Base UI and the Droppy theme.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yannbf/droppy-ds.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vite build",
+    "check": "tsc --noEmit",
+    "storybook": "storybook dev -p 6007",
+    "build-storybook": "storybook build --output-dir build/storybook",
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "chromatic": "chromatic --project-token $CHROMATIC_PROJECT_TOKEN --exit-zero-on-changes",
+    "release": "changeset publish"
+  },
+  "peerDependencies": {
+    "@base-ui/react": ">=1.6.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@droppy/theme": "https://pkg.pr.new/storybook-tmp/base-ui/@droppy/theme@85313eccf"
+  },
+  "devDependencies": {
+    "@base-ui/react": "https://pkg.pr.new/storybook-tmp/base-ui/@base-ui/react@85313eccf",
+    "@changesets/cli": "^2.29.7",
+    "@eslint/js": "^9.21.0",
+    "@storybook/addon-a11y": "^10.5.3",
+    "@storybook/addon-docs": "^10.5.3",
+    "@storybook/addon-vitest": "^10.5.3",
+    "@storybook/react-vite": "^10.5.3",
+    "@types/node": "^26.1.2",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/browser-playwright": "^4.1.0",
+    "@vitest/coverage-v8": "^4.1.0",
+    "chromatic": "^11.26.1",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-storybook": "^10.5.3",
+    "globals": "^16.0.0",
+    "playwright": "^1.50.1",
+    "prettier": "^3.5.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "storybook": "^10.5.3",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.25.0",
+    "vite": "^8.1.4",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^4.1.0"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "design-system",
+    "react",
+    "base-ui",
+    "components",
+    "accessibility"
+  ]
+}

@@ -1,0 +1,30 @@
+.droppy-Heading {
+  margin: 0;
+  color: var(--ds-color-text-primary);
+  font-family: var(--ds-type-family-heading);
+  letter-spacing: var(--ds-type-tracking-default);
+}
+
+/* Levels 1 and 2 are display sizes and get the tight tracking; 3 and below are
+   section headings and stay at normal tracking. */
+.droppy-Heading--1 {
+  font-size: var(--ds-type-size-3xl);
+  letter-spacing: var(--ds-type-tracking-display);
+}
+
+.droppy-Heading--2 {
+  font-size: var(--ds-type-size-2xl);
+  letter-spacing: var(--ds-type-tracking-display);
+}
+
+.droppy-Heading--3 {
+  font-size: var(--ds-type-size-xl);
+}
+
+.droppy-Heading--4 {
+  font-size: var(--ds-type-size-lg);
+}
+
+.droppy-Heading--5 {
+  font-size: var(--ds-type-size-md);
+}

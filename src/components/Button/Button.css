@@ -1,0 +1,55 @@
+.droppy-Button {
+  /* The theme sets line-height: 1, which collapses the control ~10px shorter
+     than the rest of the type scale expects. */
+  line-height: normal;
+  gap: var(--ds-space-xs);
+  padding: 0.875rem 1rem;
+  z-index: 1;
+}
+
+.droppy-Button--large {
+  padding: 1.125rem 1rem;
+}
+
+.droppy-Button--withIcon {
+  padding: 0.7rem;
+}
+
+.droppy-Button--round {
+  border-radius: var(--ds-radius-pill);
+}
+
+/* The icon takes the button's own text colour so both variants stay legible
+   against their fill without a second token lookup. */
+.droppy-Button .droppy-Icon {
+  stroke: currentcolor;
+}
+
+.droppy-Button--clear {
+  color: var(--ds-color-text-primary);
+  background-color: transparent;
+}
+
+/* Matches the theme's own `.Button:hover:not([data-disabled])` specificity so
+   the transparent fill survives hover. */
+.droppy-Button--clear:hover:not([data-disabled]) {
+  background-color: var(--ds-color-action-subtle-hover);
+}
+
+.droppy-Button--clear[data-disabled] {
+  background-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .droppy-Button {
+    padding: 0.875rem 1.5rem;
+  }
+
+  .droppy-Button--large {
+    padding: 1.125rem 1.5rem;
+  }
+
+  .droppy-Button--withIcon {
+    padding: 1rem;
+  }
+}

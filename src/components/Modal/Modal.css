@@ -1,0 +1,74 @@
+/* Layout is owned here rather than by the theme: the theme's positioning sits
+   on low-specificity classes meant to be overridden, and a host app's global
+   reset can otherwise defeat a fixed overlay. */
+.droppy-Modal {
+  position: fixed;
+  z-index: 99;
+  inset: 50% 0 0;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  /* Mobile: a bottom sheet, rounded on its leading edge only. */
+  border: none;
+  border-radius: var(--ds-radius-sheet) var(--ds-radius-sheet) 0 0;
+  /* Content is edge-to-edge — headers and hero images run to the border — so
+     padding belongs to the content, not the shell. */
+  padding: 0;
+  display: block;
+  margin-top: 0;
+  overflow: visible;
+  transform: none;
+  transition: transform 300ms;
+}
+
+/* Base UI moves focus into the popup on open. That programmatic focus matches
+   :focus-visible in headless browsers and paints an outline around the whole
+   sheet; the close button carries the visible focus instead. */
+.droppy-Modal:focus {
+  outline: none;
+}
+
+.droppy-Modal[data-starting-style],
+.droppy-Modal[data-ending-style] {
+  opacity: 1;
+  transform: translateY(100%);
+}
+
+.droppy-Modal-topBar {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+}
+
+.droppy-Modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  opacity: 0.4;
+  transition: opacity 300ms;
+}
+
+.droppy-Modal-backdrop[data-starting-style],
+.droppy-Modal-backdrop[data-ending-style] {
+  opacity: 0;
+}
+
+@media (min-width: 768px) {
+  /* Desktop: a fixed-size card, centred. It fades and scales rather than
+     sliding — there is no screen edge for it to come from. */
+  .droppy-Modal {
+    width: 600px;
+    height: 272px;
+    inset: calc(50% - (272px / 2)) auto 0 calc(50% - (600px / 2));
+    border-radius: var(--ds-radius-sheet);
+    transition:
+      opacity 120ms,
+      transform 120ms;
+  }
+
+  .droppy-Modal[data-starting-style],
+  .droppy-Modal[data-ending-style] {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}

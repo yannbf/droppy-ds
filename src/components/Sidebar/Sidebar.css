@@ -1,0 +1,83 @@
+.droppy-Sidebar-backdrop {
+  z-index: 98;
+  background-color: rgb(0 0 0 / 40%);
+  transition: opacity 300ms;
+}
+
+/* A flex shell rather than a fixed panel: the panel then stretches to the
+   viewport height on its own and the trailing-edge alignment survives a
+   direction change. */
+.droppy-Sidebar-viewport {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+}
+
+.droppy-Sidebar {
+  /* Heights the content area subtracts from the viewport to find its own
+     scroll bound. Kept as custom properties so overriding one of them keeps
+     the scroll maths correct. */
+  --droppy-sidebar-topbar-height: 4.5rem;
+  --droppy-sidebar-footer-height: 165px;
+
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  /* The viewport above owns the placement, so the panel owns its resting
+     transform — the slide has to start from somewhere. */
+  transform: translateX(0);
+  transition: transform 300ms;
+  will-change: transform;
+}
+
+/* Base UI moves focus into the panel on open; that programmatic focus matches
+   :focus-visible in headless browsers and outlines the whole panel. */
+.droppy-Sidebar:focus {
+  outline: none;
+}
+
+.droppy-Sidebar[data-starting-style],
+.droppy-Sidebar[data-ending-style] {
+  transform: translateX(100%);
+}
+
+.droppy-Sidebar-topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--droppy-sidebar-topbar-height);
+  padding: var(--ds-space-sm);
+  /* Trimmed on the trailing side: the close button's own padding makes up the
+     difference, so the icon lands on the same optical margin as the title. */
+  padding-right: var(--ds-space-xs);
+  background-color: var(--ds-color-surface-sunken);
+}
+
+.droppy-Sidebar-content {
+  padding: var(--ds-space-sm);
+  overflow: auto;
+  max-height: calc(
+    100vh - var(--droppy-sidebar-topbar-height) - var(--droppy-sidebar-footer-height)
+  );
+}
+
+.droppy-Sidebar-footer {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  height: var(--droppy-sidebar-footer-height);
+  padding: var(--ds-space-sm);
+  border-top: 1px solid var(--ds-color-border-subtle);
+  background-color: var(--ds-color-surface-overlay);
+}
+
+@media (min-width: 768px) {
+  .droppy-Sidebar {
+    width: 420px;
+  }
+}

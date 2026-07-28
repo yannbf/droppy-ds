@@ -1,0 +1,28 @@
+name: Preview release
+
+# Publishes an installable build for every commit and pull request through
+# pkg.pr.new, so a consumer can pin an exact SHA without a registry release.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      - run: pnpx pkg-pr-new publish --compact --pnpm
