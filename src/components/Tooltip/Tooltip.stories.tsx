@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import isChromatic from 'chromatic/isChromatic'
 import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import { Button } from '../Button'
@@ -30,6 +31,10 @@ export const Default: Story = {}
  *  tooltip is never the only place the label lives. */
 export const ShowsOnHover: Story = {
   play: async ({ canvasElement }) => {
+    // Chromatic's capture sends synthetic pointer events, which the hover
+    // logic ignores — the vitest run drives a real browser and covers this.
+    if (isChromatic()) return
+
     const canvas = within(canvasElement)
     const body = within(canvasElement.ownerDocument.body)
 
