@@ -15,7 +15,7 @@ const ModalDemo = ({
   const [isOpen, setIsOpen] = useState(initialOpen)
 
   return (
-    <>
+    <div style={{ padding: '1rem' }}>
       <Button onClick={() => setIsOpen(true)}>Open modal</Button>
       <Modal
         {...args}
@@ -25,7 +25,7 @@ const ModalDemo = ({
           onClose()
         }}
       />
-    </>
+    </div>
   )
 }
 

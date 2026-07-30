@@ -2,11 +2,10 @@
 
 React components for the Droppy design language, built on [Base UI](https://base-ui.com).
 
-Base UI supplies the behaviour — focus management, dismissal, positioning, ARIA wiring.
-[`@droppy/theme`](https://github.com/storybook-tmp/base-ui/tree/master/packages/droppy) supplies
-the tokens and the chrome. This package is the layer on top: components with props instead of
-class names, so consuming code says `<Button clear round icon="cross" />` rather than binding
-theme classes at every call site.
+Base UI supplies the behaviour — focus management, dismissal, positioning, ARIA wiring. This
+package ships its own theme — the design tokens and the chrome — plus a component layer on top:
+components with props instead of class names, so consuming code says
+`<Button clear round icon="cross" />` rather than binding theme classes at every call site.
 
 ## Install
 

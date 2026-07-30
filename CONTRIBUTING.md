@@ -34,9 +34,9 @@ All four run in CI on every pull request.
 Base UI has a primitive for it, use it rather than reimplementing. Hand-rolled overlays are how
 keyboard and screen-reader support goes missing.
 
-**Chrome comes from `@droppy/theme`.** Bind its classes (`theme.DialogPopup`) for surface,
-radius, colour and motion. This package's own CSS covers layout, variants and composition —
-the things a theme can't know.
+**Chrome comes from the theme layer** in `src/theme`. Bind its classes (`theme.DialogPopup`) for
+surface, radius, colour and motion. This package's own CSS covers layout, variants and
+composition — the things a theme can't know.
 
 **Values come from tokens.** Reach for `var(--ds-*)` before a literal. A hard-coded colour won't
 follow the theme into dark mode; a hard-coded size drifts from the scale. When a token genuinely

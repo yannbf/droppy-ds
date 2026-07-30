@@ -1,6 +1,6 @@
 import type { PropsWithChildren, ReactNode } from 'react'
 import { Drawer } from '@base-ui/react/drawer'
-import theme from '@droppy/theme'
+import theme from '../../theme'
 
 import { Button } from '../Button'
 import { Heading } from '../Heading'

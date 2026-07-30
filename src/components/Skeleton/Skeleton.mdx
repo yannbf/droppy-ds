@@ -1,0 +1,99 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as SkeletonStories from './Skeleton.stories'
+
+<Meta of={SkeletonStories} />
+
+# Skeleton
+
+A loading placeholder that stands in for content before it arrives, shaped to match what it will
+become.
+
+- **Import:** `import { Skeleton } from '@droppy/design-system'`
+- **Built on:** a plain `<span>`.
+
+<Canvas of={SkeletonStories.Default} />
+
+## Features
+
+- Renders inline-block by default, so a bare `<Skeleton />` sits inside a `Heading` or a line of
+  text and takes on the surrounding font size.
+- `width` and `height` default to `100%` and `1em` — a single line that fills its container at
+  text height — and accept either a number (treated as pixels) or a CSS length string.
+- `style` passes through and wins over the component's own inline styles, so a caller can set a
+  border radius or margin that matches the shape it's covering.
+- Shimmers with a CSS gradient animation between the theme's skeleton tokens, and turns static
+  under `prefers-reduced-motion: reduce` rather than disabling the sweep with JavaScript.
+- `aria-hidden="true"` always — a placeholder announces nothing on its own.
+- Merges any incoming `className` with its own `droppy-Skeleton` class.
+
+## When to use
+
+- In place of text, an image, or any block of content while it loads, sized to match the shape
+  that content will take.
+- Composed into an existing layout — a card, a list row, a form — so the page's structure doesn't
+  shift once the real content arrives.
+
+## When not to use
+
+- For a full-page loading wait with no layout to preview yet — a shape-matching placeholder needs
+  a shape to match.
+- For content whose final size isn't known. A skeleton that guesses wrong shifts the layout the
+  moment real content replaces it, which is the exact jump skeletons exist to prevent.
+
+## How it works
+
+### Filling a line of text
+
+Left to its defaults, `Skeleton` takes the height of the font size around it and the full width
+of its container — a drop-in placeholder for a line of copy that hasn't loaded yet.
+
+<Canvas of={SkeletonStories.Default} />
+
+### Sizing an explicit shape
+
+Numbers are read as pixels; strings pass through unchanged. `style` still passes through and wins,
+so a shape can carry its own border radius or other overrides on top of `width` and `height`.
+
+<Canvas of={SkeletonStories.SizedBlock} />
+
+### Composing a block of placeholders
+
+Several `Skeleton`s at different widths stand in for a heading and a few lines of body text. Each
+one only carries the loading state visually — the surrounding container is what should announce
+that the region is busy.
+
+<Canvas of={SkeletonStories.TextBlock} />
+
+### The shimmer
+
+The sweep animates `background-position` across a gradient built from
+`--ds-color-skeleton-base` and `--ds-color-skeleton-highlight`, so it already matches the theme
+and flips with it automatically. Under `prefers-reduced-motion: reduce`, the animation is removed
+and the background falls back to the flat base token.
+
+## Keyboard & screen reader
+
+`Skeleton` is non-interactive and carries no role — there is no keyboard interaction to document.
+
+- **ARIA:** `aria-hidden="true"` on the root element, always.
+- **Screen reader:** not announced — the placeholder contributes nothing to the accessibility
+  tree.
+- **You must provide:** the loading semantics on the container that holds the skeletons — for
+  example `role="status"` with an `aria-label`, or `aria-busy="true"` — since `Skeleton` itself
+  announces nothing.
+
+## Styling
+
+| Token                           | Used for                                                     |
+| ------------------------------- | ------------------------------------------------------------ |
+| `--ds-color-skeleton-base`      | The gradient's resting color and the reduced-motion fallback |
+| `--ds-color-skeleton-highlight` | The gradient's sweep color                                   |
+| `--ds-radius-control`           | The default border radius                                    |
+
+## API reference
+
+<ArgTypes of={SkeletonStories} />
+
+## Related
+
+- The block it sits inside while text is loading — see [Heading](?path=/docs/components-heading--docs).

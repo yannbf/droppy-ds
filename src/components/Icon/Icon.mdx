@@ -1,0 +1,87 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as IconStories from './Icon.stories'
+
+<Meta of={IconStories} />
+
+# Icon
+
+The icon set, inlined as SVG so it renders wherever the component tree renders, with no static
+asset to serve.
+
+- **Import:** `import { Icon } from '@droppy/design-system'`
+- **Built on:** a plain `<svg>` element.
+
+<Canvas of={IconStories.Default} />
+
+## Features
+
+- Every icon is inlined rather than referenced from a sprite sheet — a package can't assume the
+  consuming app serves a given static file, and `<use xlink:href>` against a cross-origin sprite
+  fails outright.
+- Decorative by default: the root `<svg>` carries `aria-hidden="true"` and `focusable="false"`,
+  so it never intercepts focus or gets announced on its own.
+- `size` accepts a number or a string, sets width, height, and `minWidth` together so a flex
+  parent can't squeeze it, and defaults to `1.5rem`.
+- `color` overrides the stroke inline, which beats the class rule — unset, the icon uses the
+  theme's icon token and flips with the theme automatically.
+- Merges any incoming `className` with its own `droppy-Icon` class.
+
+## When to use
+
+- Inside a control that already carries (or will carry) an accessible name — `Button`'s `icon`
+  prop, or `IconButton`'s `name` prop.
+- As a standalone decorative glyph where the surrounding text or layout conveys the meaning.
+
+## When not to use
+
+- As the sole content of a clickable element with no accessible name of its own — `Icon` is
+  `aria-hidden` by design, so pair it with a labelled control such as
+  [Button](?path=/docs/components-button--docs) or
+  [IconButton](?path=/docs/components-iconbutton--docs) rather than attaching a click handler
+  directly to a bare `Icon`.
+
+## How it works
+
+### The icon set
+
+Every icon in the set, decorative by default — the control it sits in carries the accessible
+name.
+
+<Canvas of={IconStories.Gallery} />
+
+### Sizing
+
+`size` takes any CSS length or a number of pixels and drives width, height, and `minWidth`
+together, so the icon holds its size even inside a shrinking flex row.
+
+<Canvas of={IconStories.Sizes} />
+
+### Colour
+
+Unset, the stroke follows `--ds-color-icon-default` and changes with the theme. Passing `color`
+sets the stroke inline instead, which wins over the class rule.
+
+## Keyboard & screen reader
+
+Icon renders a non-interactive `<svg>` — there is no keyboard interaction to document.
+
+- **ARIA**: `aria-hidden="true"` and `focusable="false"` on the root element, always.
+- **Screen reader**: not announced — the icon contributes nothing to the accessibility tree.
+- **You must provide:** the accessible name on whatever control renders the icon (`aria-label` or
+  visible text) — `Icon` itself carries none.
+
+## Styling
+
+- `--ds-color-icon-default` — stroke colour, applied only when no `color` prop is given.
+- `color` prop — sets the stroke inline, overriding the token.
+- `className` merges with the component's own `droppy-Icon` class.
+
+## API reference
+
+<ArgTypes of={IconStories} />
+
+## Related
+
+- The icon-before-label slot on actions — see [Button](?path=/docs/components-button--docs).
+- The icon-only floating control that renders an `Icon` internally — see
+  [IconButton](?path=/docs/components-iconbutton--docs).

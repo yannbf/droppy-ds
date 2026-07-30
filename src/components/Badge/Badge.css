@@ -1,0 +1,18 @@
+.droppy-Badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: var(--ds-radius-control);
+  background-color: var(--ds-color-badge-bg);
+  color: var(--ds-color-badge-text);
+  font-family: var(--ds-type-family-body);
+  font-size: var(--ds-type-size-sm);
+  font-weight: var(--ds-type-weight-regular);
+  line-height: 1;
+  text-transform: capitalize;
+}
+
+.droppy-Badge--positive {
+  background-color: var(--ds-color-badge-positive-bg);
+  color: var(--ds-color-badge-positive-text);
+  font-weight: var(--ds-type-weight-bold);
+}

@@ -27,6 +27,9 @@
   inset: auto;
   width: 100%;
   height: 100%;
+  /* The theme rounds the drawer's leading corners, but this panel runs the
+     full viewport height — a curve at the screen edge reads as a gap. */
+  border-radius: 0;
   /* The viewport above owns the placement, so the panel owns its resting
      transform — the slide has to start from somewhere. */
   transform: translateX(0);

@@ -14,7 +14,7 @@ const SidebarDemo = ({
   const [isOpen, setIsOpen] = useState(initialOpen)
 
   return (
-    <>
+    <div style={{ padding: '1rem' }}>
       <Button icon="cart" onClick={() => setIsOpen(true)}>
         Open cart
       </Button>
@@ -26,7 +26,7 @@ const SidebarDemo = ({
           onClose()
         }}
       />
-    </>
+    </div>
   )
 }
 

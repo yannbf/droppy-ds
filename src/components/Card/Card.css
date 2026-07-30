@@ -1,0 +1,22 @@
+.droppy-Card {
+  box-sizing: border-box;
+  overflow: hidden;
+  border-radius: var(--ds-radius-card);
+  background-color: var(--ds-color-surface-card);
+  box-shadow: var(--ds-shadow-lift);
+}
+
+.droppy-Card--padded {
+  padding: var(--ds-space-sm);
+}
+
+.droppy-Card--interactive {
+  cursor: pointer;
+  transition: opacity var(--ds-motion-fast) var(--ds-motion-ease);
+}
+
+@media (hover: hover) {
+  .droppy-Card--interactive:hover {
+    opacity: 0.9;
+  }
+}

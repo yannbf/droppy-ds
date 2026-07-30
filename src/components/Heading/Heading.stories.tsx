@@ -36,3 +36,16 @@ export const RendersMatchingTag: Story = {
     await expect(canvas.getByRole('heading', { level: 3 })).toBeInTheDocument()
   },
 }
+
+/** `size` picks the visual size step on its own — the tag still follows
+ *  `level`, so a card title can stay an `h2` in the outline while looking
+ *  like a level-4 heading. */
+export const SizeDecoupledFromLevel: Story = {
+  args: { level: 2, size: 4 },
+  play: async ({ canvas }) => {
+    const heading = canvas.getByRole('heading', { level: 2 })
+
+    await expect(heading).toHaveClass('droppy-Heading--4')
+    await expect(heading).not.toHaveClass('droppy-Heading--2')
+  },
+}

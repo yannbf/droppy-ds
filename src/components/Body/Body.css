@@ -1,0 +1,31 @@
+.droppy-Body {
+  display: block;
+  color: var(--ds-color-text-primary);
+  font-family: var(--ds-type-family-body);
+  font-size: var(--ds-type-size-md);
+  font-weight: var(--ds-type-weight-regular);
+}
+
+.droppy-Body--size-s {
+  font-size: var(--ds-type-size-sm);
+}
+
+.droppy-Body--size-xs {
+  font-size: var(--ds-type-size-xs);
+}
+
+.droppy-Body--size-xxs {
+  font-size: var(--ds-type-size-2xs);
+}
+
+.droppy-Body--weight-medium {
+  font-weight: var(--ds-type-weight-medium);
+}
+
+.droppy-Body--weight-bold {
+  font-weight: var(--ds-type-weight-bold);
+}
+
+.droppy-Body--weight-black {
+  font-weight: var(--ds-type-weight-black);
+}

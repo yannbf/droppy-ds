@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react'
 import { Field } from '@base-ui/react/field'
 import { Input as BaseInput } from '@base-ui/react/input'
-import theme from '@droppy/theme'
+import theme from '../../theme'
 
 import { cx } from '../../utils/cx'
 

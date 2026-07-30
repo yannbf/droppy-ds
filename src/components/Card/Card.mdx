@@ -1,0 +1,93 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as CardStories from './Card.stories'
+
+<Meta of={CardStories} />
+
+# Card
+
+A raised surface for grouping content — a restaurant tile, a food item, an order summary.
+
+- **Import:** `import { Card } from '@droppy/design-system'`
+- **Built on:** a plain `<div>` element.
+
+<Canvas of={CardStories.Default} />
+
+## Features
+
+- Deliberately minimal: background, radius, shadow, and clipping only — no layout, image slot, or
+  title slot. Callers compose those from their own markup and Droppy's other components.
+- `padded` adds `--ds-space-sm` padding on all sides; unset, the shell is bare, since most of the
+  components it replaces already own their internal padding.
+- `interactive` adds a pointer cursor and a hover dim — the shell only. It wires no `onClick`;
+  callers compose the click handling themselves.
+- `overflow: hidden`, so an edge-to-edge image child clips to the card's own corner radius instead
+  of squaring off past it.
+- Merges any incoming `className` with its own `droppy-Card` class.
+
+## When to use
+
+- A tile or panel that groups related content and should read as a single raised surface — a grid
+  item, a summary block, a preview card.
+
+## When not to use
+
+- An overlay that blocks or floats above the page — use [Modal](?path=/docs/components-modal--docs)
+  for a blocking decision or [Sidebar](?path=/docs/components-sidebar--docs) for a panel reviewed
+  alongside the page. `Card` has no portal, backdrop, or dismissal behavior.
+
+## How it works
+
+### Padding
+
+Bare by default, since most of the components this shell replaces already own their internal
+padding. Pass `padded` for the ones that don't.
+
+<Canvas of={CardStories.Padded} />
+
+### Interactive
+
+`interactive` adds a pointer cursor and dims the card to `opacity: 0.9` on hover — the same
+treatment Mealdrop's restaurant and category cards used for their whole clickable surface.
+`Card` doesn't attach the click handler itself; wrap it or spread `onClick` at the call site.
+
+<Canvas of={CardStories.Interactive} />
+
+### Clipping children to the radius
+
+`overflow: hidden` means an edge-to-edge image child clips to the card's corner radius instead of
+squaring off past it.
+
+<Canvas of={CardStories.WithImage} />
+
+## Keyboard & screen reader
+
+`Card` renders a non-interactive `<div>` — there is no keyboard interaction to document, even with
+`interactive` set, since that prop only changes appearance.
+
+- **ARIA:** none — a plain container, unless the caller adds its own role or interactive element
+  inside.
+- **Screen reader:** not announced as a distinct region; its children are read in document order.
+- **You must provide:** any interactive semantics (role, `tabIndex`, keyboard handling, accessible
+  name) if the card as a whole is meant to be actionable — `interactive` only changes how it looks.
+
+## Styling
+
+| Token                                   | Used for                                 |
+| --------------------------------------- | ---------------------------------------- |
+| `--ds-color-surface-card`               | Background                               |
+| `--ds-radius-card`                      | Corner radius                            |
+| `--ds-shadow-lift`                      | Box shadow                               |
+| `--ds-space-sm`                         | Padding, when `padded`                   |
+| `--ds-motion-fast` / `--ds-motion-ease` | Hover-dim transition, when `interactive` |
+
+`className` merges with the component's own `droppy-Card` class.
+
+## API reference
+
+<ArgTypes of={CardStories} />
+
+## Related
+
+- [Modal](?path=/docs/components-modal--docs) — for a blocking overlay instead of an inline
+  surface.
+- [Sidebar](?path=/docs/components-sidebar--docs) — for a panel reviewed alongside the page.

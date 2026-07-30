@@ -1,0 +1,102 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as BodyStories from './Body.stories'
+
+<Meta of={BodyStories} />
+
+# Body
+
+Plain-text typography for paragraph copy, captions, and labels — the body-copy counterpart to
+`Heading`.
+
+- **Import:** `import { Body } from '@droppy/design-system'`
+- **Built on:** a plain `<p>`, `<span>`, `<label>`, or `<figcaption>` element — no Base UI
+  primitive.
+
+<Canvas of={BodyStories.Default} />
+
+## Features
+
+- **`type` picks the rendered element** — `p` by default, or `span`, `label`, `figcaption` — so
+  the same size and weight scale reaches every plain-text spot regardless of which tag the
+  surrounding markup needs.
+- **`size` steps down from the base body size** — `S`, `XS`, or `XXS`. Unset renders the base
+  size.
+- **`fontWeight` picks `regular` (default), `medium`, `bold`, or `black`.**
+- **`color` overrides the text color inline**, winning over the token. Unset, text follows
+  `--ds-color-text-primary`.
+- **`className` merges onto the rendered element** rather than replacing it, so wrapping a `Body`
+  in `styled()` or adding utility classes composes instead of stripping Droppy's own type styles.
+
+## When to use
+
+- Paragraph copy, helper text, and captions that carry no heading semantics of their own.
+- A form label or figure caption, chosen via `type`, that should still share the body type scale.
+
+## When not to use
+
+- A page or section title that belongs in the document outline — use
+  [Heading](?path=/docs/components-heading--docs) instead, so it's announced as a heading and
+  reachable via a screen reader's heading-navigation tools.
+
+## How it works
+
+### `type` picks the rendered element
+
+`type="label"` renders a real `<label>`, not a styled `span` — useful when the text needs to be
+a label rather than merely look like one.
+
+<Canvas of={BodyStories.RendersMatchingTag} />
+
+<Canvas of={BodyStories.ElementChoice} />
+
+### Size steps
+
+`size` is optional — unset renders the base body size (`--ds-type-size-md`). `S`, `XS`, and `XXS`
+step down from there.
+
+<Canvas of={BodyStories.Sizes} />
+
+### Font weight
+
+<Canvas of={BodyStories.Weights} />
+
+### Color override
+
+`color` sets the text color inline, ahead of the theme's token.
+
+<Canvas of={BodyStories.ColorOverride} />
+
+## Keyboard & screen reader
+
+`Body` renders a static, non-interactive element — there's no keyboard interaction to document.
+
+- **ARIA:** none added. The rendered tag is whichever native element `type` selects, unchanged.
+- **Screen reader:** read as ordinary text. A `type="label"` renders a real `<label>`, but `Body`
+  doesn't wire its association to a control — pair it with a matching `htmlFor`/`id` yourself, the
+  same as any bare `<label>`.
+- **You must provide:** the `htmlFor`/`id` pairing if you use `type="label"` to label a control —
+  `Body` forwards the prop but doesn't generate or match an id for you.
+
+## Styling
+
+`Body` reads these tokens directly:
+
+| Token                                                    | Used for                                 |
+| -------------------------------------------------------- | ---------------------------------------- |
+| `--ds-color-text-primary`                                | Text color, unless `color` is set        |
+| `--ds-type-family-body`                                  | Font family                              |
+| `--ds-type-size-md`                                      | Font size, base (no `size` prop)         |
+| `--ds-type-size-sm` / `xs` / `2xs`                       | Font size, `size="S"` / `"XS"` / `"XXS"` |
+| `--ds-type-weight-regular` / `medium` / `bold` / `black` | Font weight, per `fontWeight`            |
+
+`className` is merged onto the rendered tag, so it composes with the tokens above rather than
+overriding them wholesale.
+
+## API reference
+
+<ArgTypes of={BodyStories} />
+
+## Related
+
+- For a page or section title that belongs in the document outline, use
+  [Heading](?path=/docs/components-heading--docs).

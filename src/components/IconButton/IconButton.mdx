@@ -1,0 +1,102 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as IconButtonStories from './IconButton.stories'
+
+<Meta of={IconButtonStories} />
+
+# IconButton
+
+A circular icon-only control for floating affordances — carousel arrows, overlay dismissals —
+that stays legible over arbitrary imagery instead of following the page's theme.
+
+- **Import:** `import { IconButton } from '@droppy/design-system'`
+- **Built on:** Base UI [`Button`](https://base-ui.com/react/components/button)
+
+<Canvas of={IconButtonStories.Default} />
+
+## Features
+
+- Keyboard activation and disabled semantics come from Base UI's `Button` under the hood — the
+  same native-button contract `Button` gets.
+- Deliberately not theme-reactive: it stays a light pill (white fill, dark icon) in dark mode,
+  because it's built to sit on photography, not a themed surface.
+- Only the radius and the focus ring are tokens — the fill, text colour, icon stroke, and drop
+  shadow are fixed, by design.
+- Two sizes, `4rem` default and `3rem` with `small`, with the icon scaled to match (`24` and
+  `15`).
+- The focus ring layers on top of the existing drop shadow instead of replacing it, so the
+  button doesn't flatten when it gains focus.
+- Merges any incoming `className` with its own classes.
+
+## When to use
+
+- A floating icon-only affordance that has to stay legible over arbitrary imagery — carousel
+  arrows, overlay dismissals.
+- A control that should look identical regardless of the surrounding theme.
+
+## When not to use
+
+- For an icon-only control that should follow the app's theme (for example, inline on a themed
+  surface), use [Button](?path=/docs/components-button--docs) with `round`, `clear`, and `icon`
+  instead, because `IconButton` is deliberately theme-independent and won't flip in dark mode.
+- For an action with visible text, use [Button](?path=/docs/components-button--docs) instead,
+  because `IconButton` has no children slot — it renders only the icon.
+
+## How it works
+
+### Sizes
+
+`small` swaps the `4rem` control for a `3rem` one, and scales the inner icon from `24` to `15`
+to match.
+
+<Canvas of={IconButtonStories.Sizes} />
+
+### Icon rendering
+
+`name` selects the icon from the same set `Icon` and `Button` draw from. The icon's stroke is
+fixed at `#202020` rather than a token, matching the rest of the control's fixed appearance.
+
+### Staying light in dark mode
+
+Carried over deliberately: `IconButton` sits on photography, not on a themed surface, so it is
+the one component in the set that doesn't respond to `data-theme`. Only its radius and focus
+ring are tokens; everything else is a fixed value.
+
+### Focus ring
+
+Focus adds `--ds-shadow-focus` alongside the existing drop shadow rather than replacing it — a
+bare `box-shadow` on focus would drop the shadow and the button would flatten.
+
+## Keyboard & screen reader
+
+| Key   | Action                                           |
+| ----- | ------------------------------------------------ |
+| Enter | Activates the button (native behaviour)          |
+| Space | Activates the button on keyup (native behaviour) |
+| Tab   | Moves focus to/from the button, unless disabled  |
+
+- **ARIA**: renders a real `<button>`, so there's no explicit role to manage.
+- **Screen reader**: there is no visible text — the accessible name comes entirely from
+  `aria-label`.
+- **You must provide:** `aria-label` on every `IconButton` — `name` selects a visual icon only,
+  it contributes nothing to the accessible name.
+- **Known limitation:** disabling the control always removes it from the tab order and the
+  accessibility tree — there's no `focusableWhenDisabled`-style escape hatch.
+
+## Styling
+
+- `--ds-radius-round` — border radius.
+- `--ds-shadow-focus` — focus ring, layered with the existing drop shadow.
+- Everything else — background, text colour, icon stroke, drop shadow — is a fixed value, not a
+  token, because `IconButton` is deliberately theme-independent.
+- `className` merges with the component's own classes.
+
+## API reference
+
+<ArgTypes of={IconButtonStories} />
+
+## Related
+
+- The themed, labelled equivalent for actions with visible text — see
+  [Button](?path=/docs/components-button--docs).
+- The icon set `IconButton` draws its `name` prop from — see
+  [Icon](?path=/docs/components-icon--docs).

@@ -1,0 +1,81 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as HeadingStories from './Heading.stories'
+
+<Meta of={HeadingStories} />
+
+# Heading
+
+Display type for page and section titles, rendered as a real semantic heading.
+
+- **Import:** `import { Heading } from '@droppy/design-system'`
+- **Built on:** a plain `<h1>`–`<h5>` element — no Base UI primitive.
+
+<Canvas of={HeadingStories.Levels} />
+
+## Features
+
+- **`level` picks the tag, and the size by default** — `level={3}` renders an actual `<h3>` at the matching size step. Pass `size` separately to keep the tag at one level while the visual size follows another, for a heading that needs to look smaller (or larger) than its place in the outline.
+- **Forwards its ref and the rest of its props**, so composition wrappers — Base UI's `Drawer.Title`, `Dialog.Title` — can wire `aria-labelledby` to the real heading element instead of a wrapper `<div>`.
+- **Levels 1–2 use tighter "display" tracking**; levels 3–5 stay at the default tracking, matching the difference between a page-level display size and an ordinary section heading.
+- **`className` merges onto the element** rather than replacing it, so wrapping a `Heading` in `styled()` or adding utility classes composes instead of stripping Droppy's own type styles.
+
+## When to use
+
+- A page or section title that should appear in the document outline and in a screen reader's heading-navigation list.
+- The title slot of a Base UI `Dialog` or `Drawer`, via `render` — the ref forwarding exists specifically so those components can point `aria-labelledby` at the rendered heading tag.
+
+## When not to use
+
+- To style text for size alone — a stat number in a dashboard tile, for instance — without giving it heading semantics, use plain text with the theme's type tokens instead. `Heading` always renders a real `<h1>`–`<h5>`, so using it purely for its size adds a heading to the outline that isn't one.
+- To make a heading "look right" against its neighbors, don't skip `level`s (jumping from 1 to 4, say). Keep levels sequential and adjust spacing or layout instead — screen reader users navigate by level, and a skipped level reads as a missing section.
+
+## How it works
+
+### `level` renders the matching tag
+
+The same prop that picks the rendered element also picks the size step by default — `level={3}` is an `<h3>` at the level-3 size, not a styled `<div>`.
+
+<Canvas of={HeadingStories.RendersMatchingTag} />
+
+### `size` decouples the visual size from the tag
+
+`size` defaults to `level`, so most call sites never set it. Pass it explicitly to pick a different visual size while `level` keeps choosing the rendered tag — a card title that needs to stay an `<h2>` in the outline but look like a level-4 heading, for instance. Dense layouts (card titles, compact sections) are the usual reason to reach for it; the outline still reads `level`.
+
+<Canvas of={HeadingStories.SizeDecoupledFromLevel} />
+
+### Type scale across levels
+
+Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and below are section headings and use the default tracking. Level 5 has its own size step, so it never falls back to whatever type size happens to surround it.
+
+<Canvas of={HeadingStories.Levels} />
+
+## Keyboard & screen reader
+
+`Heading` has no interactive behavior — it's a static element, not a control.
+
+- **ARIA:** none needed. The native tag (`<h1>`–`<h5>`) already carries the `heading` role and its level; there is no extra wiring to get wrong.
+- **Screen reader:** announced as "heading level N, `<text>`," and listed in heading-navigation tools such as NVDA's Elements List or VoiceOver's rotor.
+- **You must provide:** a sequential `level` order (don't skip levels) and exactly one `h1` per page, so the outline a screen reader user navigates by stays meaningful — `size` only changes the visual step, so this holds whether or not you set it.
+
+## Styling
+
+`Heading` reads these tokens directly:
+
+| Token                                             | Used for                                                                     |
+| ------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `--ds-color-text-primary`                         | Text color                                                                   |
+| `--ds-type-family-heading`                        | Font family                                                                  |
+| `--ds-type-tracking-default`                      | Letter-spacing, size steps 3–5                                               |
+| `--ds-type-tracking-display`                      | Letter-spacing, size steps 1–2                                               |
+| `--ds-type-size-3xl` / `2xl` / `xl` / `lg` / `md` | Font size, size steps 1 through 5 respectively — `size` if set, else `level` |
+
+`className` is merged onto the rendered tag, so it composes with the tokens above rather than overriding them wholesale.
+
+## API reference
+
+<ArgTypes of={HeadingStories} />
+
+## Related
+
+- To title a [Modal](?path=/docs/components-modal--docs) or [Sidebar](?path=/docs/components-sidebar--docs), forward this component's ref via `render` so the dialog or drawer's `aria-labelledby` points at a real heading tag.
+- To label a form field, use [Input](?path=/docs/components-input--docs), which handles its own label association without a separate `Heading`.

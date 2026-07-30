@@ -1,0 +1,88 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ModalStories from './Modal.stories'
+
+<Meta of={ModalStories} />
+
+# Modal
+
+A centered overlay that asks for one decision before the page continues.
+
+- **Import:** `import { Modal } from '@droppy/design-system'`
+- **Built on:** Base UI [`Dialog`](https://base-ui.com/react/components/dialog).
+
+{/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
+
+<Canvas of={ModalStories.Open} story={{ inline: false, height: '480px' }} />
+
+## Features
+
+- **Focus trap** — Tab loops inside the popup while it's open, so keyboard users can't tab into the page behind it.
+- **Scroll lock** — the page behind the modal stops scrolling while it's open.
+- **Escape and outside-press dismissal** — closing doesn't need a pointer to hit the close button exactly.
+- **Bottom sheet on mobile** — below 768px the popup docks to the bottom edge and slides up instead of appearing centered.
+- **Portal by default** — content renders at the end of `document.body`, so a parent's `overflow: hidden` or `z-index` stacking context can't clip or bury it.
+- **ARIA dialog wiring** — `role="dialog"` and the accessible name are set for you.
+
+## When to use
+
+- A single decision that should block the rest of the page until it's made — the `Open` story's "Remove from cart?" confirmation is the shape: state the consequence, offer a way out.
+- A short, self-contained task that doesn't need its own page or route — collecting one field before an action runs, as in the README's `Input` + `Button` example.
+
+## When not to use
+
+- To show content the person reviews _alongside_ the page rather than instead of it — a cart, a filter panel, anything they might dip in and out of — use [Sidebar](?path=/docs/components-sidebar--docs). Modal takes over the page; Sidebar shares it.
+- To explain what a control does before it's activated, use [Tooltip](?path=/docs/components-tooltip--docs) — a hint doesn't need a decision or a focus trap.
+
+## How it works
+
+### Open and close
+
+`Modal` is controlled: `isOpen` decides whether it's rendered, and `onClose` fires whenever Base UI's `Dialog` decides it should close — clicking the close button, pressing Escape, or clicking the backdrop. There's no uncontrolled mode; the caller always owns `isOpen`.
+
+<Canvas of={ModalStories.OpensAndCloses} />
+
+### Dismissal
+
+Escape closes the modal from anywhere inside it, and clicking the backdrop closes it without needing to find the close button.
+
+<Canvas of={ModalStories.EscapeDismisses} />
+
+### Focus behavior
+
+On open, focus moves to the popup itself rather than the close button — landing on "close" the instant a modal opens reads as an invitation to leave before the content's been seen. Tab still reaches the close button first from there, and it stays reachable by keyboard throughout.
+
+### Portaling
+
+`container` decides where the modal is portaled: pass an element, a CSS selector string, or leave it unset to default to `document.body`. A selector is resolved after mount, so on first paint the modal portals nowhere — the correct order, since it starts closed anyway.
+
+### Responsive behavior
+
+Below 768px, `Modal` renders as a bottom sheet: full width, docked to the bottom edge, rounded on its top corners only, sliding up from the bottom on open. At 768px and above it becomes a fixed-size card, centered on the screen, fading and scaling in instead of sliding — there's no screen edge for it to slide from.
+
+<Canvas of={ModalStories.Mobile} story={{ inline: false, height: '480px' }} />
+
+## Keyboard & screen reader
+
+| Key                 | Action                                                                                                      |
+| ------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `Tab` / `Shift+Tab` | Moves focus through the popup's tabbable elements; loops back to the start rather than escaping to the page |
+| `Escape`            | Closes the modal                                                                                            |
+
+- **ARIA**: the popup carries `role="dialog"`; the accessible name comes from the `aria-label` prop (default: `"dialog"`).
+- **Screen reader**: on open, the dialog is announced using its accessible name; on close, focus returns to wherever it was before the modal opened.
+- **You must provide:** a meaningful `aria-label` — the default value is a placeholder, not a real description of the decision being asked. Content inside the modal should also be reachable by Tab; nothing else is required to make it focusable, since the popup itself receives initial focus.
+
+## Styling
+
+- `className` — merged with the modal's own classes, so wrapping `Modal` in `styled()` or adding utility classes composes rather than replacing the built-in styling.
+
+Modal has no CSS custom properties of its own to override — its dimensions and breakpoint are fixed by the design system. Use `className` for one-off layout changes.
+
+## API reference
+
+<ArgTypes of={ModalStories} />
+
+## Related
+
+- To show content reviewed alongside the page instead of blocking it, use [Sidebar](?path=/docs/components-sidebar--docs).
+- To explain a control before it's activated, use [Tooltip](?path=/docs/components-tooltip--docs).

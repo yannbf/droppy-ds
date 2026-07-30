@@ -1,0 +1,127 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ButtonStories from './Button.stories'
+
+<Meta of={ButtonStories} />
+
+# Button
+
+The primary action control — chrome comes from the theme, variants and the icon slot come from
+Droppy.
+
+- **Import:** `import { Button } from '@droppy/design-system'`
+- **Built on:** Base UI [`Button`](https://base-ui.com/react/components/button)
+
+<Canvas of={ButtonStories.Default} />
+
+## Features
+
+- Keyboard activation and disabled semantics come from Base UI's `Button` under the hood —
+  Enter and Space work as expected, and `disabled` removes the control from the tab order and
+  the accessibility tree.
+- Chrome (fill, radius, focus ring, typeface, disabled state) comes from the theme layer; Droppy
+  layers the `clear`, `round`, `large` variants and the icon slot on top.
+- `icon` renders an `Icon` before the label, spaced with `gap` rather than a spacer element, and
+  the icon takes the button's own text colour via `currentcolor` so it stays legible in both
+  variants.
+- Responds to `data-theme` on the root element — fill and focus ring flip between light and dark
+  automatically.
+- Merges any incoming `className` instead of replacing its own, so wrapping it in `styled()` or
+  adding utility classes composes rather than strips the design system's styling.
+- Padding scales up at the `768px` breakpoint so the control doesn't feel undersized on larger
+  viewports.
+
+## When to use
+
+- Primary and secondary in-page actions — a page's one obvious primary action, plus its
+  secondary ones as `clear`.
+- Icon-augmented actions, where the icon reinforces the label ("Order now" with a cart icon).
+- A round, icon-only dismissal on a themed surface (`round`, `clear`, `icon`, no children) — for
+  example a modal's close control.
+
+## When not to use
+
+- For navigation, use a real `<a>` styled with CSS rather than a `Button` with an `onClick`
+  that changes the URL — `Button` always renders a `<button>`, so a navigating one loses
+  native link behaviour (right-click, open-in-new-tab, visible link previews).
+- For a floating icon-only affordance that has to stay legible over arbitrary imagery (carousel
+  arrows, overlay dismissals), use [IconButton](?path=/docs/components-iconbutton--docs) instead,
+  because it is deliberately not theme-reactive and carries its own drop shadow for contrast.
+
+## How it works
+
+### Variants
+
+`clear`, `round`, and `large` are independent booleans and combine freely: `clear` strips the
+fill for secondary actions, `round` gives a pill radius for icon-only affordances, and `large`
+adds taller padding for primary calls to action.
+
+<Canvas of={ButtonStories.Variants} />
+
+### Icon handling
+
+`icon` takes an `IconName` and renders it before `children`, spaced with the theme's `xs` gap
+token rather than a spacer element. `iconSize` overrides the icon's default rendered size when
+the button's own padding calls for a different proportion.
+
+<Canvas of={ButtonStories.WithIcon} />
+
+### Icon-only buttons
+
+Passing `icon` with no `children` — typically combined with `round` and `clear` — renders a
+button with no visible text. The icon itself is decorative (`aria-hidden`), so the button needs
+an explicit `aria-label` to carry an accessible name.
+
+<Canvas of={ButtonStories.IconOnly} />
+
+### Disabled state
+
+`disabled` maps straight to the native `disabled` attribute, so the button is skipped by Tab and
+every interaction handler no-ops — verified even when a click is forced past `pointer-events`
+(see the `DisabledSwallowsClicks` story). Droppy's `Button` doesn't expose Base UI's
+`focusableWhenDisabled`, so there's no built-in way to keep a disabled button focusable — every
+disabled `Button` drops out of the tab order.
+
+<Canvas of={ButtonStories.Disabled} />
+
+### In a form
+
+The rendered element always starts as `type="button"`, so it won't submit an enclosing form by
+default. Pass `type="submit"` explicitly to opt in.
+
+## Keyboard & screen reader
+
+| Key   | Action                                           |
+| ----- | ------------------------------------------------ |
+| Enter | Activates the button (native behaviour)          |
+| Space | Activates the button on keyup (native behaviour) |
+| Tab   | Moves focus to/from the button, unless disabled  |
+
+- **ARIA**: renders a real `<button>`, so there's no explicit role to manage — native button
+  semantics apply as-is.
+- **Screen reader**: `children` is announced as the accessible name.
+- **You must provide:** `aria-label` on icon-only buttons (`icon` with no `children`) — the icon
+  is `aria-hidden`, so without a label the button has no accessible name.
+- **Known limitation:** disabling a button always removes it from the tab order and the
+  accessibility tree — there's no `focusableWhenDisabled`-style escape hatch for a loading state
+  that should stay focusable.
+
+## Styling
+
+- `--ds-space-xs` — gap between the icon and the label.
+- `--ds-radius-pill` — border radius when `round` is set.
+- `--ds-color-text-primary` — text colour for the `clear` variant.
+- `--ds-color-action-subtle-hover` — hover fill for the `clear` variant.
+- `className` merges with the component's own classes rather than replacing them.
+
+Everything else — the base fill, focus ring, and typeface — comes from the theme layer, which
+this component doesn't override.
+
+## API reference
+
+<ArgTypes of={ButtonStories} />
+
+## Related
+
+- Icon-only, theme-independent affordance over imagery — see
+  [IconButton](?path=/docs/components-iconbutton--docs).
+- The icon set `Button` draws its `icon` prop from — see [Icon](?path=/docs/components-icon--docs).

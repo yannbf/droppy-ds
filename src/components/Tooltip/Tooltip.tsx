@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from 'react'
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip'
-import theme from '@droppy/theme'
+import theme from '../../theme'
 
 import { cx } from '../../utils/cx'
 

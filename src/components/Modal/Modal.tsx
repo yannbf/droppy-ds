@@ -1,6 +1,6 @@
 import { useRef, type PropsWithChildren, type ReactNode } from 'react'
 import { Dialog } from '@base-ui/react/dialog'
-import theme from '@droppy/theme'
+import theme from '../../theme'
 
 import { Button } from '../Button'
 import { cx } from '../../utils/cx'

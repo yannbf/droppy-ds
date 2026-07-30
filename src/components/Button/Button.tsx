@@ -1,6 +1,6 @@
 import type { ComponentProps, PropsWithChildren, ReactNode } from 'react'
 import { Button as BaseButton } from '@base-ui/react/button'
-import theme from '@droppy/theme'
+import theme from '../../theme'
 
 import { Icon, type IconName } from '../Icon'
 import { cx } from '../../utils/cx'
@@ -27,7 +27,7 @@ export type ButtonProps = DefaultProps & Omit<ComponentProps<'button'>, keyof De
  * The primary action control.
  *
  * Chrome (fill, radius, focus ring, typeface, disabled state) comes from
- * `@droppy/theme`; Droppy layers the variants and the icon slot on top.
+ * the theme layer; Droppy layers the variants and the icon slot on top.
  */
 export const Button = ({
   children,

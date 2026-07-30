@@ -3,8 +3,12 @@ import { forwardRef, type ComponentProps, type ElementType, type PropsWithChildr
 import { cx } from '../../utils/cx'
 
 type DefaultProps = {
-  /** Both the rendered tag (`h1`–`h5`) and the size step. */
+  /** The rendered tag (`h1`–`h5`). Also the size step when `size` is unset. */
   level?: 1 | 2 | 3 | 4 | 5
+  /** Visual size step. Defaults to `level`, so setting `level` alone keeps
+   *  the tag and the size together. Pass `size` to pick the visual size
+   *  independently of the semantic level — the tag still follows `level`. */
+  size?: 1 | 2 | 3 | 4 | 5
   className?: string
 }
 
@@ -18,13 +22,14 @@ export type HeadingProps = DefaultProps & Omit<ComponentProps<'h1'>, keyof Defau
  * heading element.
  */
 export const Heading = forwardRef<HTMLHeadingElement, PropsWithChildren<HeadingProps>>(
-  ({ level = 1, children, className, ...rest }, ref) => {
+  ({ level = 1, size, children, className, ...rest }, ref) => {
     const Tag = `h${level}` as ElementType
+    const visualSize = size ?? level
 
     return (
       <Tag
         ref={ref}
-        className={cx('droppy-Heading', `droppy-Heading--${level}`, className)}
+        className={cx('droppy-Heading', `droppy-Heading--${visualSize}`, className)}
         {...rest}
       >
         {children}

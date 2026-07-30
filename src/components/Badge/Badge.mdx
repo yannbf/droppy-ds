@@ -1,0 +1,83 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as BadgeStories from './Badge.stories'
+
+<Meta of={BadgeStories} />
+
+# Badge
+
+A small pill for a short, static label — a dietary tag, a category, a "new" flag.
+
+- **Import:** `import { Badge } from '@droppy/design-system'`
+- **Built on:** a plain `<span>` element.
+
+<Canvas of={BadgeStories.Default} />
+
+## Features
+
+- `text` renders capitalized regardless of the casing passed in — `"vegan"` and `"Vegan"` render
+  identically.
+- `variant="positive"` swaps the background, text color, and font weight for an affirmative flag
+  such as "new" — padding, radius, and size stay the same as the neutral default.
+- Merges any incoming `className` with its own `droppy-Badge` class.
+
+## When to use
+
+- A short, static label attached to something else — a dietary tag on a menu item, a category
+  chip, a "new" flag on a card.
+- Anywhere the surrounding layout, not the badge itself, decides placement — `Badge` renders
+  inline where you put it; floating it over a photo or corner is a call-site concern.
+
+## When not to use
+
+- For a live status that changes over time (loading, saved, failed) — that's status text, not a
+  label. Style it with the theme's text tokens directly rather than stretching `Badge`'s two
+  variants to cover states it wasn't designed for.
+- As a clickable control — `Badge` has no interactive semantics. If the label needs to respond to
+  a click, use [Button](?path=/docs/components-button--docs) with `clear` instead.
+
+## How it works
+
+### Variants
+
+The neutral default matches Mealdrop's original badge; `positive` matches its hand-rolled "new"
+tag look, minus the absolute positioning that was specific to a restaurant card's photo —
+placement is now the call site's job.
+
+<Canvas of={BadgeStories.Positive} />
+
+### Longer labels
+
+The pill grows with its content — there's no truncation or fixed width.
+
+<Canvas of={BadgeStories.LongerText} />
+
+## Keyboard & screen reader
+
+`Badge` renders a non-interactive `<span>` — there is no keyboard interaction to document.
+
+- **ARIA:** none — a plain text node, read as part of the surrounding content.
+- **Screen reader:** announced as part of the enclosing text flow, in reading order.
+- **You must provide:** an accessible name on whatever control the badge sits inside, if any —
+  `Badge` itself carries none.
+
+## Styling
+
+| Token                                | Used for                          |
+| ------------------------------------ | --------------------------------- |
+| `--ds-color-badge-bg`                | Background, neutral (default)     |
+| `--ds-color-badge-text`              | Text color, neutral (default)     |
+| `--ds-color-badge-positive-bg`       | Background, `positive`            |
+| `--ds-color-badge-positive-text`     | Text color, `positive`            |
+| `--ds-radius-control`                | Corner radius                     |
+| `--ds-type-size-sm`                  | Font size                         |
+| `--ds-type-weight-regular` / `-bold` | Font weight, neutral / `positive` |
+
+`className` merges with the component's own `droppy-Badge` class.
+
+## API reference
+
+<ArgTypes of={BadgeStories} />
+
+## Related
+
+- [Button](?path=/docs/components-button--docs) — for a label that needs to be clickable.

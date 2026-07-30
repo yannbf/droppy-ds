@@ -23,6 +23,23 @@ what a screen reader announces and what the page shows. Removing it lets them ag
 
 **`Button` spaces its icon with `gap`, not a spacer element.** One fewer DOM node; same 1rem.
 
+**`Skeleton` needs no `SkeletonTheme` wrapper.** Mealdrop themed `react-loading-skeleton`
+through a `<SkeletonTheme color highlightColor>` wrapper reading its styled-components theme.
+Droppy's `Skeleton` reads the skeleton tokens directly, so the swap deletes the wrapper and the
+library dependency along with it.
+
+**`Badge` absorbs `RestaurantCard`'s hand-rolled `NewTag`.** Mealdrop had two implementations
+of the same visual role; the green one is now `variant="positive"`. The variant carries the
+colours and weight only — `NewTag`'s absolute positioning belongs to the call site.
+
+**`Heading` takes a `size` prop.** Mealdrop wrapped `Heading` in `styled()` at four call sites
+to force a smaller visual size on a correctly-levelled heading. `size` does that directly:
+`level` picks the tag, `size` (defaulting to `level`) picks the scale.
+
+**`Card` replaces the inline card shells.** Background, radius, shadow and the hover dim were
+reimplemented per component (`RestaurantCard`, `Category`, `FoodItem`, `OrderSummary`); the
+shell is one component now, and the domain content composes inside it.
+
 **`Select` puts its label before the control in the DOM.** It was after, so a sibling selector
 could drive the focus highlight. `:has()` does that now, and the reading order matches the
 visual order.

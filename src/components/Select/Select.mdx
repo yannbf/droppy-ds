@@ -1,0 +1,87 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as SelectStories from './Select.stories'
+
+<Meta of={SelectStories} />
+
+# Select
+
+A single-choice control over a short, known list.
+
+- **Import:** `import { Select } from '@droppy/design-system'`
+- **Built on:** the native `<select>` element — not a Base UI primitive. On touch devices a native select opens the platform's own picker, which no scripted listbox matches for accessibility or muscle memory; Droppy restyles the control and supplies its own chevron on top.
+
+<Canvas of={SelectStories.Default} />
+
+## Features
+
+- **Renders a real native `<select>`**, so it gets the platform picker on touch, full native keyboard support, and OS-level accessibility for free — there's no scripted listbox to reimplement or get wrong.
+- **Coerces numeric option values back to numbers** in `onChange`, so quantities and similar option sets arrive ready to use without a parsing step — while a genuinely non-numeric option is never coerced into `NaN`.
+- **Generates a stable id via `useId`** when none is passed, so label/control association always works even if you never set one yourself.
+- **Label sits before the control in the DOM**, matching reading order, while the focus highlight still reaches it via a `:has()` selector rather than a sibling combinator that would require the opposite order.
+- **The chevron is a token-colored CSS mask**, not an SVG with a baked-in fill color, so it follows the theme into dark mode without any JavaScript theme lookup.
+
+## When to use
+
+- Choosing one value from a short, known list — quantities, delivery windows, and similar bounded option sets.
+- Forms where the platform's native picker behavior on touch is preferable to a custom popup.
+
+## When not to use
+
+- To let someone type a value rather than pick from a fixed list, use [Input](?path=/docs/components-input--docs) instead — a select can only ever return one of its declared options.
+- For a list too long to scan by eye or by native typeahead alone, this component isn't it — Droppy has no searchable variant here. Reach for Base UI's `Combobox` directly rather than stretching `Select` past what a native picker is good at.
+
+## How it works
+
+### Numeric and text options
+
+Options can be numbers or strings; `Select` renders both the value and the visible text identically, so quantities ("2", "3") and free-form labels ("ASAP", "Tonight") work with the same `options` prop.
+
+<Canvas of={SelectStories.TextOptions} />
+
+### Value coercion in `onChange`
+
+Numeric options come back as numbers, not strings, so a caller can use the value directly. The coercion checks for an empty string before calling `Number()` on it, so a genuinely non-numeric option is never turned into `NaN` — the failure mode of running every value through `Number()` unconditionally.
+
+<Canvas of={SelectStories.ReportsNumericValues} />
+<Canvas of={SelectStories.ReportsTextValues} />
+
+### Disabled state
+
+<Canvas of={SelectStories.Disabled} />
+
+## Keyboard & screen reader
+
+| Key                       | Context        | Action                                                                   |
+| ------------------------- | -------------- | ------------------------------------------------------------------------ |
+| Space / Enter / Down / Up | closed         | Opens the platform's native option picker                                |
+| Up / Down / Home / End    | open           | Moves through options                                                    |
+| A printable character     | open or closed | Native typeahead — jumps to the next option starting with that character |
+| Enter / Escape            | open           | Commits or cancels the pick, closing the picker                          |
+
+- **ARIA:** none added beyond what a native `<select>` and a `<label htmlFor>` already provide — the browser reports the control's role, expanded state, and current selection to assistive technology on its own.
+- **Screen reader:** announces the label as the field's name, then the currently selected option; opening the picker reads out the option list through whichever native mechanism the OS supplies.
+- **You must provide:** a `label`. Without one the rendered `<select>` has no accessible name, the same obligation as any other native form control.
+
+## Styling
+
+| Token                                                                      | Used for                                              |
+| -------------------------------------------------------------------------- | ----------------------------------------------------- |
+| `--ds-space-sm`                                                            | Bottom padding of the whole control                   |
+| `--ds-color-text-label` / `--ds-color-text-label-active`                   | Label color, at rest and while the control is focused |
+| `--ds-type-family-body` / `--ds-type-size-md` / `--ds-type-weight-regular` | Label typography                                      |
+| `--ds-space-2xs`                                                           | Space between label and control                       |
+| `--ds-radius-control`                                                      | Control corner radius                                 |
+| `--ds-color-text-primary`                                                  | Selected-value text color                             |
+| `--ds-color-surface-sunken`                                                | Control background                                    |
+| `--ds-color-icon-default`                                                  | Chevron color                                         |
+| `--ds-shadow-focus`                                                        | Focus ring                                            |
+
+The chevron itself is a `mask` over a token-colored layer rather than a data-URL SVG, specifically so `--ds-color-icon-default` can resolve inside it — colors embedded in SVG XML can't read CSS custom properties, so a baked-in-color chevron would need a JavaScript theme lookup to flip in dark mode; this one doesn't. `className` merges onto the outer wrapper.
+
+## API reference
+
+<ArgTypes of={SelectStories} />
+
+## Related
+
+- To collect free-form text instead of a fixed choice, use [Input](?path=/docs/components-input--docs).
