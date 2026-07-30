@@ -1,0 +1,82 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ContainerStories from './Container.stories'
+
+<Meta of={ContainerStories} />
+
+# Container
+
+A max-width page wrapper with responsive side padding — the bound that keeps a page's content
+from stretching edge to edge on wide screens.
+
+- **Import:** `import { Container } from '@droppy/design-system'`
+- **Built on:** a plain `<div>` element.
+
+<Canvas of={ContainerStories.Default} />
+
+## Features
+
+- Caps width at 1600px and centers with `margin: 0 auto`.
+- Side padding starts at `1.5rem` and widens to `4rem` at the 640px breakpoint, so the bound
+  reads correctly on a phone and doesn't crowd content on a tablet or larger.
+- `desktopOnly` defers the width cap and padding to the 1024px breakpoint — below that width the
+  wrapper adds no constraint, so the caller's own mobile layout runs unconstrained until the page
+  is wide enough to want the bound.
+- Merges any incoming `className` with its own `droppy-Container` class.
+
+## When to use
+
+- Wrapping a page's main content so it caps at a readable width and doesn't touch the viewport
+  edges on desktop.
+- `desktopOnly` for a section that already owns its mobile padding (a hero, a banner) and only
+  needs the width cap once the layout goes multi-column.
+
+## When not to use
+
+- Inside a component that already manages its own width — nesting `Container` inside `Container`
+  compounds the padding instead of replacing it.
+- For a raised surface that groups content — use [Card](?path=/docs/components-card--docs)
+  instead; `Container` has no background, radius, or shadow.
+
+## How it works
+
+### Default
+
+Padding applies immediately and widens at 640px; the width cap and centering hold at every size.
+
+<Canvas of={ContainerStories.Default} />
+
+### Desktop only
+
+Below 1024px, `Container` renders with no width cap and no padding of its own. From 1024px up, it
+behaves exactly like the default variant.
+
+<Canvas of={ContainerStories.DesktopOnly} />
+
+## Keyboard & screen reader
+
+`Container` is a non-interactive layout element — there is no keyboard interaction to document.
+
+- **ARIA:** none — a plain wrapping `<div>`.
+- **Screen reader:** not announced as a distinct region; its children are read in document order.
+
+## Styling
+
+| Token           | Used for                                      |
+| --------------- | --------------------------------------------- |
+| `--ds-space-sm` | Side padding (both variants, at their widths) |
+
+The 1600px max-width, the 4rem wide-viewport padding, and the 640px/1024px breakpoints are
+literal values — no token in the current scale matches them exactly.
+
+`className` merges with the component's own `droppy-Container` class.
+
+## API reference
+
+<ArgTypes of={ContainerStories} />
+
+## Related
+
+- [PageSection](?path=/docs/components-pagesection--docs) — a titled content section, commonly
+  placed inside a `Container`.
+- [Card](?path=/docs/components-card--docs) — a raised surface for grouping content, instead of a
+  page-level wrapper.

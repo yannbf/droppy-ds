@@ -1,0 +1,89 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as TopBannerStories from './TopBanner.stories'
+
+<Meta of={TopBannerStories} />
+
+# TopBanner
+
+A full-width band at the top of a page, with a centered title over either a theme color or a
+background photo — a category page's header, a restaurant's hero image.
+
+- **Import:** `import { TopBanner } from '@droppy/design-system'`
+- **Built on:** [Heading](?path=/docs/components-heading--docs).
+
+<Canvas of={TopBannerStories.Default} />
+
+## Features
+
+- Fixed 240px height, full width, centered content.
+- Without `photoUrl`, the background is `--ds-color-surface-highlight`, the theme's accent
+  surface color.
+- With `photoUrl`, the band renders that image instead, covering the full band and centered —
+  `photoUrl` takes any URL string, so it's the caller's job to host the image.
+- `title` renders as a centered level-2 [Heading](?path=/docs/components-heading--docs); its
+  color switches to `--ds-color-text-on-inverse` when a photo is set, since the theme's regular
+  text color doesn't reliably read over an arbitrary photo.
+- Merges any incoming `className` with its own `droppy-TopBanner` class.
+- Accepts an `onBackClick` prop for call-site parity with the Mealdrop component this replaces,
+  but renders no back control of its own — see [Related](#related) for composing one.
+
+## When to use
+
+- The header band of a page that wants a large title over either a flat brand color or a hero
+  photo — a category list, a restaurant detail page, a confirmation screen.
+
+## When not to use
+
+- A section title inline with the rest of the page's content — use
+  [PageSection](?path=/docs/components-pagesection--docs) instead; `TopBanner` is a full-width
+  band meant to sit above the page's content column, not inside it.
+
+## How it works
+
+### Theme color background
+
+Without `photoUrl`, the band fills with the theme's accent surface color and the title uses the
+regular primary text color.
+
+<Canvas of={TopBannerStories.Default} />
+
+### Photo background
+
+`photoUrl` replaces the color with the given image, covering the band; the title switches to the
+on-inverse text color so it stays legible over a photo.
+
+<Canvas of={TopBannerStories.WithImage} />
+
+## Keyboard & screen reader
+
+`TopBanner` is a non-interactive layout element — there is no keyboard interaction to document.
+
+- **ARIA:** none on the band itself; the title is a native `<h2>`, and the background photo, when
+  set, is a CSS `background-image` rather than an `<img>`, so it carries no alt text and is never
+  exposed to assistive technology as content.
+- **Screen reader:** the title announces as a level-2 heading; the band itself is not announced
+  as a distinct region.
+- **You must provide:** a `title` whose meaning doesn't depend on the background photo — the
+  photo is decorative as far as a screen reader is concerned.
+
+## Styling
+
+| Token                          | Used for                               |
+| ------------------------------ | -------------------------------------- |
+| `--ds-color-surface-highlight` | Background, when no `photoUrl` is set  |
+| `--ds-color-text-primary`      | Title color, when no `photoUrl` is set |
+| `--ds-color-text-on-inverse`   | Title color, when `photoUrl` is set    |
+
+The 240px band height is a literal value — no token in the current scale matches it exactly.
+
+`className` merges with the component's own `droppy-TopBanner` class.
+
+## API reference
+
+<ArgTypes of={TopBannerStories} />
+
+## Related
+
+- [PageSection](?path=/docs/components-pagesection--docs) — a titled content section for inside
+  the page, instead of a full-width header band.
+- [Heading](?path=/docs/components-heading--docs) — the title's underlying component.

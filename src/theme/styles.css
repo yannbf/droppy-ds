@@ -229,6 +229,8 @@
   --ds-color-badge-text: var(--ds-palette-neutral-700);
   --ds-color-badge-positive-bg: var(--ds-palette-green-200);
   --ds-color-badge-positive-text: var(--ds-color-text-primary);
+  --ds-color-progress-track: var(--ds-palette-neutral-100);
+  --ds-color-progress-fill: var(--ds-palette-neutral-950);
 
   /* ---- composed: the single two-layer focus ring (principles rule 9) ---- */
   --ds-shadow-focus: 0 0 0 1px var(--ds-color-focus-ring), 0 0 0 4px var(--ds-color-focus-halo);
@@ -283,6 +285,9 @@
   --ds-color-badge-text: var(--ds-palette-neutral-400);
   --ds-color-badge-positive-bg: var(--ds-palette-green-200);
   --ds-color-badge-positive-text: var(--ds-color-text-primary);
+  /* stepsIndicatorOuterBar/InnerBar in Mealdrop's darkTheme */
+  --ds-color-progress-track: var(--ds-palette-neutral-800);
+  --ds-color-progress-fill: var(--ds-palette-green-200);
 
   /* dark ring widens to 2px (tokens.json focus.ring note) */
   --ds-shadow-focus: 0 0 0 2px var(--ds-color-focus-ring), 0 0 0 4px var(--ds-color-focus-halo);
@@ -325,6 +330,8 @@
     --ds-color-badge-text: var(--ds-palette-neutral-400);
     --ds-color-badge-positive-bg: var(--ds-palette-green-200);
     --ds-color-badge-positive-text: var(--ds-color-text-primary);
+    --ds-color-progress-track: var(--ds-palette-neutral-800);
+    --ds-color-progress-fill: var(--ds-palette-green-200);
 
     /* dark ring widens to 2px (tokens.json focus.ring note) */
     --ds-shadow-focus: 0 0 0 2px var(--ds-color-focus-ring), 0 0 0 4px var(--ds-color-focus-halo);

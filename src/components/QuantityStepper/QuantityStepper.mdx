@@ -1,0 +1,86 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as QuantityStepperStories from './QuantityStepper.stories'
+
+<Meta of={QuantityStepperStories} />
+
+# QuantityStepper
+
+A minus/plus pair flanking a quantity, for adjusting the count of a single item — a food order's
+line, a cart quantity.
+
+- **Import:** `import { QuantityStepper } from '@droppy/design-system'`
+- **Built on:** two [Button](?path=/docs/components-button--docs)s (`round`, `clear`, icon-only)
+  and a [Body](?path=/docs/components-body--docs) for the value.
+
+<Canvas of={QuantityStepperStories.Default} />
+
+## Features
+
+- `value` and `onChange` are both required — the component holds no state of its own; the caller
+  owns the quantity, same as Mealdrop's inline version in `FoodItemModal`.
+- `min` (default `1`) and `max` (default `10`) disable the matching button once reached, rather
+  than clamping the value or wrapping around.
+- The value text carries `aria-live="polite"`, so a change announces itself — the group has no
+  other way to signal that a click landed.
+- The whole control is a labelled `group` (`aria-label` defaults to `"quantity"`), so assistive
+  tech reads the two buttons and the value as one unit.
+- Merges any incoming `className` with its own `droppy-QuantityStepper` class.
+
+## When to use
+
+- Adjusting the count of a single, already-identified item by small increments — a cart line, a
+  food order quantity, a form field counting units of something.
+
+## When not to use
+
+- Choosing among zero-or-more named quantities where zero means "remove" as a distinct action, or
+  the range is large enough that clicking one at a time is impractical — use
+  [Select](?path=/docs/components-select--docs) for a bounded list of quantities instead.
+
+## How it works
+
+### Disabling at the bounds
+
+<Canvas of={QuantityStepperStories.AtMin} />
+<Canvas of={QuantityStepperStories.AtMax} />
+
+### Reporting changes
+
+Each click reports the new value through `onChange` immediately — there's no confirm step, same
+as Mealdrop's original.
+
+<Canvas of={QuantityStepperStories.Increments} />
+
+## Keyboard & screen reader
+
+Both buttons are real `<button>` elements — standard Tab/Enter/Space behaviour applies, no custom
+key handling.
+
+- **ARIA:** the root is `role="group"` with `aria-label` (default `"quantity"`); the value text
+  carries `aria-live="polite"`; each button carries its own `aria-label`
+  ("increase/decrease quantity by one").
+- **Screen reader:** a change to the value is announced via the live region without needing focus
+  to move; the group's label frames the two buttons and the value as one control.
+- **You must provide:** a more specific `aria-label` when the default `"quantity"` is ambiguous —
+  for example when more than one stepper appears on the same screen.
+
+## Styling
+
+| Token           | Used for                                  |
+| --------------- | ----------------------------------------- |
+| `--ds-space-xs` | Gap between the two buttons and the value |
+
+Button and value colours, radius, and focus ring come from `Button` and `Body`'s own tokens —
+`QuantityStepper` adds only layout on top.
+
+`className` merges with the component's own `droppy-QuantityStepper` class.
+
+## API reference
+
+<ArgTypes of={QuantityStepperStories} />
+
+## Related
+
+- [Select](?path=/docs/components-select--docs) — for a bounded list of named quantities instead
+  of small increments.
+- [Button](?path=/docs/components-button--docs) — the icon-only round buttons this composes.

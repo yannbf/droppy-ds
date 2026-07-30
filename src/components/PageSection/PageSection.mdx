@@ -1,0 +1,90 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as PageSectionStories from './PageSection.stories'
+
+<Meta of={PageSectionStories} />
+
+# PageSection
+
+A titled content section — a heading with an optional "view all" action above whatever the
+caller composes below it, like a home page's Categories or Restaurants row.
+
+- **Import:** `import { PageSection } from '@droppy/design-system'`
+- **Built on:** [Heading](?path=/docs/components-heading--docs) and
+  [Button](?path=/docs/components-button--docs).
+
+<Canvas of={PageSectionStories.Default} />
+
+## Features
+
+- Renders `title` as a level-2 [Heading](?path=/docs/components-heading--docs), with an optional
+  `Button` beside it when `topButtonLabel` is set.
+- `onTopButtonClick` fires from that button; the button is a `clear` variant, so it reads as a
+  secondary action next to the heading rather than competing with it.
+- Caps width at 1600px and centers from the 1024px breakpoint up, matching
+  [Container](?path=/docs/components-container--docs)'s desktop bound; below that it fills its
+  parent with its own side padding.
+- Merges any incoming `className` with its own `droppy-PageSection` class.
+
+## When to use
+
+- A titled row of content on a page that also wants a "view all" or "see more" link next to the
+  title — a category carousel, a restaurant list, any horizontally-scrolling section.
+
+## When not to use
+
+- A page's own outer width bound with no heading — use
+  [Container](?path=/docs/components-container--docs) directly.
+- A raised, self-contained surface — use [Card](?path=/docs/components-card--docs) for a tile or
+  panel instead of a full-width section.
+
+## How it works
+
+### Title only
+
+Without `topButtonLabel`, only the heading renders — no empty space is reserved for a button that
+isn't there.
+
+<Canvas of={PageSectionStories.Default} />
+
+### With an action
+
+`topButtonLabel` renders a `clear` `Button` on the opposite side of the heading, wired to
+`onTopButtonClick`.
+
+<Canvas of={PageSectionStories.WithAction} />
+
+## Keyboard & screen reader
+
+`PageSection` itself is a non-interactive layout element — the wrapping `div`s carry no role and
+no keyboard behavior of their own.
+
+- **ARIA:** none on the section wrapper; the heading is a native `<h2>`, and the optional button
+  is a real [Button](?path=/docs/components-button--docs) with its own focus and activation
+  behavior.
+- **Screen reader:** the heading announces as a level-2 heading, so it shows up in a heading-level
+  page scan; the button announces its label.
+- **You must provide:** a `title` that makes sense read out of context — screen reader users often
+  jump between headings rather than reading the page in order.
+
+## Styling
+
+| Token           | Used for                                           |
+| --------------- | -------------------------------------------------- |
+| `--ds-space-xs` | Padding below the 1024px breakpoint                |
+| `--ds-space-sm` | Padding at and above 1024px; gap under the heading |
+
+1600px and the 1024px breakpoint are literal values — no token in the current scale matches them
+exactly.
+
+`className` merges with the component's own `droppy-PageSection` class.
+
+## API reference
+
+<ArgTypes of={PageSectionStories} />
+
+## Related
+
+- [Container](?path=/docs/components-container--docs) — the same desktop-width bound, without a
+  heading or action slot.
+- [Heading](?path=/docs/components-heading--docs) — the title's underlying component.
+- [Button](?path=/docs/components-button--docs) — the action slot's underlying component.

@@ -1,0 +1,90 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as BreadcrumbStories from './Breadcrumb.stories'
+
+<Meta of={BreadcrumbStories} />
+
+# Breadcrumb
+
+A trail of ancestor pages leading to the current one — categories, restaurants, anything with a
+browsable hierarchy above it.
+
+- **Import:** `import { Breadcrumb } from '@droppy/design-system'`
+- **Built on:** a plain `<nav>` and `<ol>`; each crumb is an `<a>` by default.
+
+<Canvas of={BreadcrumbStories.Default} />
+
+## Features
+
+- `items` is an ordered list of `{ label, href? }` — a crumb with no `href` renders as plain text
+  rather than a link, for the current page or any ancestor with nowhere to go.
+- No router dependency: crumbs render a plain `<a href>` by default. Pass `render` on an item to
+  swap in a router-aware link instead (see below) — the design system itself never imports a
+  router.
+- The last item always carries `aria-current="page"`, whether it renders as a link or as text.
+- A `/` separator sits between crumbs, hidden from assistive tech (`aria-hidden`) since the list
+  markup already conveys order.
+- Merges any incoming `className` with its own `droppy-Breadcrumb` class.
+
+## When to use
+
+- Above a page reached by drilling into a category, a restaurant, or any other browsable
+  hierarchy, so the visitor can jump back to an ancestor in one click.
+
+## When not to use
+
+- On a page with no hierarchy above it — a plain link back to the parent page reads more
+  honestly than a one-crumb trail implying a hierarchy that isn't there.
+
+## How it works
+
+### A single crumb
+
+A one-item trail still renders — typically the current page, with no ancestor to link to.
+
+<Canvas of={BreadcrumbStories.SingleCrumb} />
+
+### The current page
+
+<Canvas of={BreadcrumbStories.CurrentPageIsMarked} />
+
+### Router links via `render`
+
+Pass `render` with a router's own link element (`react-router`'s `Link`, Next's `Link`, etc.) and
+`Breadcrumb` clones it with the crumb's class and, on the last item, `aria-current` — the same
+composition pattern Base UI's own parts use for `render` props elsewhere in this library (see
+`Sidebar`'s `Drawer.Title`). `href` is ignored on that item; the router element owns its own
+destination.
+
+<Canvas of={BreadcrumbStories.WithRouterLink} />
+
+## Keyboard & screen reader
+
+Each linked crumb is a real `<a>` (or the router element passed via `render`) — standard link
+keyboard behaviour applies, no custom handling.
+
+- **ARIA:** the root is `<nav aria-label="breadcrumb">` wrapping an `<ol>`; the last crumb carries
+  `aria-current="page"`.
+- **Screen reader:** announced as a "breadcrumb" navigation landmark containing an ordered list;
+  the current crumb is announced as the current page.
+- **You must provide:** nothing further — the landmark, list semantics, and current-page marking
+  are all built in.
+
+## Styling
+
+| Token                       | Used for                                   |
+| --------------------------- | ------------------------------------------ |
+| `--ds-color-text-secondary` | Crumb text color, linked and plain         |
+| `--ds-type-size-sm`         | Crumb font size                            |
+| `--ds-type-weight-regular`  | Plain (non-link) crumb weight              |
+| `--ds-space-md`             | Vertical margin around the trail           |
+| `--ds-space-2xs`            | Horizontal margin around the `/` separator |
+
+`className` merges with the component's own `droppy-Breadcrumb` class.
+
+## API reference
+
+<ArgTypes of={BreadcrumbStories} />
+
+## Related
+
+- Plain page links, for a page with no hierarchy above it.

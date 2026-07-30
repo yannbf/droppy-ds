@@ -1,0 +1,40 @@
+.droppy-Breadcrumb {
+  margin-block: var(--ds-space-md);
+}
+
+.droppy-Breadcrumb-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.droppy-Breadcrumb-item {
+  display: flex;
+  align-items: center;
+}
+
+.droppy-Breadcrumb-link,
+.droppy-Breadcrumb-text {
+  color: var(--ds-color-text-secondary);
+  font-family: var(--ds-type-family-body);
+  font-size: var(--ds-type-size-sm);
+  text-transform: lowercase;
+}
+
+.droppy-Breadcrumb-link {
+  text-decoration: underline;
+}
+
+/* Stands in for the Mealdrop source's `font-weight: lighter` — the body face
+   only ships regular and medium weights, so the nearest available step is
+   regular. */
+.droppy-Breadcrumb-text {
+  font-weight: var(--ds-type-weight-regular);
+}
+
+.droppy-Breadcrumb-separator {
+  margin-inline: var(--ds-space-2xs);
+}

@@ -1,0 +1,88 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as SpinnerStories from './Spinner.stories'
+
+<Meta of={SpinnerStories} />
+
+# Spinner
+
+An indeterminate loading indicator — three dots crossing an arc, in the theme's brand colors.
+
+- **Import:** `import { Spinner } from '@droppy/design-system'`
+- **Built on:** a plain `<div>` wrapping an inline `<svg>` — no Base UI primitive.
+
+<Canvas of={SpinnerStories.Default} />
+
+## Features
+
+- No required props — drop it in wherever a page or section is waiting on data with no shape yet
+  to preview.
+- `label` sets the accessible name announced while it's visible. Defaults to `"Loading"`.
+- Renders `role="status"` and `aria-label={label}` on the root element, so assistive technology
+  is told a region is busy the moment the spinner mounts, without the caller wiring that up
+  itself.
+- The SVG graphic is `aria-hidden` — a screen reader only ever hears `label`, never the dots or
+  the arc.
+- Slows to roughly a quarter speed under `prefers-reduced-motion: reduce`, rather than stopping
+  outright — motion is what reads as "still loading," so it's tuned down instead of removed.
+- `className` merges onto the root element.
+
+## When to use
+
+- An indeterminate wait with no content shape to preview yet — a full page or section load before
+  anything is known about what will render.
+
+## When not to use
+
+- A wait where the eventual content's shape is already known — a card, a list row, a form. Use
+  [Skeleton](?path=/docs/components-skeleton--docs) instead, so the layout doesn't jump once the
+  real content arrives.
+
+## How it works
+
+### The graphic
+
+Three dots sweep across a two-part arc, all animated with CSS `@keyframes` rather than embedded
+SVG animation, so the motion can be tuned down under `prefers-reduced-motion` the same way any
+other CSS animation on the page can.
+
+<Canvas of={SpinnerStories.Default} />
+
+### The accessible name
+
+`label` is set as `aria-label` on the `status` root rather than rendered as visible or
+visually-hidden text, because the `status` role doesn't compute its accessible name from its
+content the way a button or heading does — only `aria-label`, `aria-labelledby`, or `title` name
+it. The SVG graphic carries `aria-hidden="true"` and contributes nothing to the accessibility
+tree either way.
+
+<Canvas of={SpinnerStories.CustomLabel} />
+
+## Keyboard & screen reader
+
+`Spinner` is non-interactive and has no keyboard behavior of its own.
+
+- **ARIA:** `role="status"` on the root — an implicit polite live region, so assistive tech is
+  notified without interrupting whatever the user is doing. `aria-label` carries the name, since
+  `status` doesn't compute one from its content.
+- **Screen reader:** announces `label` once, when the spinner mounts.
+- **You must provide:** a `label` that says what's loading, when the default `"Loading"` isn't
+  specific enough for the surrounding context — `"Loading your order"` next to a checkout button,
+  for instance.
+
+## Styling
+
+| Token                    | Used for       |
+| ------------------------ | -------------- |
+| `--ds-palette-brand-500` | The three dots |
+| `--ds-palette-brand-200` | The arc        |
+
+`className` merges with the component's own `droppy-Spinner` class.
+
+## API reference
+
+<ArgTypes of={SpinnerStories} />
+
+## Related
+
+- [Skeleton](?path=/docs/components-skeleton--docs) — a shape-matching placeholder to use instead,
+  when the loading content's layout is already known.

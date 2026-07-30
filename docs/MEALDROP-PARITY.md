@@ -40,6 +40,30 @@ to force a smaller visual size on a correctly-levelled heading. `size` does that
 reimplemented per component (`RestaurantCard`, `Category`, `FoodItem`, `OrderSummary`); the
 shell is one component now, and the domain content composes inside it.
 
+**`Container` replaces the global `.container` classes.** Mealdrop styled page width with
+`.container`/`.container-desktop` in its global stylesheet; the component's `desktopOnly` prop
+covers the second class, named for what it does rather than for the old suffix.
+
+**`ErrorBlock`'s `image` prop is `illustration`, and optional.** The Lottie player and its
+animation JSON are application assets; the slot takes any node, or nothing.
+
+**`Spinner` carries a real accessible name.** Mealdrop's spinner had an off-canvas SVG `<text>`
+that nothing announced. The component is `role="status"` with an `aria-label` from its `label`
+prop, and the spin is CSS keyframes so `prefers-reduced-motion` slows it to stay perceivable
+without strobing.
+
+**`Breadcrumb` drops the router import and gains landmark semantics.** Crumbs are
+`{ label, href? }` items rendered as plain `<a>` inside `<nav aria-label="breadcrumb">` with
+`aria-current="page"` on the last one; a per-item `render` prop is the escape hatch for a
+router-aware link. Mealdrop rendered `div`/`p` with `react-router-dom`'s `Link` baked in.
+
+**`QuantityStepper` is a component, not an inline pattern.** The minus/plus pair from
+`FoodItemModal` with the same labels and bounds behavior, plus `role="group"` and a politely
+announced value, which the inline version lacked.
+
+**`TopBanner.onBackClick` is accepted but unwired.** Mealdrop's own back button is commented
+out; the prop stays for call-site parity until one of us puts the button back.
+
 **`Select` puts its label before the control in the DOM.** It was after, so a sibling selector
 could drive the focus highlight. `:has()` does that now, and the reading order matches the
 visual order.
@@ -50,6 +74,12 @@ visual order.
 into the XML, which meant it needed a JavaScript theme lookup to flip for dark mode — custom
 properties don't resolve inside an embedded SVG. It's a mask over a token-coloured layer now, so
 it flips in CSS.
+
+**`ErrorBlock`'s inner gap is `--ds-space-sm` (24px), was 20px.** Mealdrop's `spacing.m` has no
+exact token; the scale is the source of truth for spacing, same as for type sizes below.
+
+**`Breadcrumb`'s plain crumb is `--ds-type-weight-regular`, was `font-weight: lighter`.** The
+body face ships no lighter cut, so the keyword resolved to regular at render time anyway.
 
 **The `Input` error message is `--ds-type-size-2xs` (11.52px), was 12px.** A 0.48px difference,
 visible only to pixel comparison. The scale is the source of truth for type sizes.

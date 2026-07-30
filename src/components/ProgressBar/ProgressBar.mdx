@@ -1,0 +1,81 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ProgressBarStories from './ProgressBar.stories'
+
+<Meta of={ProgressBarStories} />
+
+# ProgressBar
+
+A track-and-fill indicator for progress through a known number of steps — a multi-step checkout,
+an upload, a form with a fixed page count.
+
+- **Import:** `import { ProgressBar } from '@droppy/design-system'`
+- **Built on:** a plain `<div>` element.
+
+<Canvas of={ProgressBarStories.Mid} />
+
+## Features
+
+- `value` and `max` (default `100`) describe how far along the track the fill sits; `value` is
+  clamped to `0`–`max` before it reaches the DOM, so an out-of-range prop can't overflow or
+  invert the fill.
+- `label` sets the accessible name on the track — the title and step copy around the bar
+  ("Step 2 of 3") stay the caller's own markup, same as Mealdrop's `StepIndicator`.
+- The fill's width transitions on change, so incrementing `value` sweeps rather than jumps.
+- Merges any incoming `className` with its own `droppy-ProgressBar` class.
+
+## When to use
+
+- Progress through a known, finite sequence — a wizard's steps, an upload's byte count, a form's
+  page count — where the caller can compute a `value`/`max` ratio at any moment.
+
+## When not to use
+
+- For a wait with no known duration or step count — an indeterminate spinner reads honestly where
+  a determinate bar would imply progress that isn't real. Use
+  [Skeleton](?path=/docs/components-skeleton--docs) for a loading placeholder instead.
+
+## How it works
+
+### Values
+
+<Canvas of={ProgressBarStories.Empty} />
+<Canvas of={ProgressBarStories.Full} />
+
+### Clamping
+
+A `value` past `max` (or below `0`) clamps to the nearest bound rather than overflowing the
+track — the ARIA attributes and the rendered width always agree.
+
+<Canvas of={ProgressBarStories.OverMaxClamps} />
+
+## Keyboard & screen reader
+
+`ProgressBar` is a passive, non-interactive indicator — there is no keyboard interaction to
+document.
+
+- **ARIA:** `role="progressbar"` with `aria-valuenow`, `aria-valuemin={0}`, and `aria-valuemax`
+  on the root element; `aria-label` when `label` is set.
+- **Screen reader:** announced as a progress indicator with its current value, when the
+  containing screen reader supports live region updates on attribute changes.
+- **You must provide:** `label` — without it the progress bar has no accessible name, and the
+  title/copy the caller renders alongside it (as Mealdrop's `StepIndicator` does) isn't
+  associated with the control by markup alone.
+
+## Styling
+
+| Token                       | Used for                     |
+| --------------------------- | ---------------------------- |
+| `--ds-color-progress-track` | Track background             |
+| `--ds-color-progress-fill`  | Fill background              |
+| `--ds-radius-control`       | Track and fill corner radius |
+
+`className` merges with the component's own `droppy-ProgressBar` class.
+
+## API reference
+
+<ArgTypes of={ProgressBarStories} />
+
+## Related
+
+- [Skeleton](?path=/docs/components-skeleton--docs) — for an indeterminate loading placeholder
+  instead of a value-driven bar.

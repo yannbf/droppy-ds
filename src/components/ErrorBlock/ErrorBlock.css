@@ -1,0 +1,16 @@
+.droppy-ErrorBlock {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: var(--ds-space-md) 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.droppy-ErrorBlock-illustration {
+  text-align: center;
+  margin-top: var(--ds-space-sm);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

@@ -1,0 +1,28 @@
+.droppy-Container {
+  box-sizing: border-box;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 var(--ds-space-sm);
+}
+
+/* 640px matches --ds-breakpoint-sm; media queries can't read custom properties. */
+@media (min-width: 640px) {
+  .droppy-Container {
+    padding: 0 4rem;
+  }
+}
+
+.droppy-Container--desktopOnly {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 1024px matches --ds-breakpoint-lg. */
+@media (min-width: 1024px) {
+  .droppy-Container--desktopOnly {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 var(--ds-space-sm);
+  }
+}

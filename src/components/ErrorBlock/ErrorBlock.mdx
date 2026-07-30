@@ -1,0 +1,75 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ErrorBlockStories from './ErrorBlock.stories'
+
+<Meta of={ErrorBlockStories} />
+
+# ErrorBlock
+
+A titled message with an optional illustration and a single recovery action — an empty
+category, a 404, a failed request.
+
+- **Import:** `import { ErrorBlock } from '@droppy/design-system'`
+- **Built on:** [Heading](?path=/docs/components-heading--docs), [Body](?path=/docs/components-body--docs),
+  and [Button](?path=/docs/components-button--docs) — no Base UI primitive of its own.
+
+<Canvas of={ErrorBlockStories.Default} />
+
+## Features
+
+- A required `title`, `body`, `buttonText`, and `onButtonClick` — every instance ends in exactly
+  one action.
+- `illustration` takes any `ReactNode` — an inline SVG, an image, an animation the caller drives
+  itself — or nothing at all.
+- `className` merges onto the root element, so wrapping it in `styled()` or adding utility
+  classes composes instead of stripping the design system's styling.
+
+## When to use
+
+- An empty result set that still needs a way forward — no restaurants in a category, an empty
+  search.
+- A 404 or 500 branch of a page, paired with a way back — home, retry, or the previous list.
+
+## When not to use
+
+- A shape-matching placeholder while content is still on its way — use
+  [Skeleton](?path=/docs/components-skeleton--docs) instead. `ErrorBlock` is for a state that has
+  already resolved to "nothing here," not one still loading.
+
+## How it works
+
+`ErrorBlock` stacks its four parts in a column: the `title` as a level-2 `Heading`, the
+`illustration` slot (only rendered when one is passed), the `body` as plain `Body` copy, and the
+action as a `Button`. Composition, not configuration — the illustration is whatever the caller
+renders, so a Lottie animation, a static image, or an inline SVG all work the same way.
+
+<Canvas of={ErrorBlockStories.WithoutIllustration} />
+
+## Keyboard & screen reader
+
+- **ARIA:** none of its own — `Heading` renders a real `<h2>`, so it's reachable via a screen
+  reader's heading-navigation tools, and `Button` renders a real `<button>` with native keyboard
+  activation.
+- **Screen reader:** the title is announced as a heading, the body as ordinary text, and the
+  button by its `buttonText`.
+- **You must provide:** a `buttonText` that describes the destination or retry action on its own
+  — "Try again" or "See all restaurants" rather than "Click here" — since it's the only
+  interactive element in the block.
+
+## Styling
+
+| Token           | Used for                                         |
+| --------------- | ------------------------------------------------ |
+| `--ds-space-md` | Vertical padding on the root element             |
+| `--ds-space-sm` | Space above the illustration, when one is passed |
+
+`Heading`, `Body`, and `Button` read their own tokens independently — see each component's docs
+for those.
+
+## API reference
+
+<ArgTypes of={ErrorBlockStories} />
+
+## Related
+
+- [Skeleton](?path=/docs/components-skeleton--docs) — a shape-matching placeholder for content
+  that's still loading, rather than a state that has already resolved to empty or failed.
