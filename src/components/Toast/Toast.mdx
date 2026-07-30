@@ -1,0 +1,74 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ToastStories from './Toast.stories'
+
+<Meta of={ToastStories} />
+
+# Toast
+
+A stack of transient, self-dismissing notifications for things the reader doesn't need to act on right away.
+
+- **Import:** `import { ToastProvider, useToast } from '@droppy/design-system'`
+- **Built on:** Base UI [`Toast`](https://base-ui.com/react/components/toast).
+
+<Canvas of={ToastStories.Default} />
+
+## Features
+
+- **No markup to write per toast.** `ToastProvider` renders the viewport and the toast list for you — call `useToast().add(...)` from anywhere beneath it and a toast appears.
+- **Auto-dismisses on a timer**, and stacks newest-first when more than one is visible at once.
+- **Announced to screen readers** through the viewport's live region, without stealing focus on open.
+- **Portals to `document.body`** by default, so a parent's `overflow: hidden` or stacking context can't clip it. `container` retargets the portal, matching [Modal](?path=/docs/components-modal--docs)'s prop of the same name.
+
+## When to use
+
+- A confirmation of something that already happened — a draft saved, a file archived, an export finished — that the reader doesn't need to dismiss to keep working.
+- A transient status message like "Copied," which [Tooltip](?path=/docs/components-tooltip--docs) explicitly can't provide, since a tooltip's content is never announced to screen readers.
+
+## When not to use
+
+- A decision the reader must make before continuing — use [Modal](?path=/docs/components-modal--docs) instead, which blocks the page and traps focus until it's answered.
+- Content the reader must be able to reach at their own pace rather than within a timeout — put it on the page instead.
+
+## How it works
+
+### Raising a toast
+
+`useToast()` returns the same manager everywhere it's called beneath `ToastProvider`. `add({ title, description })` queues a toast and returns its id, which can be passed to `close(id)` or `update(id, ...)` later.
+
+<Canvas of={ToastStories.AppearsOnDemand} />
+
+### Dismissing a toast
+
+Every toast renders a `Dismiss` button that closes it immediately, without waiting out its timeout.
+
+<Canvas of={ToastStories.DismissesOnClose} />
+
+### Auto-dismiss timing
+
+`timeout` on `ToastProvider` sets the default time (in ms) before a toast dismisses itself; `0` disables auto-dismiss for every toast raised through that provider. `limit` caps how many toasts show at once — older ones beyond the limit stay mounted but hidden until newer ones close.
+
+## Keyboard & screen reader
+
+| Key / interaction | Context | Action |
+| --- | --- | --- |
+| F6 | anywhere | Jumps focus to the toast stack |
+| Tab (from the stack) | open | Enters the stack at the newest toast |
+| Escape | a toast is focused | Closes that toast; focus moves to the next one |
+| Shift+Tab (from the stack) | open | Returns focus to wherever it was before |
+
+- **ARIA:** the viewport is a live region so a new toast is announced without moving focus; each toast is announced according to its priority.
+- **Screen reader:** hears the toast's title and description as it appears, and can reach its `Dismiss` button by tabbing into the stack.
+- **You must provide:** a `title` or `description` on every toast that carries the information the reader needs — the toast itself supplies no default text.
+
+## Styling
+
+Colors, spacing, and the stacking/swipe transforms come entirely from the theme layer's `Toast*` classes. `className` on `ToastProvider` merges onto the viewport, so it composes with the theme rather than replacing it.
+
+## API reference
+
+<ArgTypes of={ToastStories} />
+
+## Related
+
+- For a decision that must block the page until it's answered, use [Modal](?path=/docs/components-modal--docs).
+- For a hint about a control before it's activated — never for a confirmation message — use [Tooltip](?path=/docs/components-tooltip--docs).

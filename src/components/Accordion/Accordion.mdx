@@ -1,0 +1,106 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as AccordionStories from './Accordion.stories'
+
+<Meta of={AccordionStories} />
+
+# Accordion
+
+A stack of collapsible sections, each labelled by a header — an FAQ list, a set of grouped
+filters, a details panel with several independent parts.
+
+- **Import:** `import { Accordion } from '@droppy/design-system'`
+- **Built on:** Base UI [`Accordion`](https://base-ui.com/react/components/accordion).
+
+<Canvas of={AccordionStories.Default} />
+
+## Features
+
+- **`items` covers the common case**: an array of `{ value?, title, content, disabled? }` renders
+  the whole list — no need to compose `Accordion.Item`/`Header`/`Trigger`/`Panel` by hand. `value`
+  falls back to the item's index when omitted.
+- **Single-open by default**: opening one item closes whichever was open before. Pass
+  `openMultiple` to allow several panels open at once.
+- **`value`/`defaultValue`/`onValueChange` passthrough**, for a controlled accordion driven by
+  state outside the component.
+- **Animated panel height**, driven by Base UI's own measurement — no fixed heights or JS
+  transitions to maintain.
+- **Renders the theme's plus icon inside each trigger**, which rotates 45° into a cross when its
+  panel opens.
+
+## When to use
+
+- A list of independent sections where showing everything at once would be overwhelming — an FAQ,
+  a filter panel with several groups, a settings page split into topics.
+
+## When not to use
+
+- For content that should always be visible together, don't collapse it — an accordion trades
+  scannability for compactness, and hiding content the user needs constantly just adds clicks.
+- For a single show/hide toggle rather than a list of sections, use Base UI's `Collapsible`
+  directly instead — `Accordion` is built for managing several sections' open state together.
+
+## How it works
+
+### Single-open vs. `openMultiple`
+
+By default, opening an item replaces whichever one was open — only one panel is visible at a
+time.
+
+<Canvas of={AccordionStories.SingleOpen} />
+
+`openMultiple` allows several panels to stay open simultaneously.
+
+<Canvas of={AccordionStories.OpenMultiple} />
+
+### Disabled items
+
+A disabled item's trigger stays focusable but never toggles open, by click or keyboard. Sibling
+items are unaffected.
+
+<Canvas of={AccordionStories.DisabledItem} />
+
+### Controlled value
+
+Pass `value` and `onValueChange` to drive which items are open from state outside the component,
+instead of `defaultValue`.
+
+<Canvas of={AccordionStories.ControlledValue} />
+
+## Keyboard & screen reader
+
+| Key / interaction     | Context | Action                                                     |
+| ---------------------- | ------- | ----------------------------------------------------------- |
+| Tab / Shift+Tab        | any     | Moves focus between triggers, in document order             |
+| Enter / Space          | focused trigger | Toggles that item's panel open or closed             |
+| Arrow keys             | any     | No effect — Accordion does not use roving focus between headers |
+
+<Canvas of={AccordionStories.KeyboardTabFlow} />
+
+- **ARIA:** each trigger is a `<button>` with `aria-expanded`, inside an `<h3>` header; each panel
+  carries `role="region"` linked to its trigger via `aria-labelledby`.
+- **Screen reader:** announces each header as a heading, and each trigger's expanded/collapsed
+  state; panel content is announced as a landmark region once open.
+- **You must provide:** a meaningful `title` per item — it becomes both the visible label and the
+  trigger's accessible name.
+
+## Styling
+
+Droppy's own stylesheet carries no rules for `Accordion` — the theme layer's `AccordionRoot`,
+`AccordionItem`, `AccordionHeader`, `AccordionTrigger`, `AccordionIcon`, `AccordionPanel`, and
+`AccordionContent` classes cover the border, spacing, icon rotation, and panel-height animation in
+full.
+
+`className` merges onto the root, so it composes with the theme layer rather than replacing it.
+
+## API reference
+
+<ArgTypes of={AccordionStories} />
+
+## Related
+
+- For a single independent show/hide section rather than a managed list, reach for Base UI's
+  `Collapsible` directly.
+- To group related content into a raised surface without collapse behavior, see
+  [Card](?path=/docs/components-card--docs).
+- For switching between panels where only one is ever relevant at a time, see
+  [Tabs](?path=/docs/components-tabs--docs) instead of collapsing all of them into one column.

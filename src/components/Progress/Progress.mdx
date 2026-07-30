@@ -1,0 +1,88 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ProgressStories from './Progress.stories'
+
+<Meta of={ProgressStories} />
+
+# Progress
+
+A track-and-fill indicator for progress through a known or unknown-length task — an upload, an
+export, a multi-step process.
+
+- **Import:** `import { Progress } from '@droppy/design-system'`
+- **Built on:** Base UI [`Progress`](https://base-ui.com/react/components/progress).
+
+<Canvas of={ProgressStories.Default} />
+
+## Features
+
+- **`value` (default `null`) drives the fill** — a number renders a determinate bar; `null` or
+  omitting it renders an indeterminate sweep, for a wait whose length or step count isn't known.
+- **`Label` and `Value` parts**, shown via `label` and `showValue` — the value defaults to a
+  formatted percentage of the range, with no extra markup from the caller.
+- **`max` (default `100`) supports arbitrary ranges**; the reported percentage and ARIA
+  attributes are always computed against it.
+- Merges any incoming `className` onto the root, alongside the theme layer's own class.
+
+## When to use
+
+- Progress through a task the caller can express as a `value`/`max` ratio — a file upload, an
+  export, a wizard's steps.
+- A wait with no known duration or step count — pass `value={null}` for the indeterminate variant
+  instead of reaching for a separate component.
+
+## When not to use
+
+- Droppy's own hand-rolled [ProgressBar](?path=/docs/components-progressbar--docs) is the
+  simpler, determinate-only sibling of this component — reach for it when a plain track-and-fill
+  with a title/copy the caller renders separately is enough, and the `Label`/`Value` parts or
+  indeterminate mode aren't needed.
+- For a content placeholder shown while data is loading, rather than a task's own progress, use
+  [Skeleton](?path=/docs/components-skeleton--docs).
+- For a small, unlabelled spinner next to a button or inline action, use
+  [Spinner](?path=/docs/components-spinner--docs) instead — it carries no value or percentage.
+
+## How it works
+
+### Determinate, complete, and custom ranges
+
+<Canvas of={ProgressStories.Determinate} />
+<Canvas of={ProgressStories.Complete} />
+<Canvas of={ProgressStories.CustomRange} />
+
+### Indeterminate
+
+<Canvas of={ProgressStories.Indeterminate} />
+
+### Without a formatted value
+
+<Canvas of={ProgressStories.WithoutValueText} />
+
+## Keyboard & screen reader
+
+`Progress` is a passive, non-interactive indicator — there is no keyboard interaction to
+document.
+
+- **ARIA:** `role="progressbar"` with `aria-valuenow`/`aria-valuemin`/`aria-valuemax` in
+  determinate mode; `aria-valuenow` is omitted entirely when indeterminate.
+- **Screen reader:** announced as a progress indicator with its current value, where the
+  containing screen reader supports live region updates on attribute changes.
+- **You must provide:** `label` — without it the progress bar has no accessible name.
+
+## Styling
+
+Colors, track/fill radius, and the indeterminate sweep animation come from the theme layer's
+`Progress*` classes — this component adds no styling of its own beyond forwarding `className` to
+the root.
+
+## API reference
+
+<ArgTypes of={ProgressStories} />
+
+## Related
+
+- [ProgressBar](?path=/docs/components-progressbar--docs) — Droppy's hand-rolled, determinate-only
+  bar for when the `Label`/`Value` parts and indeterminate mode aren't needed.
+- [Spinner](?path=/docs/components-spinner--docs) — a small, valueless indicator for inline
+  loading rather than a labelled task.
+- [Skeleton](?path=/docs/components-skeleton--docs) — a content placeholder, not a task-progress
+  indicator.

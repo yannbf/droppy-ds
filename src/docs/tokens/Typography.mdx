@@ -1,0 +1,44 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { TokenSection, TypeSpecimen, TokenRow } from '../TokenGrid'
+
+<Meta title="Design tokens/Typography" />
+
+# Typography
+
+## Families
+
+Two font families: `Montserrat` for headings, `Hind` for body copy. Both declare their own web
+fallback stack.
+
+<TokenRow token="--ds-type-family-heading" renderSample={(t) => <span style={{ fontFamily: `var(${t})`, fontSize: '1.5rem', fontWeight: 700 }}>Montserrat heading</span>} />
+<TokenRow token="--ds-type-family-body" renderSample={(t) => <span style={{ fontFamily: `var(${t})`, fontSize: '1.125rem' }}>Hind body copy</span>} />
+
+## Size scale
+
+Each specimen below renders at its token's actual computed size.
+
+<TokenSection title="Sizes">
+  <TypeSpecimen token="--ds-type-size-2xs" />
+  <TypeSpecimen token="--ds-type-size-xs" />
+  <TypeSpecimen token="--ds-type-size-sm" />
+  <TypeSpecimen token="--ds-type-size-md" />
+  <TypeSpecimen token="--ds-type-size-lg" />
+  <TypeSpecimen token="--ds-type-size-xl" />
+  <TypeSpecimen token="--ds-type-size-2xl" />
+  <TypeSpecimen token="--ds-type-size-3xl" />
+</TokenSection>
+
+## Weights
+
+<TokenRow token="--ds-type-weight-regular" renderSample={(t) => <span style={{ fontWeight: `var(${t})`, fontSize: '1.125rem' }}>Regular weight</span>} />
+<TokenRow token="--ds-type-weight-medium" renderSample={(t) => <span style={{ fontWeight: `var(${t})`, fontSize: '1.125rem' }}>Medium weight</span>} />
+<TokenRow token="--ds-type-weight-bold" renderSample={(t) => <span style={{ fontWeight: `var(${t})`, fontSize: '1.125rem' }}>Bold weight</span>} />
+<TokenRow token="--ds-type-weight-black" renderSample={(t) => <span style={{ fontWeight: `var(${t})`, fontSize: '1.125rem' }}>Black weight</span>} />
+
+## Tracking
+
+There is no dedicated leading/line-height token group in the stylesheet — line-heights are set
+per component (e.g. `1.25rem` on `.TabsTab`), not tokenized. Letter-tracking is tokenized:
+
+<TokenRow token="--ds-type-tracking-display" renderSample={(t) => <span style={{ letterSpacing: `var(${t})`, fontSize: '1.5rem', fontFamily: 'var(--ds-type-family-heading)', fontWeight: 700 }}>Display tracking</span>} />
+<TokenRow token="--ds-type-tracking-default" renderSample={(t) => <span style={{ letterSpacing: `var(${t})`, fontSize: '1.125rem' }}>Default tracking</span>} />

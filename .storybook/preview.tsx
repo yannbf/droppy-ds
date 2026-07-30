@@ -43,6 +43,16 @@ const preview: Preview = {
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
     a11y: { test: 'error' },
     docs: { codePanel: true },
+    options: {
+      storySort: {
+        order: [
+          'Getting started',
+          'Design tokens',
+          ['Colors', 'Typography', 'Spacing & layout', 'Elevation & motion'],
+          'Components',
+        ],
+      },
+    },
   },
 }
 

@@ -1,0 +1,63 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ScrollAreaStories from './ScrollArea.stories'
+
+<Meta of={ScrollAreaStories} />
+
+# ScrollArea
+
+A scrollable panel with a themed scrollbar in place of the platform's own.
+
+- **Import:** `import { ScrollArea } from '@droppy/design-system'`
+- **Built on:** Base UI [`ScrollArea`](https://base-ui.com/react/components/scroll-area).
+
+<Canvas of={ScrollAreaStories.Default} />
+
+## Features
+
+- **Replaces the platform scrollbar** with a themed track and thumb, so long content stays consistent across operating systems and browsers.
+- **The scrollbar reveals itself on hover or while scrolling**, staying out of the way otherwise.
+- **Native scroll mechanics throughout** — wheel, touch, keyboard, and thumb drag all work as the platform expects; only the scrollbar's appearance changes.
+- **`orientation` picks which axes get a scrollbar** — `'vertical'` (default), `'horizontal'`, or `'both'`, which also renders the corner where the two tracks would otherwise intersect.
+
+## When to use
+
+- A fixed-size panel — a card, a comment list, a table of options — whose content can run longer than the space available, without wanting to grow the layout around it.
+
+## When not to use
+
+- For the page itself, rely on native document scrolling — `ScrollArea` is for a panel embedded within the page, not the page's own scroll.
+
+## How it works
+
+### Sizing
+
+`ScrollArea`'s dimensions are fixed by the theme layer, matching how [Modal](?path=/docs/components-modal--docs)'s dimensions are fixed rather than left to props. Use `className` for one-off layout changes.
+
+### Choosing an axis
+
+<Canvas of={ScrollAreaStories.Horizontal} />
+
+<Canvas of={ScrollAreaStories.BothAxes} />
+
+## Keyboard & screen reader
+
+| Key / interaction | Action |
+| --- | --- |
+| Arrow keys / Page Up / Page Down (viewport focused) | Scrolls the content |
+| Tab | Scrollbar thumb is not part of tab order — scroll the viewport directly instead |
+
+- **ARIA:** none of the parts carry a role beyond the plain `<div>` Base UI renders — a scroll area is a layout affordance, not a distinct landmark.
+- **Screen reader:** reads the content inside as it would any other block; the scrollbar itself is not announced.
+
+## Styling
+
+Colors, track/thumb sizing, and the hover/scroll-gated opacity come entirely from the theme layer's `ScrollArea*` classes. `className` merges onto the root, so it composes with the theme rather than replacing it.
+
+## API reference
+
+<ArgTypes of={ScrollAreaStories} />
+
+## Related
+
+- For a panel of content the reader reviews alongside the page, in a full-width layout, see [Container](?path=/docs/components-container--docs).
+- For a panel that slides in from the trailing edge instead of sitting in the page flow, see [Sidebar](?path=/docs/components-sidebar--docs).

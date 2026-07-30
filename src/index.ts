@@ -68,3 +68,24 @@ export type { BreadcrumbProps, BreadcrumbItem } from './components/Breadcrumb'
 
 export { QuantityStepper } from './components/QuantityStepper'
 export type { QuantityStepperProps } from './components/QuantityStepper'
+
+export { Accordion } from './components/Accordion'
+export type { AccordionProps, AccordionItem } from './components/Accordion'
+
+export { Tabs } from './components/Tabs'
+export type { TabsProps, TabItem } from './components/Tabs'
+
+export { NumberField } from './components/NumberField'
+export type { NumberFieldProps } from './components/NumberField'
+
+export { Progress } from './components/Progress'
+export type { ProgressProps } from './components/Progress'
+
+export { Separator } from './components/Separator'
+export type { SeparatorProps } from './components/Separator'
+
+export { ToastProvider, useToast } from './components/Toast'
+export type { ToastProviderProps } from './components/Toast'
+
+export { ScrollArea } from './components/ScrollArea'
+export type { ScrollAreaProps } from './components/ScrollArea'

@@ -33,3 +33,10 @@
 @import '../components/ProgressBar/ProgressBar.css';
 @import '../components/Breadcrumb/Breadcrumb.css';
 @import '../components/QuantityStepper/QuantityStepper.css';
+@import '../components/Accordion/Accordion.css';
+@import '../components/Tabs/Tabs.css';
+@import '../components/NumberField/NumberField.css';
+@import '../components/Progress/Progress.css';
+@import '../components/Separator/Separator.css';
+@import '../components/Toast/Toast.css';
+@import '../components/ScrollArea/ScrollArea.css';

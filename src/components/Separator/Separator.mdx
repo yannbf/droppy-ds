@@ -1,0 +1,64 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as SeparatorStories from './Separator.stories'
+
+<Meta of={SeparatorStories} />
+
+# Separator
+
+A visual and semantic divider between two blocks of content.
+
+- **Import:** `import { Separator } from '@droppy/design-system'`
+- **Built on:** Base UI [`Separator`](https://base-ui.com/react/components/separator).
+
+<Canvas of={SeparatorStories.Horizontal} />
+
+## Features
+
+- **`orientation` (default `"horizontal"`) sets both the visual rule direction and the
+  `aria-orientation`/`data-orientation` attributes** — pass `"vertical"` for a divider between
+  inline content.
+- Renders `role="separator"`, so assistive technology recognizes it as a division between
+  content rather than decoration.
+- Merges any incoming `className` onto the root, alongside the theme layer's own class.
+
+## When to use
+
+- A plain visual and semantic break between two blocks or groups of content — a form's sections,
+  a toolbar's clusters of controls, a row of inline links.
+
+## When not to use
+
+- Between distinct pages or major layout regions — use a heading, a `Card` boundary, or layout
+  spacing instead; a separator is for dividing content within one region, not for structuring the
+  page itself.
+
+## How it works
+
+### Horizontal (default)
+
+<Canvas of={SeparatorStories.Horizontal} />
+
+### Vertical
+
+<Canvas of={SeparatorStories.Vertical} />
+
+## Keyboard & screen reader
+
+`Separator` is a passive, non-interactive element — there is no keyboard interaction to document.
+
+- **ARIA:** `role="separator"` with `aria-orientation` matching the `orientation` prop.
+- **Screen reader:** announced as a separator; carries no accessible name of its own.
+
+## Styling
+
+Thickness, color, and margin come from the theme layer's `SeparatorRoot` class — this component
+adds no styling of its own beyond forwarding `className` to the root.
+
+## API reference
+
+<ArgTypes of={SeparatorStories} />
+
+## Related
+
+- [Card](?path=/docs/components-card--docs) — for dividing distinct regions of a page rather
+  than content within one region.

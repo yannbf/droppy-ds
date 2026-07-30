@@ -1,0 +1,7 @@
+/* The theme layer styles every Accordion part, but its text rules use
+   font-family: inherit — the parts expect an app-level base font. Droppy
+   sets no global body font, so the root supplies the token itself and the
+   component renders correctly in an app that never declares one. */
+.droppy-Accordion {
+  font-family: var(--ds-type-family-body);
+}

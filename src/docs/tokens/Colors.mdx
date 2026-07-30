@@ -1,0 +1,138 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import { SwatchGrid, TokenSection, ColorSampleCell } from '../TokenGrid'
+
+<Meta title="Design tokens/Colors" />
+
+# Colors
+
+Droppy's color system has two layers. **Palette primitives** (`--ds-palette-*`) are the raw
+color values — a neutral scale plus a handful of accent scales. **Semantic roles**
+(`--ds-color-*`) point at a primitive for a specific purpose — a surface, a piece of text, a
+border. Everyday component work should reach for a semantic role; drop down to a palette
+primitive only when you're defining a new semantic role, not when styling a screen.
+
+This page reads every swatch from `var(--ds-color-*)` and `var(--ds-palette-*)` and recomputes
+the value shown under each swatch whenever `data-theme` changes on the document root — flip the
+**Theme** toolbar above to see it happen live.
+
+## Palette primitives
+
+Primitives never change between themes — only the semantic roles that point at them do.
+
+<TokenSection title="Neutral">
+  <SwatchGrid
+    tokens={[
+      '--ds-palette-neutral-0',
+      '--ds-palette-neutral-50',
+      '--ds-palette-neutral-100',
+      '--ds-palette-neutral-150',
+      '--ds-palette-neutral-200',
+      '--ds-palette-neutral-300',
+      '--ds-palette-neutral-400',
+      '--ds-palette-neutral-500',
+      '--ds-palette-neutral-600',
+      '--ds-palette-neutral-700',
+      '--ds-palette-neutral-750',
+      '--ds-palette-neutral-800',
+      '--ds-palette-neutral-900',
+      '--ds-palette-neutral-950',
+    ]}
+  />
+</TokenSection>
+
+<TokenSection title="Green (surface accent — never ink)">
+  <SwatchGrid
+    tokens={['--ds-palette-green-100', '--ds-palette-green-200', '--ds-palette-green-300']}
+  />
+</TokenSection>
+
+<TokenSection title="Blue (surfaces; 400/700 are the focus-ring and review ink)">
+  <SwatchGrid
+    tokens={[
+      '--ds-palette-blue-100',
+      '--ds-palette-blue-200',
+      '--ds-palette-blue-400',
+      '--ds-palette-blue-700',
+    ]}
+  />
+</TokenSection>
+
+<TokenSection title="Red (error only)">
+  <SwatchGrid
+    tokens={['--ds-palette-red-300', '--ds-palette-red-500', '--ds-palette-red-700']}
+  />
+</TokenSection>
+
+<TokenSection title="Brand (mascot / loading / celebration — never UI chrome)">
+  <SwatchGrid
+    tokens={[
+      '--ds-palette-brand-shine',
+      '--ds-palette-brand-200',
+      '--ds-palette-brand-300',
+      '--ds-palette-brand-400',
+      '--ds-palette-brand-500',
+      '--ds-palette-brand-nose',
+      '--ds-palette-brand-dark-shine',
+      '--ds-palette-brand-dark-100',
+      '--ds-palette-brand-dark-200',
+      '--ds-palette-brand-dark-300',
+      '--ds-palette-brand-dark-400',
+    ]}
+  />
+</TokenSection>
+
+## Semantic roles
+
+Each role below is a `--ds-color-*` variable that resolves to one of the primitives above. In
+dark mode every one of these is redefined; the primitives it points at do not change.
+
+<div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(16rem, 1fr))', gap: '0.75rem 1.5rem' }}>
+  {[
+    '--ds-color-surface-page',
+    '--ds-color-surface-card',
+    '--ds-color-surface-sunken',
+    '--ds-color-surface-overlay',
+    '--ds-color-surface-inverse',
+    '--ds-color-surface-highlight',
+    '--ds-color-surface-info',
+    '--ds-color-text-primary',
+    '--ds-color-text-secondary',
+    '--ds-color-text-hint',
+    '--ds-color-text-label',
+    '--ds-color-text-label-active',
+    '--ds-color-text-on-inverse',
+    '--ds-color-text-error',
+    '--ds-color-text-review',
+    '--ds-color-action-primary',
+    '--ds-color-action-primary-hover',
+    '--ds-color-action-on-primary',
+    '--ds-color-action-subtle-hover',
+    '--ds-color-action-progress',
+    '--ds-color-border-subtle',
+    '--ds-color-focus-ring',
+    '--ds-color-focus-halo',
+    '--ds-color-icon-default',
+    '--ds-color-skeleton-base',
+    '--ds-color-skeleton-highlight',
+    '--ds-color-chip-contrast-bg',
+    '--ds-color-chip-contrast-text',
+    '--ds-color-badge-bg',
+    '--ds-color-badge-text',
+    '--ds-color-badge-positive-bg',
+    '--ds-color-badge-positive-text',
+    '--ds-color-progress-track',
+    '--ds-color-progress-fill',
+  ].map((token) => (
+    <div key={token} style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+      <code style={{ fontSize: '0.8125rem' }}>{token}</code>
+      <ColorSampleCell token={token} />
+    </div>
+  ))}
+</div>
+
+## Dark mode
+
+`html[data-theme='dark']` overrides the semantic layer only — every `--ds-color-*` role above
+is redefined in full for dark mode, while the `--ds-palette-*` primitives it points at stay the
+same values in both themes. A `prefers-color-scheme: dark` media query provides the same dark
+values as a fallback for any context that never sets `data-theme` explicitly.

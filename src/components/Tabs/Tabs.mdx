@@ -1,0 +1,111 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as TabsStories from './Tabs.stories'
+
+<Meta of={TabsStories} />
+
+# Tabs
+
+A set of panels, one visible at a time, switched by a row of tab buttons — settings sections, a
+profile's sub-views, anything reviewed one part at a time rather than all at once.
+
+- **Import:** `import { Tabs } from '@droppy/design-system'`
+- **Built on:** Base UI [`Tabs`](https://base-ui.com/react/components/tabs).
+
+<Canvas of={TabsStories.Default} />
+
+## Features
+
+- **`tabs` covers the common case**: an array of `{ value, label, content, disabled? }` renders
+  the whole tablist and its panels — no need to compose `Tabs.Tab`/`Panel` by hand.
+- **Renders the theme's `Indicator`**, an animated highlight that slides beneath the active tab.
+- **`value`/`defaultValue`/`onValueChange` passthrough**, for a controlled set of tabs driven by
+  state outside the component.
+- **Activates on click**, not on focus alone — arrow-keying through the tabs moves focus without
+  changing which panel is shown, matching current WCAG guidance on pointer cancellation.
+
+## When to use
+
+- Content split into a small number of named sections where only one is relevant at a time — a
+  settings page, an item's details vs. reviews, a dashboard's stat groupings.
+
+## When not to use
+
+- For a sequence the user is meant to complete in order, like a checkout or a wizard, use explicit
+  "next"/"back" navigation instead — tabs imply free jumping between sections, not a required
+  order.
+- For content that benefits from being scanned all at once rather than switched between, don't
+  hide it behind tabs — an [Accordion](?path=/docs/components-accordion--docs) at least keeps
+  every section's title visible, and plain layout keeps everything visible outright.
+
+## How it works
+
+### Switching tabs
+
+Clicking a tab activates it and swaps the visible panel.
+
+<Canvas of={TabsStories.ClickToActivate} />
+
+### Keyboard focus doesn't activate
+
+Arrow-keying between tabs moves focus without changing the active panel — an explicit click,
+Enter, or Space is what activates the focused tab.
+
+<Canvas of={TabsStories.KeyboardFocusDoesNotActivate} />
+
+### Disabled tabs
+
+A disabled tab stays focusable, so arrow-key navigation can still land on it, but neither click
+nor keyboard ever activates it.
+
+<Canvas of={TabsStories.DisabledTab} />
+
+### Controlled value
+
+Pass `value` and `onValueChange` to drive the active tab from state outside the component, instead
+of `defaultValue`.
+
+<Canvas of={TabsStories.ControlledValue} />
+
+### The animated indicator
+
+`Tabs.Indicator` measures the active tab's position and writes it as CSS custom properties; the
+theme layer transitions on top of them to produce the sliding underline.
+
+<Canvas of={TabsStories.AnimatedIndicator} />
+
+## Keyboard & screen reader
+
+| Key / interaction   | Context        | Action                                                |
+| -------------------- | -------------- | ------------------------------------------------------ |
+| Tab                  | outside tablist | Moves focus into the tablist, landing on the active tab |
+| Left/Right arrow     | horizontal tablist | Moves focus between tabs, wrapping at the ends; does not activate |
+| Up/Down arrow        | vertical tablist   | Same as above, on the vertical axis |
+| Enter / Space        | focused tab     | Activates the focused tab, showing its panel          |
+| Click                | any tab         | Activates that tab immediately                          |
+
+- **ARIA:** the tab row carries `role="tablist"`; each tab is `role="tab"` with `aria-selected`
+  and `aria-controls` pointing at its panel; each panel is `role="tabpanel"` with
+  `aria-labelledby` pointing back at its tab.
+- **Screen reader:** announces the tablist, each tab's selected state, and each panel as
+  associated with its tab.
+- **You must provide:** a meaningful `label` per tab — it becomes both the visible tab text and
+  its accessible name.
+
+## Styling
+
+Droppy's own stylesheet carries no rules for `Tabs` — the theme layer's `TabsRoot`, `TabsList`,
+`TabsTab`, `TabsIndicator`, `TabsPanelViewport`, and `TabsPanel` classes cover the layout, active
+state, and indicator animation in full.
+
+`className` merges onto the root, so it composes with the theme layer rather than replacing it.
+
+## API reference
+
+<ArgTypes of={TabsStories} />
+
+## Related
+
+- For several independent sections whose titles should all stay visible at once, see
+  [Accordion](?path=/docs/components-accordion--docs) instead of hiding content behind tabs.
+- To group a tab panel's content into a raised surface, see
+  [Card](?path=/docs/components-card--docs).
