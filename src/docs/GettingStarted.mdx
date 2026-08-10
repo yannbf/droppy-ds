@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 
-<Meta title="Getting started" />
+<Meta title="Getting started" tags={['general-setup']} />
 
 # Getting started
 
@@ -19,7 +19,7 @@ commit you want:
 npm install "@droppy/design-system@https://pkg.pr.new/yannbf/droppy-ds/@droppy/design-system@<sha>"
 ```
 
-`@base-ui/react` and `react` are peer dependencies — install them alongside.
+`@base-ui/react`, `react`, and `react-dom` are peer dependencies — install them alongside.
 
 ## Import the stylesheet
 
@@ -42,59 +42,9 @@ export const RemoveItem = ({ isOpen, onClose }) => (
 )
 ```
 
-Every component merges an incoming `className` rather than replacing its own, so wrapping one
-in `styled()` or adding utility classes composes instead of stripping the design system's
-styling. The cascade is ordered: theme rules first, component rules second, and anything the
-app writes last — app CSS wins at equal specificity without `!important`.
+## Next
 
-## Theming
+See [Technical guidelines](?path=/docs/technical-guidelines--docs) for how styling, theming,
+overlays, and forms work across the system.
 
-Droppy flips light and dark by a `data-theme` attribute on the root element. Unset, the tokens
-follow the OS `prefers-color-scheme`:
-
-```tsx
-document.documentElement.dataset.theme = isDark ? 'dark' : 'light'
-```
-
-`IconButton` is the one component that doesn't respond to the theme — it stays a light pill in
-dark mode because it's built for floating over photography, not over a themed surface.
-
-## Portaling
-
-`Modal` and `Sidebar` render into a portal and accept a `container` prop — an element or a CSS
-selector — instead of assuming a fixed portal node exists in the page. It defaults to
-`document.body`. Pass a selector to portal into an app-specific node instead:
-
-```tsx
-<Modal container="#modal" isOpen={isOpen} onClose={onClose}>
-  ...
-</Modal>
-```
-
-See [`docs/MEALDROP-PARITY.md`](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)
-in the repository for the full list of behaviour and appearance differences from the
-components these were migrated from.
-
-## Components
-
-- [Button](?path=/docs/components-button--docs) — primary and secondary actions
-- [IconButton](?path=/docs/components-iconbutton--docs) — floating icon-only affordances, carousel arrows
-- [Icon](?path=/docs/components-icon--docs) — the icon set, inlined
-- [Heading](?path=/docs/components-heading--docs) — display type, h1–h5
-- [Body](?path=/docs/components-body--docs) — paragraph copy, captions, and labels
-- [Badge](?path=/docs/components-badge--docs) — a short static label: dietary tag, category, "new" flag
-- [Card](?path=/docs/components-card--docs) — a raised surface for grouping content
-- [Skeleton](?path=/docs/components-skeleton--docs) — a shape-matching loading placeholder
-- [Input](?path=/docs/components-input--docs) — labelled text fields with a reserved error slot
-- [Select](?path=/docs/components-select--docs) — a single choice from a short, known list
-- [Modal](?path=/docs/components-modal--docs) — a decision that blocks the page
-- [Sidebar](?path=/docs/components-sidebar--docs) — a panel reviewed alongside the page, carts, filters
-- [Tooltip](?path=/docs/components-tooltip--docs) — a hint for a control whose face doesn't explain it
-- [Container](?path=/docs/components-container--docs) — a max-width page wrapper with responsive padding
-- [PageSection](?path=/docs/components-pagesection--docs) — a titled content section with an optional action
-- [TopBanner](?path=/docs/components-topbanner--docs) — a full-width header band, color or photo background
-- [ErrorBlock](?path=/docs/components-errorblock--docs) — a titled message with an illustration slot and a recovery action
-- [Spinner](?path=/docs/components-spinner--docs) — an indeterminate loading indicator
-- [ProgressBar](?path=/docs/components-progressbar--docs) — a track-and-fill indicator for a known number of steps
-- [Breadcrumb](?path=/docs/components-breadcrumb--docs) — a trail of ancestor pages above the current one
-- [QuantityStepper](?path=/docs/components-quantitystepper--docs) — a minus/plus pair for adjusting an item's count
+Browse [Component browser](?path=/docs/component-browser--docs) for the full component list.

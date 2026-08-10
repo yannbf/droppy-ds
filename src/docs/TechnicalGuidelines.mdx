@@ -1,0 +1,192 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Technical guidelines" tags={['general-do-dont']} />
+
+# Technical guidelines
+
+Droppy's 33 components share one grammar for how they're styled, themed, and composed —
+whether or not the component underneath happens to be a Base UI primitive. Most of them hide
+Base UI's own composition doctrine entirely: `<Button clear round icon="cross" />` reads
+nothing like the `Button.Root`/`Button.Icon` namespace it's built from. This page is that
+shared grammar — styling, theming, composition, overlay mechanics, animation, and form
+participation — plus the pattern for extending the system with a
+component of your own. Base UI's own grammar, for anyone composing its parts directly, is
+documented in the [handbook on base-ui.com](https://base-ui.com/react/handbook).
+
+## Styling contract
+
+Every component takes an incoming `className` and appends it rather than replacing its own —
+a small `cx` helper joins class names and drops anything falsy, so wrapping a component in
+`styled()` or adding a utility class composes instead of stripping Droppy's own chrome.
+
+The stylesheet backs this with a fixed cascade, ordered by import rather than CSS `@layer`:
+`@droppy/design-system/styles.css` pulls in the theme file first and each component's own CSS
+after, so a component rule can refine a theme rule at equal specificity, and whatever the
+consuming app writes after the import wins over both — no `!important` needed anywhere in the
+system.
+
+Hiding part composition doesn't hide the DOM those parts render. A
+[Button](?path=/docs/components-button--docs) still renders whatever
+`@base-ui/react/button`'s `Button` renders, with whatever state attributes it sets —
+`data-disabled`, `data-checked`, `data-starting-style`. Droppy's own CSS is written against
+exactly those hooks (`.Button:hover:not([data-disabled])`, `.Input[data-invalid]`,
+`[data-panel-open] > .AccordionIcon`), and so can yours.
+
+## Theming
+
+Droppy flips light and dark with a `data-theme` attribute on the root element:
+
+```tsx
+document.documentElement.dataset.theme = isDark ? 'dark' : 'light'
+```
+
+Unset, the tokens follow the OS's own `prefers-color-scheme` instead. The dark values are
+defined twice in the theme stylesheet — once under `:root[data-theme='dark']`, once inside
+`@media (prefers-color-scheme: dark)` guarded to apply only when no explicit `data-theme` is
+set — so an app that never touches the attribute still gets a correct dark mode.
+
+[IconButton](?path=/docs/components-iconbutton--docs) is the one component that opts out. It's
+built for floating over photography —
+carousel arrows, overlay dismissals — so it stays a light pill regardless of theme: its
+background and icon color are literal values, not `--ds-color-*` tokens, a deliberate,
+documented exception rather than an oversight.
+
+## Composition
+
+Droppy's props hide almost all of Base UI's own composition doctrine. `mergeProps`,
+`createHandle`, and an `eventDetails`-shaped change callback appear nowhere in the component
+layer, public or internal. `render` is different, though it's still not a general escape
+hatch: [Tooltip](?path=/docs/components-tooltip--docs) passes `render={children}` into Base
+UI's own `Trigger` so the caller's child becomes the trigger instead of being wrapped in an
+extra node, and [Sidebar](?path=/docs/components-sidebar--docs) passes a `render`ed `Heading`
+into the Drawer's title the same way — both internal, neither exposed as a prop of their own.
+[Modal](?path=/docs/components-modal--docs)'s and `Sidebar`'s `onClose` collapses Base UI's
+`(open, eventDetails)` change callback down to a plain callback the same way — none of
+`eventDetails`'s `.reason` or `.cancel()` comes with it, so there's no supported way to veto a
+specific dismissal from outside the component today.
+
+One `render` escape hatch is deliberate and public: [Link](?path=/docs/components-link--docs)
+and each [Breadcrumb](?path=/docs/components-breadcrumb--docs) item build it by calling Base
+UI's `useRender` hook directly, and [FooterCard](?path=/docs/components-footercard--docs)'s
+links accept the same prop and forward it straight to the `Link` they render underneath. All
+three exist to swap in a
+router-aware link (`react-router`'s `Link`, Next's `Link`) in place of the default `<a>`, and
+all three only ever take the element form — `render?: ReactElement`, cloned with the
+component's own class and computed props — never Base UI's function form; there's no per-part
+`state` to hand back. Where a component adopts a Base UI part's props wholesale, the
+hatch is closed explicitly rather than inherited by accident: `NumberField`'s prop type is Base
+UI's `NumberField.Root` props with `render` omitted by name.
+
+## Overlays
+
+`Modal`, `Sidebar`, and [ToastProvider](?path=/docs/components-toast--docs) all portal their
+content, and all three take the same
+`container?: HTMLElement | string | null` prop: pass an element, a CSS selector, or leave it
+unset to default to `document.body`. A selector can't resolve during render — the target may
+not exist yet, and touching `document` on the server throws — so it resolves in an effect
+instead, one frame after mount; that's the right order anyway, since every one of these starts
+closed. Leaving `container` unset resolves to `undefined`, which is Base UI's own signal to
+use its default container rather than Droppy choosing one itself.
+
+There's no shared `isolation: isolate` root to opt an app shell into. Each overlay's popup and
+backdrop carry their own fixed `z-index` in the theme and component stylesheets instead, with
+each backdrop sitting just below its own popup. `Tooltip`'s is deliberately low — just above
+sticky page chrome, like a fixed header; `Modal` and `Sidebar` sit much higher, clearing
+ordinary page content. Don't add a competing `z-index` in app CSS to referee between Droppy
+overlays; use `container` to change where one portals instead.
+
+Dismissal is intentionally plain. `Modal` and `Sidebar` are controlled — the caller owns
+`isOpen` — and each funnels Base UI's own dismissal paths into one `onClose` call: Escape and
+outside-press for both, plus swipe-to-dismiss for `Sidebar`, which is built on Base UI's
+`Drawer`. `Toast` has no trigger and no
+`isOpen` at all: a consuming app wraps its tree once in `ToastProvider`, then raises toasts
+imperatively with `useToast().add(...)` from anywhere beneath it. `timeout` (provider-wide,
+`0` disables it) and each toast's own `Dismiss` button are the only two ways one goes away,
+and `limit` caps how many stack at once.
+
+## Animation
+
+Popups animate the way Base UI recommends generally: CSS transitions gated on
+`[data-starting-style]`/`[data-ending-style]`, not keyframes, because a transition can reverse
+mid-flight — closing a modal before its opening transition finishes just plays backwards
+instead of jumping. `Modal`, `Sidebar`, `Tooltip`, and
+[Accordion](?path=/docs/components-accordion--docs)'s panel all follow this
+pattern: a `transition` paired with a rule that zeroes out `opacity`/`transform`/`height`
+under the starting/ending-style attributes, whether that CSS lives in the component's own
+stylesheet (`Modal`, `Sidebar`) or in the shared theme layer (`Tooltip`, `Accordion`).
+
+Motion timing comes from four tokens defined once, in `:root`: `--ds-motion-fast` (150ms),
+`--ds-motion-base` (250ms), `--ds-motion-slow` (300ms), and `--ds-motion-ease` (`ease-in`) —
+the 150–300ms range the stylesheet's own header comment calls out as a brand rule. Not every
+transition in the system references the token yet; treat the tokens as the vocabulary for
+anything new rather than a guarantee every existing rule already uses them.
+
+`Accordion`'s panel-height animation is one place a CSS variable carries a measurement instead
+of a token: `--accordion-panel-height` is written from the panel's measured content height
+every render, because animating to and from `height: auto` isn't otherwise possible in CSS —
+the same technique Base UI documents for `Collapsible`.
+
+## Form participation
+
+| Component                                                       | Built on                                               | Participates via                   | Native constraint props                                                                                                                                       |
+| --------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Input](?path=/docs/components-input--docs)                     | Base UI `Field` + `Input`                              | the `<input>` it renders directly  | every native attribute passes through (`required`, `pattern`, `minLength`, `type`, …)                                                                         |
+| [Select](?path=/docs/components-select--docs)                   | a plain native `<select>` — not a Base UI primitive    | the `<select>` it renders directly | every native attribute passes through (`required`, `multiple`, `name`, …)                                                                                     |
+| [NumberField](?path=/docs/components-numberfield--docs)         | Base UI `Field` + `NumberField`                        | Base UI's `NumberField.Root`       | its prop type is `NumberField.Root`'s own props (minus `render`), so whatever Root accepts (`min`, `max`, `step`, `name`, `required`) passes straight through |
+| [QuantityStepper](?path=/docs/components-quantitystepper--docs) | two `Button`s and a `Body` — no Base UI form primitive | nothing                            | none — a controlled `value`/`onChange` pair with no `name` and no rendered `<input>`                                                                          |
+
+Input and Select are already native elements, so participating in a form is just the browser's
+own mechanism — there's no hidden shadow input to know about for either. NumberField adds no
+form logic of its own: its props are Base UI's `NumberField.Root` props verbatim (minus
+`render`), so whatever native-form behavior Root provides passes through unchanged — see Base
+UI's own NumberField docs for exactly what that includes. QuantityStepper is the outlier: it
+looks form-shaped but isn't one, by design — the caller already owns `value`, and nothing
+about the component assumes a `<form>` exists.
+
+## Extending the system
+
+Building a new component on top of Droppy follows the same recipe every existing one does:
+
+1. **Import the Base UI primitive directly**, from its own subpath (`@base-ui/react/switch`,
+   `@base-ui/react/collapsible`, …) — Droppy doesn't wrap Base UI in an intermediate
+   abstraction layer.
+2. **Bind the shared theme class** from `src/theme` alongside your own. `theme.SwitchRoot` (or
+   whichever part you're styling) carries that Base UI part's base chrome; add your own class
+   after it for anything specific to the new component — the same two-class pattern `Button`
+   and `Modal` both use.
+3. **Merge, don't replace, an incoming `className`.** Use the same last-wins `cx(...)` shape
+   the rest of the system uses, with the caller's `className` last, so composition never
+   silently drops the design system's own styling.
+4. **Reach for `--ds-*` tokens** — colors, spacing, radius, motion, type — before a literal
+   value. A literal value is correct only where a component deliberately opts out of theming,
+   and that choice should be as documented as `IconButton`'s is.
+5. **Respect `data-theme`.** Anything token-driven already does, automatically; anything with
+   a literal color needs its own justification for skipping it.
+6. **Decide the composition surface deliberately.** Default to no `render` prop — most
+   components have none. Only add one, in the narrow `render?: ReactElement` shape `Link` and
+   `Breadcrumb` use, when the component's whole job is standing in for an element the caller
+   doesn't control — not as a general escape hatch.
+
+The theme layer already carries `SwitchRoot`/`SwitchThumb` classes with no component wrapping
+them yet — the shape a new one would take:
+
+```tsx
+import type { ComponentProps } from 'react'
+import { Switch as BaseSwitch } from '@base-ui/react/switch'
+import theme from '../../theme'
+import { cx } from '../../utils/cx'
+
+export const Switch = ({ className, ...rest }: ComponentProps<typeof BaseSwitch.Root>) => (
+  <BaseSwitch.Root className={cx(theme.SwitchRoot, 'droppy-Switch', className)} {...rest}>
+    <BaseSwitch.Thumb className={cx(theme.SwitchThumb, 'droppy-Switch-thumb')} />
+  </BaseSwitch.Root>
+)
+```
+
+## Related
+
+- For voice and color meaning, see [Brand guidelines](?path=/docs/brand-guidelines--docs).
+- For the full token list, see [Design tokens](?path=/docs/design-tokens--docs).
+- For the part-composition grammar this page deliberately leaves out — parts, `render`'s
+  function form, `eventDetails` — see the
+  [Base UI handbook](https://base-ui.com/react/handbook).
