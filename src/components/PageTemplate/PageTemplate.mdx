@@ -1,0 +1,72 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as PageTemplateStories from './PageTemplate.stories'
+
+<Meta of={PageTemplateStories} />
+
+# PageTemplate
+
+The page shell: header, a `<main>` content area, and footer — the top-level layout every routed
+page sits inside.
+
+- **Import:** `import { PageTemplate } from '@droppy/design-system'`
+- **Built on:** a plain `<div>` wrapping a `<main>` element.
+
+<Canvas of={PageTemplateStories.Default} />
+
+## Features
+
+- `header` and `footer` are optional slots rendered outside the `<main>` landmark, above and below
+  the content area respectively.
+- `children` renders inside `<main>` — the one content landmark per page, so assistive tech can
+  jump straight to it.
+- The content area carries `min-height: calc(100vh - 200px)`, a literal allowance for a typical
+  header + footer height, so a short page's footer still lands at the bottom of the viewport
+  instead of riding up under the fold.
+- Merges any incoming `className` with its own `droppy-PageTemplate` class.
+
+## When to use
+
+- As the outermost layout of a routed page, wrapping the app's own header and footer components
+  around whatever page content renders for that route.
+
+## When not to use
+
+- For a section within a page — use [Container](?path=/docs/components-container--docs) or
+  [PageSection](?path=/docs/components-pagesection--docs) instead.
+
+## How it works
+
+### Content only
+
+`header` and `footer` are both optional — omit them for a bare content shell.
+
+<Canvas of={PageTemplateStories.ContentOnly} />
+
+## Keyboard & screen reader
+
+`PageTemplate` renders no interactive elements of its own.
+
+- **ARIA:** the content slot is a real `<main>` landmark.
+- **Screen reader:** a screen reader's landmark navigation can jump straight to the main content,
+  skipping the header.
+- **You must provide:** the header and footer content, and any skip-link the app wants ahead of
+  `<main>` — `PageTemplate` doesn't add one itself.
+
+## Styling
+
+| Token / value             | Used for                           |
+| ------------------------- | ---------------------------------- |
+| `100vh - 200px` (literal) | Minimum height of the content area |
+
+No color or spacing tokens apply directly — `PageTemplate` is a layout shell; header, footer, and
+content styling come from whatever is passed into its slots. `className` merges with the
+component's own `droppy-PageTemplate` class.
+
+## API reference
+
+<ArgTypes of={PageTemplateStories} />
+
+## Related
+
+- [Container](?path=/docs/components-container--docs) — for constraining width within a page.
+- [PageSection](?path=/docs/components-pagesection--docs) — for a titled section within a page.

@@ -89,3 +89,18 @@ export type { ToastProviderProps } from './components/Toast'
 
 export { ScrollArea } from './components/ScrollArea'
 export type { ScrollAreaProps } from './components/ScrollArea'
+
+export { Link } from './components/Link'
+export type { LinkProps } from './components/Link'
+
+export { Carousel } from './components/Carousel'
+export type { CarouselProps, ItemsPerView } from './components/Carousel'
+
+export { PageTemplate } from './components/PageTemplate'
+export type { PageTemplateProps } from './components/PageTemplate'
+
+export { FooterCard } from './components/FooterCard'
+export type { FooterCardProps, FooterCardLink } from './components/FooterCard'
+
+export { Review } from './components/Review'
+export type { ReviewProps } from './components/Review'

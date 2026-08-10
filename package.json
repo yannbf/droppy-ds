@@ -44,6 +44,10 @@
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
+  "dependencies": {
+    "embla-carousel-react": "^8.6.0",
+    "embla-carousel-wheel-gestures": "^8.1.0"
+  },
   "devDependencies": {
     "@base-ui/react": "https://pkg.pr.new/storybook-tmp/base-ui/@base-ui/react@85313eccf",
     "@changesets/cli": "^2.29.7",

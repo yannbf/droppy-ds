@@ -40,3 +40,8 @@
 @import '../components/Separator/Separator.css';
 @import '../components/Toast/Toast.css';
 @import '../components/ScrollArea/ScrollArea.css';
+@import '../components/Link/Link.css';
+@import '../components/Carousel/Carousel.css';
+@import '../components/PageTemplate/PageTemplate.css';
+@import '../components/FooterCard/FooterCard.css';
+@import '../components/Review/Review.css';
