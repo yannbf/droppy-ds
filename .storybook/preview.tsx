@@ -1,5 +1,10 @@
 import * as React from 'react'
-import type { Decorator, Preview } from '@storybook/react-vite'
+import { definePreview } from '@storybook/react-vite'
+import type { Decorator } from '@storybook/react-vite'
+import addonDocs from '@storybook/addon-docs'
+import addonA11y from '@storybook/addon-a11y'
+import addonVitest from '@storybook/addon-vitest'
+import swatchbookAddon from '@unpunnyfuns/swatchbook-addon'
 
 import '../src/styles/index.css'
 
@@ -22,7 +27,14 @@ const withTheme: Decorator = (Story, context) => (
   </ThemedStory>
 )
 
-const preview: Preview = {
+const preview = definePreview({
+  // Factory-style preview composes ONLY the addons listed here — the addons
+  // array in main.ts contributes manager/preset halves, not preview
+  // annotations. Every addon with a preview side must appear in this list, or
+  // its annotations silently vanish: addon-docs' entry is what provides
+  // `parameters.docs.renderer`, without which every docs page throws
+  // `renderer is not a function` at runtime while the build stays green.
+  addons: [addonDocs(), addonA11y(), addonVitest(), swatchbookAddon()],
   decorators: [withTheme],
   globalTypes: {
     theme: {
@@ -47,13 +59,17 @@ const preview: Preview = {
       storySort: {
         order: [
           'Getting started',
+          'Technical guidelines',
+          'Accessibility guidelines',
+          'Brand guidelines',
+          'Choosing components',
+          'Component browser',
           'Design tokens',
-          ['Colors', 'Typography', 'Spacing & layout', 'Elevation & motion'],
           'Components',
         ],
       },
     },
   },
-}
+})
 
 export default preview

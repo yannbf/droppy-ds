@@ -1,0 +1,157 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import {
+  Diagnostics,
+  ColorPalette,
+  ColorTable,
+  FontFamilyPreview,
+  FontWeightScale,
+  DimensionScale,
+  TokenTable,
+  ShadowPreview,
+  MotionPreview,
+  TokenDetail,
+} from '@unpunnyfuns/swatchbook-addon'
+
+<Meta title="Design tokens" tags={['general-tokens']} />
+
+# Design tokens
+
+<Diagnostics />
+
+Droppy's tokens live as `--ds-*` CSS custom properties in the theme stylesheet. This page reads
+the same values from the DTCG source that mirrors them. Flip the toolbar's **mode** control
+above to see every value re-render for light and dark.
+
+## Colors
+
+Two layers. **Palette primitives** (`color.palette.*`) are the raw color values — a neutral
+scale plus a handful of accent scales. **Semantic roles** (everything else under `color.*`)
+point at a primitive for a specific purpose — a surface, a piece of text, a border. Everyday
+component work should reach for a semantic role; drop down to a palette primitive only when
+you're defining a new semantic role, not when styling a screen.
+
+### Palette primitives
+
+Primitives never change between themes — only the semantic roles that point at them do.
+
+<ColorPalette filter="color.palette.neutral.**" />
+
+**Green** — surface accent, never ink.
+
+<ColorPalette filter="color.palette.green.**" />
+
+**Blue** — surfaces; `400` and `700` are the focus-ring and review ink.
+
+<ColorPalette filter="color.palette.blue.**" />
+
+**Red** — error only.
+
+<ColorPalette filter="color.palette.red.**" />
+
+**Brand** — mascot, loading, and celebration moments only, never UI chrome.
+
+<ColorPalette filter="color.palette.brand.**" />
+
+### Semantic roles
+
+Each role below resolves to one of the primitives above. Every role is redefined in full for
+dark mode; the primitives it points at do not change. A `prefers-color-scheme: dark` media
+query supplies the same dark values as a fallback for any context that never sets
+`data-theme` explicitly.
+
+<ColorTable filter="color.*.*" />
+
+## Typography
+
+Two font families: `Montserrat` for headings, `Hind` for body copy. Both declare their own web
+fallback stack.
+
+<FontFamilyPreview />
+
+### Size scale
+
+<DimensionScale filter="type.size.**" visual="length" />
+
+### Weights
+
+<FontWeightScale />
+
+### Tracking
+
+There is no dedicated leading/line-height token group in the stylesheet — line-heights are set
+per component (e.g. `1.25rem` on `.TabsTab`), not tokenized. Letter-tracking is: `display`
+(`-2px`) for large display headings, `default` for everywhere else. `default`'s value is the
+CSS keyword `normal`, not a length, so it's stored as a plain string rather than a dimension.
+
+<TokenTable filter="type.tracking.*" searchable={false} />
+
+## Spacing & layout
+
+### Space scale
+
+Seven steps, each shown at its own width.
+
+<DimensionScale filter="space.*" visual="length" />
+
+### Radius
+
+A ladder by "floatiness" — the more elevated or overlay-like a surface, the larger the radius.
+
+- **control** — buttons, inputs, checkboxes, radios, toggles
+- **card** — cards, tooltips, and other floating chrome
+- **sheet** — dialog, drawer
+- **pill** — switch track
+
+<DimensionScale filter="radius.*" visual="radius" />
+
+`round` (avatar, radio, switch thumb) is `50%` — a percentage, not a length, so it isn't
+representable as a `dimension` token:
+
+<TokenTable filter="radius.round" searchable={false} />
+
+### Breakpoints
+
+<TokenTable filter="breakpoint.*" searchable={false} />
+
+Reference values only — a custom property can't be read inside a `@media` query. The
+stylesheet itself doesn't reference them anywhere; components that need a breakpoint
+(`Container`, `PageSection`) hardcode the matching literal pixel value in their own `@media`
+rule and leave a comment pointing back at the token it matches, e.g. `/* 640px matches
+--ds-breakpoint-sm; media queries can't read custom properties. */`. Treat these as the source
+of truth for which literal to hardcode, and keep the comment in place if you add a new
+responsive rule.
+
+## Elevation & motion
+
+### Shadows
+
+<ShadowPreview filter="shadow.*" />
+
+#### The focus ring
+
+`shadow.focus` is a single design principle — one two-layer focus ring reused everywhere
+`:focus-visible` needs an outline — composed from two semantic color tokens rather than
+hardcoded colors. It stacks two rings: an inner ring in `color.focus.ring`, and an outer 4px
+halo in `color.focus.halo`, both centered on the element with no offset. In dark mode the inner
+ring widens from 1px to 2px. Every focusable part in the theme layer applies it the same way,
+on `:focus-visible`.
+
+<TokenDetail path="shadow.focus" />
+
+### Motion
+
+Two duration steps beyond the base, one shared easing.
+
+<MotionPreview filter="motion.*" />
+
+`ease` is the one easing curve used across every transition in the theme layer — hover states
+at `fast` (150ms), the theme cross-fade at `base` (250ms), overlay transitions at `slow`
+(300ms). Its value (`ease-in`) is a CSS keyword, not a numeric curve, so it isn't representable
+as a `cubicBezier` token:
+
+<TokenDetail path="motion.ease" />
+
+The theme stylesheet has no `prefers-reduced-motion` handling of its own — that media query
+isn't referenced anywhere in the theme layer. Where reduced motion is respected (the
+`Skeleton` and `Spinner` components), it's implemented per component, not as a shared token or
+global rule.

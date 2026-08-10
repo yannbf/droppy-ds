@@ -1,0 +1,849 @@
+{
+  "color": {
+    "palette": {
+      "neutral": {
+        "0": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "alpha": 1,
+            "hex": "#fff"
+          }
+        },
+        "50": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.9764705882352941, 0.9764705882352941, 0.9764705882352941],
+            "alpha": 1,
+            "hex": "#f9f9f9"
+          }
+        },
+        "100": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.9607843137254902, 0.9647058823529412, 0.9686274509803922],
+            "alpha": 1,
+            "hex": "#f5f6f7"
+          }
+        },
+        "150": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.9137254901960784, 0.9137254901960784, 0.9137254901960784],
+            "alpha": 1,
+            "hex": "#e9e9e9"
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.8235294117647058, 0.8235294117647058, 0.8235294117647058],
+            "alpha": 1,
+            "hex": "#d2d2d2"
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.7372549019607844, 0.7372549019607844, 0.7372549019607844],
+            "alpha": 1,
+            "hex": "#bcbcbc"
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.6509803921568628, 0.6509803921568628, 0.6509803921568628],
+            "alpha": 1,
+            "hex": "#a6a6a6"
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.5647058823529412, 0.5647058823529412, 0.5647058823529412],
+            "alpha": 1,
+            "hex": "#909090"
+          }
+        },
+        "600": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.4745098039215686, 0.4745098039215686, 0.4745098039215686],
+            "alpha": 1,
+            "hex": "#797979"
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.38823529411764707, 0.38823529411764707, 0.38823529411764707],
+            "alpha": 1,
+            "hex": "#636363"
+          }
+        },
+        "750": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.30196078431372547, 0.30196078431372547, 0.30196078431372547],
+            "alpha": 1,
+            "hex": "#4d4d4d"
+          }
+        },
+        "800": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.21176470588235294, 0.21176470588235294, 0.21176470588235294],
+            "alpha": 1,
+            "hex": "#363636"
+          }
+        },
+        "900": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.17254901960784313, 0.17254901960784313, 0.17254901960784313],
+            "alpha": 1,
+            "hex": "#2c2c2c"
+          }
+        },
+        "950": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.12549019607843137, 0.12549019607843137, 0.12549019607843137],
+            "alpha": 1,
+            "hex": "#202020"
+          }
+        }
+      },
+      "green": {
+        "100": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.9490196078431372, 0.9882352941176471, 0.8705882352941177],
+            "alpha": 1,
+            "hex": "#f2fcde"
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.8980392156862745, 0.9725490196078431, 0.7372549019607844],
+            "alpha": 1,
+            "hex": "#e5f8bc"
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.807843137254902, 0.8745098039215686, 0.6627450980392157],
+            "alpha": 1,
+            "hex": "#cedfa9"
+          }
+        },
+        "$description": "Surface accent — never ink."
+      },
+      "blue": {
+        "100": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.8470588235294118, 0.9333333333333333, 0.9490196078431372],
+            "alpha": 1,
+            "hex": "#d8eef2"
+          }
+        },
+        "200": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.6941176470588235, 0.8666666666666667, 0.8941176470588236],
+            "alpha": 1,
+            "hex": "#b1dde4"
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.5568627450980392, 0.6941176470588235, 0.7137254901960784],
+            "alpha": 1,
+            "hex": "#8eb1b6"
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.34901960784313724, 0.43529411764705883, 0.4470588235294118],
+            "alpha": 1,
+            "hex": "#596f72"
+          }
+        },
+        "$description": "Surfaces; 400 and 700 are the focus-ring and review ink."
+      },
+      "red": {
+        "300": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.8980392156862745, 0.45098039215686275, 0.45098039215686275],
+            "alpha": 1,
+            "hex": "#e57373"
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.8431372549019608, 0.03137254901960784, 0.03137254901960784],
+            "alpha": 1,
+            "hex": "#d70808"
+          }
+        },
+        "700": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.7176470588235294, 0.10980392156862745, 0.10980392156862745],
+            "alpha": 1,
+            "hex": "#b71c1c"
+          }
+        },
+        "$description": "Error only."
+      },
+      "brand": {
+        "200": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.3803921568627451, 0.8470588235294118, 0.8705882352941177],
+            "alpha": 1,
+            "hex": "#61d8de"
+          }
+        },
+        "300": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.2980392156862745, 0.7843137254901961, 0.7529411764705882],
+            "alpha": 1,
+            "hex": "#4cc8c0"
+          }
+        },
+        "400": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.21176470588235294, 0.7568627450980392, 0.7490196078431373],
+            "alpha": 1,
+            "hex": "#36c1bf"
+          }
+        },
+        "500": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.13333333333333333, 0.6745098039215687, 0.6549019607843137],
+            "alpha": 1,
+            "hex": "#22aca7"
+          }
+        },
+        "$description": "Mascot, loading, and celebration moments only — never UI chrome.",
+        "shine": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.6235294117647059, 0.9568627450980393, 0.9450980392156862],
+            "alpha": 1,
+            "hex": "#9ff4f1"
+          }
+        },
+        "nose": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.6941176470588235, 0.8627450980392157, 0.8901960784313725],
+            "alpha": 1,
+            "hex": "#b1dce3"
+          }
+        },
+        "dark-shine": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.9372549019607843, 1, 0.7333333333333333],
+            "alpha": 1,
+            "hex": "#efffbb"
+          }
+        },
+        "dark-100": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.8941176470588236, 0.9686274509803922, 0.7333333333333333],
+            "alpha": 1,
+            "hex": "#e4f7bb"
+          }
+        },
+        "dark-200": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.8549019607843137, 0.9176470588235294, 0.6823529411764706],
+            "alpha": 1,
+            "hex": "#daeaae"
+          }
+        },
+        "dark-300": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.8235294117647058, 0.8862745098039215, 0.6039215686274509],
+            "alpha": 1,
+            "hex": "#d2e29a"
+          }
+        },
+        "dark-400": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.7764705882352941, 0.8470588235294118, 0.5450980392156862],
+            "alpha": 1,
+            "hex": "#c6d88b"
+          }
+        }
+      }
+    },
+    "surface": {
+      "page": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.0}"
+      },
+      "card": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.50}"
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.100}"
+      },
+      "overlay": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.0}"
+      },
+      "inverse": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.900}"
+      },
+      "highlight": {
+        "$type": "color",
+        "$value": "{color.palette.green.200}"
+      },
+      "info": {
+        "$type": "color",
+        "$value": "{color.palette.blue.200}"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.900}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.700}"
+      },
+      "hint": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.600}"
+      },
+      "label": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.800}"
+      },
+      "label-active": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.950}"
+      },
+      "on-inverse": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.0}"
+      },
+      "error": {
+        "$type": "color",
+        "$value": "{color.palette.red.700}"
+      },
+      "review": {
+        "$type": "color",
+        "$value": "{color.palette.blue.700}"
+      }
+    },
+    "action": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.950}"
+      },
+      "primary-hover": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.900}"
+      },
+      "on-primary": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.0}"
+      },
+      "subtle-hover": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.100}"
+      },
+      "progress": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.950}"
+      }
+    },
+    "border": {
+      "subtle": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.150}"
+      }
+    },
+    "focus": {
+      "$description": "Drives the single two-layer focus ring (shadow.focus). Never used standalone for fills.",
+      "ring": {
+        "$type": "color",
+        "$value": "{color.palette.blue.400}"
+      },
+      "halo": {
+        "$type": "color",
+        "$value": "{color.palette.blue.100}"
+      }
+    },
+    "icon": {
+      "default": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.900}"
+      }
+    },
+    "skeleton": {
+      "base": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.150}"
+      },
+      "highlight": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.100}"
+      }
+    },
+    "chip": {
+      "contrast-bg": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.950}"
+      },
+      "contrast-text": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.0}"
+      }
+    },
+    "badge": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.150}"
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.700}"
+      },
+      "positive-bg": {
+        "$type": "color",
+        "$value": "{color.palette.green.200}"
+      },
+      "positive-text": {
+        "$type": "color",
+        "$value": "{color.text.primary}"
+      }
+    },
+    "progress": {
+      "track": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.100}"
+      },
+      "fill": {
+        "$type": "color",
+        "$value": "{color.palette.neutral.950}"
+      }
+    }
+  },
+  "type": {
+    "family": {
+      "heading": {
+        "$type": "fontFamily",
+        "$value": ["Montserrat", "sans-serif"]
+      },
+      "body": {
+        "$type": "fontFamily",
+        "$value": ["Hind", "sans-serif"]
+      }
+    },
+    "size": {
+      "2xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.72,
+          "unit": "rem"
+        }
+      },
+      "xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.9,
+          "unit": "rem"
+        }
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.125,
+          "unit": "rem"
+        }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.4,
+          "unit": "rem"
+        }
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.75,
+          "unit": "rem"
+        }
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2.19,
+          "unit": "rem"
+        }
+      },
+      "3xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 2.74,
+          "unit": "rem"
+        }
+      }
+    },
+    "weight": {
+      "regular": {
+        "$type": "fontWeight",
+        "$value": 400
+      },
+      "medium": {
+        "$type": "fontWeight",
+        "$value": 500
+      },
+      "bold": {
+        "$type": "fontWeight",
+        "$value": 700
+      },
+      "black": {
+        "$type": "fontWeight",
+        "$value": 900
+      }
+    },
+    "tracking": {
+      "display": {
+        "$type": "dimension",
+        "$value": {
+          "value": -2,
+          "unit": "px"
+        }
+      },
+      "default": {
+        "$type": "string",
+        "$value": "normal",
+        "$description": "CSS keyword — not a length. See --ds-type-tracking-default."
+      }
+    }
+  },
+  "space": {
+    "3xs": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.25,
+        "unit": "rem"
+      }
+    },
+    "2xs": {
+      "$type": "dimension",
+      "$value": {
+        "value": 0.5,
+        "unit": "rem"
+      }
+    },
+    "xs": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      }
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1.5,
+        "unit": "rem"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 2,
+        "unit": "rem"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 3.25,
+        "unit": "rem"
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 5.25,
+        "unit": "rem"
+      }
+    }
+  },
+  "radius": {
+    "$description": "A ladder by \"floatiness\" — the more elevated or overlay-like a surface, the larger the radius.",
+    "control": {
+      "$type": "dimension",
+      "$value": {
+        "value": 4,
+        "unit": "px"
+      },
+      "$description": "Buttons, inputs, checkboxes, radios, toggles."
+    },
+    "card": {
+      "$type": "dimension",
+      "$value": {
+        "value": 8,
+        "unit": "px"
+      },
+      "$description": "Tooltip and other raised surfaces."
+    },
+    "sheet": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      },
+      "$description": "Dialog, drawer."
+    },
+    "pill": {
+      "$type": "dimension",
+      "$value": {
+        "value": 32,
+        "unit": "px"
+      },
+      "$description": "Switch track."
+    },
+    "round": {
+      "$type": "string",
+      "$value": "50%",
+      "$description": "Avatar, radio, switch thumb. Percentage, not a length — see --ds-radius-round."
+    }
+  },
+  "shadow": {
+    "lift": {
+      "$type": "shadow",
+      "$description": "Tooltip.",
+      "$value": {
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 14,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 26,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        },
+        "color": {
+          "colorSpace": "srgb",
+          "components": [0, 0, 0],
+          "alpha": 0.08,
+          "hex": "#000000"
+        }
+      }
+    },
+    "overlay": {
+      "$type": "shadow",
+      "$description": "Dialog, drawer.",
+      "$value": {
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 28,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 48,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        },
+        "color": {
+          "colorSpace": "srgb",
+          "components": [0, 0, 0],
+          "alpha": 0.4,
+          "hex": "#000000"
+        }
+      }
+    },
+    "focus": {
+      "$type": "shadow",
+      "$description": "The single two-layer focus ring — one inner ring in color.focus.ring, one outer 4px halo in color.focus.halo. Applied on :focus-visible everywhere a part needs an outline. The inner ring widens from 1px to 2px in dark mode.",
+      "$value": [
+        {
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 0,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 0,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 1,
+            "unit": "px"
+          },
+          "color": "{color.focus.ring}"
+        },
+        {
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 0,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 0,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 4,
+            "unit": "px"
+          },
+          "color": "{color.focus.halo}"
+        }
+      ]
+    }
+  },
+  "motion": {
+    "fast": {
+      "$type": "duration",
+      "$value": {
+        "value": 150,
+        "unit": "ms"
+      },
+      "$description": "Hover states."
+    },
+    "base": {
+      "$type": "duration",
+      "$value": {
+        "value": 250,
+        "unit": "ms"
+      },
+      "$description": "Theme cross-fade."
+    },
+    "slow": {
+      "$type": "duration",
+      "$value": {
+        "value": 300,
+        "unit": "ms"
+      },
+      "$description": "Overlay transitions."
+    },
+    "ease": {
+      "$type": "string",
+      "$value": "ease-in",
+      "$description": "The one easing curve used across every transition in the theme layer. CSS keyword, not a cubicBezier — see --ds-motion-ease."
+    }
+  },
+  "breakpoint": {
+    "$description": "Reference values only — a custom property cannot be read inside a @media query. Components hardcode the matching literal pixel value and comment which breakpoint token it mirrors.",
+    "sm": {
+      "$type": "dimension",
+      "$value": {
+        "value": 640,
+        "unit": "px"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": {
+        "value": 768,
+        "unit": "px"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1024,
+        "unit": "px"
+      }
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": {
+        "value": 1440,
+        "unit": "px"
+      }
+    }
+  }
+}

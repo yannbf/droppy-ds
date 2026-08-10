@@ -15,6 +15,30 @@ const config: StorybookConfig = {
     '@storybook/addon-a11y',
     '@storybook/addon-vitest',
     '@storybook/addon-mcp',
+    {
+      name: '@unpunnyfuns/swatchbook-addon',
+      options: {
+        config: {
+          // Base layer mirrors :root (primitives + light semantic values);
+          // the "Dark" context overlays :root[data-theme='dark'] on top of it.
+          tokens: ['src/theme/tokens/base.json'],
+          axes: [
+            {
+              name: 'mode',
+              contexts: { Light: [], Dark: ['src/theme/tokens/dark.json'] },
+              default: 'Light',
+            },
+          ],
+          // Distinct from the runtime `--ds-*` custom properties in
+          // styles.css: the addon's own toolbar writes axis state to
+          // `<html>` globally, and reusing `ds` would let its generated
+          // `--ds-*` rules fight the real stylesheet's `data-theme` rules
+          // for the same property names across the whole Storybook preview,
+          // not just the tokens doc page.
+          cssVarPrefix: 'token',
+        },
+      },
+    },
   ],
   framework: '@storybook/react-vite',
   viteFinal: (config) => {
