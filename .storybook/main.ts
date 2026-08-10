@@ -17,6 +17,15 @@ const config: StorybookConfig = {
     '@storybook/addon-mcp',
   ],
   framework: '@storybook/react-vite',
+  viteFinal: (config) => {
+    // The inherited vite.config.ts runs vite-plugin-dts, whose api-extractor
+    // pass reads dist/index.d.ts — a library-build concern that fails on a
+    // clean checkout (Chromatic CI) and emits nothing Storybook uses.
+    config.plugins = (config.plugins ?? [])
+      .flat(3)
+      .filter((plugin) => !(plugin && 'name' in plugin && plugin.name === 'vite:dts'))
+    return config
+  },
   features: {
     experimentalReview: true,
     experimentalReactComponentMeta: true,
