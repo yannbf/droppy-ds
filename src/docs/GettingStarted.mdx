@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/addon-docs/blocks'
 
-<Meta title="Getting started" />
+<Meta title="Getting started" tags={['general-setup']} />
 
 # Getting started
 
@@ -19,7 +19,7 @@ commit you want:
 npm install "@droppy/design-system@https://pkg.pr.new/yannbf/droppy-ds/@droppy/design-system@<sha>"
 ```
 
-`@base-ui/react` and `react` are peer dependencies — install them alongside.
+`@base-ui/react`, `react`, and `react-dom` are peer dependencies — install them alongside.
 
 ## Import the stylesheet
 
@@ -42,71 +42,9 @@ export const RemoveItem = ({ isOpen, onClose }) => (
 )
 ```
 
-Every component merges an incoming `className` rather than replacing its own, so wrapping one
-in `styled()` or adding utility classes composes instead of stripping the design system's
-styling. The cascade is ordered: theme rules first, component rules second, and anything the
-app writes last — app CSS wins at equal specificity without `!important`.
+## Next
 
-## Theming
+See [Technical guidelines](?path=/docs/technical-guidelines--docs) for how styling, theming,
+overlays, and forms work across the system.
 
-Droppy flips light and dark by a `data-ds-theme` attribute on the root element. Unset, the tokens
-follow the OS `prefers-color-scheme`:
-
-```tsx
-document.documentElement.dataset.theme = isDark ? 'dark' : 'light'
-```
-
-`IconButton` is the one component that doesn't respond to the theme — it stays a light pill in
-dark mode because it's built for floating over photography, not over a themed surface.
-
-## Tokens in app code
-
-The stylesheet defines every design token as a CSS custom property (`--ds-color-text-primary`,
-`--ds-space-md`, …). Use them directly wherever CSS goes — plain CSS, styled-components,
-inline styles — and they follow the active theme:
-
-```tsx
-const Price = styled.span`
-  color: var(--ds-color-text-secondary);
-`
-```
-
-## Portaling
-
-`Modal` and `Sidebar` render into a portal and accept a `container` prop — an element or a CSS
-selector — instead of assuming a fixed portal node exists in the page. It defaults to
-`document.body`. Pass a selector to portal into an app-specific node instead:
-
-```tsx
-<Modal container="#modal" isOpen={isOpen} onClose={onClose}>
-  ...
-</Modal>
-```
-
-See [`docs/MEALDROP-PARITY.md`](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)
-in the repository for the full list of behaviour and appearance differences from the
-components these were migrated from.
-
-## Components
-
-- [Button](?path=/docs/actions-button--docs) — primary and secondary actions
-- [IconButton](?path=/docs/actions-iconbutton--docs) — floating icon-only affordances, carousel arrows
-- [Icon](?path=/docs/media-content-icon--docs) — the icon set, inlined
-- [Heading](?path=/docs/typography-heading--docs) — display type, h1–h5
-- [Body](?path=/docs/typography-body--docs) — paragraph copy, captions, and labels
-- [Badge](?path=/docs/feedback-status-badge--docs) — a short static label: dietary tag, category, "new" flag
-- [Card](?path=/docs/media-content-card--docs) — a raised surface for grouping content
-- [Skeleton](?path=/docs/feedback-status-skeleton--docs) — a shape-matching loading placeholder
-- [Input](?path=/docs/forms-input-input--docs) — labelled text fields with a reserved error slot
-- [Select](?path=/docs/forms-input-select--docs) — a single choice from a short, known list
-- [Modal](?path=/docs/overlays-modal--docs) — a decision that blocks the page
-- [Sidebar](?path=/docs/overlays-sidebar--docs) — a panel reviewed alongside the page, carts, filters
-- [Tooltip](?path=/docs/overlays-tooltip--docs) — a hint for a control whose face doesn't explain it
-- [Container](?path=/docs/layout-structure-container--docs) — a max-width page wrapper with responsive padding
-- [PageSection](?path=/docs/layout-structure-pagesection--docs) — a titled content section with an optional action
-- [TopBanner](?path=/docs/media-content-topbanner--docs) — a full-width header band, color or photo background
-- [ErrorBlock](?path=/docs/feedback-status-errorblock--docs) — a titled message with an illustration slot and a recovery action
-- [Spinner](?path=/docs/feedback-status-spinner--docs) — an indeterminate loading indicator
-- [ProgressBar](?path=/docs/feedback-status-progressbar--docs) — a track-and-fill indicator for a known number of steps
-- [Breadcrumb](?path=/docs/navigation-breadcrumb--docs) — a trail of ancestor pages above the current one
-- [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) — a minus/plus pair for adjusting an item's count
+Browse [Component browser](?path=/docs/component-browser-live--docs) for the full component list.
