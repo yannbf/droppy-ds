@@ -1,0 +1,202 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Choosing components" tags={['general-when-to-use']} />
+
+# Choosing components
+
+A handful of Droppy's components solve overlapping problems on purpose — the choice between
+them isn't obvious from the name alone. This page draws those lines: one section per family,
+with a comparison table and a link to every component involved. Styling contracts, overlay
+stacking, and animation belong on [technical guidelines](?path=/docs/technical-guidelines--docs)
+instead — this page only settles which component to reach for.
+
+## Actions and navigation: Button, IconButton, Link
+
+These controls render as clickable text or an icon. They differ in what happens on
+activation, and in whether they follow the page's theme.
+
+|                      | Button                      | IconButton                           | Link                        |
+| -------------------- | --------------------------- | ------------------------------------ | --------------------------- |
+| Element              | `<button>`                  | `<button>`                           | `<a>`                       |
+| Effect               | in-page action              | in-page action                       | navigates — changes the URL |
+| Label                | visible text, optional icon | icon only, `aria-label` required     | inline text                 |
+| Follows `data-theme` | yes                         | **no** — fixed light pill, by design | yes                         |
+
+[Button](?path=/docs/actions-button--docs) is the default: primary and secondary actions,
+with `clear`, `round`, and `large` variants plus an `icon` slot. It always renders a real
+`<button>`, so it covers icon-only affordances too — `round`, `clear`, `icon`, no children —
+as long as the control sits on a themed surface.
+
+[IconButton](?path=/docs/actions-iconbutton--docs) exists for the one case Button can't
+cover: an icon-only control that must stay legible over arbitrary imagery — carousel arrows, a
+dismissal floating on a photo. It isn't theme-reactive, so it looks the same in
+light and dark mode. Neither it nor Button substitutes for labeling — a bare
+[Icon](?path=/docs/media-content-icon--docs) is always `aria-hidden`, so pair one with a labeled
+control rather than a bare click handler.
+
+[Link](?path=/docs/actions-link--docs) is for navigation, not action: a plain `<a href>` (or
+a router element via `render`) for a destination inside a sentence or a short list. Routing an
+`onClick` through a `Button` instead loses native link behavior — right-click, open-in-new-tab,
+and visible URL previews all depend on a real anchor.
+
+**Changes the URL, it's a Link; icon-only over unpredictable imagery, it's an IconButton;
+everything else is a Button.**
+
+## Typography: Body, Heading
+
+[Heading](?path=/docs/typography-heading--docs) renders a real `<h1>`–`<h5>` and belongs in the
+page's outline — a screen reader's heading-navigation list is built from it.
+[Body](?path=/docs/typography-body--docs) renders `p`, `span`, `label`, or `figcaption` and
+carries no heading semantics at all, whatever size or weight it's given.
+
+Visual size doesn't decide it — a level-5 Heading and a large Body can render at the same
+pixel size. What decides it is whether removing the element should also remove an entry from
+the document outline.
+A dashboard's stat number looks big but isn't a section title: Body. A card's title is small
+but is one: Heading, with `size` set apart from `level` when it needs to look smaller than its
+outline position implies. `Heading` also forwards its ref, so composition wrappers like Base
+UI's `Dialog.Title` can point `aria-labelledby` at a real heading tag instead of a wrapper `<div>`.
+
+**If it belongs in the page's heading outline, it's a Heading; if it's copy, a caption, or a
+label, it's Body.**
+
+## Providing a value: Input, Select, NumberField, QuantityStepper
+
+These controls collect a single value in a form. Work through them in order:
+
+1. Free-form text — a name, an address, anything outside a fixed set? →
+   [Input](?path=/docs/forms-input-input--docs): a labelled field with a reserved error slot, so
+   validating one field never shifts the ones below it.
+2. One value out of a short, known list? → [Select](?path=/docs/forms-input-select--docs): a
+   native `<select>`, giving touch devices the platform's own picker instead of a scripted
+   listbox — it can only ever return a value the list contains.
+3. A number the caller can't fully predict, or one worth typing, arrow-keying, or scrubbing? →
+   [NumberField](?path=/docs/forms-input-numberfield--docs): typeable, with increment/decrement
+   buttons and a drag-to-scrub label.
+4. A small, bounded count where tapping is the whole interaction and typing was never expected?
+   → [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs): two buttons and a
+   live-announced value, no typing at all — the simpler, button-only sibling of NumberField.
+
+**Free text is Input, a fixed list is Select, and a number splits on whether it needs to be
+typed (NumberField) or just tapped a few times (QuantityStepper).**
+
+## Progressive disclosure: Accordion, Tooltip, Tabs
+
+These components hide content until something asks for it, but disagree on whether that content
+is essential, and whether it stays open once revealed.
+
+|                            | Tooltip                                    | Accordion                         | Tabs                              |
+| -------------------------- | ------------------------------------------ | --------------------------------- | --------------------------------- |
+| Opens on                   | hover / focus                              | click                             | click                             |
+| Content                    | a hint, never essential                    | a full section, can be essential  | a full panel, can be essential    |
+| Stays open                 | no — floats, closes on blur/outside/Escape | yes, until collapsed again        | yes, until another tab is picked  |
+| Shown on touch             | **never**, by design                       | yes                               | yes                               |
+| Peer headings stay visible | n/a                                        | yes, every header stays on screen | no, only the active panel renders |
+
+[Tooltip](?path=/docs/overlays-tooltip--docs) never opens on touch and carries no ARIA link
+to its trigger, so its content is invisible to touch and assistive-tech users by design — it
+can only ever be a bonus, never the one place information lives. The moment content is
+something a user must be able to reach, Tooltip is the wrong tool regardless of styling.
+
+[Accordion](?path=/docs/layout-structure-accordion--docs) is for that case: sections that
+behave as a set — one open at a time by default, or several via `openMultiple` — with every
+heading staying visible whether its section is open or not.
+[Tabs](?path=/docs/navigation-tabs--docs) looks similar — one region visible among peers — but
+only the active panel exists on screen, and its trigger row is built for fast switching rather
+than scanning. Every title visible at once: Accordion. Peer views of one subject, switched
+instantly: Tabs. ([Carousel](?path=/docs/media-content-carousel--docs) sits outside this comparison
+entirely — several same-shaped items visible at once, not a switch between named views.)
+
+**A hint that must never be essential is Tooltip; a set of sections whose headings should all
+stay visible is Accordion; a compact row switching between full peer views is Tabs.**
+
+## Interruptions and messages: Toast, Sidebar, Modal, ErrorBlock
+
+These components tell the user something happened or ask them to act, differing on whether the
+page keeps running behind them and whether a response is required.
+
+|                                   | Toast           | Sidebar       | Modal                       | ErrorBlock          |
+| --------------------------------- | --------------- | ------------- | --------------------------- | ------------------- |
+| Blocks the page, needs a response | no              | no, shares it | **yes** — before continuing | n/a, not an overlay |
+| Dismisses itself                  | yes, on a timer | no            | no                          | no                  |
+
+[Toast](?path=/docs/feedback-status-toast--docs) is for something that already happened and needs
+no response — a draft saved, an export finished. It has no trigger part of its own: a consuming
+app calls `useToast().add(...)` from anywhere beneath `ToastProvider` and a toast appears,
+dismissing itself on a timer.
+
+[Sidebar](?path=/docs/overlays-sidebar--docs) and [Modal](?path=/docs/overlays-modal--docs)
+share the same overlay mechanics — focus trap, scroll lock, Escape and outside-press dismissal —
+so they're easy to reach for interchangeably. Modal takes over the page for a single
+decision ("Remove from cart?"); Sidebar shares the page, like a running cart total the user
+can check and dismiss without breaking their flow.
+
+[ErrorBlock](?path=/docs/feedback-status-errorblock--docs) isn't an interruption at all — no portal,
+no open state, no timer. It renders in the page's normal flow for a state that has already
+resolved: an empty search, a 404, a failed request, always paired with one recovery action.
+Nothing is pending, so nothing needs to be dismissed.
+
+For a hint about a control before it's activated rather than a message, none of these apply —
+see Tooltip, above, instead.
+
+**Blocks the page for a decision: Modal. Shares the page: Sidebar. Announces and disappears:
+Toast. Already resolved to nothing: ErrorBlock.**
+
+## Loading feedback: Spinner, Skeleton, Progress, ProgressBar
+
+These components cover a wait. The first split is whether the eventual content's shape is known;
+the second, once there's an actual task behind it, is how much control the display needs.
+
+|                     | Skeleton       | Spinner                       | Progress            | ProgressBar                    |
+| ------------------- | -------------- | ----------------------------- | ------------------- | ------------------------------ |
+| Stands in for       | a known layout | nothing — no shape to preview | a numeric task      | a numeric task                 |
+| Indeterminate mode  | n/a            | yes, its only mode            | yes, `value={null}` | **no** — `value` is required   |
+| Label / Value parts | n/a            | `label` only                  | built in            | caller renders them separately |
+
+[Skeleton](?path=/docs/feedback-status-skeleton--docs) shape-matches: a card, a list row, a line of
+text, composed into the layout that's already there so nothing jumps when the real content
+arrives. [Spinner](?path=/docs/feedback-status-spinner--docs) is the opposite case — a full page or
+section wait with no layout to preview yet, so there's nothing to shape-match against.
+
+Once the wait has an actual number attached — an upload's byte count, a wizard's step — reach
+for [Progress](?path=/docs/feedback-status-progress--docs) or
+[ProgressBar](?path=/docs/feedback-status-progressbar--docs) instead of either placeholder. Progress
+is the Base UI-backed version, with built-in `Label`/`Value` parts and a real indeterminate mode
+for when the length turns out to be unknown mid-task. ProgressBar is Droppy's own hand-rolled,
+determinate-only sibling: `value` is required, there's no indeterminate state, and the
+title/copy around the bar stays the caller's own markup. A plain track-and-fill: ProgressBar. A
+wait that might turn indeterminate, or a need for the built-in label parts: Progress.
+
+**Know the shape but not the wait: Skeleton. Know neither: Spinner. Know a number: ProgressBar,
+or Progress if it might go indeterminate.**
+
+## Page structure: Container, PageSection, TopBanner, Card
+
+These components wrap page content, from full-bleed to a single tile — only one of them
+has any visual surface of its own.
+
+|                | TopBanner                | Container                  | PageSection                    | Card                           |
+| -------------- | ------------------------ | -------------------------- | ------------------------------ | ------------------------------ |
+| Width          | full-bleed, edge to edge | capped at 1600px, centered | same cap as Container          | intrinsic to its parent        |
+| Visual surface | color or photo fill      | none                       | none                           | background + radius + clipping |
+| Heading slot   | title, centered          | none                       | title + optional action button | none, caller composes          |
+| Typical unit   | the page's own hero      | the whole content column   | one row/section within it      | one tile within a section      |
+
+[Container](?path=/docs/layout-structure-container--docs) is the plain bound: no background, no
+heading, just the max-width and responsive padding keeping a page's content off the viewport
+edges. [PageSection](?path=/docs/layout-structure-pagesection--docs) is that same bound with a title
+and an optional "view all" action — reach for it the moment a section needs a heading, and
+Container directly the moment it doesn't. [TopBanner](?path=/docs/media-content-topbanner--docs)
+ignores the column bound entirely: a full-width band over a flat color or a photo, sitting above
+the page's content rather than inside it — use PageSection instead for a title that belongs
+inline with the rest of the page.
+
+[Card](?path=/docs/media-content-card--docs) is the only one of this family with a visual
+surface of its own — background, radius, and clipping, nothing more —
+for a tile that should read as one distinct surface inside any of the other three, not a
+page-level wrapper itself. (One level up from all four,
+[PageTemplate](?path=/docs/layout-structure-pagetemplate--docs) is the outermost header/`<main>`/footer
+shell a routed page sits inside once — not a per-section choice.)
+
+**Full-bleed hero: TopBanner. Page-width column: Container, titled: PageSection. A distinct tile
+inside any of them: Card.**
