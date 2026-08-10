@@ -4,7 +4,7 @@ import { Icon } from './Icon'
 import { iconNames } from './icons'
 
 const meta = {
-  title: 'Components/Icon',
+  title: 'Media & content/Icon',
   component: Icon,
   args: { name: 'cart' },
   argTypes: {

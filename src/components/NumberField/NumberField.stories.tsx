@@ -4,7 +4,7 @@ import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
 import { NumberField } from './NumberField'
 
 const meta = {
-  title: 'Components/NumberField',
+  title: 'Forms & input/NumberField',
   component: NumberField,
   args: { label: 'Quantity', defaultValue: 1, onValueChange: fn() },
 } satisfies Meta<typeof NumberField>

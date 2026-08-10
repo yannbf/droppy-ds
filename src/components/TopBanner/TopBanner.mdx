@@ -9,7 +9,7 @@ A full-width band at the top of a page, with a centered title over either a them
 background photo — a category page's header, a restaurant's hero image.
 
 - **Import:** `import { TopBanner } from '@droppy/design-system'`
-- **Built on:** [Heading](?path=/docs/components-heading--docs).
+- **Built on:** [Heading](?path=/docs/typography-heading--docs).
 
 <Canvas of={TopBannerStories.Default} />
 
@@ -20,7 +20,7 @@ background photo — a category page's header, a restaurant's hero image.
   surface color.
 - With `photoUrl`, the band renders that image instead, covering the full band and centered —
   `photoUrl` takes any URL string, so it's the caller's job to host the image.
-- `title` renders as a centered level-2 [Heading](?path=/docs/components-heading--docs); its
+- `title` renders as a centered level-2 [Heading](?path=/docs/typography-heading--docs); its
   color switches to `--ds-color-text-on-inverse` when a photo is set, since the theme's regular
   text color doesn't reliably read over an arbitrary photo.
 - Merges any incoming `className` with its own `droppy-TopBanner` class.
@@ -35,7 +35,7 @@ background photo — a category page's header, a restaurant's hero image.
 ## When not to use
 
 - A section title inline with the rest of the page's content — use
-  [PageSection](?path=/docs/components-pagesection--docs) instead; `TopBanner` is a full-width
+  [PageSection](?path=/docs/layout-structure-pagesection--docs) instead; `TopBanner` is a full-width
   band meant to sit above the page's content column, not inside it.
 
 ## How it works
@@ -84,6 +84,6 @@ The 240px band height is a literal value — no token in the current scale match
 
 ## Related
 
-- [PageSection](?path=/docs/components-pagesection--docs) — a titled content section for inside
+- [PageSection](?path=/docs/layout-structure-pagesection--docs) — a titled content section for inside
   the page, instead of a full-width header band.
-- [Heading](?path=/docs/components-heading--docs) — the title's underlying component.
+- [Heading](?path=/docs/typography-heading--docs) — the title's underlying component.

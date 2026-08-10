@@ -4,7 +4,7 @@ import { expect, fn, userEvent, within } from 'storybook/test'
 import { Select } from './Select'
 
 const meta = {
-  title: 'Components/Select',
+  title: 'Forms & input/Select',
   component: Select,
   args: {
     label: 'servings',

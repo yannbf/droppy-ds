@@ -18,7 +18,7 @@ const paragraphs = [
 ]
 
 const meta = {
-  title: 'Components/ScrollArea',
+  title: 'Layout & structure/ScrollArea',
   component: ScrollArea,
   args: {
     children: paragraphs.map((text, index) => <p key={index}>{text}</p>),
@@ -77,7 +77,9 @@ export const BothAxes: Story = {
   args: {
     orientation: 'both',
     children: (
-      <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(20, 4rem)', margin: 0, padding: 0 }}>
+      <ul
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(20, 4rem)', margin: 0, padding: 0 }}
+      >
         {Array.from({ length: 100 }, (_, index) => (
           <li key={index} style={{ listStyle: 'none', padding: '0.5rem' }}>
             {index + 1}

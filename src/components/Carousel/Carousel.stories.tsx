@@ -15,7 +15,7 @@ const tiles = Array.from({ length: 8 }, (_, index) => (
 ))
 
 const meta = {
-  title: 'Components/Carousel',
+  title: 'Media & content/Carousel',
   component: Carousel,
   args: {
     itemsPerView: { mobile: 1.2, tablet: 3, desktop: 4 },

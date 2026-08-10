@@ -27,7 +27,7 @@ const faqItems: readonly [Faq, Faq, Faq] = [
 ]
 
 const meta = {
-  title: 'Components/Accordion',
+  title: 'Layout & structure/Accordion',
   component: Accordion,
   args: {
     items: [...faqItems],

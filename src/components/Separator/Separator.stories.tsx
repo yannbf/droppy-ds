@@ -4,7 +4,7 @@ import { expect } from 'storybook/test'
 import { Separator } from './Separator'
 
 const meta = {
-  title: 'Components/Separator',
+  title: 'Layout & structure/Separator',
   component: Separator,
 } satisfies Meta<typeof Separator>
 
