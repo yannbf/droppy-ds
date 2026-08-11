@@ -22,3 +22,9 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: build-storybook
           exitZeroOnChanges: true
+          # TurboSnap: only snapshot stories whose module graph the push
+          # touched. Token JSON is consumed through the swatchbook preset's
+          # virtual module, which the dependency trace can't see — treat it
+          # as external so token edits still snapshot everything.
+          onlyChanged: true
+          externals: src/theme/tokens/**
