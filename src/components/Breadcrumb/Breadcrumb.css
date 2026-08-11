@@ -16,15 +16,18 @@
   align-items: center;
 }
 
-.droppy-Breadcrumb-link,
-.droppy-Breadcrumb-text {
+/* Ancestor-qualified: a routed crumb rendered through `Link` also carries the
+   `droppy-Link` class, whose single-class color/decoration rules tie with a
+   bare class here and win or lose on bundle order. */
+.droppy-Breadcrumb .droppy-Breadcrumb-link,
+.droppy-Breadcrumb .droppy-Breadcrumb-text {
   color: var(--ds-color-text-secondary);
   font-family: var(--ds-type-family-body);
   font-size: var(--ds-type-size-sm);
   text-transform: lowercase;
 }
 
-.droppy-Breadcrumb-link {
+.droppy-Breadcrumb .droppy-Breadcrumb-link {
   text-decoration: underline;
 }
 

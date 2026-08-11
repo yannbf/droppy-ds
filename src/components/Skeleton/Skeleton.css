@@ -24,12 +24,15 @@
   }
 }
 
+/* With a 200%-wide gradient tile, 100% → -100% travels exactly one tile
+   period — one evenly-eased sweep per cycle. A 200% → -200% span is two
+   periods, which reads as an uneven double pulse. */
 @keyframes droppy-skeleton-shimmer {
   0% {
-    background-position: 200% 0;
+    background-position: 100% 0;
   }
 
   100% {
-    background-position: -200% 0;
+    background-position: -100% 0;
   }
 }

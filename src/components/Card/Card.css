@@ -3,7 +3,6 @@
   overflow: hidden;
   border-radius: var(--ds-radius-card);
   background-color: var(--ds-color-surface-card);
-  box-shadow: var(--ds-shadow-lift);
 }
 
 .droppy-Card--padded {
