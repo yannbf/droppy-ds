@@ -585,9 +585,101 @@
         }
       },
       "default": {
-        "$type": "string",
-        "$value": "normal",
-        "$description": "CSS keyword — not a length. See --ds-type-tracking-default."
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    },
+    "style": {
+      "h1": {
+        "$type": "typography",
+        "$description": "Heading level 1",
+        "$value": {
+          "fontFamily": "{type.family.heading}",
+          "fontSize": "{type.size.3xl}",
+          "fontWeight": "{type.weight.bold}",
+          "lineHeight": 1.2,
+          "letterSpacing": "{type.tracking.display}"
+        }
+      },
+      "h2": {
+        "$type": "typography",
+        "$description": "Heading level 2.",
+        "$value": {
+          "fontFamily": "{type.family.heading}",
+          "fontSize": "{type.size.2xl}",
+          "fontWeight": "{type.weight.bold}",
+          "lineHeight": 1.2,
+          "letterSpacing": "{type.tracking.display}"
+        }
+      },
+      "h3": {
+        "$type": "typography",
+        "$description": "Heading level 3.",
+        "$value": {
+          "fontFamily": "{type.family.heading}",
+          "fontSize": "{type.size.xl}",
+          "fontWeight": "{type.weight.bold}",
+          "lineHeight": 1.2,
+          "letterSpacing": "{type.tracking.default}"
+        }
+      },
+      "h4": {
+        "$type": "typography",
+        "$description": "Product wordmark; also the overlay and section title step (dialog, drawer, popover, fieldset legend).",
+        "$value": {
+          "fontFamily": "{type.family.heading}",
+          "fontSize": "{type.size.lg}",
+          "fontWeight": "{type.weight.bold}",
+          "lineHeight": 1.2,
+          "letterSpacing": "{type.tracking.default}"
+        }
+      },
+      "body": {
+        "$type": "typography",
+        "$description": "Default copy size.",
+        "$value": {
+          "fontFamily": "{type.family.body}",
+          "fontSize": "{type.size.md}",
+          "fontWeight": "{type.weight.regular}",
+          "lineHeight": 1.2,
+          "letterSpacing": "{type.tracking.default}"
+        }
+      },
+      "small": {
+        "$type": "typography",
+        "$description": "Buttons, inputs, field labels, small copy.",
+        "$value": {
+          "fontFamily": "{type.family.body}",
+          "fontSize": "{type.size.sm}",
+          "fontWeight": "{type.weight.regular}",
+          "lineHeight": 1.2,
+          "letterSpacing": "{type.tracking.default}"
+        }
+      },
+      "xs": {
+        "$type": "typography",
+        "$description": "UI chrome \u2014 menus, lists, tabs, triggers, item text \u2014 and captions.",
+        "$value": {
+          "fontFamily": "{type.family.body}",
+          "fontSize": "{type.size.xs}",
+          "fontWeight": "{type.weight.regular}",
+          "lineHeight": 1.2,
+          "letterSpacing": "{type.tracking.default}"
+        }
+      },
+      "xxs": {
+        "$type": "typography",
+        "$description": "Captions.",
+        "$value": {
+          "fontFamily": "{type.family.body}",
+          "fontSize": "{type.size.2xs}",
+          "fontWeight": "{type.weight.regular}",
+          "lineHeight": 1.2,
+          "letterSpacing": "{type.tracking.default}"
+        }
       }
     }
   },
@@ -677,9 +769,12 @@
       "$description": "Switch track."
     },
     "round": {
-      "$type": "string",
-      "$value": "50%",
-      "$description": "Avatar, radio, switch thumb. Percentage, not a length — see --ds-radius-round."
+      "$type": "dimension",
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      },
+      "$description": "Avatar, radio, switch thumb."
     }
   },
   "shadow": {

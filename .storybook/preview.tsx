@@ -28,12 +28,6 @@ const withTheme: Decorator = (Story, context) => (
 )
 
 const preview = definePreview({
-  // Factory-style preview composes ONLY the addons listed here — the addons
-  // array in main.ts contributes manager/preset halves, not preview
-  // annotations. Every addon with a preview side must appear in this list, or
-  // its annotations silently vanish: addon-docs' entry is what provides
-  // `parameters.docs.renderer`, without which every docs page throws
-  // `renderer is not a function` at runtime while the build stays green.
   addons: [addonDocs(), addonA11y(), addonVitest(), swatchbookAddon()],
   decorators: [withTheme],
   globalTypes: {
@@ -54,7 +48,7 @@ const preview = definePreview({
   parameters: {
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
     a11y: { test: 'error' },
-    docs: { codePanel: true },
+    docs: { codePanel: true, toc: { headingSelector: 'h2, h3, h4' } },
     options: {
       storySort: {
         order: [

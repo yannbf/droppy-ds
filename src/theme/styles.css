@@ -234,6 +234,80 @@
 
   /* ---- composed: the single two-layer focus ring (principles rule 9) ---- */
   --ds-shadow-focus: 0 0 0 1px var(--ds-color-focus-ring), 0 0 0 4px var(--ds-color-focus-halo);
+
+  /*
+   * ---- composed: the brand type scale ----
+   * One step per row of the brand guidelines' type table: the face, the size,
+   * and the tracking that belong together, so a component picks a step instead
+   * of re-deriving the triple. Mirrors `type.style.*` in tokens/base.json —
+   * both the flattened sub-properties and the `font` shorthand, matching what
+   * @terrazzo/plugin-css emits for a `typography` composite, so the names here
+   * are the names the token docs show.
+   *
+   * Prefer the sub-properties. The `font` shorthand also resets font-weight,
+   * font-style, and font-variant to their initial values, and the scale is
+   * meant to leave weight free — the `-font-weight` row is the step's default,
+   * not a lock. Leading is 1.2, what `line-height: normal` already renders in
+   * Montserrat and Hind; the type tokens carry no `normal` keyword because
+   * DTCG can't express one.
+   */
+  --ds-type-style-h1-font-family: var(--ds-type-family-heading);
+  --ds-type-style-h1-font-size: var(--ds-type-size-3xl);
+  --ds-type-style-h1-font-weight: var(--ds-type-weight-bold);
+  --ds-type-style-h1-line-height: 1.2;
+  --ds-type-style-h1-letter-spacing: var(--ds-type-tracking-display);
+  --ds-type-style-h1: var(--ds-type-style-h1-font-weight) var(--ds-type-style-h1-font-size) /
+    var(--ds-type-style-h1-line-height) var(--ds-type-style-h1-font-family);
+  --ds-type-style-h2-font-family: var(--ds-type-family-heading);
+  --ds-type-style-h2-font-size: var(--ds-type-size-2xl);
+  --ds-type-style-h2-font-weight: var(--ds-type-weight-bold);
+  --ds-type-style-h2-line-height: 1.2;
+  --ds-type-style-h2-letter-spacing: var(--ds-type-tracking-display);
+  --ds-type-style-h2: var(--ds-type-style-h2-font-weight) var(--ds-type-style-h2-font-size) /
+    var(--ds-type-style-h2-line-height) var(--ds-type-style-h2-font-family);
+  --ds-type-style-h3-font-family: var(--ds-type-family-heading);
+  --ds-type-style-h3-font-size: var(--ds-type-size-xl);
+  --ds-type-style-h3-font-weight: var(--ds-type-weight-bold);
+  --ds-type-style-h3-line-height: 1.2;
+  --ds-type-style-h3-letter-spacing: 0px;
+  --ds-type-style-h3: var(--ds-type-style-h3-font-weight) var(--ds-type-style-h3-font-size) /
+    var(--ds-type-style-h3-line-height) var(--ds-type-style-h3-font-family);
+  --ds-type-style-h4-font-family: var(--ds-type-family-heading);
+  --ds-type-style-h4-font-size: var(--ds-type-size-lg);
+  --ds-type-style-h4-font-weight: var(--ds-type-weight-bold);
+  --ds-type-style-h4-line-height: 1.2;
+  --ds-type-style-h4-letter-spacing: 0px;
+  --ds-type-style-h4: var(--ds-type-style-h4-font-weight) var(--ds-type-style-h4-font-size) /
+    var(--ds-type-style-h4-line-height) var(--ds-type-style-h4-font-family);
+  --ds-type-style-body-font-family: var(--ds-type-family-body);
+  --ds-type-style-body-font-size: var(--ds-type-size-md);
+  --ds-type-style-body-font-weight: var(--ds-type-weight-regular);
+  --ds-type-style-body-line-height: 1.2;
+  --ds-type-style-body-letter-spacing: 0px;
+  --ds-type-style-body: var(--ds-type-style-body-font-weight) var(--ds-type-style-body-font-size) /
+    var(--ds-type-style-body-line-height) var(--ds-type-style-body-font-family);
+  --ds-type-style-small-font-family: var(--ds-type-family-body);
+  --ds-type-style-small-font-size: var(--ds-type-size-sm);
+  --ds-type-style-small-font-weight: var(--ds-type-weight-regular);
+  --ds-type-style-small-line-height: 1.2;
+  --ds-type-style-small-letter-spacing: 0px;
+  --ds-type-style-small: var(--ds-type-style-small-font-weight)
+    var(--ds-type-style-small-font-size) / var(--ds-type-style-small-line-height)
+    var(--ds-type-style-small-font-family);
+  --ds-type-style-xs-font-family: var(--ds-type-family-body);
+  --ds-type-style-xs-font-size: var(--ds-type-size-xs);
+  --ds-type-style-xs-font-weight: var(--ds-type-weight-regular);
+  --ds-type-style-xs-line-height: 1.2;
+  --ds-type-style-xs-letter-spacing: 0px;
+  --ds-type-style-xs: var(--ds-type-style-xs-font-weight) var(--ds-type-style-xs-font-size) /
+    var(--ds-type-style-xs-line-height) var(--ds-type-style-xs-font-family);
+  --ds-type-style-xxs-font-family: var(--ds-type-family-body);
+  --ds-type-style-xxs-font-size: var(--ds-type-size-2xs);
+  --ds-type-style-xxs-font-weight: var(--ds-type-weight-regular);
+  --ds-type-style-xxs-line-height: 1.2;
+  --ds-type-style-xxs-letter-spacing: 0px;
+  --ds-type-style-xxs: var(--ds-type-style-xxs-font-weight) var(--ds-type-style-xxs-font-size) /
+    var(--ds-type-style-xxs-line-height) var(--ds-type-style-xxs-font-family);
 }
 
 /*
@@ -631,10 +705,10 @@
   border-radius: var(--ds-radius-control);
   background-color: var(--ds-color-action-primary);
   color: var(--ds-color-action-on-primary);
-  font-family: var(--ds-type-family-body);
-  font-weight: var(--ds-type-weight-regular);
-  font-size: var(--ds-type-size-sm);
-  line-height: 1;
+  font-family: var(--ds-type-style-small-font-family);
+  font-weight: var(--ds-type-style-small-font-weight);
+  font-size: var(--ds-type-style-small-font-size);
+  line-height: var(--ds-type-style-small-line-height);
   cursor: pointer;
   transition:
     background-color var(--ds-motion-fast) var(--ds-motion-ease),
@@ -664,8 +738,9 @@
 
 .FieldLabel {
   color: var(--ds-color-text-label);
-  font-family: var(--ds-type-family-body);
-  font-size: var(--ds-type-size-sm);
+  font-family: var(--ds-type-style-small-font-family);
+  font-size: var(--ds-type-style-small-font-size);
+  line-height: var(--ds-type-style-small-line-height);
   padding-bottom: 0.25rem;
 }
 
@@ -690,14 +765,16 @@
 
 .FieldDescription {
   color: var(--ds-color-text-secondary);
-  font-family: var(--ds-type-family-body);
-  font-size: var(--ds-type-size-xs);
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 .FieldError {
   color: var(--ds-color-text-error);
-  font-family: var(--ds-type-family-body);
-  font-size: var(--ds-type-size-2xs);
+  font-family: var(--ds-type-style-xxs-font-family);
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   margin-top: 0.25rem;
   min-height: 1rem;
 }
@@ -714,8 +791,9 @@
   border-radius: var(--ds-radius-control);
   background-color: var(--ds-color-surface-sunken);
   color: var(--ds-color-text-primary);
-  font-family: var(--ds-type-family-body);
-  font-size: var(--ds-type-size-sm);
+  font-family: var(--ds-type-style-small-font-family);
+  font-size: var(--ds-type-style-small-font-size);
+  line-height: var(--ds-type-style-small-line-height);
   transition: box-shadow var(--ds-motion-fast) var(--ds-motion-ease);
 }
 
@@ -772,7 +850,7 @@ html[data-theme='dark'] .DialogBackdrop {
   overflow: auto;
   background-color: var(--ds-color-surface-overlay);
   color: var(--ds-color-text-primary);
-  font-family: var(--ds-type-family-body);
+  font-family: var(--ds-type-style-body-font-family);
   border-radius: var(--ds-radius-sheet);
   box-shadow: var(--ds-shadow-overlay);
   transition:
@@ -789,14 +867,15 @@ html[data-theme='dark'] .DialogBackdrop {
 .DialogTitle {
   margin: 0;
   color: var(--ds-color-text-primary);
-  font-family: var(--ds-type-family-heading);
-  font-size: var(--ds-type-size-lg);
-  font-weight: var(--ds-type-weight-bold);
+  font-family: var(--ds-type-style-h4-font-family);
+  font-size: var(--ds-type-style-h4-font-size);
+  line-height: var(--ds-type-style-h4-line-height);
+  font-weight: var(--ds-type-style-h4-font-weight);
 }
 
 .DialogDescription {
   color: var(--ds-color-text-secondary);
-  font-family: var(--ds-type-family-body);
+  font-family: var(--ds-type-style-xs-font-family);
 }
 
 /* ========================= Drawer ========================= */
@@ -835,7 +914,7 @@ html[data-theme='dark'] .DrawerBackdrop {
   flex-direction: column;
   background-color: var(--ds-color-surface-overlay);
   color: var(--ds-color-text-primary);
-  font-family: var(--ds-type-family-body);
+  font-family: var(--ds-type-style-body-font-family);
   border-radius: var(--ds-radius-sheet) 0 0 var(--ds-radius-sheet);
   box-shadow: var(--ds-shadow-overlay);
   transition: transform var(--ds-motion-slow) var(--ds-motion-ease);
@@ -849,9 +928,10 @@ html[data-theme='dark'] .DrawerBackdrop {
 .DrawerTitle {
   margin: 0;
   color: var(--ds-color-text-primary);
-  font-family: var(--ds-type-family-heading);
-  font-size: var(--ds-type-size-lg);
-  font-weight: var(--ds-type-weight-bold);
+  font-family: var(--ds-type-style-h4-font-family);
+  font-size: var(--ds-type-style-h4-font-size);
+  line-height: var(--ds-type-style-h4-line-height);
+  font-weight: var(--ds-type-style-h4-font-weight);
 }
 
 /* ========================= Tooltip ========================= */
@@ -860,8 +940,9 @@ html[data-theme='dark'] .DrawerBackdrop {
   box-sizing: border-box;
   background-color: var(--ds-color-surface-overlay);
   color: var(--ds-color-text-primary);
-  font-family: var(--ds-type-family-body);
-  font-size: var(--ds-type-size-xs);
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   padding: 0.4rem 0.75rem;
   border-radius: var(--ds-radius-card);
   box-shadow: var(--ds-shadow-lift);
@@ -909,10 +990,10 @@ html[data-theme='dark'] .DrawerBackdrop {
   border-radius: var(--ds-radius-control);
   background-color: transparent;
   color: var(--ds-color-text-primary);
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.25rem;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  font-weight: var(--ds-type-style-xs-font-weight);
+  line-height: var(--ds-type-style-xs-line-height);
   text-align: left;
   -webkit-user-select: none;
   user-select: none;
@@ -948,8 +1029,8 @@ html[data-theme='dark'] .DrawerBackdrop {
   box-sizing: border-box;
   height: var(--accordion-panel-height);
   overflow: hidden;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   transition: height var(--ds-motion-fast) var(--ds-motion-ease);
 }
 
@@ -972,11 +1053,11 @@ html[data-theme='dark'] .DrawerBackdrop {
   border-radius: var(--ds-radius-round);
   -webkit-user-select: none;
   user-select: none;
-  font-weight: 400;
+  font-weight: var(--ds-type-style-xs-font-weight);
   color: var(--ds-color-text-secondary);
   background-color: var(--ds-color-surface-sunken);
-  font-size: 0.875rem;
-  line-height: 1;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   overflow: hidden;
   height: 2rem;
   width: 2rem;
@@ -994,7 +1075,8 @@ html[data-theme='dark'] .DrawerBackdrop {
   justify-content: center;
   height: 100%;
   width: 100%;
-  font-size: 0.875rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 /* ========================= Checkbox ========================= */
@@ -1003,9 +1085,9 @@ html[data-theme='dark'] .DrawerBackdrop {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   color: var(--ds-color-text-primary);
 }
 
@@ -1068,9 +1150,9 @@ html[data-theme='dark'] .DrawerBackdrop {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
 }
 
 /* ========================= Fieldset =========================
@@ -1091,10 +1173,10 @@ html[data-theme='dark'] .DrawerBackdrop {
 
 .FieldsetLegend {
   border-bottom: 1px solid var(--ds-color-border-subtle);
-  font-family: var(--ds-type-family-heading);
-  font-weight: var(--ds-type-weight-bold);
-  font-size: var(--ds-type-size-sm);
-  line-height: 1.5rem;
+  font-family: var(--ds-type-style-h4-font-family);
+  font-weight: var(--ds-type-style-h4-font-weight);
+  font-size: var(--ds-type-style-h4-font-size);
+  line-height: var(--ds-type-style-h4-line-height);
   color: var(--ds-color-text-primary);
 }
 
@@ -1110,17 +1192,17 @@ html[data-theme='dark'] .DrawerBackdrop {
 
 .FieldItemLabel {
   grid-column: 2;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   color: var(--ds-color-text-primary);
 }
 
 .FieldItemDescription {
   grid-column: 2;
   margin: 0;
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   color: var(--ds-color-text-secondary);
 }
 
@@ -1138,9 +1220,9 @@ html[data-theme='dark'] .DrawerBackdrop {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
 }
 
 .RadioRoot {
@@ -1202,9 +1284,9 @@ html[data-theme='dark'] .DrawerBackdrop {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   color: var(--ds-color-text-primary);
 }
 
@@ -1370,15 +1452,15 @@ html[data-theme='dark'] .DrawerBackdrop {
 }
 
 .MeterLabel {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   color: var(--ds-color-text-primary);
 }
 
 .MeterValue {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-primary);
   text-align: right;
 }
@@ -1418,15 +1500,15 @@ html[data-theme='dark'] .DrawerBackdrop {
 }
 
 .ProgressLabel {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   color: var(--ds-color-text-primary);
 }
 
 .ProgressValue {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-primary);
   text-align: right;
 }
@@ -1489,10 +1571,10 @@ html[data-theme='dark'] .DrawerBackdrop {
   border-radius: var(--ds-radius-control);
   background-color: var(--ds-color-action-primary);
   color: var(--ds-color-action-on-primary);
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  font-weight: var(--ds-type-style-xs-font-weight);
+  line-height: var(--ds-type-style-xs-line-height);
   white-space: nowrap;
   -webkit-user-select: none;
   user-select: none;
@@ -1529,8 +1611,8 @@ html[data-theme='dark'] .DrawerBackdrop {
   flex-direction: column;
   justify-content: end;
   overflow: hidden;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   transition: height var(--ds-motion-fast) var(--ds-motion-ease);
 }
 
@@ -1605,10 +1687,10 @@ html[data-theme='dark'] .DrawerBackdrop {
   border-radius: var(--ds-radius-control);
   background: none;
   color: var(--ds-color-text-secondary);
-  font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   -webkit-user-select: none;
   user-select: none;
   white-space: nowrap;
@@ -1679,8 +1761,8 @@ html[data-theme='dark'] .DrawerBackdrop {
   width: 100%;
   padding: 1rem;
   outline: 0;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   text-align: center;
   color: var(--ds-color-text-primary);
   background-color: var(--ds-color-surface-card);
@@ -1730,10 +1812,10 @@ html[data-theme='dark'] .DrawerBackdrop {
   color: var(--ds-color-text-primary);
   -webkit-user-select: none;
   user-select: none;
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  font-weight: var(--ds-type-style-xs-font-weight);
+  line-height: var(--ds-type-style-xs-line-height);
   white-space: nowrap;
 }
 
@@ -1783,14 +1865,15 @@ html[data-theme='dark'] .DrawerBackdrop {
 }
 
 .SliderLabel {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 700;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-weight-bold);
   color: var(--ds-color-text-primary);
 }
 
 .SliderValue {
-  font-size: 0.875rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-secondary);
   font-variant-numeric: tabular-nums;
 }
@@ -1885,10 +1968,10 @@ html[data-theme='dark'] .DrawerBackdrop {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: var(--ds-radius-control);
-  font-family: inherit;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-weight: 400;
+  font-family: var(--ds-type-style-small-font-family);
+  font-size: var(--ds-type-style-small-font-size);
+  line-height: var(--ds-type-style-small-line-height);
+  font-weight: var(--ds-type-style-small-font-weight);
   text-align: center;
   background-color: var(--ds-color-surface-sunken);
   color: var(--ds-color-text-primary);
@@ -1917,7 +2000,7 @@ html[data-theme='dark'] .DrawerBackdrop {
 
 .NumberFieldScrubArea {
   cursor: ew-resize;
-  font-weight: 700;
+  font-weight: var(--ds-type-weight-bold);
   -webkit-user-select: none;
   user-select: none;
 }
@@ -1939,10 +2022,10 @@ html[data-theme='dark'] .DrawerBackdrop {
   border-radius: var(--ds-radius-control);
   width: 7ch;
   height: 100%;
-  font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   background-color: var(--ds-color-surface-sunken);
   color: var(--ds-color-text-primary);
   text-align: left;
@@ -1951,8 +2034,8 @@ html[data-theme='dark'] .DrawerBackdrop {
 
 @media (any-pointer: coarse) {
   .NumberFieldInput {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: var(--ds-type-style-small-font-size);
+    line-height: var(--ds-type-style-small-line-height);
   }
 }
 
@@ -2017,8 +2100,9 @@ html[data-theme='dark'] .DrawerBackdrop {
   border-radius: var(--ds-radius-control);
   background-color: var(--ds-color-surface-sunken);
   color: var(--ds-color-text-primary);
-  font-family: var(--ds-type-family-body);
-  font-size: var(--ds-type-size-sm);
+  font-family: var(--ds-type-style-small-font-family);
+  font-size: var(--ds-type-style-small-font-size);
+  line-height: var(--ds-type-style-small-line-height);
   height: auto;
   min-height: 4rem;
   resize: vertical;
@@ -2042,8 +2126,9 @@ html[data-theme='dark'] .DrawerBackdrop {
 /* Fades in on entry, out on exit via the transition-status attributes. */
 .FieldErrorAnimated {
   color: var(--ds-color-text-error);
-  font-family: var(--ds-type-family-body);
-  font-size: var(--ds-type-size-2xs);
+  font-family: var(--ds-type-style-xxs-font-family);
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   margin-top: 0.25rem;
   min-height: 1rem;
   opacity: 1;
@@ -2171,8 +2256,8 @@ html[data-theme='dark'] .DrawerBackdrop {
 
 .PreviewCardSummary {
   margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 /* ========================= Menu ========================= */
@@ -2190,10 +2275,10 @@ html[data-theme='dark'] .DrawerBackdrop {
   border: 1px solid var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-control);
   background-color: transparent;
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: var(--ds-type-weight-regular);
-  line-height: 1;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  font-weight: var(--ds-type-style-xs-font-weight);
+  line-height: var(--ds-type-style-xs-line-height);
   white-space: nowrap;
   color: var(--ds-color-text-primary);
   -webkit-user-select: none;
@@ -2295,8 +2380,8 @@ html[data-theme='dark'] .DrawerBackdrop {
   padding-left: 1rem;
   padding-right: 2rem;
   display: flex;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: inherit;
 }
 
@@ -2373,8 +2458,8 @@ html[data-theme='dark'] .DrawerBackdrop {
   padding-block: 0.5rem;
   padding-left: 0.625rem;
   padding-right: 2rem;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   display: grid;
   gap: 0.5rem;
   align-items: center;
@@ -2419,8 +2504,8 @@ html[data-theme='dark'] .DrawerBackdrop {
   padding-block: 0.5rem;
   padding-left: 2.125rem;
   padding-right: 2rem;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-hint);
 }
 
@@ -2429,8 +2514,8 @@ html[data-theme='dark'] .DrawerBackdrop {
   -webkit-user-select: none;
   user-select: none;
   padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-hint);
 }
 
@@ -2641,16 +2726,16 @@ html[data-theme='dark'] .DrawerBackdrop {
 
 .PopoverTitle {
   margin: 0;
-  font-family: var(--ds-type-family-heading);
-  font-size: var(--ds-type-size-xs);
-  line-height: 1.25rem;
-  font-weight: var(--ds-type-weight-bold);
+  font-family: var(--ds-type-style-h4-font-family);
+  font-size: var(--ds-type-style-h4-font-size);
+  line-height: var(--ds-type-style-h4-line-height);
+  font-weight: var(--ds-type-style-h4-font-weight);
 }
 
 .PopoverDescription {
   margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-secondary);
 }
 
@@ -2665,10 +2750,10 @@ html[data-theme='dark'] .DrawerBackdrop {
   margin: 0;
   border: 1px solid var(--ds-color-border-subtle);
   background-color: transparent;
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: var(--ds-type-weight-regular);
-  line-height: 1;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  font-weight: var(--ds-type-style-xs-font-weight);
+  line-height: var(--ds-type-style-xs-line-height);
   white-space: nowrap;
   color: var(--ds-color-text-primary);
   -webkit-user-select: none;
@@ -2706,11 +2791,11 @@ html[data-theme='dark'] .DrawerBackdrop {
   margin: 0;
   border: 1px solid var(--ds-color-border-subtle);
   background-color: transparent;
-  font-family: inherit;
-  font-size: 0.875rem;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
   font-style: italic;
   font-weight: var(--ds-type-weight-bold);
-  line-height: 1;
+  line-height: var(--ds-type-style-xs-line-height);
   white-space: nowrap;
   color: var(--ds-color-text-primary);
   -webkit-user-select: none;
@@ -2870,11 +2955,11 @@ html[data-theme='dark'] .PopoverBackdrop {
   border: 1px solid var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-control);
   background-color: var(--ds-color-surface-sunken);
-  font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   white-space: nowrap;
-  font-weight: 400;
+  font-weight: var(--ds-type-style-xs-font-weight);
   color: var(--ds-color-text-primary);
   -webkit-user-select: none;
   user-select: none;
@@ -2967,8 +3052,8 @@ html[data-theme='dark'] .PopoverBackdrop {
 .SelectItem {
   box-sizing: border-box;
   outline: 0;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   padding-block: 0.375rem;
   padding-left: 0.625rem;
   padding-right: 1rem;
@@ -3004,13 +3089,13 @@ html[data-theme='dark'] .PopoverBackdrop {
 }
 
 .SelectItemLabel {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 .SelectItemDescription {
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   color: var(--ds-color-text-secondary);
 }
 
@@ -3026,13 +3111,13 @@ html[data-theme='dark'] .PopoverBackdrop {
 }
 
 .SelectValuePrimary {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 .SelectValueSecondary {
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   color: var(--ds-color-text-secondary);
 }
 
@@ -3050,8 +3135,8 @@ html[data-theme='dark'] .PopoverBackdrop {
   padding-block: 0.375rem;
   padding-left: calc(0.625rem + 1rem + 0.5rem);
   padding-right: 1rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   -webkit-user-select: none;
   user-select: none;
   color: var(--ds-color-text-hint);
@@ -3073,7 +3158,8 @@ html[data-theme='dark'] .PopoverBackdrop {
   text-align: center;
   cursor: default;
   height: 1rem;
-  font-size: 0.75rem;
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3262,15 +3348,10 @@ html[data-theme='dark'] .DialogBackdrop {
   transform: translate(-50%, -50%) scale(0.98);
 }
 
-.DialogTitle {
-  font-size: var(--ds-type-size-sm);
-  line-height: 1.5rem;
-}
-
-.DialogDescription {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-}
+/* Title and Description carry no type of their own here: the base Dialog
+   block above already assigns them the h4 and xs steps. The additions
+   modules used to shrink the title to 1rem and re-declare the description
+   at 0.875rem — both off-scale sizes, dropped when the type steps landed. */
 
 .DialogActions {
   display: flex;
@@ -3291,8 +3372,8 @@ html[data-theme='dark'] .DialogBackdrop {
 
 .DrawerDescription {
   margin: 0 0 1.5rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-secondary);
 }
 
@@ -3372,8 +3453,8 @@ html[data-theme='dark'] .DialogBackdrop {
   border: 1px dashed var(--ds-color-border-subtle);
   border-radius: var(--ds-radius-card);
   background-color: var(--ds-color-surface-card);
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-primary);
   -webkit-user-select: none;
   user-select: none;
@@ -3419,8 +3500,8 @@ html[data-theme='dark'] .DialogBackdrop {
   padding-left: 1rem;
   padding-right: 2rem;
   display: flex;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: inherit;
 }
 
@@ -3482,8 +3563,8 @@ html[data-theme='dark'] .DialogBackdrop {
   padding-block: 0.5rem;
   padding-left: 0.625rem;
   padding-right: 2rem;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   display: grid;
   gap: 0.5rem;
   align-items: center;
@@ -3528,8 +3609,8 @@ html[data-theme='dark'] .DialogBackdrop {
   padding-block: 0.5rem;
   padding-left: 1rem;
   padding-right: 2rem;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-hint);
 }
 
@@ -3564,10 +3645,10 @@ html[data-theme='dark'] .DialogBackdrop {
   border: 0;
   background-color: transparent;
   color: var(--ds-color-text-primary);
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: var(--ds-type-weight-regular);
-  line-height: 1.25rem;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  font-weight: var(--ds-type-style-xs-font-weight);
+  line-height: var(--ds-type-style-xs-line-height);
   -webkit-user-select: none;
   user-select: none;
 }
@@ -3631,9 +3712,9 @@ html[data-theme='dark'] .DialogBackdrop {
   padding-left: 1rem;
   padding-right: 1rem;
   display: flex;
-  font-size: 0.875rem;
-  line-height: 1rem;
-  font-weight: var(--ds-type-weight-regular);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -3683,10 +3764,10 @@ html[data-theme='dark'] .DialogBackdrop {
   border: 1px solid var(--ds-color-border-subtle);
   width: 16rem;
   height: 2rem;
-  font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   background-color: var(--ds-color-surface-sunken);
   color: var(--ds-color-text-primary);
   outline: none;
@@ -3694,8 +3775,8 @@ html[data-theme='dark'] .DialogBackdrop {
 
 @media (any-pointer: coarse) {
   .AutocompleteInput {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: var(--ds-type-style-small-font-size);
+    line-height: var(--ds-type-style-small-line-height);
   }
 }
 
@@ -3732,10 +3813,10 @@ html[data-theme='dark'] .DialogBackdrop {
   border-radius: var(--ds-radius-control);
   width: 100%;
   height: 100%;
-  font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   background-color: transparent;
   color: var(--ds-color-text-primary);
   outline: none;
@@ -3743,8 +3824,8 @@ html[data-theme='dark'] .DialogBackdrop {
 
 @media (any-pointer: coarse) {
   .AutocompleteGroupedInput {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: var(--ds-type-style-small-font-size);
+    line-height: var(--ds-type-style-small-line-height);
   }
 }
 
@@ -3813,8 +3894,8 @@ html[data-theme='dark'] .DialogBackdrop {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   display: flex;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 .AutocompleteItem[data-highlighted] {
@@ -3839,16 +3920,16 @@ html[data-theme='dark'] .DialogBackdrop {
 .AutocompleteEmpty {
   box-sizing: border-box;
   padding: 1rem 1rem 1rem 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-hint);
 }
 
 .AutocompleteStatus {
   box-sizing: border-box;
   padding: 0.5rem;
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   color: var(--ds-color-text-hint);
   border-top: 1px solid var(--ds-color-border-subtle);
 }
@@ -3864,8 +3945,8 @@ html[data-theme='dark'] .DialogBackdrop {
 .AutocompleteGroupLabel {
   box-sizing: border-box;
   padding: 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-hint);
   -webkit-user-select: none;
   user-select: none;
@@ -3880,13 +3961,13 @@ html[data-theme='dark'] .DialogBackdrop {
 }
 
 .AutocompleteItemTitle {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 .AutocompleteItemDescription {
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   color: var(--ds-color-text-secondary);
 }
 
@@ -3900,8 +3981,8 @@ html[data-theme='dark'] .DialogBackdrop {
 }
 
 .AutocompleteItemMeta {
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   color: var(--ds-color-text-hint);
   white-space: nowrap;
 }
@@ -3944,10 +4025,10 @@ html[data-theme='dark'] .DialogBackdrop {
   outline: 0;
   border: 0;
   background-color: transparent;
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: var(--ds-type-weight-regular);
-  line-height: 1.25rem;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  font-weight: var(--ds-type-style-xs-font-weight);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-primary);
   -webkit-user-select: none;
   user-select: none;
@@ -4146,7 +4227,7 @@ html[data-theme='dark'] .DialogBackdrop {
   text-align: left;
   border: 0;
   background-color: transparent;
-  font-family: inherit;
+  font-family: var(--ds-type-style-xs-font-family);
 }
 
 .NavigationMenuLinkCard[data-popup-open],
@@ -4167,15 +4248,15 @@ html[data-theme='dark'] .DialogBackdrop {
 
 .NavigationMenuLinkTitle {
   margin: 0 0 4px;
-  font-size: 0.875rem;
-  font-weight: var(--ds-type-weight-regular);
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  font-weight: var(--ds-type-style-xs-font-weight);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 .NavigationMenuLinkDescription {
   margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-secondary);
 }
 
@@ -4284,18 +4365,18 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
   border-radius: var(--ds-radius-control);
   width: 100%;
   height: 100%;
-  font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   background-color: var(--ds-color-surface-sunken);
   color: var(--ds-color-text-primary);
 }
 
 @media (any-pointer: coarse) {
   .ComboboxInput {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: var(--ds-type-style-small-font-size);
+    line-height: var(--ds-type-style-small-line-height);
   }
 }
 
@@ -4378,10 +4459,10 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
   width: 100%;
   min-width: 12rem;
   height: 2rem;
-  font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   background-color: var(--ds-color-surface-sunken);
   color: var(--ds-color-text-primary);
   outline: none;
@@ -4418,8 +4499,8 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
   gap: 0.5rem;
   align-items: center;
   grid-template-columns: 1rem 1fr;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 .ComboboxItem[data-highlighted] {
@@ -4453,21 +4534,21 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
 }
 
 .ComboboxItemLabel {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
 }
 
 .ComboboxItemDescription {
-  font-size: 0.75rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xxs-font-size);
+  line-height: var(--ds-type-style-xxs-line-height);
   color: var(--ds-color-text-secondary);
 }
 
 .ComboboxEmpty {
   box-sizing: border-box;
   padding: 1rem 1rem 1rem 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-hint);
 }
 
@@ -4477,8 +4558,8 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem 0.5rem 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   color: var(--ds-color-text-hint);
 }
 
@@ -4512,9 +4593,9 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
   padding-block: 0.375rem;
   padding-left: calc(0.5rem + 1rem + 0.5rem);
   padding-right: 0.5rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: var(--ds-type-weight-regular);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   -webkit-user-select: none;
   user-select: none;
   color: var(--ds-color-text-hint);
@@ -4567,8 +4648,8 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
   min-height: calc(1.5rem - 2px);
   background-color: var(--ds-color-surface-card);
   color: var(--ds-color-text-primary);
-  font-size: 0.875rem;
-  line-height: 1;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   padding: 0 0.2rem 0 0.4rem;
   overflow: hidden;
   gap: 0.25rem;
@@ -4616,10 +4697,10 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
   border: none;
   border-radius: var(--ds-radius-control);
   height: calc(1.5rem - 2px);
-  font-family: inherit;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 400;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
+  font-weight: var(--ds-type-style-xs-font-weight);
   background-color: transparent;
   color: var(--ds-color-text-primary);
   min-width: 3rem;
@@ -4829,15 +4910,15 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
 }
 
 .ToastTitle {
-  font-weight: 700;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-weight: var(--ds-type-weight-bold);
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   margin: 0;
 }
 
 .ToastDescription {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   margin: 0;
 }
 
@@ -4854,10 +4935,10 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
   border-radius: var(--ds-radius-control);
   background-color: transparent;
   color: var(--ds-color-text-primary);
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: var(--ds-type-weight-regular);
-  line-height: 1;
+  font-family: var(--ds-type-style-xs-font-family);
+  font-size: var(--ds-type-style-xs-font-size);
+  font-weight: var(--ds-type-style-xs-font-weight);
+  line-height: var(--ds-type-style-xs-line-height);
   white-space: nowrap;
 }
 
@@ -4902,8 +4983,8 @@ html[data-theme='dark'] .NavigationMenuBackdrop {
 .ToastAnchoredRoot {
   box-sizing: border-box;
   position: relative;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
+  font-size: var(--ds-type-style-xs-font-size);
+  line-height: var(--ds-type-style-xs-line-height);
   display: flex;
   flex-direction: column;
   width: max-content;

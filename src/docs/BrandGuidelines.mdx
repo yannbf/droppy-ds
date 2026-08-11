@@ -123,19 +123,20 @@ The Droppy brand uses one fontface for display, and another for body copy and UI
   <dd>Text and UI face for body copy, labels, and buttons. Weights 400/500.</dd>
 </dl>
 
-The type scale is designed to allow rich size hierarchy. Notably, it does not include weights, so that you may emphasize words within a heading or text body.
+The type scale is designed to allow rich size hierarchy. Headings are bold by default, and other types have a regular weight, but you may freely override weights to emphasize words within a heading or text body.
 
-| Element | Size (rem) | Tracking | Suggested use |
-| ------- | ---------: | -------: | ------------- | 
-| h1      | 2.74       | -2px     | Heading |
-| h1      | 2.74       | -2px     | Heading |
-| h2      | 2.19       | -2px     | Heading |
-| h3      | 1.75       | 0px      | Heading |
-| h4      | 1.4        | 0px      | Product wordmark |
-| body    | 1.125      | 0px      | Copy |
-| small   | 1          | 0px      | UI labels |
-| xs      | 0.9        | 0px      | Captions | 
-| xxs     | 0.72       | 0px      | Captions | 
+| Element | Size (rem) | Default Weight | Tracking | Suggested use |
+| ------- | ---------: | -----: | -------: | ------------- | 
+| h1      | 2.74       | 700    | -2px     | Heading |
+| h2      | 2.19       | 700    | -2px     | Heading |
+| h3      | 1.75       | 700    | 0px      | Heading |
+| h4      | 1.4        | 700    | 0px      | Product wordmark; overlay and section titles |
+| body    | 1.125      | 400    | 0px      | Copy |
+| small   | 1          | 400    | 0px      | Buttons, inputs, field labels |
+| xs      | 0.9        | 400    | 0px      | UI labels and captions | 
+| xxs     | 0.72       | 400    | 0px      | Captions | 
+
+The scale stops at h4. There is no fifth heading step: a title that needs to sit below h4 takes the heading face at a body-scale size rather than inventing one.
 
 
 ## Voice & tone
