@@ -1,16 +1,19 @@
 import * as React from 'react'
 import type { CSSProperties } from 'react'
 
-import { BASEUI_GLYPHS } from './componentGlyphsBaseUI'
-
 /**
- * A browsable, searchable index of every Droppy component. Each card shows the component
- * name and a one-line description, and links to that component's docs page, which leads
- * with its primary story.
+ * A browsable, searchable index of every Droppy component. Each card embeds the
+ * component's primary story — frozen on its finished state — shows the component name and
+ * a one-line description, and links to that component's docs page.
  *
  * Rendered by the `Component browser` MDX page. Because docs pages render inside the
  * Storybook preview iframe, card links target `_top` with a manager-rooted `?path=` URL so
  * a click navigates the Storybook manager rather than just the iframe.
+ *
+ * Booting a preview iframe per card is expensive, so frames load through two layers:
+ * an IntersectionObserver loads on-screen frames first and trickles in the rest, and in
+ * dev the frozen documents are snapshotted into the Cache API so a revisit renders them
+ * without booting anything (Vite HMR events invalidate the snapshots).
  */
 
 interface ComponentEntry {
@@ -339,10 +342,6 @@ const cardInteractionStyle = `
     outline: none;
     box-shadow: var(--ds-shadow-focus);
   }
-  .ds-component-browser-card:hover .ds-component-browser-card-glyph,
-  .ds-component-browser-card:focus-visible .ds-component-browser-card-glyph {
-    color: var(--ds-color-text-secondary);
-  }
   .ds-component-browser-card:hover .ds-component-browser-card-arrow,
   .ds-component-browser-card:focus-visible .ds-component-browser-card-arrow {
     opacity: 1;
@@ -363,7 +362,6 @@ const searchRowStyle: CSSProperties = {
   alignItems: 'center',
   gap: '0.75rem',
   padding: '0.75rem 0',
-  backgroundColor: 'var(--ds-color-surface-page)',
 }
 
 const searchInputStyle: CSSProperties = {
@@ -382,7 +380,7 @@ const searchInputStyle: CSSProperties = {
 const countStyle: CSSProperties = {
   flex: 'none',
   fontSize: '0.8125rem',
-  color: 'var(--ds-color-text-secondary)',
+  color: 'var(--ds-palette-neutral-800)',
   whiteSpace: 'nowrap',
 }
 
@@ -400,7 +398,7 @@ const categoryHeadingStyle: CSSProperties = {
 
 const gridStyle: CSSProperties = {
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(min(230px, 100%), 1fr))',
   gap: '1rem',
 }
 
@@ -415,16 +413,6 @@ const cardStyle: CSSProperties = {
   color: 'inherit',
   textDecoration: 'none',
   transition: 'all var(--ds-motion-fast) var(--ds-motion-ease)',
-}
-
-const cardGlyphStyle: CSSProperties = {
-  // The glyphs draw structure in currentColor with a brand-token accent, so
-  // the hint color keeps them quiet until the card is hovered.
-  color: 'var(--ds-color-text-hint)',
-  backgroundColor: 'var(--ds-color-surface-sunken)',
-  borderRadius: 'var(--ds-radius-control)',
-  padding: '0.625rem 1.25rem',
-  transition: 'color var(--ds-motion-fast) var(--ds-motion-ease)',
 }
 
 const cardStageStyle: CSSProperties = {
@@ -505,20 +493,302 @@ const parseResizeMessage = (data: unknown): FrameDimensions | null => {
   return { width, height }
 }
 
+const postRemeasureRequest = (iframe: HTMLIFrameElement | null) => {
+  try {
+    iframe?.contentWindow?.postMessage(
+      JSON.stringify({ context: IFRAME_RESIZE_REQUEST_CONTEXT }),
+      '*'
+    )
+  } catch {
+    // Detached frame; the load listener retries.
+  }
+}
+
 /**
- * A story rendered live in its own preview iframe, the way review thumbnails
- * embed stories: `embed=true` skips manager chrome and interaction autoplay,
+ * Snapshot cache for frozen stories. A frozen story is static by construction:
+ * before broadcasting its size, the preview strips every `<script>` tag and
+ * pins animations to their final frame with injected CSS. Serializing the
+ * frozen document therefore captures exactly what the card shows, and playing
+ * it back through `srcdoc` skips the entire preview boot on the next visit.
+ *
+ * Dev-only (`import.meta.hot`): Vite's HMR events are the invalidation
+ * signal, and a static build has no equivalent way to learn that its stories
+ * changed, so it always renders live frames.
+ */
+const SNAPSHOT_CACHE_NAME = 'droppy-frozen-story-snapshots'
+
+type StorySnapshot = { html: string; height: number }
+
+const snapshotCacheEnabled = typeof caches !== 'undefined' && Boolean(import.meta.hot)
+
+const snapshotKey = (storyId: string) => `/__droppy-frozen-story__/${encodeURIComponent(storyId)}`
+
+async function readSnapshot(storyId: string): Promise<StorySnapshot | null> {
+  if (!snapshotCacheEnabled) {
+    return null
+  }
+  try {
+    const cache = await caches.open(SNAPSHOT_CACHE_NAME)
+    const response = await cache.match(snapshotKey(storyId))
+    if (!response) {
+      return null
+    }
+    const { html, height } = (await response.json()) as Record<string, unknown>
+    return typeof html === 'string' && typeof height === 'number' ? { html, height } : null
+  } catch {
+    return null
+  }
+}
+
+async function writeSnapshot(storyId: string, snapshot: StorySnapshot): Promise<void> {
+  if (!snapshotCacheEnabled) {
+    return
+  }
+  try {
+    const cache = await caches.open(SNAPSHOT_CACHE_NAME)
+    await cache.put(
+      snapshotKey(storyId),
+      new Response(JSON.stringify(snapshot), { headers: { 'Content-Type': 'application/json' } })
+    )
+  } catch {
+    // Quota or availability trouble — the card still has its live frame.
+  }
+}
+
+/** Serialize a frozen story document (script tags re-stripped as insurance). */
+function serializeFrozenStory(iframe: HTMLIFrameElement): string | null {
+  try {
+    const root = iframe.contentDocument?.documentElement
+    if (!root) {
+      return null
+    }
+    const clone = root.cloneNode(true) as HTMLElement
+    for (const script of Array.from(clone.querySelectorAll('script'))) {
+      script.remove()
+    }
+    return `<!DOCTYPE html>${clone.outerHTML}`
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Any HMR update can restyle or re-render any story, so every update drops the
+ * whole snapshot cache. Mounted frames subscribe here too: a frame showing a
+ * cached snapshot re-mounts its live iframe (a snapshot carries no HMR client
+ * of its own), and a live frame re-serializes so the cache warms back up.
+ */
+const snapshotInvalidationListeners = new Set<() => void>()
+
+if (import.meta.hot) {
+  const invalidateSnapshots = () => {
+    if (snapshotCacheEnabled) {
+      void caches.delete(SNAPSHOT_CACHE_NAME).catch(() => {})
+    }
+    snapshotInvalidationListeners.forEach((listener) => listener())
+  }
+  import.meta.hot.on('vite:beforeUpdate', invalidateSnapshots)
+  import.meta.hot.on('vite:beforeFullReload', invalidateSnapshots)
+  import.meta.hot.dispose(() => {
+    import.meta.hot?.off('vite:beforeUpdate', invalidateSnapshots)
+    import.meta.hot?.off('vite:beforeFullReload', invalidateSnapshots)
+  })
+}
+
+/**
+ * Uncached frames each boot a full Storybook preview, so an
+ * IntersectionObserver splits them: frames in or near the viewport start
+ * loading immediately, and the rest wait in a queue that only drains — a few
+ * at a time — once the visible frames have settled. A queued frame that
+ * scrolls into view jumps straight to the front.
+ */
+const BACKGROUND_LOAD_CONCURRENCY = 3
+const LOAD_SETTLE_TIMEOUT_MS = 15_000
+const VIEWPORT_LOOKAHEAD = '100px'
+
+type FrameLoadHandle = { done: () => void; dispose: () => void }
+
+const frameLoadScheduler = (() => {
+  type Entry = {
+    element: Element
+    start: () => void
+    state: 'waiting' | 'queued' | 'loading' | 'done'
+    priority: boolean
+    timer: number | null
+  }
+
+  const entries = new Map<Element, Entry>()
+  const queue: Entry[] = []
+  let priorityLoads = 0
+  let backgroundLoads = 0
+  let observer: IntersectionObserver | null = null
+
+  const settle = (entry: Entry) => {
+    if (entry.state !== 'loading') {
+      return
+    }
+    entry.state = 'done'
+    if (entry.timer !== null) {
+      window.clearTimeout(entry.timer)
+      entry.timer = null
+    }
+    if (entry.priority) {
+      priorityLoads -= 1
+    } else {
+      backgroundLoads -= 1
+    }
+    pump()
+  }
+
+  const begin = (entry: Entry, priority: boolean) => {
+    observer?.unobserve(entry.element)
+    entry.state = 'loading'
+    entry.priority = priority
+    if (priority) {
+      priorityLoads += 1
+    } else {
+      backgroundLoads += 1
+    }
+    // A frame that never settles (broken story) must not stall the queue.
+    entry.timer = window.setTimeout(() => settle(entry), LOAD_SETTLE_TIMEOUT_MS)
+    entry.start()
+  }
+
+  const pump = () => {
+    if (priorityLoads > 0) {
+      return
+    }
+    while (backgroundLoads < BACKGROUND_LOAD_CONCURRENCY) {
+      const entry = queue.shift()
+      if (!entry) {
+        return
+      }
+      if (entry.state === 'queued') {
+        begin(entry, false)
+      }
+    }
+  }
+
+  const onIntersect: IntersectionObserverCallback = (records) => {
+    // Visible frames first, so they claim priority before the queue pumps.
+    for (const record of records.filter((r) => r.isIntersecting)) {
+      const entry = entries.get(record.target)
+      if (entry && (entry.state === 'waiting' || entry.state === 'queued')) {
+        begin(entry, true)
+      }
+    }
+    for (const record of records.filter((r) => !r.isIntersecting)) {
+      const entry = entries.get(record.target)
+      if (entry && entry.state === 'waiting') {
+        entry.state = 'queued'
+        queue.push(entry)
+      }
+    }
+    pump()
+  }
+
+  const register = (element: Element, start: () => void): FrameLoadHandle => {
+    const entry: Entry = { element, start, state: 'waiting', priority: false, timer: null }
+    entries.set(element, entry)
+    if (typeof IntersectionObserver === 'undefined') {
+      begin(entry, true)
+    } else {
+      observer ??= new IntersectionObserver(onIntersect, { rootMargin: VIEWPORT_LOOKAHEAD })
+      observer.observe(element)
+    }
+    return {
+      done: () => settle(entry),
+      dispose: () => {
+        observer?.unobserve(element)
+        entries.delete(element)
+        if (entry.state === 'loading') {
+          settle(entry) // frees the concurrency slot
+        } else {
+          entry.state = 'done'
+        }
+      },
+    }
+  }
+
+  return { register }
+})()
+
+/**
+ * A story rendered in its own preview iframe, the way review thumbnails embed
+ * stories: `embed=true` skips manager chrome and interaction autoplay,
  * `freeze=finished` locks animations to their final frame, and the preview
- * broadcasts its content size so the frame can scale to fit the stage.
+ * broadcasts its content size so the frame can size to its story. With a
+ * cached snapshot the same frozen document renders straight from `srcdoc`.
  */
 function StoryFrame({ storyId }: { storyId: string }) {
   const stageRef = React.useRef<HTMLDivElement>(null)
   const iframeRef = React.useRef<HTMLIFrameElement>(null)
+  const loadHandleRef = React.useRef<FrameLoadHandle | null>(null)
+  const remeasureTimerRef = React.useRef<number | null>(null)
+  const [snapshot, setSnapshot] = React.useState<StorySnapshot | null>(null)
+  const [live, setLive] = React.useState(false)
   const [dims, setDims] = React.useState<FrameDimensions | null>(null)
+  // Bumped when an HMR update obsoletes this frame's snapshot, to re-decide the source.
+  const [generation, setGeneration] = React.useState(0)
+
+  const liveRef = React.useRef(live)
+  liveRef.current = live
+
+  // Pick the frame's source: a cached snapshot renders instantly; otherwise
+  // the load scheduler decides when the live iframe mounts.
+  React.useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) {
+      return undefined
+    }
+    let disposed = false
+    void readSnapshot(storyId).then((cached) => {
+      if (disposed) {
+        return
+      }
+      if (cached) {
+        setSnapshot(cached)
+      } else {
+        loadHandleRef.current = frameLoadScheduler.register(stage, () => setLive(true))
+      }
+    })
+    return () => {
+      disposed = true
+      loadHandleRef.current?.dispose()
+      loadHandleRef.current = null
+    }
+  }, [storyId, generation])
+
+  React.useEffect(() => {
+    const onInvalidate = () => {
+      if (liveRef.current) {
+        // The nested preview applies its own HMR update; once it has settled,
+        // ask for a fresh measurement so the new markup is re-cached.
+        if (remeasureTimerRef.current !== null) {
+          window.clearTimeout(remeasureTimerRef.current)
+        }
+        remeasureTimerRef.current = window.setTimeout(() => {
+          remeasureTimerRef.current = null
+          postRemeasureRequest(iframeRef.current)
+        }, 600)
+      } else {
+        setSnapshot(null)
+        setDims(null)
+        setGeneration((current) => current + 1)
+      }
+    }
+    snapshotInvalidationListeners.add(onInvalidate)
+    return () => {
+      snapshotInvalidationListeners.delete(onInvalidate)
+      if (remeasureTimerRef.current !== null) {
+        window.clearTimeout(remeasureTimerRef.current)
+      }
+    }
+  }, [])
 
   React.useEffect(() => {
     const iframe = iframeRef.current
-    if (!iframe) {
+    if (!live || !iframe) {
       return undefined
     }
     const onMessage = (event: MessageEvent) => {
@@ -526,54 +796,64 @@ function StoryFrame({ storyId }: { storyId: string }) {
         return
       }
       const parsed = parseResizeMessage(event.data)
-      if (parsed) {
-        setDims(parsed)
+      if (!parsed) {
+        return
+      }
+      setDims(parsed)
+      loadHandleRef.current?.done()
+      // The size broadcast happens only after the freezer has stripped and
+      // pinned the document, so this is the moment a snapshot is faithful.
+      const html = serializeFrozenStory(iframe)
+      if (html) {
+        void writeSnapshot(storyId, { html, height: parsed.height })
       }
     }
     window.addEventListener('message', onMessage)
-    const requestRemeasure = () => {
-      try {
-        iframe.contentWindow?.postMessage(
-          JSON.stringify({ context: IFRAME_RESIZE_REQUEST_CONTEXT }),
-          '*'
-        )
-      } catch {
-        // Detached or cross-origin frame; the load listener retries.
-      }
-    }
+    const requestRemeasure = () => postRemeasureRequest(iframe)
     requestRemeasure()
     iframe.addEventListener('load', requestRemeasure)
     return () => {
       window.removeEventListener('message', onMessage)
       iframe.removeEventListener('load', requestRemeasure)
     }
-  }, [])
+  }, [live, storyId])
 
   return (
     <div ref={stageRef} style={cardStageStyle} aria-hidden>
-      <iframe
-        ref={iframeRef}
-        src={`iframe.html?id=${encodeURIComponent(storyId)}&viewMode=story&embed=true&freeze=finished`}
-        title={storyId}
-        loading="lazy"
-        tabIndex={-1}
-        style={{
-          border: 0,
-          pointerEvents: 'none',
-          backgroundColor: 'transparent',
-          // Full stage width so the story lays out at the card's real size;
-          // height follows the preview's own measurement, so the aspect is the
-          // story's natural one and anything taller than the stage crops.
-          width: '100%',
-          height: dims ? dims.height : '100%',
-          flex: 'none',
-        }}
-      />
+      {snapshot || live ? (
+        <iframe
+          // Snapshot and live frames must not share an element: clearing
+          // `srcdoc` on a reused iframe would keep showing the old document.
+          key={snapshot ? 'snapshot' : 'live'}
+          ref={iframeRef}
+          {...(snapshot
+            ? { srcDoc: snapshot.html }
+            : {
+                src: `iframe.html?id=${encodeURIComponent(storyId)}&viewMode=story&embed=true&freeze=finished`,
+              })}
+          title={storyId}
+          tabIndex={-1}
+          // Frozen frames are never scrolled; this also keeps stories wider
+          // than the card from growing a horizontal scrollbar inside it.
+          scrolling="no"
+          style={{
+            border: 0,
+            pointerEvents: 'none',
+            backgroundColor: 'transparent',
+            // Full stage width so the story lays out at the card's real size;
+            // height follows the preview's own measurement, so the aspect is the
+            // story's natural one and anything taller than the stage crops.
+            width: '100%',
+            height: snapshot ? snapshot.height : dims ? dims.height : '100%',
+            flex: 'none',
+          }}
+        />
+      ) : null}
     </div>
   )
 }
 
-export function ComponentBrowser({ preview }: { preview: 'live' | 'baseui' }) {
+export function ComponentBrowser() {
   const [query, setQuery] = React.useState('')
   const base = managerBase()
   const q = query.trim().toLowerCase()
@@ -625,17 +905,7 @@ export function ComponentBrowser({ preview }: { preview: 'live' | 'baseui' }) {
                 target="_top"
                 style={cardStyle}
               >
-                {preview === 'live' ? (
-                  <StoryFrame storyId={component.storyId} />
-                ) : (
-                  <div
-                    className="ds-component-browser-card-glyph"
-                    style={cardGlyphStyle}
-                    aria-hidden
-                  >
-                    {BASEUI_GLYPHS[component.name]}
-                  </div>
-                )}
+                <StoryFrame storyId={component.storyId} />
                 <div style={cardHeadStyle}>
                   <span style={cardNameStyle}>{component.name}</span>
                   <span
