@@ -4,32 +4,34 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 # Getting started
 
-`@droppy/design-system` is the Droppy design language as React components. Base UI supplies
-the behaviour — focus management, dismissal, positioning, ARIA wiring. This package ships its
-own theme — the design tokens and the chrome — plus a component layer on top: components with
-props instead of class names, so consuming code says `<Button clear round icon="cross" />`
-rather than binding theme classes at every call site.
+`@droppy/design-system` is the Droppy design language for developers. It provides React
+implementations of Droppy components, and a CSS theme. Base UI is used under the hood, but
+Droppy components are themed rather than headless. Base UI cannot be used interchangeably.
 
 ## Install
 
-Every commit publishes a build through [pkg.pr.new](https://pkg.pr.new). Take the SHA from the
-commit you want:
+Install through NPM. `@base-ui/react`, `react`, and `react-dom` are peer dependencies, so install them alongside:
 
+```bash
+npm install "@droppy/design-system @base-ui/react react react-dom
+```
+
+To use a specific commit SHA, install Droppy from [pkg.pr.new](https://pkg.pr.new):
 ```bash
 npm install "@droppy/design-system@https://pkg.pr.new/yannbf/droppy-ds/@droppy/design-system@<sha>"
 ```
 
-`@base-ui/react`, `react`, and `react-dom` are peer dependencies — install them alongside.
+## Import stylesheet
 
-## Import the stylesheet
-
-Once, in your app entry:
+Once, in your app entry, import the CSS file. It carries the Droppy tokens and every component's styles.
 
 ```tsx
 import '@droppy/design-system/styles.css'
 ```
 
-It carries the Droppy tokens and every component's styles. Then import components anywhere:
+## Use components
+
+Then import components anywhere. No need for `className` props:
 
 ```tsx
 import { Button, Input, Modal } from '@droppy/design-system'
@@ -47,4 +49,4 @@ export const RemoveItem = ({ isOpen, onClose }) => (
 See [Technical guidelines](?path=/docs/technical-guidelines--docs) for how styling, theming,
 overlays, and forms work across the system.
 
-Browse [Component browser](?path=/docs/component-browser-live--docs) for the full component list.
+Consult [Component browser](?path=/docs/component-browser-live--docs) for the full component list.
