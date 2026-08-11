@@ -4,7 +4,7 @@ import { expect } from 'storybook/test'
 import { Review } from './Review'
 
 const meta = {
-  title: 'Components/Review',
+  title: 'Feedback & status/Review',
   component: Review,
   args: { rating: 4.5 },
 } satisfies Meta<typeof Review>

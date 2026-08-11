@@ -14,11 +14,11 @@ import type { CSSProperties } from 'react'
 interface ComponentEntry {
   /** Display name (matches the sidebar leaf). */
   name: string
-  /** Storybook docs page id, e.g. `components-button` (the `--docs` suffix is added). */
+  /** Storybook docs page id, e.g. `actions-button` (the `--docs` suffix is added). */
   id: string
   /**
-   * Curated grouping for this page — Storybook's own sidebar is flat
-   * (`Components/<Name>` for every entry).
+   * Grouping shared with the sidebar — story titles are `<category>/<Name>`,
+   * so this page's sections mirror the sidebar's own.
    */
   category: string
   /** One-line description shown on the card. */
@@ -43,21 +43,21 @@ const COMPONENTS: ComponentEntry[] = [
   // Actions
   {
     name: 'Button',
-    id: 'components-button',
+    id: 'actions-button',
     category: 'Actions',
     description:
       'The primary action control — chrome from the theme, variants and icon slot from Droppy.',
   },
   {
     name: 'IconButton',
-    id: 'components-iconbutton',
+    id: 'actions-iconbutton',
     category: 'Actions',
     description:
       'A circular icon-only control for floating affordances like carousel arrows and dismissals.',
   },
   {
     name: 'Link',
-    id: 'components-link',
+    id: 'actions-link',
     category: 'Actions',
     description:
       'An inline text link — inside a sentence or a short list, not a button and not a nav item.',
@@ -66,25 +66,25 @@ const COMPONENTS: ComponentEntry[] = [
   // Forms & input
   {
     name: 'Input',
-    id: 'components-input',
+    id: 'forms-input-input',
     category: 'Forms & input',
     description: 'A labelled text field with a reserved slot for its validation message.',
   },
   {
     name: 'NumberField',
-    id: 'components-numberfield',
+    id: 'forms-input-numberfield',
     category: 'Forms & input',
     description: 'A typeable numeric input with increment/decrement buttons and pointer scrub.',
   },
   {
     name: 'QuantityStepper',
-    id: 'components-quantitystepper',
+    id: 'forms-input-quantitystepper',
     category: 'Forms & input',
     description: 'A minus/plus pair flanking a quantity, for adjusting the count of a single item.',
   },
   {
     name: 'Select',
-    id: 'components-select',
+    id: 'forms-input-select',
     category: 'Forms & input',
     description: 'A single-choice control over a short, known list.',
   },
@@ -92,20 +92,20 @@ const COMPONENTS: ComponentEntry[] = [
   // Navigation
   {
     name: 'Breadcrumb',
-    id: 'components-breadcrumb',
+    id: 'navigation-breadcrumb',
     category: 'Navigation',
     description:
       'A trail of ancestor pages to the current one — categories, restaurants, hierarchies.',
   },
   {
     name: 'FooterCard',
-    id: 'components-footercard',
+    id: 'navigation-footercard',
     category: 'Navigation',
     description: 'A titled column of links for a page footer — grouped footer navigation.',
   },
   {
     name: 'Tabs',
-    id: 'components-tabs',
+    id: 'navigation-tabs',
     category: 'Navigation',
     description: 'A set of panels, one visible at a time, switched by a row of tab buttons.',
   },
@@ -113,41 +113,41 @@ const COMPONENTS: ComponentEntry[] = [
   // Layout & structure
   {
     name: 'Accordion',
-    id: 'components-accordion',
+    id: 'layout-structure-accordion',
     category: 'Layout & structure',
     description:
       'A stack of collapsible sections, each labelled by a header — an FAQ list, grouped filters.',
   },
   {
     name: 'Container',
-    id: 'components-container',
+    id: 'layout-structure-container',
     category: 'Layout & structure',
     description:
       'A max-width page wrapper with responsive padding, keeping content off wide screens.',
   },
   {
     name: 'PageSection',
-    id: 'components-pagesection',
+    id: 'layout-structure-pagesection',
     category: 'Layout & structure',
     description:
       'A titled content section — a heading with an optional "view all" action above the content.',
   },
   {
     name: 'PageTemplate',
-    id: 'components-pagetemplate',
+    id: 'layout-structure-pagetemplate',
     category: 'Layout & structure',
     description:
       'The page shell — header, main content area, and footer — every routed page sits inside it.',
   },
   {
     name: 'ScrollArea',
-    id: 'components-scrollarea',
+    id: 'layout-structure-scrollarea',
     category: 'Layout & structure',
     description: "A scrollable panel with a themed scrollbar in place of the platform's own.",
   },
   {
     name: 'Separator',
-    id: 'components-separator',
+    id: 'layout-structure-separator',
     category: 'Layout & structure',
     description: 'A visual and semantic divider between two blocks of content.',
   },
@@ -155,54 +155,54 @@ const COMPONENTS: ComponentEntry[] = [
   // Feedback & status
   {
     name: 'Badge',
-    id: 'components-badge',
+    id: 'feedback-status-badge',
     category: 'Feedback & status',
     description:
       'A small pill for a short, static label — a dietary tag, a category, a "new" flag.',
   },
   {
     name: 'ErrorBlock',
-    id: 'components-errorblock',
+    id: 'feedback-status-errorblock',
     category: 'Feedback & status',
     description:
       'A titled message with an illustration slot and a recovery action — an empty state, a 404.',
   },
   {
     name: 'Progress',
-    id: 'components-progress',
+    id: 'feedback-status-progress',
     category: 'Feedback & status',
     description: 'A track-and-fill indicator for progress through a known- or unknown-length task.',
   },
   {
     name: 'ProgressBar',
-    id: 'components-progressbar',
+    id: 'feedback-status-progressbar',
     category: 'Feedback & status',
     description: 'A track-and-fill indicator for progress through a known number of steps.',
   },
   {
     name: 'Review',
-    id: 'components-review',
+    id: 'feedback-status-review',
     category: 'Feedback & status',
     description:
       'A star rating and text line, for a restaurant tile, an item card, or an order summary.',
   },
   {
     name: 'Skeleton',
-    id: 'components-skeleton',
+    id: 'feedback-status-skeleton',
     category: 'Feedback & status',
     description:
       'A loading placeholder that stands in for content before it arrives, shaped to match it.',
   },
   {
     name: 'Spinner',
-    id: 'components-spinner',
+    id: 'feedback-status-spinner',
     category: 'Feedback & status',
     description:
       "An indeterminate loading indicator — three dots crossing an arc in the brand's colors.",
   },
   {
     name: 'Toast',
-    id: 'components-toast',
+    id: 'feedback-status-toast',
     category: 'Feedback & status',
     description:
       "A stack of transient, self-dismissing notifications for things that don't need acting on.",
@@ -211,20 +211,20 @@ const COMPONENTS: ComponentEntry[] = [
   // Overlays
   {
     name: 'Modal',
-    id: 'components-modal',
+    id: 'overlays-modal',
     category: 'Overlays',
     description: 'A centered overlay that asks for one decision before the page continues.',
   },
   {
     name: 'Sidebar',
-    id: 'components-sidebar',
+    id: 'overlays-sidebar',
     category: 'Overlays',
     description:
       'A panel that slides in from the trailing edge, for content reviewed alongside the page.',
   },
   {
     name: 'Tooltip',
-    id: 'components-tooltip',
+    id: 'overlays-tooltip',
     category: 'Overlays',
     description: "A hover and focus hint for a control whose purpose isn't obvious from its face.",
   },
@@ -232,14 +232,14 @@ const COMPONENTS: ComponentEntry[] = [
   // Typography
   {
     name: 'Body',
-    id: 'components-body',
+    id: 'typography-body',
     category: 'Typography',
     description:
       'Plain-text typography for paragraph copy, captions, and labels, pairing with Heading.',
   },
   {
     name: 'Heading',
-    id: 'components-heading',
+    id: 'typography-heading',
     category: 'Typography',
     description: 'Display type for page and section titles, rendered as a real semantic heading.',
   },
@@ -247,28 +247,28 @@ const COMPONENTS: ComponentEntry[] = [
   // Media & content
   {
     name: 'Card',
-    id: 'components-card',
+    id: 'media-content-card',
     category: 'Media & content',
     description:
       'A rounded, clipped surface for grouping content — a restaurant tile, a food item, an order summary.',
   },
   {
     name: 'Carousel',
-    id: 'components-carousel',
+    id: 'media-content-carousel',
     category: 'Media & content',
     description:
       'A horizontally scrolling row of restaurant cards or category tiles, with drag and arrows.',
   },
   {
     name: 'Icon',
-    id: 'components-icon',
+    id: 'media-content-icon',
     category: 'Media & content',
     description:
       'The icon set, inlined as SVG so it renders anywhere, with no static asset to serve.',
   },
   {
     name: 'TopBanner',
-    id: 'components-topbanner',
+    id: 'media-content-topbanner',
     category: 'Media & content',
     description:
       'A full-width band at the top of a page, with a centered title over a color or photo.',

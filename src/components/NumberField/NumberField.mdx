@@ -11,7 +11,7 @@ amount that also needs a keyboard or direct-entry path.
 - **Import:** `import { NumberField } from '@droppy/design-system'`
 - **Built on:** Base UI [`NumberField`](https://base-ui.com/react/components/number-field),
   labelled via [`Field`](https://base-ui.com/react/components/field) the same way
-  [Input](?path=/docs/components-input--docs) is.
+  [Input](?path=/docs/forms-input-input--docs) is.
 
 <Canvas of={NumberFieldStories.Default} />
 
@@ -36,7 +36,7 @@ amount that also needs a keyboard or direct-entry path.
 ## When not to use
 
 - A small, bounded range where tap-tap increments are the whole interaction and typing isn't
-  expected — reach for [QuantityStepper](?path=/docs/components-quantitystepper--docs) instead;
+  expected — reach for [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) instead;
   it is the simpler, button-only sibling of this component.
 
 ## How it works
@@ -60,10 +60,10 @@ amount that also needs a keyboard or direct-entry path.
 
 ## Keyboard & screen reader
 
-| Key / interaction                    | Context | Action                                             |
-| ------------------------------------- | ------- | --------------------------------------------------- |
+| Key / interaction                     | Context | Action                                             |
+| ------------------------------------- | ------- | -------------------------------------------------- |
 | Arrow Up / Arrow Down (input focused) | any     | Steps the value by `step`                          |
-| Home / End (input focused)            | any     | Jumps to `min`/`max`, when set                      |
+| Home / End (input focused)            | any     | Jumps to `min`/`max`, when set                     |
 | Type digits                           | any     | Replaces the value as parsed input                 |
 | Click Increment / Decrement           | any     | Steps the value by `step`; disables at `min`/`max` |
 | Drag the label                        | any     | Scrubs the value with pointer movement             |
@@ -85,7 +85,7 @@ classes — this component adds no styling of its own beyond forwarding `classNa
 
 ## Related
 
-- [QuantityStepper](?path=/docs/components-quantitystepper--docs) — a simpler, button-only
+- [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) — a simpler, button-only
   stepper for small bounded counts where typing isn't needed.
-- [Input](?path=/docs/components-input--docs) — the plain text field this shares its labelling
+- [Input](?path=/docs/forms-input-input--docs) — the plain text field this shares its labelling
   approach with.

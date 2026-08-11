@@ -23,7 +23,7 @@ const CreateToastButton = () => {
 }
 
 const meta = {
-  title: 'Components/Toast',
+  title: 'Feedback & status/Toast',
   component: ToastProvider,
   args: {
     children: <CreateToastButton />,

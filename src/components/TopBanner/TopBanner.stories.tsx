@@ -14,7 +14,7 @@ const photoDataUri = `data:image/svg+xml,${encodeURIComponent(
 )}`
 
 const meta = {
-  title: 'Components/TopBanner',
+  title: 'Media & content/TopBanner',
   component: TopBanner,
   args: { title: 'Categories' },
   parameters: {

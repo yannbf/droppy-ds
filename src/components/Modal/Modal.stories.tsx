@@ -30,7 +30,7 @@ const ModalDemo = ({
 }
 
 const meta = {
-  title: 'Components/Modal',
+  title: 'Overlays/Modal',
   component: Modal,
   args: {
     isOpen: false,

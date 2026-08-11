@@ -26,7 +26,7 @@ consuming app writes after the import wins over both — no `!important` needed 
 system.
 
 Hiding part composition doesn't hide the DOM those parts render. A
-[Button](?path=/docs/components-button--docs) still renders whatever
+[Button](?path=/docs/actions-button--docs) still renders whatever
 `@base-ui/react/button`'s `Button` renders, with whatever state attributes it sets —
 `data-disabled`, `data-checked`, `data-starting-style`. Droppy's own CSS is written against
 exactly those hooks (`.Button:hover:not([data-disabled])`, `.Input[data-invalid]`,
@@ -45,7 +45,7 @@ defined twice in the theme stylesheet — once under `:root[data-theme='dark']`,
 `@media (prefers-color-scheme: dark)` guarded to apply only when no explicit `data-theme` is
 set — so an app that never touches the attribute still gets a correct dark mode.
 
-[IconButton](?path=/docs/components-iconbutton--docs) is the one component that opts out. It's
+[IconButton](?path=/docs/actions-iconbutton--docs) is the one component that opts out. It's
 built for floating over photography —
 carousel arrows, overlay dismissals — so it stays a light pill regardless of theme: its
 background and icon color are literal values, not `--ds-color-*` tokens, a deliberate,
@@ -56,18 +56,18 @@ documented exception rather than an oversight.
 Droppy's props hide almost all of Base UI's own composition doctrine. `mergeProps`,
 `createHandle`, and an `eventDetails`-shaped change callback appear nowhere in the component
 layer, public or internal. `render` is different, though it's still not a general escape
-hatch: [Tooltip](?path=/docs/components-tooltip--docs) passes `render={children}` into Base
+hatch: [Tooltip](?path=/docs/overlays-tooltip--docs) passes `render={children}` into Base
 UI's own `Trigger` so the caller's child becomes the trigger instead of being wrapped in an
-extra node, and [Sidebar](?path=/docs/components-sidebar--docs) passes a `render`ed `Heading`
+extra node, and [Sidebar](?path=/docs/overlays-sidebar--docs) passes a `render`ed `Heading`
 into the Drawer's title the same way — both internal, neither exposed as a prop of their own.
-[Modal](?path=/docs/components-modal--docs)'s and `Sidebar`'s `onClose` collapses Base UI's
+[Modal](?path=/docs/overlays-modal--docs)'s and `Sidebar`'s `onClose` collapses Base UI's
 `(open, eventDetails)` change callback down to a plain callback the same way — none of
 `eventDetails`'s `.reason` or `.cancel()` comes with it, so there's no supported way to veto a
 specific dismissal from outside the component today.
 
-One `render` escape hatch is deliberate and public: [Link](?path=/docs/components-link--docs)
-and each [Breadcrumb](?path=/docs/components-breadcrumb--docs) item build it by calling Base
-UI's `useRender` hook directly, and [FooterCard](?path=/docs/components-footercard--docs)'s
+One `render` escape hatch is deliberate and public: [Link](?path=/docs/actions-link--docs)
+and each [Breadcrumb](?path=/docs/navigation-breadcrumb--docs) item build it by calling Base
+UI's `useRender` hook directly, and [FooterCard](?path=/docs/navigation-footercard--docs)'s
 links accept the same prop and forward it straight to the `Link` they render underneath. All
 three exist to swap in a
 router-aware link (`react-router`'s `Link`, Next's `Link`) in place of the default `<a>`, and
@@ -79,7 +79,7 @@ UI's `NumberField.Root` props with `render` omitted by name.
 
 ## Overlays
 
-`Modal`, `Sidebar`, and [ToastProvider](?path=/docs/components-toast--docs) all portal their
+`Modal`, `Sidebar`, and [ToastProvider](?path=/docs/feedback-status-toast--docs) all portal their
 content, and all three take the same
 `container?: HTMLElement | string | null` prop: pass an element, a CSS selector, or leave it
 unset to default to `document.body`. A selector can't resolve during render — the target may
@@ -110,7 +110,7 @@ Popups animate the way Base UI recommends generally: CSS transitions gated on
 `[data-starting-style]`/`[data-ending-style]`, not keyframes, because a transition can reverse
 mid-flight — closing a modal before its opening transition finishes just plays backwards
 instead of jumping. `Modal`, `Sidebar`, `Tooltip`, and
-[Accordion](?path=/docs/components-accordion--docs)'s panel all follow this
+[Accordion](?path=/docs/layout-structure-accordion--docs)'s panel all follow this
 pattern: a `transition` paired with a rule that zeroes out `opacity`/`transform`/`height`
 under the starting/ending-style attributes, whether that CSS lives in the component's own
 stylesheet (`Modal`, `Sidebar`) or in the shared theme layer (`Tooltip`, `Accordion`).
@@ -128,12 +128,12 @@ the same technique Base UI documents for `Collapsible`.
 
 ## Form participation
 
-| Component                                                       | Built on                                               | Participates via                   | Native constraint props                                                                                                                                       |
-| --------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Input](?path=/docs/components-input--docs)                     | Base UI `Field` + `Input`                              | the `<input>` it renders directly  | every native attribute passes through (`required`, `pattern`, `minLength`, `type`, …)                                                                         |
-| [Select](?path=/docs/components-select--docs)                   | a plain native `<select>` — not a Base UI primitive    | the `<select>` it renders directly | every native attribute passes through (`required`, `multiple`, `name`, …)                                                                                     |
-| [NumberField](?path=/docs/components-numberfield--docs)         | Base UI `Field` + `NumberField`                        | Base UI's `NumberField.Root`       | its prop type is `NumberField.Root`'s own props (minus `render`), so whatever Root accepts (`min`, `max`, `step`, `name`, `required`) passes straight through |
-| [QuantityStepper](?path=/docs/components-quantitystepper--docs) | two `Button`s and a `Body` — no Base UI form primitive | nothing                            | none — a controlled `value`/`onChange` pair with no `name` and no rendered `<input>`                                                                          |
+| Component                                                        | Built on                                               | Participates via                   | Native constraint props                                                                                                                                       |
+| ---------------------------------------------------------------- | ------------------------------------------------------ | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Input](?path=/docs/forms-input-input--docs)                     | Base UI `Field` + `Input`                              | the `<input>` it renders directly  | every native attribute passes through (`required`, `pattern`, `minLength`, `type`, …)                                                                         |
+| [Select](?path=/docs/forms-input-select--docs)                   | a plain native `<select>` — not a Base UI primitive    | the `<select>` it renders directly | every native attribute passes through (`required`, `multiple`, `name`, …)                                                                                     |
+| [NumberField](?path=/docs/forms-input-numberfield--docs)         | Base UI `Field` + `NumberField`                        | Base UI's `NumberField.Root`       | its prop type is `NumberField.Root`'s own props (minus `render`), so whatever Root accepts (`min`, `max`, `step`, `name`, `required`) passes straight through |
+| [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) | two `Button`s and a `Body` — no Base UI form primitive | nothing                            | none — a controlled `value`/`onChange` pair with no `name` and no rendered `<input>`                                                                          |
 
 Input and Select are already native elements, so participating in a form is just the browser's
 own mechanism — there's no hidden shadow input to know about for either. NumberField adds no

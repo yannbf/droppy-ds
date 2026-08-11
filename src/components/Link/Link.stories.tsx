@@ -14,7 +14,7 @@ const RouterLink = ({ to, children, ...rest }: { to: string } & ComponentProps<'
 )
 
 const meta = {
-  title: 'Components/Link',
+  title: 'Actions/Link',
   component: Link,
   args: { children: 'Order again', href: '/orders' },
 } satisfies Meta<typeof Link>

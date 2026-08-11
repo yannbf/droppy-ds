@@ -14,7 +14,7 @@ const RouterLink = ({ to, children, ...rest }: { to: string } & ComponentProps<'
 )
 
 const meta = {
-  title: 'Components/FooterCard',
+  title: 'Navigation/FooterCard',
   component: FooterCard,
   args: {
     title: 'Discover us',

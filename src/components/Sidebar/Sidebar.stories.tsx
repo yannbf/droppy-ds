@@ -31,7 +31,7 @@ const SidebarDemo = ({
 }
 
 const meta = {
-  title: 'Components/Sidebar',
+  title: 'Overlays/Sidebar',
   component: Sidebar,
   args: {
     isOpen: false,

@@ -4,7 +4,7 @@ import { expect, fn } from 'storybook/test'
 import { PageSection } from './PageSection'
 
 const meta = {
-  title: 'Components/PageSection',
+  title: 'Layout & structure/PageSection',
   component: PageSection,
   args: {
     title: 'Asian',

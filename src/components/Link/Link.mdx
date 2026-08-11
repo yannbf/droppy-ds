@@ -29,8 +29,8 @@ An inline text link — a link inside a sentence or a short list, not a button a
 ## When not to use
 
 - A primary or secondary action a visitor is meant to notice and act on — use
-  [Button](?path=/docs/components-button--docs) instead.
-- A trail of ancestor pages — use [Breadcrumb](?path=/docs/components-breadcrumb--docs).
+  [Button](?path=/docs/actions-button--docs) instead.
+- A trail of ancestor pages — use [Breadcrumb](?path=/docs/navigation-breadcrumb--docs).
 
 ## How it works
 
@@ -53,7 +53,7 @@ its own destination.
 
 `Link`'s default color is a token, not a hardcoded value, so a caller on a dark surface (a footer,
 an overlay) overrides `color` to `currentColor` or another token to keep it legible — see
-[FooterCard](?path=/docs/components-footercard--docs), which does exactly this for its own links.
+[FooterCard](?path=/docs/navigation-footercard--docs), which does exactly this for its own links.
 
 <Canvas of={LinkStories.OnDarkSurface} />
 
@@ -82,6 +82,6 @@ caller can override it with an inline `style`, a `className`, or `currentColor` 
 
 ## Related
 
-- [Breadcrumb](?path=/docs/components-breadcrumb--docs) — for a trail of ancestor pages, which uses
+- [Breadcrumb](?path=/docs/navigation-breadcrumb--docs) — for a trail of ancestor pages, which uses
   the same `render` pattern.
-- [Button](?path=/docs/components-button--docs) — for a primary or secondary action.
+- [Button](?path=/docs/actions-button--docs) — for a primary or secondary action.
