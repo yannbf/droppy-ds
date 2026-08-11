@@ -1,0 +1,29 @@
+.droppy-FooterCard {
+  color: var(--ds-color-text-on-inverse);
+}
+
+.droppy-FooterCard-title {
+  color: inherit;
+  margin-bottom: var(--ds-space-xs);
+}
+
+.droppy-FooterCard-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.droppy-FooterCard-item {
+  margin-bottom: var(--ds-space-2xs);
+}
+
+.droppy-FooterCard-link {
+  color: currentcolor;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .droppy-FooterCard-link:hover {
+    text-decoration: underline;
+  }
+}

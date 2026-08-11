@@ -1,0 +1,11 @@
+.droppy-PageTemplate {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 200px allows for a typical header + footer height so a short page's footer
+   still lands at the bottom of the viewport instead of riding up under the
+   fold. No token models this combined offset; keep it literal here. */
+.droppy-PageTemplate-content {
+  min-height: calc(100vh - 200px);
+}

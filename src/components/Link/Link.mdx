@@ -1,0 +1,87 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as LinkStories from './Link.stories'
+
+<Meta of={LinkStories} />
+
+# Link
+
+An inline text link — a link inside a sentence or a short list, not a button and not a nav item.
+
+- **Import:** `import { Link } from '@droppy/design-system'`
+- **Built on:** a plain `<a>` element.
+
+<Canvas of={LinkStories.Default} />
+
+## Features
+
+- Inherits the surrounding font (`font: inherit`) so it drops into a paragraph, a list, or a
+  heading without a size or family mismatch.
+- Colored with the primary text token by default; underlines on hover rather than staying
+  underlined at rest, so a paragraph of body copy with an inline link doesn't read as noisy.
+- No router dependency: renders a plain `<a href>` by default. Pass `render` to swap in a
+  router-aware link instead (see below) — the design system itself never imports a router.
+- Merges any incoming `className` with its own `droppy-Link` class.
+
+## When to use
+
+- A link inside a sentence, a paragraph, or a short inline list of related links.
+
+## When not to use
+
+- A primary or secondary action a visitor is meant to notice and act on — use
+  [Button](?path=/docs/components-button--docs) instead.
+- A trail of ancestor pages — use [Breadcrumb](?path=/docs/components-breadcrumb--docs).
+
+## How it works
+
+### Inline
+
+`Link` inherits the font of whatever it's dropped into, so it reads as part of the sentence.
+
+<Canvas of={LinkStories.Inline} />
+
+### Router links via `render`
+
+Pass `render` with a router's own link element (`react-router`'s `Link`, Next's `Link`, etc.) and
+`Link` clones it with its own class and the rest of its props — the same composition pattern
+`Breadcrumb` uses for its crumbs. `href` is ignored when `render` is set; the router element owns
+its own destination.
+
+<Canvas of={LinkStories.WithRouterLink} />
+
+### On a dark surface
+
+`Link`'s default color is a token, not a hardcoded value, so a caller on a dark surface (a footer,
+an overlay) overrides `color` to `currentColor` or another token to keep it legible — see
+[FooterCard](?path=/docs/components-footercard--docs), which does exactly this for its own links.
+
+<Canvas of={LinkStories.OnDarkSurface} />
+
+## Keyboard & screen reader
+
+A real `<a>` (or the router element passed via `render`) — standard link keyboard behaviour
+applies, no custom handling.
+
+- **ARIA:** none beyond the native link semantics.
+- **Screen reader:** announced as a link with its text content as the accessible name.
+- **You must provide:** link text that makes sense out of context (avoid bare "click here").
+
+## Styling
+
+| Token                     | Used for           |
+| ------------------------- | ------------------ |
+| `--ds-color-text-primary` | Default link color |
+| `--ds-shadow-focus`       | Focus ring         |
+
+`className` merges with the component's own `droppy-Link` class. Color is a plain CSS rule, so a
+caller can override it with an inline `style`, a `className`, or `currentColor` inheritance.
+
+## API reference
+
+<ArgTypes of={LinkStories} />
+
+## Related
+
+- [Breadcrumb](?path=/docs/components-breadcrumb--docs) — for a trail of ancestor pages, which uses
+  the same `render` pattern.
+- [Button](?path=/docs/components-button--docs) — for a primary or secondary action.

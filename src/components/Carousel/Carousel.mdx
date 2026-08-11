@@ -1,0 +1,87 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as CarouselStories from './Carousel.stories'
+
+<Meta of={CarouselStories} />
+
+# Carousel
+
+A horizontally scrolling row of items — restaurant cards, category tiles — showing a fixed number
+per breakpoint, with drag, wheel-gesture, and arrow navigation.
+
+- **Import:** `import { Carousel } from '@droppy/design-system'`
+- **Built on:** [Embla Carousel](https://www.embla-carousel.com/) with the wheel-gestures plugin,
+  and the design system's own `IconButton` for the arrows.
+
+<Canvas of={CarouselStories.Default} />
+
+## Features
+
+- `itemsPerView` sets how many items are visible per breakpoint (mobile, tablet, desktop) —
+  fractional values (e.g. `1.2`) are valid, and peek the next item at the edge.
+- `slidesToScroll` sets how many items an arrow click advances per breakpoint (defaults to `1` at
+  every breakpoint).
+- Dragging works on both mouse and touch. Horizontal wheel / trackpad scrolling and shift+scroll
+  also move the carousel; vertical scrolling still scrolls the page.
+- A slide dims to `opacity: 0.5` once it's no longer (almost) fully in view, signaling there's more
+  to scroll to without hiding it outright.
+- Arrows only render once there's somewhere to go in that direction, and only appear at the desktop
+  breakpoint — smaller screens scroll by dragging instead.
+- Merges any incoming `className` with its own `droppy-Carousel` class.
+
+## When to use
+
+- A horizontally browsable row of same-shaped items where showing a fixed count per breakpoint
+  matters more than showing everything at once — a restaurant list, a category rail.
+
+## When not to use
+
+- A small, fixed set of items that all fit comfortably in the available width — a plain flex or
+  grid row needs no carousel machinery.
+
+## How it works
+
+### Fewer items than fit in view
+
+When every child already fits in the viewport, neither arrow renders — there's nowhere to scroll.
+
+<Canvas of={CarouselStories.FewerItemsThanFitInView} />
+
+### Paging by more than one slide
+
+`slidesToScroll` decouples how many items are visible from how far an arrow click moves.
+
+<Canvas of={CarouselStories.AdvanceByPage} />
+
+## Keyboard & screen reader
+
+Arrow buttons are real `<button>`s (via `IconButton`) with `aria-label="Previous"` /
+`aria-label="Next"`, focusable and operable with keyboard and screen readers. The scroll track
+itself is drag-only, matching the same tradeoff most carousel implementations make; each slide's
+own content remains independently focusable and readable in document order.
+
+- **ARIA:** none beyond the labeled arrow buttons — the design system leaves the region's
+  accessible name to the caller.
+- **Screen reader:** slide content is read in document order regardless of which slides are
+  currently dimmed or in view.
+- **You must provide:** an accessible label for the carousel region as a whole, if the surrounding
+  page needs one (e.g. wrap it with `aria-label` or a preceding heading).
+
+## Styling
+
+| Token              | Used for                                 |
+| ------------------ | ---------------------------------------- |
+| `--ds-space-sm`    | Gutter between slides                    |
+| `--ds-motion-base` | Dim/undim transition duration for slides |
+
+Arrow buttons use `IconButton`'s own styling (see [IconButton](?path=/docs/components-iconbutton--docs)) —
+deliberately not theme-reactive, so they stay legible over arbitrary imagery. `className` merges
+with the component's own `droppy-Carousel` class.
+
+## API reference
+
+<ArgTypes of={CarouselStories} />
+
+## Related
+
+- [IconButton](?path=/docs/components-iconbutton--docs) — the arrow control `Carousel` builds on.
+- [Card](?path=/docs/components-card--docs) — a common shape for carousel items.

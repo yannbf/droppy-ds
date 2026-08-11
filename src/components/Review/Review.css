@@ -1,0 +1,12 @@
+.droppy-Review {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.droppy-Review-text {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--ds-color-text-review);
+}

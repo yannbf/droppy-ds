@@ -1,0 +1,80 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ReviewStories from './Review.stories'
+
+<Meta of={ReviewStories} />
+
+# Review
+
+A star-rating and text line — "★ 4.5 Very good" or "No reviews yet" — for a restaurant tile, an
+item card, or an order summary.
+
+- **Import:** `import { Review } from '@droppy/design-system'`
+- **Built on:** `Body`, sized `S` and rendered as a `span`.
+
+<Canvas of={ReviewStories.Default} />
+
+## Features
+
+- `rating` is a number out of 5. It maps to one of four labels — "Very poor" below 2, "Adequate"
+  from 2 to 4, "Very good" from 4 to 5, "Excellent" at 5 — prefixed with the star glyph and the
+  rating to one decimal place.
+- No `rating` (or a falsy one) renders "No reviews yet" instead of a score.
+- Uses the low-contrast `--ds-color-text-review` token by default — a deliberately quiet
+  treatment so the rating reads as secondary to the content around it. Pass `color` to override it.
+- Merges any incoming `className` with its own `droppy-Review` class.
+
+## When to use
+
+- Alongside a restaurant or item's name, to show its aggregate rating at a glance.
+
+## When not to use
+
+- A star-input control for a visitor to leave their own rating — `Review` is a read-only display,
+  not a form control.
+
+## How it works
+
+### Rating bands
+
+<Canvas of={ReviewStories.VeryPoor} />
+<Canvas of={ReviewStories.Adequate} />
+<Canvas of={ReviewStories.Excellent} />
+
+### No reviews yet
+
+<Canvas of={ReviewStories.NoReviews} />
+
+### Overriding the color
+
+The default text color is intentionally low-contrast. A caller that wants a different look — a
+higher-contrast rating in a dense list, say — overrides it with `color` rather than fighting the
+token with an external stylesheet.
+
+<Canvas of={ReviewStories.CustomColor} />
+
+## Keyboard & screen reader
+
+`Review` renders static text — there is no keyboard interaction to document.
+
+- **ARIA:** none — the rating and label are read as plain text content.
+- **Screen reader:** announced as the rendered string (e.g. "★ 4.5 Very good" or "No reviews yet").
+- **You must provide:** nothing further, unless the surrounding context needs an accessible name
+  for the region the review sits in.
+
+## Styling
+
+| Token                    | Used for                              |
+| ------------------------ | ------------------------------------- |
+| `--ds-color-text-review` | Default text color (low-contrast)     |
+| `--ds-type-size-sm`      | Text size, via `Body`'s `S` size step |
+
+`className` merges with the component's own `droppy-Review` class. `color` overrides the token
+inline.
+
+## API reference
+
+<ArgTypes of={ReviewStories} />
+
+## Related
+
+- [Body](?path=/docs/components-body--docs) — the typography primitive `Review` builds on.

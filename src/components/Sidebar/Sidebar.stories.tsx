@@ -102,5 +102,9 @@ export const OpensAndCloses: Story = {
     await userEvent.click(body.getByRole('button', { name: 'close sidebar' }))
 
     await waitFor(() => expect(args.onClose).toHaveBeenCalled())
+    // Settle the exit transition before the automatic a11y check: Base UI's
+    // focus guards (aria-hidden + tabindex) exist while the drawer is mounted
+    // and trip axe's aria-hidden-focus rule if it snapshots mid-close.
+    await waitFor(() => expect(body.queryByRole('dialog')).not.toBeInTheDocument())
   },
 }
