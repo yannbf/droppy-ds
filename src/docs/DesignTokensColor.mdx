@@ -17,8 +17,8 @@ import {
 
 # Color tokens
 
-**Palette primitives** (`color.palette.*`) are the raw color values used in Droppy.
-**Semantic roles** (everything else under `color.*`) serve specific purposes,
+**Palette primitives** (`ds.palette.*`) are the raw color values used in Droppy.
+**Semantic roles** (everything else under `ds.color.*`) serve specific purposes,
 like a surface, a piece of text, a border. Everyday component work should only use
 semantic colors. Semantic colors ensure consistent branding, and provide dark theme
 support.
@@ -27,16 +27,16 @@ support.
 
 Each role resolves to one of the colors in the primitive palettes below, depending on whether the `light` or `dark` mode is used.
 
-<ColorTable filter="color.*.*" caption="" />
+<ColorTable filter="ds.color.*.*" caption="" />
 
 ## Primitive color palettes
 
-<ColorPalette filter="color.palette.neutral.**" caption="" />
+<ColorPalette filter="ds.palette.neutral.**" caption="" />
 
-<ColorPalette filter="color.palette.green.**" caption="" />
+<ColorPalette filter="ds.palette.green.**" caption="" />
 
-<ColorPalette filter="color.palette.blue.**" caption="" />
+<ColorPalette filter="ds.palette.blue.**" caption="" />
 
-<ColorPalette filter="color.palette.red.**" caption="" />
+<ColorPalette filter="ds.palette.red.**" caption="" />
 
-<ColorPalette filter="color.palette.brand.**" caption="" />
+<ColorPalette filter="ds.palette.brand.**" caption="" />
