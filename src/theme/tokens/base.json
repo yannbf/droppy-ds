@@ -1,5 +1,5 @@
 {
-  "color": {
+  "ds": {
     "palette": {
       "neutral": {
         "0": {
@@ -331,620 +331,622 @@
         }
       }
     },
-    "surface": {
-      "page": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.0}"
-      },
-      "card": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.50}"
-      },
-      "sunken": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.100}"
-      },
-      "overlay": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.0}"
-      },
-      "inverse": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.900}"
-      },
-      "highlight": {
-        "$type": "color",
-        "$value": "{color.palette.green.200}"
-      },
-      "info": {
-        "$type": "color",
-        "$value": "{color.palette.blue.200}"
-      },
-      "default": {
-        "$type": "color",
-        "$value": "{color.surface.page}",
-        "$description": "The canonical page-chrome surface role — read by the Storybook swatchbook addon."
-      }
-    },
-    "text": {
-      "primary": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.900}"
-      },
-      "secondary": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.700}"
-      },
-      "hint": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.600}"
-      },
-      "label": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.800}"
-      },
-      "label-active": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.950}"
-      },
-      "on-inverse": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.0}"
-      },
-      "error": {
-        "$type": "color",
-        "$value": "{color.palette.red.700}"
-      },
-      "review": {
-        "$type": "color",
-        "$value": "{color.palette.blue.700}"
-      },
-      "default": {
-        "$type": "color",
-        "$value": "{color.text.primary}",
-        "$description": "The canonical page-chrome text role — read by the Storybook swatchbook addon."
-      }
-    },
-    "action": {
-      "primary": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.950}"
-      },
-      "primary-hover": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.900}"
-      },
-      "on-primary": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.0}"
-      },
-      "subtle-hover": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.100}"
-      },
-      "progress": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.950}"
-      }
-    },
-    "border": {
-      "subtle": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.150}"
-      }
-    },
-    "focus": {
-      "$description": "Drives the single two-layer focus ring (shadow.focus). Never used standalone for fills.",
-      "ring": {
-        "$type": "color",
-        "$value": "{color.palette.blue.400}"
-      },
-      "halo": {
-        "$type": "color",
-        "$value": "{color.palette.blue.100}"
-      }
-    },
-    "icon": {
-      "default": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.900}"
-      }
-    },
-    "skeleton": {
-      "base": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.150}"
-      },
-      "highlight": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.100}"
-      }
-    },
-    "chip": {
-      "contrast-bg": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.950}"
-      },
-      "contrast-text": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.0}"
-      }
-    },
-    "badge": {
-      "bg": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.150}"
+    "color": {
+      "surface": {
+        "page": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        },
+        "card": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.50}"
+        },
+        "sunken": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.100}"
+        },
+        "overlay": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        },
+        "inverse": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        },
+        "highlight": {
+          "$type": "color",
+          "$value": "{ds.palette.green.200}"
+        },
+        "info": {
+          "$type": "color",
+          "$value": "{ds.palette.blue.200}"
+        },
+        "default": {
+          "$type": "color",
+          "$value": "{ds.color.surface.page}",
+          "$description": "The canonical page-chrome surface role — read by the Storybook swatchbook addon."
+        }
       },
       "text": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.700}"
+        "primary": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.700}"
+        },
+        "hint": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.600}"
+        },
+        "label": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.800}"
+        },
+        "label-active": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.950}"
+        },
+        "on-inverse": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        },
+        "error": {
+          "$type": "color",
+          "$value": "{ds.palette.red.700}"
+        },
+        "review": {
+          "$type": "color",
+          "$value": "{ds.palette.blue.700}"
+        },
+        "default": {
+          "$type": "color",
+          "$value": "{ds.color.text.primary}",
+          "$description": "The canonical page-chrome text role — read by the Storybook swatchbook addon."
+        }
       },
-      "positive-bg": {
-        "$type": "color",
-        "$value": "{color.palette.green.200}"
+      "action": {
+        "primary": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.950}"
+        },
+        "primary-hover": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        },
+        "on-primary": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        },
+        "subtle-hover": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.100}"
+        },
+        "progress": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.950}"
+        }
       },
-      "positive-text": {
-        "$type": "color",
-        "$value": "{color.text.primary}"
+      "border": {
+        "subtle": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.150}"
+        }
+      },
+      "focus": {
+        "$description": "Drives the single two-layer focus ring (shadow.focus). Never used standalone for fills.",
+        "ring": {
+          "$type": "color",
+          "$value": "{ds.palette.blue.400}"
+        },
+        "halo": {
+          "$type": "color",
+          "$value": "{ds.palette.blue.100}"
+        }
+      },
+      "icon": {
+        "default": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        }
+      },
+      "skeleton": {
+        "base": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.150}"
+        },
+        "highlight": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.100}"
+        }
+      },
+      "chip": {
+        "contrast-bg": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.950}"
+        },
+        "contrast-text": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        }
+      },
+      "badge": {
+        "bg": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.150}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.700}"
+        },
+        "positive-bg": {
+          "$type": "color",
+          "$value": "{ds.palette.green.200}"
+        },
+        "positive-text": {
+          "$type": "color",
+          "$value": "{ds.color.text.primary}"
+        }
+      },
+      "progress": {
+        "track": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.100}"
+        },
+        "fill": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.950}"
+        }
       }
     },
-    "progress": {
-      "track": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.100}"
+    "type": {
+      "family": {
+        "heading": {
+          "$type": "fontFamily",
+          "$value": ["Montserrat", "sans-serif"]
+        },
+        "body": {
+          "$type": "fontFamily",
+          "$value": ["Hind", "sans-serif"]
+        }
       },
-      "fill": {
-        "$type": "color",
-        "$value": "{color.palette.neutral.950}"
-      }
-    }
-  },
-  "type": {
-    "family": {
-      "heading": {
-        "$type": "fontFamily",
-        "$value": ["Montserrat", "sans-serif"]
+      "size": {
+        "2xs": {
+          "$type": "dimension",
+          "$value": {
+            "value": 0.72,
+            "unit": "rem"
+          }
+        },
+        "xs": {
+          "$type": "dimension",
+          "$value": {
+            "value": 0.9,
+            "unit": "rem"
+          }
+        },
+        "sm": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1,
+            "unit": "rem"
+          }
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1.125,
+            "unit": "rem"
+          }
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1.4,
+            "unit": "rem"
+          }
+        },
+        "xl": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1.75,
+            "unit": "rem"
+          }
+        },
+        "2xl": {
+          "$type": "dimension",
+          "$value": {
+            "value": 2.19,
+            "unit": "rem"
+          }
+        },
+        "3xl": {
+          "$type": "dimension",
+          "$value": {
+            "value": 2.74,
+            "unit": "rem"
+          }
+        }
       },
-      "body": {
-        "$type": "fontFamily",
-        "$value": ["Hind", "sans-serif"]
+      "weight": {
+        "regular": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "medium": {
+          "$type": "fontWeight",
+          "$value": 500
+        },
+        "bold": {
+          "$type": "fontWeight",
+          "$value": 700
+        },
+        "black": {
+          "$type": "fontWeight",
+          "$value": 900
+        }
+      },
+      "tracking": {
+        "display": {
+          "$type": "dimension",
+          "$value": {
+            "value": -2,
+            "unit": "px"
+          }
+        },
+        "default": {
+          "$type": "dimension",
+          "$value": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      },
+      "style": {
+        "h1": {
+          "$type": "typography",
+          "$description": "Heading level 1",
+          "$value": {
+            "fontFamily": "{ds.type.family.heading}",
+            "fontSize": "{ds.type.size.3xl}",
+            "fontWeight": "{ds.type.weight.bold}",
+            "lineHeight": 1.2,
+            "letterSpacing": "{ds.type.tracking.display}"
+          }
+        },
+        "h2": {
+          "$type": "typography",
+          "$description": "Heading level 2.",
+          "$value": {
+            "fontFamily": "{ds.type.family.heading}",
+            "fontSize": "{ds.type.size.2xl}",
+            "fontWeight": "{ds.type.weight.bold}",
+            "lineHeight": 1.2,
+            "letterSpacing": "{ds.type.tracking.display}"
+          }
+        },
+        "h3": {
+          "$type": "typography",
+          "$description": "Heading level 3.",
+          "$value": {
+            "fontFamily": "{ds.type.family.heading}",
+            "fontSize": "{ds.type.size.xl}",
+            "fontWeight": "{ds.type.weight.bold}",
+            "lineHeight": 1.2,
+            "letterSpacing": "{ds.type.tracking.default}"
+          }
+        },
+        "h4": {
+          "$type": "typography",
+          "$description": "Product wordmark; also the overlay and section title step (dialog, drawer, popover, fieldset legend).",
+          "$value": {
+            "fontFamily": "{ds.type.family.heading}",
+            "fontSize": "{ds.type.size.lg}",
+            "fontWeight": "{ds.type.weight.bold}",
+            "lineHeight": 1.2,
+            "letterSpacing": "{ds.type.tracking.default}"
+          }
+        },
+        "body": {
+          "$type": "typography",
+          "$description": "Default copy size.",
+          "$value": {
+            "fontFamily": "{ds.type.family.body}",
+            "fontSize": "{ds.type.size.md}",
+            "fontWeight": "{ds.type.weight.regular}",
+            "lineHeight": 1.2,
+            "letterSpacing": "{ds.type.tracking.default}"
+          }
+        },
+        "small": {
+          "$type": "typography",
+          "$description": "Buttons, inputs, field labels, small copy.",
+          "$value": {
+            "fontFamily": "{ds.type.family.body}",
+            "fontSize": "{ds.type.size.sm}",
+            "fontWeight": "{ds.type.weight.regular}",
+            "lineHeight": 1.2,
+            "letterSpacing": "{ds.type.tracking.default}"
+          }
+        },
+        "xs": {
+          "$type": "typography",
+          "$description": "UI chrome \u2014 menus, lists, tabs, triggers, item text \u2014 and captions.",
+          "$value": {
+            "fontFamily": "{ds.type.family.body}",
+            "fontSize": "{ds.type.size.xs}",
+            "fontWeight": "{ds.type.weight.regular}",
+            "lineHeight": 1.2,
+            "letterSpacing": "{ds.type.tracking.default}"
+          }
+        },
+        "xxs": {
+          "$type": "typography",
+          "$description": "Captions.",
+          "$value": {
+            "fontFamily": "{ds.type.family.body}",
+            "fontSize": "{ds.type.size.2xs}",
+            "fontWeight": "{ds.type.weight.regular}",
+            "lineHeight": 1.2,
+            "letterSpacing": "{ds.type.tracking.default}"
+          }
+        }
       }
     },
-    "size": {
+    "space": {
+      "3xs": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0.25,
+          "unit": "rem"
+        }
+      },
       "2xs": {
         "$type": "dimension",
         "$value": {
-          "value": 0.72,
+          "value": 0.5,
           "unit": "rem"
         }
       },
       "xs": {
-        "$type": "dimension",
-        "$value": {
-          "value": 0.9,
-          "unit": "rem"
-        }
-      },
-      "sm": {
         "$type": "dimension",
         "$value": {
           "value": 1,
           "unit": "rem"
         }
       },
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        }
+      },
       "md": {
         "$type": "dimension",
         "$value": {
-          "value": 1.125,
+          "value": 2,
           "unit": "rem"
         }
       },
       "lg": {
         "$type": "dimension",
         "$value": {
-          "value": 1.4,
+          "value": 3.25,
           "unit": "rem"
         }
       },
       "xl": {
         "$type": "dimension",
         "$value": {
-          "value": 1.75,
-          "unit": "rem"
-        }
-      },
-      "2xl": {
-        "$type": "dimension",
-        "$value": {
-          "value": 2.19,
-          "unit": "rem"
-        }
-      },
-      "3xl": {
-        "$type": "dimension",
-        "$value": {
-          "value": 2.74,
+          "value": 5.25,
           "unit": "rem"
         }
       }
     },
-    "weight": {
-      "regular": {
-        "$type": "fontWeight",
-        "$value": 400
-      },
-      "medium": {
-        "$type": "fontWeight",
-        "$value": 500
-      },
-      "bold": {
-        "$type": "fontWeight",
-        "$value": 700
-      },
-      "black": {
-        "$type": "fontWeight",
-        "$value": 900
-      }
-    },
-    "tracking": {
-      "display": {
+    "radius": {
+      "$description": "A ladder by \"floatiness\" — the more elevated or overlay-like a surface, the larger the radius.",
+      "control": {
         "$type": "dimension",
         "$value": {
-          "value": -2,
+          "value": 4,
           "unit": "px"
-        }
+        },
+        "$description": "Buttons, inputs, checkboxes, radios, toggles."
       },
-      "default": {
+      "card": {
         "$type": "dimension",
         "$value": {
-          "value": 0,
-          "unit": "px"
-        }
-      }
-    },
-    "style": {
-      "h1": {
-        "$type": "typography",
-        "$description": "Heading level 1",
-        "$value": {
-          "fontFamily": "{type.family.heading}",
-          "fontSize": "{type.size.3xl}",
-          "fontWeight": "{type.weight.bold}",
-          "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.display}"
-        }
-      },
-      "h2": {
-        "$type": "typography",
-        "$description": "Heading level 2.",
-        "$value": {
-          "fontFamily": "{type.family.heading}",
-          "fontSize": "{type.size.2xl}",
-          "fontWeight": "{type.weight.bold}",
-          "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.display}"
-        }
-      },
-      "h3": {
-        "$type": "typography",
-        "$description": "Heading level 3.",
-        "$value": {
-          "fontFamily": "{type.family.heading}",
-          "fontSize": "{type.size.xl}",
-          "fontWeight": "{type.weight.bold}",
-          "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
-        }
-      },
-      "h4": {
-        "$type": "typography",
-        "$description": "Product wordmark; also the overlay and section title step (dialog, drawer, popover, fieldset legend).",
-        "$value": {
-          "fontFamily": "{type.family.heading}",
-          "fontSize": "{type.size.lg}",
-          "fontWeight": "{type.weight.bold}",
-          "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
-        }
-      },
-      "body": {
-        "$type": "typography",
-        "$description": "Default copy size.",
-        "$value": {
-          "fontFamily": "{type.family.body}",
-          "fontSize": "{type.size.md}",
-          "fontWeight": "{type.weight.regular}",
-          "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
-        }
-      },
-      "small": {
-        "$type": "typography",
-        "$description": "Buttons, inputs, field labels, small copy.",
-        "$value": {
-          "fontFamily": "{type.family.body}",
-          "fontSize": "{type.size.sm}",
-          "fontWeight": "{type.weight.regular}",
-          "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
-        }
-      },
-      "xs": {
-        "$type": "typography",
-        "$description": "UI chrome \u2014 menus, lists, tabs, triggers, item text \u2014 and captions.",
-        "$value": {
-          "fontFamily": "{type.family.body}",
-          "fontSize": "{type.size.xs}",
-          "fontWeight": "{type.weight.regular}",
-          "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
-        }
-      },
-      "xxs": {
-        "$type": "typography",
-        "$description": "Captions.",
-        "$value": {
-          "fontFamily": "{type.family.body}",
-          "fontSize": "{type.size.2xs}",
-          "fontWeight": "{type.weight.regular}",
-          "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
-        }
-      }
-    }
-  },
-  "space": {
-    "3xs": {
-      "$type": "dimension",
-      "$value": {
-        "value": 0.25,
-        "unit": "rem"
-      }
-    },
-    "2xs": {
-      "$type": "dimension",
-      "$value": {
-        "value": 0.5,
-        "unit": "rem"
-      }
-    },
-    "xs": {
-      "$type": "dimension",
-      "$value": {
-        "value": 1,
-        "unit": "rem"
-      }
-    },
-    "sm": {
-      "$type": "dimension",
-      "$value": {
-        "value": 1.5,
-        "unit": "rem"
-      }
-    },
-    "md": {
-      "$type": "dimension",
-      "$value": {
-        "value": 2,
-        "unit": "rem"
-      }
-    },
-    "lg": {
-      "$type": "dimension",
-      "$value": {
-        "value": 3.25,
-        "unit": "rem"
-      }
-    },
-    "xl": {
-      "$type": "dimension",
-      "$value": {
-        "value": 5.25,
-        "unit": "rem"
-      }
-    }
-  },
-  "radius": {
-    "$description": "A ladder by \"floatiness\" — the more elevated or overlay-like a surface, the larger the radius.",
-    "control": {
-      "$type": "dimension",
-      "$value": {
-        "value": 4,
-        "unit": "px"
-      },
-      "$description": "Buttons, inputs, checkboxes, radios, toggles."
-    },
-    "card": {
-      "$type": "dimension",
-      "$value": {
-        "value": 8,
-        "unit": "px"
-      },
-      "$description": "Tooltip and other raised surfaces."
-    },
-    "sheet": {
-      "$type": "dimension",
-      "$value": {
-        "value": 16,
-        "unit": "px"
-      },
-      "$description": "Dialog, drawer."
-    },
-    "pill": {
-      "$type": "dimension",
-      "$value": {
-        "value": 32,
-        "unit": "px"
-      },
-      "$description": "Switch track."
-    },
-    "round": {
-      "$type": "string",
-      "$value": "50%",
-      "$description": "A CSS percentage that turns a square element into a circle regardless of its size. Avatar, radio, switch thumb."
-    }
-  },
-  "shadow": {
-    "lift": {
-      "$type": "shadow",
-      "$description": "Tooltip.",
-      "$value": {
-        "offsetX": {
-          "value": 0,
+          "value": 8,
           "unit": "px"
         },
-        "offsetY": {
-          "value": 14,
+        "$description": "Tooltip and other raised surfaces."
+      },
+      "sheet": {
+        "$type": "dimension",
+        "$value": {
+          "value": 16,
           "unit": "px"
         },
-        "blur": {
-          "value": 26,
+        "$description": "Dialog, drawer."
+      },
+      "pill": {
+        "$type": "dimension",
+        "$value": {
+          "value": 32,
           "unit": "px"
         },
-        "spread": {
-          "value": 0,
-          "unit": "px"
-        },
-        "color": {
-          "colorSpace": "srgb",
-          "components": [0, 0, 0],
-          "alpha": 0.08,
-          "hex": "#000000"
-        }
+        "$description": "Switch track."
+      },
+      "round": {
+        "$type": "string",
+        "$value": "50%",
+        "$description": "A CSS percentage that turns a square element into a circle regardless of its size. Avatar, radio, switch thumb."
       }
     },
-    "overlay": {
-      "$type": "shadow",
-      "$description": "Dialog, drawer.",
-      "$value": {
-        "offsetX": {
-          "value": 0,
-          "unit": "px"
-        },
-        "offsetY": {
-          "value": 28,
-          "unit": "px"
-        },
-        "blur": {
-          "value": 48,
-          "unit": "px"
-        },
-        "spread": {
-          "value": 0,
-          "unit": "px"
-        },
-        "color": {
-          "colorSpace": "srgb",
-          "components": [0, 0, 0],
-          "alpha": 0.4,
-          "hex": "#000000"
-        }
-      }
-    },
-    "focus": {
-      "$type": "shadow",
-      "$description": "The single two-layer focus ring — one inner ring in color.focus.ring, one outer 4px halo in color.focus.halo. Applied on :focus-visible everywhere a part needs an outline. The inner ring widens from 1px to 2px in dark mode.",
-      "$value": [
-        {
+    "shadow": {
+      "lift": {
+        "$type": "shadow",
+        "$description": "Tooltip.",
+        "$value": {
           "offsetX": {
             "value": 0,
             "unit": "px"
           },
           "offsetY": {
-            "value": 0,
+            "value": 14,
             "unit": "px"
           },
           "blur": {
-            "value": 0,
+            "value": 26,
             "unit": "px"
           },
           "spread": {
-            "value": 1,
+            "value": 0,
             "unit": "px"
           },
-          "color": "{color.focus.ring}"
-        },
-        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.08,
+            "hex": "#000000"
+          }
+        }
+      },
+      "overlay": {
+        "$type": "shadow",
+        "$description": "Dialog, drawer.",
+        "$value": {
           "offsetX": {
             "value": 0,
             "unit": "px"
           },
           "offsetY": {
-            "value": 0,
+            "value": 28,
             "unit": "px"
           },
           "blur": {
-            "value": 0,
+            "value": 48,
             "unit": "px"
           },
           "spread": {
-            "value": 4,
+            "value": 0,
             "unit": "px"
           },
-          "color": "{color.focus.halo}"
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.4,
+            "hex": "#000000"
+          }
         }
-      ]
-    }
-  },
-  "motion": {
-    "fast": {
-      "$type": "duration",
-      "$value": {
-        "value": 150,
-        "unit": "ms"
       },
-      "$description": "Hover states."
-    },
-    "base": {
-      "$type": "duration",
-      "$value": {
-        "value": 250,
-        "unit": "ms"
-      },
-      "$description": "Theme cross-fade."
-    },
-    "slow": {
-      "$type": "duration",
-      "$value": {
-        "value": 300,
-        "unit": "ms"
-      },
-      "$description": "Overlay transitions."
-    },
-    "ease": {
-      "$type": "string",
-      "$value": "ease-in",
-      "$description": "The one easing curve used across every transition in the theme layer. CSS keyword, not a cubicBezier — see --ds-motion-ease."
-    }
-  },
-  "breakpoint": {
-    "$description": "Reference values only — a custom property cannot be read inside a @media query. Components hardcode the matching literal pixel value and comment which breakpoint token it mirrors.",
-    "sm": {
-      "$type": "dimension",
-      "$value": {
-        "value": 640,
-        "unit": "px"
+      "focus": {
+        "$type": "shadow",
+        "$description": "The single two-layer focus ring — one inner ring in color.focus.ring, one outer 4px halo in color.focus.halo. Applied on :focus-visible everywhere a part needs an outline. The inner ring widens from 1px to 2px in dark mode.",
+        "$value": [
+          {
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 1,
+              "unit": "px"
+            },
+            "color": "{ds.color.focus.ring}"
+          },
+          {
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 4,
+              "unit": "px"
+            },
+            "color": "{ds.color.focus.halo}"
+          }
+        ]
       }
     },
-    "md": {
-      "$type": "dimension",
-      "$value": {
-        "value": 768,
-        "unit": "px"
+    "motion": {
+      "fast": {
+        "$type": "duration",
+        "$value": {
+          "value": 150,
+          "unit": "ms"
+        },
+        "$description": "Hover states."
+      },
+      "base": {
+        "$type": "duration",
+        "$value": {
+          "value": 250,
+          "unit": "ms"
+        },
+        "$description": "Theme cross-fade."
+      },
+      "slow": {
+        "$type": "duration",
+        "$value": {
+          "value": 300,
+          "unit": "ms"
+        },
+        "$description": "Overlay transitions."
+      },
+      "ease": {
+        "$type": "string",
+        "$value": "ease-in",
+        "$description": "The one easing curve used across every transition in the theme layer. CSS keyword, not a cubicBezier — see --ds-motion-ease."
       }
     },
-    "lg": {
-      "$type": "dimension",
-      "$value": {
-        "value": 1024,
-        "unit": "px"
-      }
-    },
-    "xl": {
-      "$type": "dimension",
-      "$value": {
-        "value": 1440,
-        "unit": "px"
+    "breakpoint": {
+      "$description": "Reference values only — a custom property cannot be read inside a @media query. Components hardcode the matching literal pixel value and comment which breakpoint token it mirrors.",
+      "sm": {
+        "$type": "dimension",
+        "$value": {
+          "value": 640,
+          "unit": "px"
+        }
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": {
+          "value": 768,
+          "unit": "px"
+        }
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1024,
+          "unit": "px"
+        }
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": {
+          "value": 1440,
+          "unit": "px"
+        }
       }
     }
   }

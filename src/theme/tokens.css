@@ -3,7 +3,7 @@
  * ------------------------------------------- */
 
 :root {
---ds-breakpoint-lg: 1024px;
+  --ds-breakpoint-lg: 1024px;
   --ds-breakpoint-md: 768px;
   --ds-breakpoint-sm: 640px;
   --ds-breakpoint-xl: 1440px;
@@ -27,6 +27,7 @@
   --ds-color-skeleton-base: var(--ds-palette-neutral-150);
   --ds-color-skeleton-highlight: var(--ds-palette-neutral-100);
   --ds-color-surface-card: var(--ds-palette-neutral-50);
+  /* The canonical page-chrome surface role — read by the Storybook swatchbook addon. */
   --ds-color-surface-default: var(--ds-color-surface-page);
   --ds-color-surface-highlight: var(--ds-palette-green-200);
   --ds-color-surface-info: var(--ds-palette-blue-200);
@@ -34,6 +35,7 @@
   --ds-color-surface-overlay: var(--ds-palette-neutral-0);
   --ds-color-surface-page: var(--ds-palette-neutral-0);
   --ds-color-surface-sunken: var(--ds-palette-neutral-100);
+  /* The canonical page-chrome text role — read by the Storybook swatchbook addon. */
   --ds-color-text-default: var(--ds-color-text-primary);
   --ds-color-text-error: var(--ds-palette-red-700);
   --ds-color-text-hint: var(--ds-palette-neutral-600);
@@ -247,6 +249,7 @@
   --ds-color-skeleton-base: var(--ds-palette-neutral-750);
   --ds-color-skeleton-highlight: var(--ds-palette-neutral-700);
   --ds-color-surface-card: var(--ds-palette-neutral-900);
+  /* The canonical page-chrome surface role — read by the Storybook swatchbook addon. */
   --ds-color-surface-default: var(--ds-color-surface-page);
   --ds-color-surface-highlight: var(--ds-palette-neutral-900);
   --ds-color-surface-info: var(--ds-palette-neutral-900);
@@ -254,6 +257,7 @@
   --ds-color-surface-overlay: var(--ds-palette-neutral-900);
   --ds-color-surface-page: var(--ds-palette-neutral-950);
   --ds-color-surface-sunken: var(--ds-palette-neutral-800);
+  /* The canonical page-chrome text role — read by the Storybook swatchbook addon. */
   --ds-color-text-default: var(--ds-color-text-primary);
   --ds-color-text-error: var(--ds-palette-red-300);
   --ds-color-text-hint: var(--ds-palette-neutral-400);
@@ -468,6 +472,7 @@
     --ds-color-skeleton-base: var(--ds-palette-neutral-750);
     --ds-color-skeleton-highlight: var(--ds-palette-neutral-700);
     --ds-color-surface-card: var(--ds-palette-neutral-900);
+    /* The canonical page-chrome surface role — read by the Storybook swatchbook addon. */
     --ds-color-surface-default: var(--ds-color-surface-page);
     --ds-color-surface-highlight: var(--ds-palette-neutral-900);
     --ds-color-surface-info: var(--ds-palette-neutral-900);
@@ -475,6 +480,7 @@
     --ds-color-surface-overlay: var(--ds-palette-neutral-900);
     --ds-color-surface-page: var(--ds-palette-neutral-950);
     --ds-color-surface-sunken: var(--ds-palette-neutral-800);
+    /* The canonical page-chrome text role — read by the Storybook swatchbook addon. */
     --ds-color-text-default: var(--ds-color-text-primary);
     --ds-color-text-error: var(--ds-palette-red-300);
     --ds-color-text-hint: var(--ds-palette-neutral-400);
