@@ -1,0 +1,208 @@
+{
+  "ds": {
+    "color": {
+      "surface": {
+        "page": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.950}"
+        },
+        "card": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        },
+        "sunken": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.800}"
+        },
+        "overlay": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        },
+        "inverse": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        },
+        "highlight": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        },
+        "info": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        }
+      },
+      "text": {
+        "primary": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.400}"
+        },
+        "hint": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.400}"
+        },
+        "label": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.150}"
+        },
+        "label-active": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        },
+        "on-inverse": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        },
+        "error": {
+          "$type": "color",
+          "$value": "{ds.palette.red.300}"
+        },
+        "review": {
+          "$type": "color",
+          "$value": "{ds.palette.blue.200}"
+        }
+      },
+      "action": {
+        "primary": {
+          "$type": "color",
+          "$value": "{ds.palette.green.200}"
+        },
+        "primary-hover": {
+          "$type": "color",
+          "$value": "{ds.palette.green.300}"
+        },
+        "on-primary": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.900}"
+        },
+        "subtle-hover": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.800}"
+        },
+        "progress": {
+          "$type": "color",
+          "$value": "{ds.palette.green.200}"
+        }
+      },
+      "border": {
+        "subtle": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.800}"
+        }
+      },
+      "focus": {
+        "ring": {
+          "$type": "color",
+          "$value": "{ds.palette.blue.700}"
+        },
+        "halo": {
+          "$type": "color",
+          "$value": "{ds.palette.blue.200}"
+        }
+      },
+      "icon": {
+        "default": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        }
+      },
+      "skeleton": {
+        "base": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.750}"
+        },
+        "highlight": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.700}"
+        }
+      },
+      "chip": {
+        "contrast-bg": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.950}"
+        },
+        "contrast-text": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.0}"
+        }
+      },
+      "badge": {
+        "bg": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.800}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.400}"
+        },
+        "positive-bg": {
+          "$type": "color",
+          "$value": "{ds.palette.green.200}"
+        },
+        "positive-text": {
+          "$type": "color",
+          "$value": "{ds.color.text.primary}"
+        }
+      },
+      "progress": {
+        "track": {
+          "$type": "color",
+          "$value": "{ds.palette.neutral.800}"
+        },
+        "fill": {
+          "$type": "color",
+          "$value": "{ds.palette.green.200}"
+        }
+      }
+    },
+    "shadow": {
+      "focus": {
+        "$type": "shadow",
+        "$description": "Inner ring widens to 2px in dark mode.",
+        "$value": [
+          {
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 2,
+              "unit": "px"
+            },
+            "color": "{ds.color.focus.ring}"
+          },
+          {
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 0,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 0,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 4,
+              "unit": "px"
+            },
+            "color": "{ds.color.focus.halo}"
+          }
+        ]
+      }
+    }
+  }
+}

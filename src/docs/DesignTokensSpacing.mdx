@@ -1,0 +1,45 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import {
+  Diagnostics,
+  ColorPalette,
+  ColorTable,
+  FontFamilyPreview,
+  FontWeightScale,
+  DimensionScale,
+  TokenTable,
+  ShadowPreview,
+  MotionPreview,
+  TokenDetail,
+  TypographyScale,
+} from '@unpunnyfuns/swatchbook-addon'
+
+<Meta title="Design tokens/Spacing and layout" tags={['general-tokens']} />
+
+# Spacing and layout tokens
+
+This page lists all tokens related to spacing your components. The list is voluntarily short to encourage consistent layouts. If you have a need that is not covered by the existing tokens, please make a request for new tokens to be added.
+
+## Space scale
+
+The Droppy space scale acts as a ladder, with no particular semantic attributed to individual token values.
+
+<DimensionScale filter="ds.space.*" visual="length" caption="" />
+
+## Radius
+
+Radius expresses the "floatiness" of different UI elements. The more elevated or overlay-like a surface, the larger the radius.
+
+- **control:** buttons, inputs, checkboxes, radios, toggles
+- **card:** cards, tooltips, and other floating chrome
+- **sheet:** dialog, drawer
+- **pill:** switch track
+- **round:** avatar, radio, switch thumb
+
+<DimensionScale filter="ds.radius.*" visual="radius" caption="" />
+
+## Breakpoints
+
+Reference values only, as CSS custom property can't be used inside `@media` queries.
+Components hardcode the matching literal pixel value where needed.
+
+<TokenTable filter="ds.breakpoint.*" searchable={false} caption="" />

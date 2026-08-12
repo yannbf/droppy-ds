@@ -49,7 +49,7 @@ app writes last — app CSS wins at equal specificity without `!important`.
 
 ## Theming
 
-Droppy flips light and dark by a `data-theme` attribute on the root element. Unset, the tokens
+Droppy flips light and dark by a `data-ds-theme` attribute on the root element. Unset, the tokens
 follow the OS `prefers-color-scheme`:
 
 ```tsx
@@ -58,6 +58,18 @@ document.documentElement.dataset.theme = isDark ? 'dark' : 'light'
 
 `IconButton` is the one component that doesn't respond to the theme — it stays a light pill in
 dark mode because it's built for floating over photography, not over a themed surface.
+
+## Tokens in app code
+
+The stylesheet defines every design token as a CSS custom property (`--ds-color-text-primary`,
+`--ds-space-md`, …). Use them directly wherever CSS goes — plain CSS, styled-components,
+inline styles — and they follow the active theme:
+
+```tsx
+const Price = styled.span`
+  color: var(--ds-color-text-secondary);
+`
+```
 
 ## Portaling
 
