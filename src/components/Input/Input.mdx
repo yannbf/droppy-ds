@@ -5,6 +5,8 @@ import * as InputStories from './Input.stories'
 
 # Input
 
+{/* BEGIN: general */}
+
 A labelled text field with a reserved slot for its validation message.
 
 - **Import:** `import { Input } from '@droppy/design-system'`
@@ -20,6 +22,10 @@ A labelled text field with a reserved slot for its validation message.
 - **No `aria-label` layered on top of the visible label.** Field's association already gives the input its accessible name, so what a screen reader announces always matches what's on screen.
 - **`className` merges onto the underlying input**, so wrapping it in `styled()` or adding utility classes composes instead of replacing Droppy's own styling.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Any single-line text field in a form — name, email, phone, postcode.
@@ -29,6 +35,10 @@ A labelled text field with a reserved slot for its validation message.
 
 - To let someone pick from a short, known list rather than type a value, use [Select](?path=/docs/forms-input-select--docs) instead — a select can't return a value the list doesn't contain, which is often what you want.
 - For multi-line content, `Input` renders a single `<input>` and has no multi-line mode — reach for Base UI's `Field.Control render={<textarea />}` directly instead of stretching this component past a single line.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -56,6 +66,10 @@ Any native `type` works — `Input` only supplies its own default (`text`) and o
 
 <Canvas of={InputStories.Types} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 | Key                        | Action                                                                  |
@@ -67,6 +81,10 @@ Any native `type` works — `Input` only supplies its own default (`text`) and o
 - **Screen reader:** announces the label as the field's accessible name, then reads the error slot as part of the field's description. Because the slot is always rendered — even with no error — its id stays in `aria-describedby` at all times; with no error present, a screen reader simply reads a blank description.
 - **You must provide:** a `label`. Without one, no `Field.Label` renders at all and the input has no accessible name — the same obligation every native form control has.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token                      | Used for                                                          |
@@ -76,6 +94,16 @@ Any native `type` works — `Input` only supplies its own default (`text`) and o
 | `--ds-type-size-2xs`       | Error message font size                                           |
 
 Everything else — colors, borders, radius, focus ring — comes from the theme layer's own `Field`/`Input` classes; `Input.css` only overrides the pieces specific to Droppy's variant (the placeholder border is removed, since validity is communicated by the error message rather than a border color). `className` is merged onto the rendered input, composing with rather than replacing that layer.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={InputStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -105,11 +133,11 @@ Everything else — colors, borders, radius, focus ring — comes from the theme
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={InputStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To offer a fixed set of choices instead of free text, use [Select](?path=/docs/forms-input-select--docs).
 - For the page or section title above a form, use [Heading](?path=/docs/typography-heading--docs).
+
+{/* END: when-to-use */}

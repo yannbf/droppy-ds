@@ -21,31 +21,39 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const Large: Story = {
+  tags: ['api-ref'],
   args: { large: true },
 }
 
 /** Secondary actions, so the page has one obvious primary. */
 export const Clear: Story = {
+  tags: ['api-ref'],
   args: { clear: true },
 }
 
 export const WithIcon: Story = {
+  tags: ['api-ref'],
   args: { icon: 'cart' },
 }
 
 /** Icon-only buttons carry their name in `aria-label` — there is no text to read. */
 export const IconOnly: Story = {
+  tags: ['highlight'],
   args: { icon: 'cross', round: true, clear: true, children: undefined, 'aria-label': 'close' },
 }
 
 export const Disabled: Story = {
+  tags: ['api-ref'],
   args: { disabled: true },
 }
 
 export const Variants: Story = {
+  tags: ['api-ref'],
   render: (args) => (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
       <Button {...args}>Default</Button>
@@ -69,6 +77,7 @@ export const Variants: Story = {
 }
 
 export const ClickHandling: Story = {
+  tags: ['tests'],
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)
 
@@ -79,6 +88,7 @@ export const ClickHandling: Story = {
 }
 
 export const DisabledSwallowsClicks: Story = {
+  tags: ['tests'],
   args: { disabled: true },
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)

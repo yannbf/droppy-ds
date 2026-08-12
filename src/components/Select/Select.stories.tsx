@@ -24,9 +24,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const TextOptions: Story = {
+  tags: ['api-ref'],
   args: {
     label: 'delivery window',
     options: ['ASAP', 'In 30 minutes', 'In an hour', 'Tonight'],
@@ -35,12 +38,14 @@ export const TextOptions: Story = {
 }
 
 export const Disabled: Story = {
+  tags: ['api-ref'],
   args: { disabled: true },
 }
 
 /** Numeric options come back as numbers, so a caller can use the value without
  *  parsing it first. */
 export const ReportsNumericValues: Story = {
+  tags: ['tests'],
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)
 
@@ -51,6 +56,7 @@ export const ReportsNumericValues: Story = {
 }
 
 export const ReportsTextValues: Story = {
+  tags: ['tests'],
   args: TextOptions.args,
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)

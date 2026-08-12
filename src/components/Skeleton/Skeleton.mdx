@@ -5,6 +5,8 @@ import * as SkeletonStories from './Skeleton.stories'
 
 # Skeleton
 
+{/* BEGIN: general */}
+
 A loading placeholder that stands in for content before it arrives, shaped to match what it will
 become.
 
@@ -26,6 +28,10 @@ become.
 - `aria-hidden="true"` always — a placeholder announces nothing on its own.
 - Merges any incoming `className` with its own `droppy-Skeleton` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - In place of text, an image, or any block of content while it loads, sized to match the shape
@@ -39,6 +45,10 @@ become.
   a shape to match.
 - For content whose final size isn't known. A skeleton that guesses wrong shifts the layout the
   moment real content replaces it, which is the exact jump skeletons exist to prevent.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -71,6 +81,10 @@ The sweep animates `background-position` across a gradient built from
 and flips with it automatically. Under `prefers-reduced-motion: reduce`, the animation is removed
 and the background falls back to the flat base token.
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `Skeleton` is non-interactive and carries no role — there is no keyboard interaction to document.
@@ -82,6 +96,10 @@ and the background falls back to the flat base token.
   example `role="status"` with an `aria-label`, or `aria-busy="true"` — since `Skeleton` itself
   announces nothing.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token                           | Used for                                                     |
@@ -89,6 +107,16 @@ and the background falls back to the flat base token.
 | `--ds-color-skeleton-base`      | The gradient's resting color and the reduced-motion fallback |
 | `--ds-color-skeleton-highlight` | The gradient's sweep color                                   |
 | `--ds-radius-control`           | The default border radius                                    |
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={SkeletonStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -112,10 +140,10 @@ and the background falls back to the flat base token.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={SkeletonStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - The block it sits inside while text is loading — see [Heading](?path=/docs/typography-heading--docs).
+
+{/* END: when-to-use */}

@@ -16,13 +16,17 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const Small: Story = {
+  tags: ['api-ref'],
   args: { small: true },
 }
 
 export const Sizes: Story = {
+  tags: ['api-ref'],
   render: (args) => (
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
       <IconButton {...args} aria-label="previous" name="arrow-left" />
@@ -32,6 +36,7 @@ export const Sizes: Story = {
 }
 
 export const ClickHandling: Story = {
+  tags: ['tests'],
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)
 

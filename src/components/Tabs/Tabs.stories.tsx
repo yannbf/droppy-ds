@@ -27,6 +27,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  tags: ['showcase'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
@@ -38,6 +39,7 @@ export const Default: Story = {
 
 /** Clicking a tab activates it and swaps the visible panel. */
 export const ClickToActivate: Story = {
+  tags: ['tests'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
@@ -57,6 +59,7 @@ export const ClickToActivate: Story = {
  * alone does not change which panel is visible.
  */
 export const KeyboardFocusDoesNotActivate: Story = {
+  tags: ['tests'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
@@ -80,6 +83,7 @@ export const KeyboardFocusDoesNotActivate: Story = {
 
 /** A disabled tab stays focusable but never activates, by click or keyboard. */
 export const DisabledTab: Story = {
+  tags: ['api-ref'],
   args: {
     tabs: [tabs[0], { ...tabs[1], disabled: true }, tabs[2]],
   },
@@ -97,6 +101,7 @@ export const DisabledTab: Story = {
 
 /** External `value`/`onValueChange`, so the caller can drive which tab is active. */
 export const ControlledValue: Story = {
+  tags: ['api-ref'],
   args: {
     defaultValue: undefined,
     value: 'items',
@@ -117,6 +122,7 @@ export const ControlledValue: Story = {
  * indicator's underlying value actually tracks the active tab.
  */
 export const AnimatedIndicator: Story = {
+  tags: ['animation'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const indicator = canvasElement.querySelector('.TabsIndicator') as HTMLElement

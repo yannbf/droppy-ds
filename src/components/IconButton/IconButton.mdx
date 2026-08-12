@@ -5,6 +5,8 @@ import * as IconButtonStories from './IconButton.stories'
 
 # IconButton
 
+{/* BEGIN: general */}
+
 A circular icon-only control for floating affordances — carousel arrows, overlay dismissals —
 that stays legible over arbitrary imagery instead of following the page's theme.
 
@@ -27,6 +29,10 @@ that stays legible over arbitrary imagery instead of following the page's theme.
   button doesn't flatten when it gains focus.
 - Merges any incoming `className` with its own classes.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A floating icon-only affordance that has to stay legible over arbitrary imagery — carousel
@@ -40,6 +46,10 @@ that stays legible over arbitrary imagery instead of following the page's theme.
   instead, because `IconButton` is deliberately theme-independent and won't flip in dark mode.
 - For an action with visible text, use [Button](?path=/docs/actions-button--docs) instead,
   because `IconButton` has no children slot — it renders only the icon.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -66,6 +76,10 @@ ring are tokens; everything else is a fixed value.
 Focus adds `--ds-shadow-focus` alongside the existing drop shadow rather than replacing it — a
 bare `box-shadow` on focus would drop the shadow and the button would flatten.
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 | Key   | Action                                           |
@@ -82,6 +96,10 @@ bare `box-shadow` on focus would drop the shadow and the button would flatten.
 - **Known limitation:** disabling the control always removes it from the tab order and the
   accessibility tree — there's no `focusableWhenDisabled`-style escape hatch.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 - `--ds-radius-round` — border radius.
@@ -89,6 +107,16 @@ bare `box-shadow` on focus would drop the shadow and the button would flatten.
 - Everything else — background, text colour, icon stroke, drop shadow — is a fixed value, not a
   token, because `IconButton` is deliberately theme-independent.
 - `className` merges with the component's own classes.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={IconButtonStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -116,9 +144,7 @@ bare `box-shadow` on focus would drop the shadow and the button would flatten.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={IconButtonStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
@@ -126,3 +152,5 @@ bare `box-shadow` on focus would drop the shadow and the button would flatten.
   [Button](?path=/docs/actions-button--docs).
 - The icon set `IconButton` draws its `name` prop from — see
   [Icon](?path=/docs/media-content-icon--docs).
+
+{/* END: when-to-use */}

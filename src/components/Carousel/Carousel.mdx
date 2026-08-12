@@ -5,6 +5,8 @@ import * as CarouselStories from './Carousel.stories'
 
 # Carousel
 
+{/* BEGIN: general */}
+
 A horizontally scrolling row of items — restaurant cards, category tiles — showing a fixed number
 per breakpoint, with drag, wheel-gesture, and arrow navigation.
 
@@ -28,6 +30,10 @@ per breakpoint, with drag, wheel-gesture, and arrow navigation.
   breakpoint — smaller screens scroll by dragging instead.
 - Merges any incoming `className` with its own `droppy-Carousel` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A horizontally browsable row of same-shaped items where showing a fixed count per breakpoint
@@ -37,6 +43,10 @@ per breakpoint, with drag, wheel-gesture, and arrow navigation.
 
 - A small, fixed set of items that all fit comfortably in the available width — a plain flex or
   grid row needs no carousel machinery.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -52,6 +62,10 @@ When every child already fits in the viewport, neither arrow renders — there's
 
 <Canvas of={CarouselStories.AdvanceByPage} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 Arrow buttons are real `<button>`s (via `IconButton`) with `aria-label="Previous"` /
@@ -66,6 +80,10 @@ own content remains independently focusable and readable in document order.
 - **You must provide:** an accessible label for the carousel region as a whole, if the surrounding
   page needs one (e.g. wrap it with `aria-label` or a preceding heading).
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token              | Used for                                 |
@@ -77,11 +95,21 @@ Arrow buttons use `IconButton`'s own styling (see [IconButton](?path=/docs/actio
 deliberately not theme-reactive, so they stay legible over arbitrary imagery. `className` merges
 with the component's own `droppy-Carousel` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
 ## API reference
 
 <ArgTypes of={CarouselStories} />
+
+{/* END: props */}
+
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [IconButton](?path=/docs/actions-iconbutton--docs) — the arrow control `Carousel` builds on.
 - [Card](?path=/docs/media-content-card--docs) — a common shape for carousel items.
+
+{/* END: when-to-use */}

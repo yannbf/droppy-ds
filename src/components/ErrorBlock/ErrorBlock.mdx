@@ -5,6 +5,8 @@ import * as ErrorBlockStories from './ErrorBlock.stories'
 
 # ErrorBlock
 
+{/* BEGIN: general */}
+
 A titled message with an optional illustration and a single recovery action — an empty
 category, a 404, a failed request.
 
@@ -23,6 +25,10 @@ category, a 404, a failed request.
 - `className` merges onto the root element, so wrapping it in `styled()` or adding utility
   classes composes instead of stripping the design system's styling.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - An empty result set that still needs a way forward — no restaurants in a category, an empty
@@ -35,6 +41,10 @@ category, a 404, a failed request.
   [Skeleton](?path=/docs/feedback-status-skeleton--docs) instead. `ErrorBlock` is for a state that has
   already resolved to "nothing here," not one still loading.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
 `ErrorBlock` stacks its four parts in a column: the `title` as a level-2 `Heading`, the
@@ -43,6 +53,10 @@ action as a `Button`. Composition, not configuration — the illustration is wha
 renders, so a Lottie animation, a static image, or an inline SVG all work the same way.
 
 <Canvas of={ErrorBlockStories.WithoutIllustration} />
+
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -55,6 +69,10 @@ renders, so a Lottie animation, a static image, or an inline SVG all work the sa
   — "Try again" or "See all restaurants" rather than "Click here" — since it's the only
   interactive element in the block.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token           | Used for                                         |
@@ -64,6 +82,16 @@ renders, so a Lottie animation, a static image, or an inline SVG all work the sa
 
 `Heading`, `Body`, and `Button` read their own tokens independently — see each component's docs
 for those.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ErrorBlockStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -90,11 +118,11 @@ for those.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ErrorBlockStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Skeleton](?path=/docs/feedback-status-skeleton--docs) — a shape-matching placeholder for content
   that's still loading, rather than a state that has already resolved to empty or failed.
+
+{/* END: when-to-use */}

@@ -16,6 +16,7 @@ type Story = StoryObj<typeof meta>
 /** Bare, inside a line of text: an inline-block that takes the height of the
  *  surrounding font and fills the available width. */
 export const Default: Story = {
+  tags: ['showcase'],
   render: (args) => (
     <p style={{ margin: 0, fontSize: '1.5rem' }}>
       <Skeleton {...args} />
@@ -27,6 +28,7 @@ export const Default: Story = {
  *  and `style` still passes through for a corner radius the tokens don't
  *  cover. */
 export const SizedBlock: Story = {
+  tags: ['api-ref'],
   render: (args) => (
     <Skeleton {...args} height={200} width="100%" style={{ borderRadius: '4px 4px 0 0' }} />
   ),
@@ -36,6 +38,7 @@ export const SizedBlock: Story = {
  *  lines, and a trailing detail, each width fixed to the shape it stands in
  *  for so the layout doesn't jump once the real copy arrives. */
 export const TextBlock: Story = {
+  tags: ['highlight'],
   render: (args) => (
     // A skeleton heading has no accessible name of its own — the loading
     // container is what announces the busy state, so it carries the label
@@ -62,6 +65,7 @@ export const TextBlock: Story = {
 /** A placeholder announces nothing — the loading state belongs to whatever
  *  container renders it, not to the `Skeleton` itself. */
 export const HiddenFromAssistiveTech: Story = {
+  tags: ['tests'],
   play: async ({ canvasElement }) => {
     const canvas = canvasElement.querySelector('.droppy-Skeleton')
 
@@ -72,6 +76,7 @@ export const HiddenFromAssistiveTech: Story = {
 /** The shimmer comes entirely from `Skeleton.css` — this proves the
  *  stylesheet loaded rather than trusting the visual sweep in the canvas. */
 export const UsesShimmerTokens: Story = {
+  tags: ['animation'],
   play: async ({ canvasElement }) => {
     const canvas = canvasElement.querySelector('.droppy-Skeleton')
     const computed = window.getComputedStyle(canvas as Element)

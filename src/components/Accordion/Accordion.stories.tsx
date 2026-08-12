@@ -37,10 +37,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 /** Single-open mode (the default): opening one item replaces whichever was open before. */
 export const SingleOpen: Story = {
+  tags: ['highlight'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
@@ -62,6 +65,7 @@ export const SingleOpen: Story = {
 
 /** `openMultiple` allows more than one panel to stay open simultaneously. */
 export const OpenMultiple: Story = {
+  tags: ['api-ref'],
   args: {
     openMultiple: true,
   },
@@ -83,6 +87,7 @@ export const OpenMultiple: Story = {
 
 /** A disabled item stays focusable but never toggles open, by click or keyboard. */
 export const DisabledItem: Story = {
+  tags: ['api-ref'],
   args: {
     items: [faqItems[0], { ...faqItems[1], disabled: true }, faqItems[2]],
   },
@@ -101,6 +106,7 @@ export const DisabledItem: Story = {
 
 /** External `value`/`onValueChange`, so the caller can drive which item is open. */
 export const ControlledValue: Story = {
+  tags: ['api-ref'],
   args: {
     value: ['what-is'],
     onValueChange: () => {},
@@ -120,6 +126,7 @@ export const ControlledValue: Story = {
  * order moves focus between triggers, and Space toggles the focused one.
  */
 export const KeyboardTabFlow: Story = {
+  tags: ['tests'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const trigger1 = canvas.getByRole('button', { name: faqItems[0].title })

@@ -31,6 +31,7 @@ type Story = StoryObj<typeof meta>
 /** A fixed-height panel of long text content with a single vertical
  *  scrollbar, revealed on hover or while scrolling. */
 export const Default: Story = {
+  tags: ['showcase'],
   play: async ({ canvasElement }) => {
     // The scrollbar renders after Base UI's overflow measurement effect runs,
     // so it isn't present on first paint — re-query inside waitFor.
@@ -41,6 +42,7 @@ export const Default: Story = {
 }
 
 export const Horizontal: Story = {
+  tags: ['api-ref'],
   args: {
     orientation: 'horizontal',
     children: (
@@ -74,6 +76,7 @@ export const Horizontal: Story = {
 /** Content overflowing both axes renders a scrollbar on each, plus the corner
  *  where the two tracks would otherwise intersect. */
 export const BothAxes: Story = {
+  tags: ['api-ref'],
   args: {
     orientation: 'both',
     children: (

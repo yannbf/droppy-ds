@@ -5,6 +5,8 @@ import * as BadgeStories from './Badge.stories'
 
 # Badge
 
+{/* BEGIN: general */}
+
 A small pill for a short, static label — a dietary tag, a category, a "new" flag.
 
 - **Import:** `import { Badge } from '@droppy/design-system'`
@@ -20,6 +22,10 @@ A small pill for a short, static label — a dietary tag, a category, a "new" fl
   such as "new" — padding, radius, and size stay the same as the neutral default.
 - Merges any incoming `className` with its own `droppy-Badge` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A short, static label attached to something else — a dietary tag on a menu item, a category
@@ -34,6 +40,10 @@ A small pill for a short, static label — a dietary tag, a category, a "new" fl
   variants to cover states it wasn't designed for.
 - As a clickable control — `Badge` has no interactive semantics. If the label needs to respond to
   a click, use [Button](?path=/docs/actions-button--docs) with `clear` instead.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -51,6 +61,10 @@ The pill grows with its content — there's no truncation or fixed width.
 
 <Canvas of={BadgeStories.LongerText} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `Badge` renders a non-interactive `<span>` — there is no keyboard interaction to document.
@@ -59,6 +73,10 @@ The pill grows with its content — there's no truncation or fixed width.
 - **Screen reader:** announced as part of the enclosing text flow, in reading order.
 - **You must provide:** an accessible name on whatever control the badge sits inside, if any —
   `Badge` itself carries none.
+
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -73,6 +91,16 @@ The pill grows with its content — there's no truncation or fixed width.
 | `--ds-type-weight-regular` / `-bold` | Font weight, neutral / `positive` |
 
 `className` merges with the component's own `droppy-Badge` class.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={BadgeStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -100,10 +128,10 @@ The pill grows with its content — there's no truncation or fixed width.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={BadgeStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Button](?path=/docs/actions-button--docs) — for a label that needs to be clickable.
+
+{/* END: when-to-use */}

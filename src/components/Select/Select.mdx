@@ -5,6 +5,8 @@ import * as SelectStories from './Select.stories'
 
 # Select
 
+{/* BEGIN: general */}
+
 A single-choice control over a short, known list.
 
 - **Import:** `import { Select } from '@droppy/design-system'`
@@ -20,6 +22,10 @@ A single-choice control over a short, known list.
 - **Label sits before the control in the DOM**, matching reading order, while the focus highlight still reaches it via a `:has()` selector rather than a sibling combinator that would require the opposite order.
 - **The chevron is a token-colored CSS mask**, not an SVG with a baked-in fill color, so it follows the theme into dark mode without any JavaScript theme lookup.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Choosing one value from a short, known list — quantities, delivery windows, and similar bounded option sets.
@@ -29,6 +35,10 @@ A single-choice control over a short, known list.
 
 - To let someone type a value rather than pick from a fixed list, use [Input](?path=/docs/forms-input-input--docs) instead — a select can only ever return one of its declared options.
 - For a list too long to scan by eye or by native typeahead alone, this component isn't it — Droppy has no searchable variant here. Reach for Base UI's `Combobox` directly rather than stretching `Select` past what a native picker is good at.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -49,6 +59,10 @@ Numeric options come back as numbers, not strings, so a caller can use the value
 
 <Canvas of={SelectStories.Disabled} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 | Key                       | Context        | Action                                                                   |
@@ -61,6 +75,10 @@ Numeric options come back as numbers, not strings, so a caller can use the value
 - **ARIA:** none added beyond what a native `<select>` and a `<label htmlFor>` already provide — the browser reports the control's role, expanded state, and current selection to assistive technology on its own.
 - **Screen reader:** announces the label as the field's name, then the currently selected option; opening the picker reads out the option list through whichever native mechanism the OS supplies.
 - **You must provide:** a `label`. Without one the rendered `<select>` has no accessible name, the same obligation as any other native form control.
+
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -77,6 +95,16 @@ Numeric options come back as numbers, not strings, so a caller can use the value
 | `--ds-shadow-focus`                                                        | Focus ring                                            |
 
 The chevron itself is a `mask` over a token-colored layer rather than a data-URL SVG, specifically so `--ds-color-icon-default` can resolve inside it — colors embedded in SVG XML can't read CSS custom properties, so a baked-in-color chevron would need a JavaScript theme lookup to flip in dark mode; this one doesn't. `className` merges onto the outer wrapper.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={SelectStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -106,10 +134,10 @@ The chevron itself is a `mask` over a token-colored layer rather than a data-URL
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={SelectStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To collect free-form text instead of a fixed choice, use [Input](?path=/docs/forms-input-input--docs).
+
+{/* END: when-to-use */}

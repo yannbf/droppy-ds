@@ -5,6 +5,8 @@ import * as AccordionStories from './Accordion.stories'
 
 # Accordion
 
+{/* BEGIN: general */}
+
 A stack of collapsible sections, each labelled by a header — an FAQ list, a set of grouped
 filters, a details panel with several independent parts.
 
@@ -27,6 +29,10 @@ filters, a details panel with several independent parts.
 - **Renders the theme's plus icon inside each trigger**, which rotates 45° into a cross when its
   panel opens.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A list of independent sections where showing everything at once would be overwhelming — an FAQ,
@@ -38,6 +44,10 @@ filters, a details panel with several independent parts.
   scannability for compactness, and hiding content the user needs constantly just adds clicks.
 - For a single show/hide toggle rather than a list of sections, use Base UI's `Collapsible`
   directly instead — `Accordion` is built for managing several sections' open state together.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -66,6 +76,10 @@ instead of `defaultValue`.
 
 <Canvas of={AccordionStories.ControlledValue} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 | Key / interaction | Context         | Action                                                          |
@@ -83,6 +97,10 @@ instead of `defaultValue`.
 - **You must provide:** a meaningful `title` per item — it becomes both the visible label and the
   trigger's accessible name.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 Droppy's own stylesheet carries no rules for `Accordion` — the theme layer's `AccordionRoot`,
@@ -91,6 +109,15 @@ Droppy's own stylesheet carries no rules for `Accordion` — the theme layer's `
 full.
 
 `className` merges onto the root, so it composes with the theme layer rather than replacing it.
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={AccordionStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -117,9 +144,7 @@ full.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={AccordionStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
@@ -129,3 +154,5 @@ full.
   [Card](?path=/docs/media-content-card--docs).
 - For switching between panels where only one is ever relevant at a time, see
   [Tabs](?path=/docs/navigation-tabs--docs) instead of collapsing all of them into one column.
+
+{/* END: when-to-use */}

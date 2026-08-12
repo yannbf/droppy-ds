@@ -24,15 +24,19 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const SingleCrumb: Story = {
+  tags: ['highlight'],
   args: { items: [{ label: 'restaurants' }] },
 }
 
 /** The last crumb carries `aria-current="page"`, whether it renders as a
  *  link or as plain text. */
 export const CurrentPageIsMarked: Story = {
+  tags: ['tests'],
   play: async ({ canvas }) => {
     const current = canvas.getByText('sushi')
 
@@ -45,6 +49,7 @@ export const CurrentPageIsMarked: Story = {
  *  for `react-router`'s `Link`, cloned with the crumb's class and, on the
  *  last item, `aria-current`. */
 export const WithRouterLink: Story = {
+  tags: ['highlight'],
   args: {
     items: [
       { label: 'categories', render: <RouterLink to="/categories" /> },

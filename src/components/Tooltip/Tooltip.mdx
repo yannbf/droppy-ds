@@ -5,6 +5,8 @@ import * as TooltipStories from './Tooltip.stories'
 
 # Tooltip
 
+{/* BEGIN: general */}
+
 A hover and focus hint for a control whose purpose isn't obvious from its face.
 
 - **Import:** `import { Tooltip, TooltipProvider } from '@droppy/design-system'`
@@ -20,6 +22,10 @@ A hover and focus hint for a control whose purpose isn't obvious from its face.
 - **Never opens on touch, by design.** A tooltip is a sighted, mouse-and-keyboard supplement — it is not the only place the information it shows can live.
 - **`TooltipProvider` shares open/close timing across a group of tooltips**, so moving between neighboring controls skips the opening delay after the first one has already shown.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A hint for a control whose face doesn't explain itself — typically an icon-only button.
@@ -30,6 +36,10 @@ A hover and focus hint for a control whose purpose isn't obvious from its face.
 - To give the trigger its accessible name, don't rely on the tooltip alone — set `aria-label` directly on the trigger, as the stories on this page do. A tooltip never opens on touch and carries no ARIA link to the trigger, so it's invisible to touch users and to assistive technology either way.
 - For content a touch-only user must be able to reach, or information critical to understanding the control, a tooltip is the wrong place regardless of styling — put it in visible text instead, or, if it truly must block the page until acknowledged, use [Modal](?path=/docs/overlays-modal--docs).
 - For a transient confirmation message like "Copied," reach for a dedicated status notification, not a `Tooltip` — a tooltip's content isn't announced to screen readers, which a confirmation message needs to be.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -51,6 +61,10 @@ Focus and hover use separate paths: tabbing to the trigger opens the tip immedia
 
 The label text shown in the tip is meant to repeat the trigger's own `aria-label`, not substitute for it — every story on this page passes the same string to both. A tooltip is a supplement; if the tooltip text disappeared, the trigger would still need to make sense on its own.
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 | Key / interaction            | Context | Action                                                                                                |
@@ -66,6 +80,10 @@ The label text shown in the tip is meant to repeat the trigger's own `aria-label
 - **Screen reader:** announces nothing about the tooltip itself; a screen reader user hears only the trigger's own accessible name.
 - **You must provide:** an accessible name on the trigger — typically `aria-label` — whose text closely matches the tip, since the tooltip's content is otherwise invisible to assistive technology.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 Droppy's own stylesheet sets only the popup's stacking order:
@@ -75,6 +93,16 @@ Droppy's own stylesheet sets only the popup's stacking order:
 | `z-index: 3` | Keeps the popup above sticky page chrome such as a fixed header |
 
 Colors, padding, and border come from the theme layer's `TooltipPopup` class, layered before Droppy's own rule — the cascade is theme first, component second, consuming app last. `className` merges onto the popup, so it composes with both layers rather than replacing them.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={TooltipStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -104,12 +132,12 @@ Colors, padding, and border come from the theme layer's `TooltipPopup` class, la
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={TooltipStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - For a circular icon-only trigger — the shape most tooltips end up labelling — see [IconButton](?path=/docs/actions-iconbutton--docs). The stories on this page use a plain [Button](?path=/docs/actions-button--docs) instead.
 - To label a form field rather than a floating hint, use [Input](?path=/docs/forms-input-input--docs).
 - For a richer hint that touch and screen reader users also need to reach, use Base UI's `Popover` with `openOnHover` instead of `Tooltip`.
+
+{/* END: when-to-use */}

@@ -36,9 +36,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const AtMin: Story = {
+  tags: ['api-ref'],
   args: { value: 1 },
   play: async ({ canvas }) => {
     const decrease = canvas.getByRole('button', { name: 'decrease quantity by one' })
@@ -50,6 +53,7 @@ export const AtMin: Story = {
 }
 
 export const AtMax: Story = {
+  tags: ['api-ref'],
   args: { value: 10 },
   play: async ({ canvas }) => {
     const increase = canvas.getByRole('button', { name: 'increase quantity by one' })
@@ -62,6 +66,7 @@ export const AtMax: Story = {
 
 /** Clicking plus/minus reports each new value and disables at the bounds. */
 export const Increments: Story = {
+  tags: ['tests'],
   args: { value: 1, max: 2 },
   play: async ({ args, canvas }) => {
     const increase = canvas.getByRole('button', { name: 'increase quantity by one' })

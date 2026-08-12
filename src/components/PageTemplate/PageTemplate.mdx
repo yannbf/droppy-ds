@@ -5,6 +5,8 @@ import * as PageTemplateStories from './PageTemplate.stories'
 
 # PageTemplate
 
+{/* BEGIN: general */}
+
 The page shell: header, a `<main>` content area, and footer — the top-level layout every routed
 page sits inside.
 
@@ -24,6 +26,10 @@ page sits inside.
   instead of riding up under the fold.
 - Merges any incoming `className` with its own `droppy-PageTemplate` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - As the outermost layout of a routed page, wrapping the app's own header and footer components
@@ -34,6 +40,10 @@ page sits inside.
 - For a section within a page — use [Container](?path=/docs/layout-structure-container--docs) or
   [PageSection](?path=/docs/layout-structure-pagesection--docs) instead.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
 ### Content only
@@ -41,6 +51,10 @@ page sits inside.
 `header` and `footer` are both optional — omit them for a bare content shell.
 
 <Canvas of={PageTemplateStories.ContentOnly} />
+
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -52,6 +66,10 @@ page sits inside.
 - **You must provide:** the header and footer content, and any skip-link the app wants ahead of
   `<main>` — `PageTemplate` doesn't add one itself.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token / value             | Used for                           |
@@ -62,11 +80,21 @@ No color or spacing tokens apply directly — `PageTemplate` is a layout shell; 
 content styling come from whatever is passed into its slots. `className` merges with the
 component's own `droppy-PageTemplate` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
 ## API reference
 
 <ArgTypes of={PageTemplateStories} />
+
+{/* END: props */}
+
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Container](?path=/docs/layout-structure-container--docs) — for constraining width within a page.
 - [PageSection](?path=/docs/layout-structure-pagesection--docs) — for a titled section within a page.
+
+{/* END: when-to-use */}

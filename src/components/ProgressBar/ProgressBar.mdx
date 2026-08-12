@@ -5,6 +5,8 @@ import * as ProgressBarStories from './ProgressBar.stories'
 
 # ProgressBar
 
+{/* BEGIN: general */}
+
 A track-and-fill indicator for progress through a known number of steps — a multi-step checkout,
 an upload, a form with a fixed page count.
 
@@ -23,6 +25,10 @@ an upload, a form with a fixed page count.
 - The fill's width transitions on change, so incrementing `value` sweeps rather than jumps.
 - Merges any incoming `className` with its own `droppy-ProgressBar` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Progress through a known, finite sequence — a wizard's steps, an upload's byte count, a form's
@@ -33,6 +39,10 @@ an upload, a form with a fixed page count.
 - For a wait with no known duration or step count — an indeterminate spinner reads honestly where
   a determinate bar would imply progress that isn't real. Use
   [Skeleton](?path=/docs/feedback-status-skeleton--docs) for a loading placeholder instead.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -48,6 +58,10 @@ track — the ARIA attributes and the rendered width always agree.
 
 <Canvas of={ProgressBarStories.OverMaxClamps} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `ProgressBar` is a passive, non-interactive indicator — there is no keyboard interaction to
@@ -61,6 +75,10 @@ document.
   title/copy the caller renders alongside it (as Mealdrop's `StepIndicator` does) isn't
   associated with the control by markup alone.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token                       | Used for                     |
@@ -70,6 +88,16 @@ document.
 | `--ds-radius-control`       | Track and fill corner radius |
 
 `className` merges with the component's own `droppy-ProgressBar` class.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ProgressBarStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -97,11 +125,11 @@ document.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ProgressBarStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Skeleton](?path=/docs/feedback-status-skeleton--docs) — for an indeterminate loading placeholder
   instead of a value-driven bar.
+
+{/* END: when-to-use */}

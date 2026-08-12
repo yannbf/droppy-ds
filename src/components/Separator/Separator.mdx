@@ -5,6 +5,8 @@ import * as SeparatorStories from './Separator.stories'
 
 # Separator
 
+{/* BEGIN: general */}
+
 A visual and semantic divider between two blocks of content.
 
 - **Import:** `import { Separator } from '@droppy/design-system'`
@@ -21,6 +23,10 @@ A visual and semantic divider between two blocks of content.
   content rather than decoration.
 - Merges any incoming `className` onto the root, alongside the theme layer's own class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A plain visual and semantic break between two blocks or groups of content — a form's sections,
@@ -32,6 +38,10 @@ A visual and semantic divider between two blocks of content.
   spacing instead; a separator is for dividing content within one region, not for structuring the
   page itself.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
 ### Horizontal (default)
@@ -42,6 +52,10 @@ A visual and semantic divider between two blocks of content.
 
 <Canvas of={SeparatorStories.Vertical} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `Separator` is a passive, non-interactive element — there is no keyboard interaction to document.
@@ -49,10 +63,24 @@ A visual and semantic divider between two blocks of content.
 - **ARIA:** `role="separator"` with `aria-orientation` matching the `orientation` prop.
 - **Screen reader:** announced as a separator; carries no accessible name of its own.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 Thickness, color, and margin come from the theme layer's `SeparatorRoot` class — this component
 adds no styling of its own beyond forwarding `className` to the root.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={SeparatorStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -79,11 +107,11 @@ adds no styling of its own beyond forwarding `className` to the root.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={SeparatorStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Card](?path=/docs/media-content-card--docs) — for dividing distinct regions of a page rather
   than content within one region.
+
+{/* END: when-to-use */}

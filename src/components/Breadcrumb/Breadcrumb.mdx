@@ -5,6 +5,8 @@ import * as BreadcrumbStories from './Breadcrumb.stories'
 
 # Breadcrumb
 
+{/* BEGIN: general */}
+
 A trail of ancestor pages leading to the current one — categories, restaurants, anything with a
 browsable hierarchy above it.
 
@@ -25,6 +27,10 @@ browsable hierarchy above it.
   markup already conveys order.
 - Merges any incoming `className` with its own `droppy-Breadcrumb` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Above a page reached by drilling into a category, a restaurant, or any other browsable
@@ -34,6 +40,10 @@ browsable hierarchy above it.
 
 - On a page with no hierarchy above it — a plain link back to the parent page reads more
   honestly than a one-crumb trail implying a hierarchy that isn't there.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -57,6 +67,10 @@ destination.
 
 <Canvas of={BreadcrumbStories.WithRouterLink} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 Each linked crumb is a real `<a>` (or the router element passed via `render`) — standard link
@@ -69,6 +83,10 @@ keyboard behaviour applies, no custom handling.
 - **You must provide:** nothing further — the landmark, list semantics, and current-page marking
   are all built in.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token                       | Used for                                   |
@@ -80,6 +98,16 @@ keyboard behaviour applies, no custom handling.
 | `--ds-space-2xs`            | Horizontal margin around the `/` separator |
 
 `className` merges with the component's own `droppy-Breadcrumb` class.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={BreadcrumbStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -109,10 +137,10 @@ keyboard behaviour applies, no custom handling.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={BreadcrumbStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - Plain page links, for a page with no hierarchy above it.
+
+{/* END: when-to-use */}

@@ -12,9 +12,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const Sizes: Story = {
+  tags: ['api-ref'],
   render: (args) => (
     <>
       <Body {...args}>Base</Body>
@@ -32,6 +35,7 @@ export const Sizes: Story = {
 }
 
 export const Weights: Story = {
+  tags: ['api-ref'],
   render: (args) => (
     <>
       <Body {...args} fontWeight="regular">
@@ -53,6 +57,7 @@ export const Weights: Story = {
 /** `type` picks the rendered element — `label` renders a real `<label>`, so it
  *  can be associated with a control instead of styled with a `span`. */
 export const RendersMatchingTag: Story = {
+  tags: ['highlight'],
   args: { type: 'label', children: 'Delivery address' },
   play: async ({ canvas }) => {
     await expect(canvas.getByText('Delivery address').tagName).toBe('LABEL')
@@ -60,6 +65,7 @@ export const RendersMatchingTag: Story = {
 }
 
 export const ElementChoice: Story = {
+  tags: ['api-ref'],
   render: (args) => (
     <>
       <Body {...args} type="p">
@@ -79,5 +85,6 @@ export const ElementChoice: Story = {
 }
 
 export const ColorOverride: Story = {
+  tags: ['api-ref'],
   args: { color: 'var(--ds-color-text-error)', children: 'Delivery unavailable at this address.' },
 }

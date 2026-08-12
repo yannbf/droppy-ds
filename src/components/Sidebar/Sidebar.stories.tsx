@@ -54,15 +54,19 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Closed: Story = {}
+export const Closed: Story = {
+  tags: ['api-ref'],
+}
 
 export const Open: Story = {
+  tags: ['showcase'],
   args: { isOpen: true },
 }
 
 /** The footer is pinned and the content scrolls above it. It is a plain flex
  *  container — the caller owns the arrangement inside it. */
 export const WithFooter: Story = {
+  tags: ['api-ref'],
   args: {
     isOpen: true,
     footer: (
@@ -77,12 +81,14 @@ export const WithFooter: Story = {
 }
 
 export const FullWidthOnMobile: Story = {
+  tags: ['highlight'],
   args: { isOpen: true },
   globals: { viewport: { value: 'mobile1' } },
 }
 
 /** The title names the dialog, so a screen reader announces what opened. */
 export const TitleNamesTheDialog: Story = {
+  tags: ['tests'],
   args: { isOpen: true },
   play: async ({ canvasElement }) => {
     const body = within(canvasElement.ownerDocument.body)
@@ -92,6 +98,7 @@ export const TitleNamesTheDialog: Story = {
 }
 
 export const OpensAndCloses: Story = {
+  tags: ['tests'],
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)
     const body = within(canvasElement.ownerDocument.body)

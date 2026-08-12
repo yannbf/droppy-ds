@@ -5,6 +5,8 @@ import * as TopBannerStories from './TopBanner.stories'
 
 # TopBanner
 
+{/* BEGIN: general */}
+
 A full-width band at the top of a page, with a centered title over either a theme color or a
 background photo — a category page's header, a restaurant's hero image.
 
@@ -27,6 +29,10 @@ background photo — a category page's header, a restaurant's hero image.
 - Accepts an `onBackClick` prop for call-site parity with the Mealdrop component this replaces,
   but renders no back control of its own — see [Related](#related) for composing one.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - The header band of a page that wants a large title over either a flat brand color or a hero
@@ -37,6 +43,10 @@ background photo — a category page's header, a restaurant's hero image.
 - A section title inline with the rest of the page's content — use
   [PageSection](?path=/docs/layout-structure-pagesection--docs) instead; `TopBanner` is a full-width
   band meant to sit above the page's content column, not inside it.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -54,6 +64,10 @@ on-inverse text color so it stays legible over a photo.
 
 <Canvas of={TopBannerStories.WithImage} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `TopBanner` is a non-interactive layout element — there is no keyboard interaction to document.
@@ -66,6 +80,10 @@ on-inverse text color so it stays legible over a photo.
 - **You must provide:** a `title` whose meaning doesn't depend on the background photo — the
   photo is decorative as far as a screen reader is concerned.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token                          | Used for                               |
@@ -77,6 +95,16 @@ on-inverse text color so it stays legible over a photo.
 The 240px band height is a literal value — no token in the current scale matches it exactly.
 
 `className` merges with the component's own `droppy-TopBanner` class.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={TopBannerStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -103,12 +131,12 @@ The 240px band height is a literal value — no token in the current scale match
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={TopBannerStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [PageSection](?path=/docs/layout-structure-pagesection--docs) — a titled content section for inside
   the page, instead of a full-width header band.
 - [Heading](?path=/docs/typography-heading--docs) — the title's underlying component.
+
+{/* END: when-to-use */}

@@ -19,15 +19,19 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const WithError: Story = {
+  tags: ['api-ref'],
   args: { error: 'Enter your full name' },
 }
 
 /** The error slot keeps its height whether or not a message is showing, so
  *  validating a field never shifts the ones below it. */
 export const ErrorDoesNotShiftLayout: Story = {
+  tags: ['highlight'],
   render: (args) => (
     <>
       <Input {...args} label="Street" error="Enter a street" />
@@ -37,6 +41,7 @@ export const ErrorDoesNotShiftLayout: Story = {
 }
 
 export const Types: Story = {
+  tags: ['api-ref'],
   render: (args) => (
     <>
       <Input {...args} label="Email" type="email" />
@@ -47,6 +52,7 @@ export const Types: Story = {
 }
 
 export const LabelNamesTheControl: Story = {
+  tags: ['tests'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const field = canvas.getByLabelText('Full name')

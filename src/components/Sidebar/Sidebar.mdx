@@ -5,6 +5,8 @@ import * as SidebarStories from './Sidebar.stories'
 
 # Sidebar
 
+{/* BEGIN: general */}
+
 A panel that slides in from the trailing edge, for content reviewed alongside the page rather than instead of it.
 
 - **Import:** `import { Sidebar } from '@droppy/design-system'`
@@ -24,6 +26,10 @@ A panel that slides in from the trailing edge, for content reviewed alongside th
 - **Portal by default** — content renders at the end of `document.body`, so a parent's `overflow: hidden` or `z-index` stacking context can't clip or bury it.
 - **ARIA dialog wiring** — `role="dialog"` and the accessible name (from `title`) are set for you.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Content the person reviews _alongside_ the page rather than instead of it — a cart is the shape the `Open` story demonstrates: line items stay visible while the page underneath is still there to return to.
@@ -34,6 +40,10 @@ A panel that slides in from the trailing edge, for content reviewed alongside th
 
 - To ask for a single decision that should block the rest of the page until it's made — a confirmation, an "are you sure" — use [Modal](?path=/docs/overlays-modal--docs). Sidebar shares the page; Modal takes it over.
 - To explain what a control does before it's activated, use [Tooltip](?path=/docs/overlays-tooltip--docs) — a hint doesn't need a panel or a focus trap.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -73,6 +83,10 @@ Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px 
 
 <Canvas of={SidebarStories.TitleNamesTheDialog} story={{ inline: false, height: '480px' }} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 | Key                 | Action                                                                                                      |
@@ -85,6 +99,10 @@ Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px 
 - **Gesture honesty**: swipe-to-dismiss is pointer-only and has no keyboard equivalent — keyboard and screen reader users rely on Escape and the visible close button, both always present regardless of touch support.
 - **You must provide:** a `title` that actually describes the panel's contents ("Your order" rather than something generic) — it is the only accessible name the dialog gets.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 - `--droppy-sidebar-topbar-height` — the top bar's height (default `4.5rem`), subtracted from the viewport when the content area computes its own scroll bound.
@@ -92,6 +110,16 @@ Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px 
 - `className` — merged with the panel's own classes, so wrapping `Sidebar` in `styled()` or adding utility classes composes rather than replacing the built-in styling.
 
 The panel's desktop width (420px) is fixed by the design system and isn't exposed as a custom property; use `className` for one-off width changes.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={SidebarStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -122,11 +150,11 @@ The panel's desktop width (420px) is fixed by the design system and isn't expose
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={SidebarStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To ask for a single decision that blocks the page, use [Modal](?path=/docs/overlays-modal--docs).
 - To explain a control before it's activated, use [Tooltip](?path=/docs/overlays-tooltip--docs).
+
+{/* END: when-to-use */}

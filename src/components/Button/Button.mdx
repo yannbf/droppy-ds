@@ -5,6 +5,8 @@ import * as ButtonStories from './Button.stories'
 
 # Button
 
+{/* BEGIN: general */}
+
 The primary action control — chrome comes from the theme, variants and the icon slot come from
 Droppy.
 
@@ -30,6 +32,10 @@ Droppy.
 - Padding scales up at the `768px` breakpoint so the control doesn't feel undersized on larger
   viewports.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Primary and secondary in-page actions — a page's one obvious primary action, plus its
@@ -46,6 +52,10 @@ Droppy.
 - For a floating icon-only affordance that has to stay legible over arbitrary imagery (carousel
   arrows, overlay dismissals), use [IconButton](?path=/docs/actions-iconbutton--docs) instead,
   because it is deliberately not theme-reactive and carries its own drop shadow for contrast.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -88,6 +98,10 @@ disabled `Button` drops out of the tab order.
 The rendered element always starts as `type="button"`, so it won't submit an enclosing form by
 default. Pass `type="submit"` explicitly to opt in.
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 | Key   | Action                                           |
@@ -105,6 +119,10 @@ default. Pass `type="submit"` explicitly to opt in.
   accessibility tree — there's no `focusableWhenDisabled`-style escape hatch for a loading state
   that should stay focusable.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 - `--ds-space-xs` — gap between the icon and the label.
@@ -115,6 +133,16 @@ default. Pass `type="submit"` explicitly to opt in.
 
 Everything else — the base fill, focus ring, and typeface — comes from the theme layer, which
 this component doesn't override.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ButtonStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -145,12 +173,12 @@ this component doesn't override.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ButtonStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - Icon-only, theme-independent affordance over imagery — see
   [IconButton](?path=/docs/actions-iconbutton--docs).
 - The icon set `Button` draws its `icon` prop from — see [Icon](?path=/docs/media-content-icon--docs).
+
+{/* END: when-to-use */}

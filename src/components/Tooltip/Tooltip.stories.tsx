@@ -25,11 +25,14 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 /** The tip repeats the trigger's accessible name rather than replacing it — a
  *  tooltip is never the only place the label lives. */
 export const ShowsOnHover: Story = {
+  tags: ['tests'],
   play: async ({ canvasElement }) => {
     // Chromatic's capture sends synthetic pointer events, which the hover
     // logic ignores — the vitest run drives a real browser and covers this.
@@ -45,6 +48,7 @@ export const ShowsOnHover: Story = {
 }
 
 export const ShowsOnFocus: Story = {
+  tags: ['tests'],
   play: async ({ canvasElement }) => {
     const body = within(canvasElement.ownerDocument.body)
 

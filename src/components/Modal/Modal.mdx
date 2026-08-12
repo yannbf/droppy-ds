@@ -5,6 +5,8 @@ import * as ModalStories from './Modal.stories'
 
 # Modal
 
+{/* BEGIN: general */}
+
 A centered overlay that asks for one decision before the page continues.
 
 - **Import:** `import { Modal } from '@droppy/design-system'`
@@ -23,6 +25,10 @@ A centered overlay that asks for one decision before the page continues.
 - **Portal by default** — content renders at the end of `document.body`, so a parent's `overflow: hidden` or `z-index` stacking context can't clip or bury it.
 - **ARIA dialog wiring** — `role="dialog"` and the accessible name are set for you.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A single decision that should block the rest of the page until it's made — the `Open` story's "Remove from cart?" confirmation is the shape: state the consequence, offer a way out.
@@ -32,6 +38,10 @@ A centered overlay that asks for one decision before the page continues.
 
 - To show content the person reviews _alongside_ the page rather than instead of it — a cart, a filter panel, anything they might dip in and out of — use [Sidebar](?path=/docs/overlays-sidebar--docs). Modal takes over the page; Sidebar shares it.
 - To explain what a control does before it's activated, use [Tooltip](?path=/docs/overlays-tooltip--docs) — a hint doesn't need a decision or a focus trap.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -61,6 +71,10 @@ Below 768px, `Modal` renders as a bottom sheet: full width, docked to the bottom
 
 <Canvas of={ModalStories.Mobile} story={{ inline: false, height: '480px' }} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 | Key                 | Action                                                                                                      |
@@ -72,11 +86,25 @@ Below 768px, `Modal` renders as a bottom sheet: full width, docked to the bottom
 - **Screen reader**: on open, the dialog is announced using its accessible name; on close, focus returns to wherever it was before the modal opened.
 - **You must provide:** a meaningful `aria-label` — the default value is a placeholder, not a real description of the decision being asked. Content inside the modal should also be reachable by Tab; nothing else is required to make it focusable, since the popup itself receives initial focus.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 - `className` — merged with the modal's own classes, so wrapping `Modal` in `styled()` or adding utility classes composes rather than replacing the built-in styling.
 
 Modal has no CSS custom properties of its own to override — its dimensions and breakpoint are fixed by the design system. Use `className` for one-off layout changes.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ModalStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -107,11 +135,11 @@ Modal has no CSS custom properties of its own to override — its dimensions and
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ModalStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To show content reviewed alongside the page instead of blocking it, use [Sidebar](?path=/docs/overlays-sidebar--docs).
 - To explain a control before it's activated, use [Tooltip](?path=/docs/overlays-tooltip--docs).
+
+{/* END: when-to-use */}

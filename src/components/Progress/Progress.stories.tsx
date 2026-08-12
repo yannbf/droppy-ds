@@ -12,9 +12,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const Determinate: Story = {
+  tags: ['api-ref'],
   args: { value: 40 },
   play: async ({ canvas }) => {
     const progressbar = canvas.getByRole('progressbar', { name: 'Uploading files' })
@@ -29,6 +32,7 @@ export const Determinate: Story = {
 /** `value={null}` (or omitting it) renders an indeterminate bar — `aria-valuenow` is
  *  omitted entirely, for a wait whose length isn't known. */
 export const Indeterminate: Story = {
+  tags: ['api-ref'],
   args: { value: null, showValue: false },
   play: async ({ canvas }) => {
     const progressbar = canvas.getByRole('progressbar', { name: 'Uploading files' })
@@ -39,6 +43,7 @@ export const Indeterminate: Story = {
 }
 
 export const Complete: Story = {
+  tags: ['api-ref'],
   args: { value: 100 },
   play: async ({ canvas }) => {
     const progressbar = canvas.getByRole('progressbar', { name: 'Uploading files' })
@@ -50,6 +55,7 @@ export const Complete: Story = {
 
 /** A custom `max` still reports the percentage of the full range. */
 export const CustomRange: Story = {
+  tags: ['api-ref'],
   args: { value: 30, max: 40 },
   play: async ({ canvas }) => {
     const progressbar = canvas.getByRole('progressbar', { name: 'Uploading files' })
@@ -60,5 +66,6 @@ export const CustomRange: Story = {
 }
 
 export const WithoutValueText: Story = {
+  tags: ['api-ref'],
   args: { showValue: false },
 }

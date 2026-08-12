@@ -37,6 +37,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  tags: ['showcase'],
   play: async ({ canvas }) => {
     const link = canvas.getByRole('link', { name: 'Categories' })
 
@@ -46,6 +47,7 @@ export const Default: Story = {
 
 /** External links open in a new tab with `rel="noopener noreferrer"`. */
 export const ExternalLinks: Story = {
+  tags: ['api-ref'],
   args: {
     title: 'Our social media',
     links: [
@@ -65,6 +67,7 @@ export const ExternalLinks: Story = {
 /** `render` swaps the default `<a>` for a router-aware link per item — a
  *  stand-in here for `react-router`'s `Link`. */
 export const WithRouterLinks: Story = {
+  tags: ['highlight'],
   args: {
     links: [
       { name: 'Home', render: <RouterLink to="/" /> },
@@ -79,6 +82,7 @@ export const WithRouterLinks: Story = {
 /** Arbitrary content — app store badges, a short paragraph — instead of (or
  *  alongside) a link list. */
 export const WithChildren: Story = {
+  tags: ['api-ref'],
   args: { title: 'Check our apps', links: [] },
   render: (args) => (
     <FooterCard {...args}>

@@ -5,6 +5,8 @@ import * as PageSectionStories from './PageSection.stories'
 
 # PageSection
 
+{/* BEGIN: general */}
+
 A titled content section — a heading with an optional "view all" action above whatever the
 caller composes below it, like a home page's Categories or Restaurants row.
 
@@ -25,6 +27,10 @@ caller composes below it, like a home page's Categories or Restaurants row.
   parent with its own side padding.
 - Merges any incoming `className` with its own `droppy-PageSection` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A titled row of content on a page that also wants a "view all" or "see more" link next to the
@@ -36,6 +42,10 @@ caller composes below it, like a home page's Categories or Restaurants row.
   [Container](?path=/docs/layout-structure-container--docs) directly.
 - A raised, self-contained surface — use [Card](?path=/docs/media-content-card--docs) for a tile or
   panel instead of a full-width section.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -53,6 +63,10 @@ isn't there.
 
 <Canvas of={PageSectionStories.WithAction} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `PageSection` itself is a non-interactive layout element — the wrapping `div`s carry no role and
@@ -66,6 +80,10 @@ no keyboard behavior of their own.
 - **You must provide:** a `title` that makes sense read out of context — screen reader users often
   jump between headings rather than reading the page in order.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token           | Used for                                           |
@@ -77,6 +95,16 @@ no keyboard behavior of their own.
 exactly.
 
 `className` merges with the component's own `droppy-PageSection` class.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={PageSectionStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -103,9 +131,7 @@ exactly.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={PageSectionStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
@@ -113,3 +139,5 @@ exactly.
   heading or action slot.
 - [Heading](?path=/docs/typography-heading--docs) — the title's underlying component.
 - [Button](?path=/docs/actions-button--docs) — the action slot's underlying component.
+
+{/* END: when-to-use */}

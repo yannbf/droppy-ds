@@ -16,6 +16,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  tags: ['showcase'],
   render: (args) => (
     <Container {...args} style={{ background: 'var(--ds-color-surface-highlight)' }} />
   ),
@@ -27,6 +28,7 @@ export const Default: Story = {
 }
 
 export const DesktopOnly: Story = {
+  tags: ['api-ref'],
   args: { desktopOnly: true },
   render: (args) => (
     <Container {...args} style={{ background: 'var(--ds-color-surface-highlight)' }} />

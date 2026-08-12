@@ -23,6 +23,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  tags: ['showcase'],
   play: async ({ canvas, canvasElement }) => {
     await expect(canvas.getByText('Site header')).toBeInTheDocument()
     await expect(canvas.getByText('Page content')).toBeInTheDocument()
@@ -34,5 +35,6 @@ export const Default: Story = {
 /** No `header` or `footer` — just the content area, semantically a `<main>`
  *  on its own. */
 export const ContentOnly: Story = {
+  tags: ['api-ref'],
   args: { header: undefined, footer: undefined },
 }

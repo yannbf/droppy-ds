@@ -12,9 +12,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['api-ref'],
+}
 
 export const Levels: Story = {
+  tags: ['showcase'],
   render: (args) => (
     <>
       {([1, 2, 3, 4, 5] as const).map((level) => (
@@ -29,6 +32,7 @@ export const Levels: Story = {
 /** `level` picks the tag as well as the size — a page keeps one `h1` and does
  *  not skip levels, so the outline stays navigable. */
 export const RendersMatchingTag: Story = {
+  tags: ['highlight'],
   args: { level: 3 },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -41,6 +45,7 @@ export const RendersMatchingTag: Story = {
  *  `level`, so a card title can stay an `h2` in the outline while looking
  *  like a level-4 heading. */
 export const SizeDecoupledFromLevel: Story = {
+  tags: ['highlight'],
   args: { level: 2, size: 4 },
   play: async ({ canvas }) => {
     const heading = canvas.getByRole('heading', { level: 2 })

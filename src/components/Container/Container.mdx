@@ -5,6 +5,8 @@ import * as ContainerStories from './Container.stories'
 
 # Container
 
+{/* BEGIN: general */}
+
 A max-width page wrapper with responsive side padding — the bound that keeps a page's content
 from stretching edge to edge on wide screens.
 
@@ -23,6 +25,10 @@ from stretching edge to edge on wide screens.
   is wide enough to want the bound.
 - Merges any incoming `className` with its own `droppy-Container` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Wrapping a page's main content so it caps at a readable width and doesn't touch the viewport
@@ -36,6 +42,10 @@ from stretching edge to edge on wide screens.
   compounds the padding instead of replacing it.
 - For a raised surface that groups content — use [Card](?path=/docs/media-content-card--docs)
   instead; `Container` has no background, radius, or shadow.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -52,12 +62,20 @@ behaves exactly like the default variant.
 
 <Canvas of={ContainerStories.DesktopOnly} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `Container` is a non-interactive layout element — there is no keyboard interaction to document.
 
 - **ARIA:** none — a plain wrapping `<div>`.
 - **Screen reader:** not announced as a distinct region; its children are read in document order.
+
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -69,6 +87,16 @@ The 1600px max-width, the 4rem wide-viewport padding, and the 640px/1024px break
 literal values — no token in the current scale matches them exactly.
 
 `className` merges with the component's own `droppy-Container` class.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ContainerStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -92,9 +120,7 @@ literal values — no token in the current scale matches them exactly.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ContainerStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
@@ -102,3 +128,5 @@ literal values — no token in the current scale matches them exactly.
   placed inside a `Container`.
 - [Card](?path=/docs/media-content-card--docs) — a raised surface for grouping content, instead of a
   page-level wrapper.
+
+{/* END: when-to-use */}

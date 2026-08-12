@@ -25,9 +25,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const WithImage: Story = {
+  tags: ['api-ref'],
   args: { photoUrl: photoDataUri },
   play: async ({ canvas }) => {
     const banner = canvas.getByRole('heading', { level: 2, name: 'Categories' })

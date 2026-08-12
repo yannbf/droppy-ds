@@ -5,6 +5,8 @@ import * as NumberFieldStories from './NumberField.stories'
 
 # NumberField
 
+{/* BEGIN: general */}
+
 A typeable numeric input with increment/decrement buttons and pointer scrub, for a quantity or
 amount that also needs a keyboard or direct-entry path.
 
@@ -27,6 +29,10 @@ amount that also needs a keyboard or direct-entry path.
   omit `value` for an uncontrolled field, or pass both `value` and `onValueChange` to control it.
 - Merges any incoming `className` onto the root, alongside the theme layer's own class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A quantity or amount where the caller can't predict every value in advance, or where keyboard
@@ -38,6 +44,10 @@ amount that also needs a keyboard or direct-entry path.
 - A small, bounded range where tap-tap increments are the whole interaction and typing isn't
   expected — reach for [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) instead;
   it is the simpler, button-only sibling of this component.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -58,6 +68,10 @@ amount that also needs a keyboard or direct-entry path.
 
 <Canvas of={NumberFieldStories.Disabled} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 | Key / interaction                     | Context | Action                                             |
@@ -74,10 +88,24 @@ amount that also needs a keyboard or direct-entry path.
   announce as disabled once a bound is reached.
 - **You must provide:** `label` — without it the field has no accessible name.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 Colors, spacing, and the scrub cursor come entirely from the theme layer's `NumberField*`
 classes — this component adds no styling of its own beyond forwarding `className` to the root.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={NumberFieldStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -104,9 +132,7 @@ classes — this component adds no styling of its own beyond forwarding `classNa
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={NumberFieldStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
@@ -114,3 +140,5 @@ classes — this component adds no styling of its own beyond forwarding `classNa
   stepper for small bounded counts where typing isn't needed.
 - [Input](?path=/docs/forms-input-input--docs) — the plain text field this shares its labelling
   approach with.
+
+{/* END: when-to-use */}

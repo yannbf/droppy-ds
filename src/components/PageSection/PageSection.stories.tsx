@@ -19,6 +19,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  tags: ['showcase'],
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('heading', { level: 2, name: 'Asian' })).toBeInTheDocument()
     await expect(canvas.queryByRole('button')).not.toBeInTheDocument()
@@ -26,6 +27,7 @@ export const Default: Story = {
 }
 
 export const WithAction: Story = {
+  tags: ['api-ref'],
   args: {
     topButtonLabel: 'View all categories',
     onTopButtonClick: fn(),

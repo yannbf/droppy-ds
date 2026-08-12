@@ -12,10 +12,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 /** Typing a value fires `onValueChange` with the parsed number. */
 export const Typing: Story = {
+  tags: ['tests'],
   args: { defaultValue: undefined },
   play: async ({ args, canvas }) => {
     const input = canvas.getByRole('textbox')
@@ -29,6 +32,7 @@ export const Typing: Story = {
 }
 
 export const IncrementAndDecrement: Story = {
+  tags: ['tests'],
   args: { defaultValue: 5 },
   play: async ({ canvas }) => {
     const input = canvas.getByRole('textbox')
@@ -44,6 +48,7 @@ export const IncrementAndDecrement: Story = {
 
 /** The stepper buttons disable once the value reaches `min`/`max` rather than wrapping. */
 export const MinMaxClamping: Story = {
+  tags: ['highlight'],
   args: { defaultValue: 9, min: 0, max: 10 },
   play: async ({ canvas }) => {
     const increment = canvas.getByRole('button', { name: 'Increase' })
@@ -56,6 +61,7 @@ export const MinMaxClamping: Story = {
 }
 
 export const Disabled: Story = {
+  tags: ['api-ref'],
   args: { defaultValue: 3, disabled: true },
   play: async ({ canvas }) => {
     const input = canvas.getByRole('textbox')
@@ -71,6 +77,7 @@ export const Disabled: Story = {
  * buttons — the scrub area sits behind the label text.
  */
 export const Scrub: Story = {
+  tags: ['highlight'],
   args: { defaultValue: 100 },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)

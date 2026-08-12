@@ -51,19 +51,24 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Closed: Story = {}
+export const Closed: Story = {
+  tags: ['api-ref'],
+}
 
 export const Open: Story = {
+  tags: ['showcase'],
   args: { isOpen: true },
 }
 
 /** Below 768px the card becomes a bottom sheet and slides up from the edge. */
 export const Mobile: Story = {
+  tags: ['highlight'],
   args: { isOpen: true },
   globals: { viewport: { value: 'mobile1' } },
 }
 
 export const OpensAndCloses: Story = {
+  tags: ['tests'],
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)
     const body = within(canvasElement.ownerDocument.body)
@@ -80,6 +85,7 @@ export const OpensAndCloses: Story = {
 /** Escape dismisses the dialog — Base UI wires it, and every modal in the
  *  system inherits it. */
 export const EscapeDismisses: Story = {
+  tags: ['tests'],
   play: async ({ args, canvasElement }) => {
     const canvas = within(canvasElement)
     const body = within(canvasElement.ownerDocument.body)

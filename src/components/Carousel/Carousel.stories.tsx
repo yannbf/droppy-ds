@@ -34,6 +34,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  tags: ['showcase'],
   play: async ({ canvas }) => {
     await expect(canvas.getByText('Item 1')).toBeInTheDocument()
   },
@@ -42,6 +43,7 @@ export const Default: Story = {
 /** Fewer items than fit in the viewport — no arrows render since there's
  *  nowhere to scroll. */
 export const FewerItemsThanFitInView: Story = {
+  tags: ['highlight'],
   args: {
     children: tiles.slice(0, 2),
   },
@@ -49,6 +51,7 @@ export const FewerItemsThanFitInView: Story = {
 
 /** Arrow clicks advance by more than one slide at a time on desktop. */
 export const AdvanceByPage: Story = {
+  tags: ['api-ref'],
   args: {
     slidesToScroll: { desktop: 4 },
   },

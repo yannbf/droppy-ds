@@ -40,11 +40,14 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 /** A toast reports its own dismissal — waiting past its timeout removes it
  *  from the stack without any action from the reader. */
 export const AppearsOnDemand: Story = {
+  tags: ['tests'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const body = within(canvasElement.ownerDocument.body)
@@ -59,6 +62,7 @@ export const AppearsOnDemand: Story = {
 /** Clicking `Dismiss` closes the toast immediately, without waiting out its
  *  timeout. */
 export const DismissesOnClose: Story = {
+  tags: ['tests'],
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const body = within(canvasElement.ownerDocument.body)

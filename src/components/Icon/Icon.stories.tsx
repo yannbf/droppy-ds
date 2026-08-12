@@ -16,9 +16,12 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 export const Sizes: Story = {
+  tags: ['api-ref'],
   render: (args) => (
     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
       {['1rem', '1.5rem', '2rem', '3rem'].map((size) => (
@@ -31,6 +34,7 @@ export const Sizes: Story = {
 /** Every icon in the set. Icons are decorative by default (`aria-hidden`) — the
  *  control they sit in carries the accessible name. */
 export const Gallery: Story = {
+  tags: ['api-ref'],
   render: (args) => (
     <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
       {iconNames.map((name) => (

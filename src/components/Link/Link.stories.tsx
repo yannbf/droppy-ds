@@ -23,6 +23,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  tags: ['showcase'],
   play: async ({ canvas }) => {
     const link = canvas.getByRole('link', { name: 'Order again' })
 
@@ -32,6 +33,7 @@ export const Default: Story = {
 
 /** Inline inside a sentence, inheriting the surrounding text's font. */
 export const Inline: Story = {
+  tags: ['highlight'],
   render: (args) => (
     <p>
       Your order is on its way. <Link {...args}>Track it</Link> or view the receipt.
@@ -42,6 +44,7 @@ export const Inline: Story = {
 /** `render` swaps the default `<a>` for a router-aware link — here a stand-in
  *  for `react-router`'s `Link`. */
 export const WithRouterLink: Story = {
+  tags: ['highlight'],
   args: {
     href: undefined,
     render: <RouterLink to="/orders" />,
@@ -56,6 +59,7 @@ export const WithRouterLink: Story = {
 /** On a dark surface, `Link` inherits `currentColor` from the wrapping
  *  context rather than fighting it with a hardcoded light-mode token. */
 export const OnDarkSurface: Story = {
+  tags: ['highlight'],
   render: (args) => (
     <div
       style={{

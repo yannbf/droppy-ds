@@ -12,6 +12,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Horizontal: Story = {
+  tags: ['showcase'],
   render: (args) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       <span>Section one</span>
@@ -28,6 +29,7 @@ export const Horizontal: Story = {
 }
 
 export const Vertical: Story = {
+  tags: ['api-ref'],
   args: { orientation: 'vertical' },
   render: (args) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', height: '2rem' }}>

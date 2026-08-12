@@ -5,6 +5,8 @@ import * as FooterCardStories from './FooterCard.stories'
 
 # FooterCard
 
+{/* BEGIN: general */}
+
 A titled column of links for a page footer — "Discover us", "Our social media", or any other
 grouped set of footer navigation.
 
@@ -26,6 +28,10 @@ grouped set of footer navigation.
   correctly on the dark surface a footer typically sits on, without hardcoding white.
 - Merges any incoming `className` with its own `droppy-FooterCard` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Inside a page footer, grouping a titled set of links — site navigation, social links, legal
@@ -35,6 +41,10 @@ grouped set of footer navigation.
 
 - A single standalone link — use [Link](?path=/docs/actions-link--docs) directly.
 - A trail of ancestor pages — use [Breadcrumb](?path=/docs/navigation-breadcrumb--docs).
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -55,6 +65,10 @@ Pass `render` on a link item with a router's own link element, the same pattern 
 
 <Canvas of={FooterCardStories.WithChildren} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 Each link is a real `<a>` (or the router element passed via `render`) — standard link keyboard
@@ -65,6 +79,10 @@ behaviour applies, no custom handling.
 - **Screen reader:** announced as a heading followed by a list of links.
 - **You must provide:** nothing further — heading level and list semantics are built in. Make sure
   each footer only has one `FooterCard` per topic so the headings stay meaningful.
+
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -78,11 +96,21 @@ Links inherit their color from the card via `currentColor`, so overriding `--ds-
 (or setting `color` on a wrapping element) re-colors both the title and the links together.
 `className` merges with the component's own `droppy-FooterCard` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
 ## API reference
 
 <ArgTypes of={FooterCardStories} />
+
+{/* END: props */}
+
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Link](?path=/docs/actions-link--docs) — the link primitive `FooterCard` builds on.
 - [Heading](?path=/docs/typography-heading--docs) — the heading primitive `FooterCard` builds on.
+
+{/* END: when-to-use */}

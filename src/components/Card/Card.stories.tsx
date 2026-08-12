@@ -13,6 +13,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  tags: ['showcase'],
   play: async ({ canvas }) => {
     const card = canvas.getByText('Card content')
 
@@ -23,16 +24,19 @@ export const Default: Story = {
 }
 
 export const Padded: Story = {
+  tags: ['api-ref'],
   args: { padded: true },
 }
 
 export const Interactive: Story = {
+  tags: ['api-ref'],
   args: { interactive: true, children: 'Hover me' },
 }
 
 /** An edge-to-edge image clips to the card's own corner radius instead of
  *  poking past it. */
 export const WithImage: Story = {
+  tags: ['highlight'],
   render: () => (
     <Card style={{ width: '16rem' }}>
       <img

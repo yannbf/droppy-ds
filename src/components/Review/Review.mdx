@@ -5,6 +5,8 @@ import * as ReviewStories from './Review.stories'
 
 # Review
 
+{/* BEGIN: general */}
+
 A star-rating and text line — "★ 4.5 Very good" or "No reviews yet" — for a restaurant tile, an
 item card, or an order summary.
 
@@ -23,6 +25,10 @@ item card, or an order summary.
   treatment so the rating reads as secondary to the content around it. Pass `color` to override it.
 - Merges any incoming `className` with its own `droppy-Review` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Alongside a restaurant or item's name, to show its aggregate rating at a glance.
@@ -31,6 +37,10 @@ item card, or an order summary.
 
 - A star-input control for a visitor to leave their own rating — `Review` is a read-only display,
   not a form control.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -52,6 +62,10 @@ token with an external stylesheet.
 
 <Canvas of={ReviewStories.CustomColor} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `Review` renders static text — there is no keyboard interaction to document.
@@ -60,6 +74,10 @@ token with an external stylesheet.
 - **Screen reader:** announced as the rendered string (e.g. "★ 4.5 Very good" or "No reviews yet").
 - **You must provide:** nothing further, unless the surrounding context needs an accessible name
   for the region the review sits in.
+
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -71,10 +89,20 @@ token with an external stylesheet.
 `className` merges with the component's own `droppy-Review` class. `color` overrides the token
 inline.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
 ## API reference
 
 <ArgTypes of={ReviewStories} />
 
+{/* END: props */}
+
+{/* BEGIN: when-to-use */}
+
 ## Related
 
 - [Body](?path=/docs/typography-body--docs) — the typography primitive `Review` builds on.
+
+{/* END: when-to-use */}

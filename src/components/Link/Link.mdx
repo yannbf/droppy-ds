@@ -5,6 +5,8 @@ import * as LinkStories from './Link.stories'
 
 # Link
 
+{/* BEGIN: general */}
+
 An inline text link — a link inside a sentence or a short list, not a button and not a nav item.
 
 - **Import:** `import { Link } from '@droppy/design-system'`
@@ -22,6 +24,10 @@ An inline text link — a link inside a sentence or a short list, not a button a
   router-aware link instead (see below) — the design system itself never imports a router.
 - Merges any incoming `className` with its own `droppy-Link` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A link inside a sentence, a paragraph, or a short inline list of related links.
@@ -31,6 +37,10 @@ An inline text link — a link inside a sentence or a short list, not a button a
 - A primary or secondary action a visitor is meant to notice and act on — use
   [Button](?path=/docs/actions-button--docs) instead.
 - A trail of ancestor pages — use [Breadcrumb](?path=/docs/navigation-breadcrumb--docs).
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -57,6 +67,10 @@ an overlay) overrides `color` to `currentColor` or another token to keep it legi
 
 <Canvas of={LinkStories.OnDarkSurface} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 A real `<a>` (or the router element passed via `render`) — standard link keyboard behaviour
@@ -65,6 +79,10 @@ applies, no custom handling.
 - **ARIA:** none beyond the native link semantics.
 - **Screen reader:** announced as a link with its text content as the accessible name.
 - **You must provide:** link text that makes sense out of context (avoid bare "click here").
+
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -76,12 +94,22 @@ applies, no custom handling.
 `className` merges with the component's own `droppy-Link` class. Color is a plain CSS rule, so a
 caller can override it with an inline `style`, a `className`, or `currentColor` inheritance.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
 ## API reference
 
 <ArgTypes of={LinkStories} />
+
+{/* END: props */}
+
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Breadcrumb](?path=/docs/navigation-breadcrumb--docs) — for a trail of ancestor pages, which uses
   the same `render` pattern.
 - [Button](?path=/docs/actions-button--docs) — for a primary or secondary action.
+
+{/* END: when-to-use */}

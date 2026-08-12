@@ -18,6 +18,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Empty: Story = {
+  tags: ['api-ref'],
   args: { value: 0 },
   play: async ({ canvas }) => {
     const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })
@@ -29,6 +30,7 @@ export const Empty: Story = {
 }
 
 export const Mid: Story = {
+  tags: ['showcase'],
   play: async ({ canvas }) => {
     const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })
 
@@ -37,6 +39,7 @@ export const Mid: Story = {
 }
 
 export const Full: Story = {
+  tags: ['api-ref'],
   args: { value: 3 },
   play: async ({ canvas }) => {
     const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })
@@ -47,6 +50,7 @@ export const Full: Story = {
 
 /** A value past `max` clamps rather than overflowing the track. */
 export const OverMaxClamps: Story = {
+  tags: ['highlight'],
   args: { value: 9 },
   play: async ({ canvas }) => {
     const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })

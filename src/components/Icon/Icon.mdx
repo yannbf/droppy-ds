@@ -5,6 +5,8 @@ import * as IconStories from './Icon.stories'
 
 # Icon
 
+{/* BEGIN: general */}
+
 The icon set, inlined as SVG so it renders wherever the component tree renders, with no static
 asset to serve.
 
@@ -26,6 +28,10 @@ asset to serve.
   theme's icon token and flips with the theme automatically.
 - Merges any incoming `className` with its own `droppy-Icon` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Inside a control that already carries (or will carry) an accessible name — `Button`'s `icon`
@@ -39,6 +45,10 @@ asset to serve.
   [Button](?path=/docs/actions-button--docs) or
   [IconButton](?path=/docs/actions-iconbutton--docs) rather than attaching a click handler
   directly to a bare `Icon`.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -61,6 +71,10 @@ together, so the icon holds its size even inside a shrinking flex row.
 Unset, the stroke follows `--ds-color-icon-default` and changes with the theme. Passing `color`
 sets the stroke inline instead, which wins over the class rule.
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 Icon renders a non-interactive `<svg>` — there is no keyboard interaction to document.
@@ -70,11 +84,25 @@ Icon renders a non-interactive `<svg>` — there is no keyboard interaction to d
 - **You must provide:** the accessible name on whatever control renders the icon (`aria-label` or
   visible text) — `Icon` itself carries none.
 
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 - `--ds-color-icon-default` — stroke colour, applied only when no `color` prop is given.
 - `color` prop — sets the stroke inline, overriding the token.
 - `className` merges with the component's own `droppy-Icon` class.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={IconStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -101,12 +129,12 @@ Icon renders a non-interactive `<svg>` — there is no keyboard interaction to d
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={IconStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - The icon-before-label slot on actions — see [Button](?path=/docs/actions-button--docs).
 - The icon-only floating control that renders an `Icon` internally — see
   [IconButton](?path=/docs/actions-iconbutton--docs).
+
+{/* END: when-to-use */}

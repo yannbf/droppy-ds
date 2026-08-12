@@ -26,6 +26,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
+  tags: ['showcase'],
   args: {
     illustration: sushiIllustration,
   },
@@ -33,9 +34,12 @@ export const Default: Story = {
 
 /** The illustration slot is optional — omitted, the block renders with just the
  *  title, body, and action. */
-export const WithoutIllustration: Story = {}
+export const WithoutIllustration: Story = {
+  tags: ['api-ref'],
+}
 
 export const ActionIsReachable: Story = {
+  tags: ['tests'],
   args: {
     illustration: sushiIllustration,
   },

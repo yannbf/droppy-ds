@@ -11,17 +11,21 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Default: Story = {}
+export const Default: Story = {
+  tags: ['showcase'],
+}
 
 /** `label` overrides the accessible name announced to screen readers — the
  *  graphic itself stays `aria-hidden`. */
 export const CustomLabel: Story = {
+  tags: ['api-ref'],
   args: { label: 'Loading your order' },
 }
 
 /** The visible graphic is `aria-hidden`; a visually-hidden label carries the
  *  accessible name on the `status` role instead. */
 export const AnnouncesLoading: Story = {
+  tags: ['tests'],
   play: async ({ canvas }) => {
     const status = canvas.getByRole('status', { name: 'Loading' })
 

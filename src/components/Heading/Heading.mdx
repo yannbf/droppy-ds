@@ -5,6 +5,8 @@ import * as HeadingStories from './Heading.stories'
 
 # Heading
 
+{/* BEGIN: general */}
+
 Display type for page and section titles, rendered as a real semantic heading.
 
 - **Import:** `import { Heading } from '@droppy/design-system'`
@@ -19,6 +21,10 @@ Display type for page and section titles, rendered as a real semantic heading.
 - **Levels 1–2 use tighter "display" tracking**; levels 3–5 stay at the default tracking, matching the difference between a page-level display size and an ordinary section heading.
 - **`className` merges onto the element** rather than replacing it, so wrapping a `Heading` in `styled()` or adding utility classes composes instead of stripping Droppy's own type styles.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A page or section title that should appear in the document outline and in a screen reader's heading-navigation list.
@@ -28,6 +34,10 @@ Display type for page and section titles, rendered as a real semantic heading.
 
 - To style text for size alone — a stat number in a dashboard tile, for instance — without giving it heading semantics, use plain text with the theme's type tokens instead. `Heading` always renders a real `<h1>`–`<h5>`, so using it purely for its size adds a heading to the outline that isn't one.
 - To make a heading "look right" against its neighbors, don't skip `level`s (jumping from 1 to 4, say). Keep levels sequential and adjust spacing or layout instead — screen reader users navigate by level, and a skipped level reads as a missing section.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -49,6 +59,10 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 
 <Canvas of={HeadingStories.Levels} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `Heading` has no interactive behavior — it's a static element, not a control.
@@ -56,6 +70,10 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 - **ARIA:** none needed. The native tag (`<h1>`–`<h5>`) already carries the `heading` role and its level; there is no extra wiring to get wrong.
 - **Screen reader:** announced as "heading level N, `<text>`," and listed in heading-navigation tools such as NVDA's Elements List or VoiceOver's rotor.
 - **You must provide:** a sequential `level` order (don't skip levels) and exactly one `h1` per page, so the outline a screen reader user navigates by stays meaningful — `size` only changes the visual step, so this holds whether or not you set it.
+
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -70,6 +88,16 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 | `--ds-type-size-3xl` / `2xl` / `xl` / `lg` / `md` | Font size, size steps 1 through 5 respectively — `size` if set, else `level` |
 
 `className` is merged onto the rendered tag, so it composes with the tokens above rather than overriding them wholesale.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={HeadingStories} />
+
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -100,11 +128,11 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={HeadingStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To title a [Modal](?path=/docs/overlays-modal--docs) or [Sidebar](?path=/docs/overlays-sidebar--docs), forward this component's ref via `render` so the dialog or drawer's `aria-labelledby` points at a real heading tag.
 - To label a form field, use [Input](?path=/docs/forms-input-input--docs), which handles its own label association without a separate `Heading`.
+
+{/* END: when-to-use */}
