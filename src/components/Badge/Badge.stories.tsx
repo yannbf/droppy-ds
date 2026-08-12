@@ -4,7 +4,7 @@ import { expect } from 'storybook/test'
 import { Badge } from './Badge'
 
 const meta = {
-  title: 'Components/Badge',
+  title: 'Feedback & status/Badge',
   component: Badge,
   args: { text: 'vegan' },
 } satisfies Meta<typeof Badge>

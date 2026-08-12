@@ -4,7 +4,7 @@ import { expect, userEvent, within } from 'storybook/test'
 import { Input } from './Input'
 
 const meta = {
-  title: 'Components/Input',
+  title: 'Forms & input/Input',
   component: Input,
   args: { label: 'Full name' },
   decorators: [

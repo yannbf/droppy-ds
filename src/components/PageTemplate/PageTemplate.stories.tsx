@@ -10,7 +10,7 @@ const Footer = () => (
 )
 
 const meta = {
-  title: 'Components/PageTemplate',
+  title: 'Layout & structure/PageTemplate',
   component: PageTemplate,
   args: {
     header: <Header />,

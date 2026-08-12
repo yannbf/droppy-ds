@@ -4,7 +4,7 @@ import { expect } from 'storybook/test'
 import { ProgressBar } from './ProgressBar'
 
 const meta = {
-  title: 'Components/ProgressBar',
+  title: 'Feedback & status/ProgressBar',
   component: ProgressBar,
   args: { value: 1, max: 3, label: 'Checkout progress' },
   render: (args) => (

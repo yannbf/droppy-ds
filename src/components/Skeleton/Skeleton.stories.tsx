@@ -6,7 +6,7 @@ import { Heading } from '../Heading'
 import { Skeleton } from './Skeleton'
 
 const meta = {
-  title: 'Components/Skeleton',
+  title: 'Feedback & status/Skeleton',
   component: Skeleton,
 } satisfies Meta<typeof Skeleton>
 

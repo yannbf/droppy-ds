@@ -4,7 +4,7 @@ import { expect } from 'storybook/test'
 import { Spinner } from './Spinner'
 
 const meta = {
-  title: 'Components/Spinner',
+  title: 'Feedback & status/Spinner',
   component: Spinner,
 } satisfies Meta<typeof Spinner>
 

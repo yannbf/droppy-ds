@@ -12,7 +12,7 @@ const sushiIllustration = (
 )
 
 const meta = {
-  title: 'Components/ErrorBlock',
+  title: 'Feedback & status/ErrorBlock',
   component: ErrorBlock,
   args: {
     title: 'This is not the food you’re looking for.',
