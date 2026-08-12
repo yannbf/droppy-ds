@@ -1,0 +1,35 @@
+diff --git a/dist/preview-DT8xYHrd.mjs b/dist/preview-DT8xYHrd.mjs
+index 16f7bf348f09deb9fa9721d4d7499715878c9d2b..be7d7f87b8a858bcf996997a5144e8a3820ec2db 100644
+--- a/dist/preview-DT8xYHrd.mjs
++++ b/dist/preview-DT8xYHrd.mjs
+@@ -226,14 +226,6 @@ const themedDecorator = (Story, context) => {
+ 		};
+ 	}, [tuple, axesGlobal]);
+ 	const announcement = useThemeAnnouncement(themeName);
+-	const wrapperAttrs = {};
+-	for (const axis of axes) {
+-		const value = tuple[axis.name];
+-		if (value !== void 0) wrapperAttrs[dataAttr(cssVarPrefix, axis.name)] = value;
+-	}
+-	forEachPinnedAxis((name, value) => {
+-		wrapperAttrs[dataAttr(cssVarPrefix, name)] = value;
+-	});
+ 	const live = useProjectSource();
+ 	return /* @__PURE__ */ jsx(SwatchbookProvider, {
+ 		snapshot: useMemo(() => ({
+@@ -255,14 +247,7 @@ const themedDecorator = (Story, context) => {
+ 			value: themeName,
+ 			children: /* @__PURE__ */ jsxs(AxesContext.Provider, {
+ 				value: tuple,
+-				children: [/* @__PURE__ */ jsx("div", {
+-					...wrapperAttrs,
+-					style: {
+-						padding: "1rem",
+-						minHeight: "100%"
+-					},
+-					children: /* @__PURE__ */ jsx(Story, {})
+-				}), /* @__PURE__ */ jsx("div", {
++				children: [/* @__PURE__ */ jsx(Story, {}), /* @__PURE__ */ jsx("div", {
+ 					role: "status",
+ 					"aria-live": "polite",
+ 					style: SR_ONLY_STYLE,
