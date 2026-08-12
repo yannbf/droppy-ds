@@ -4,28 +4,48 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 <Meta title="Accessibility guidelines" tags={['general-a11y']} />
 
-Base UI supplies the behavior underneath every component Droppy ships: ARIA roles and attributes,
-keyboard navigation, focus management, pointer interactions. Droppy supplies what sits on top of
-that behavior — the focus ring, the contrast, the touch target, the motion — the visible half of
-accessibility that a correct ARIA tree alone doesn't cover. This page states the standard both
-halves target, how the work divides three ways, and where to find the exact keyboard model for
-every composite Droppy ships.
+Web accessibility is not only a legal requirement in many jurisdictions, but also a moral imperative and a business advantage. It ensures that all users, regardless of context, can access and interact with digital content effectively. By adhering to accessibility guidelines, we create inclusive experiences that benefit everyone, including those with temporary or situational impairments.
+
+Droppy builds its accessibility compliance on top of Base UI, which itself implements trusted accessibility patterns. Droppy's theme ensures components are perceivable, operable and understandable. As an app developer, you too contribute to accessibility compliance, by correctly handling page heading structure, landmark order, labels and alt text for content, etc.
 
 ## Standards & targets
 
-Every component targets **WCAG 2.2 Level AA** as the floor, for these groups in particular:
+All our products, and so, all Droppy components, must meet **WCAG 2.2 Level AA** success criteria.
 
-- **Keyboard-only** users, who need a visible focus indicator and a sane tab order on everything
-  interactive — no pointer to fall back on.
-- **Screen-reader** users, who depend on the roles, names, and states the underlying primitive
-  exposes.
-- **Low-vision** users, who rely on contrast and scale, often stacked with browser zoom or
-  OS-level magnification.
-- **Motor-impaired** users, who need targets sized and spaced for imprecise pointing, and no
-  interaction that demands split-second timing.
-- **Reduced-motion** users, for whom animation is a vestibular or attentional hazard.
+### Target audience
+
+We support a wide range of users with their own needs:
+
+- **Keyboard-only** users, who need a visible focus indicator and a predictable tab order
+- **Screen-reader** users, who depend on correct HTML semantics
+- **Low-vision** users, who rely on contrast improvement and magnification tools
+- **Motor-impaired** users, who need targets sized and spaced for imprecise pointing
+- **Reduced-motion** users, for whom animation is a vestibular or attentional hazard
+
+### Manual testing stack
+
+We aim to be compatible with the NVDA and VoiceOver screen readers, which are both free and available to the vast majority of our B2B and B2C users. NVDA is available on Windows, and VoiceOver on macOS. Support for High Contrast Mode and magnification tools should be tested on Windows and macOS, with Chrome and Safari.
+
+We use those tools to test Droppy components in isolation. We encourage you to also use them on MealDrop and DropBoard app pages to verify that Droppy components are integrated correctly.
+
+### Automated testing stack
+
+`@storybook/addon-a11y` runs on every story in Droppy, as a first line of defense against WCAG violations.
+It uses axe-core to automatically detect patterns that are likely to be violations. In rare cases,
+the addon reports false positives. For instance, [Carousel](?path=/docs/media-content-carousel--docs) intentionally dims its non-interactive slide previews, which triggers a `color-contrast` violation. We disable axe-core rules in such cases, so that you can rely on the addon's violation reports to confirm the presence of actual accessibility violations.
+
+Additionally, we write `play` functions that are run in Vitest via `@storybook/addon-vitest`. In these `play`
+function tests, we verify additional requirements, such as:
+* the keyboard tab order is as expected, and focus traps resolve as expected
+* the expected ARIA attributes show up based on the passed props
+* the expected `aria-live` announcements are made when a component's state changes
+* etc.
+
+## WCAG compliance FAQ
 
 ### Contrast
+
+Our theme's color palette is designed to meet the following minimum contrast ratios for text and UI elements, ensuring readability and accessibility for users with visual impairments. Below is a reminder of the minimum contrast ratios mandated by WCAG 2.2 AA:
 
 | Content                                     | Minimum ratio |
 | :------------------------------------------ | :------------ |
@@ -33,56 +53,22 @@ Every component targets **WCAG 2.2 Level AA** as the floor, for these groups in 
 | Large text (≥24px, or ≥19px bold)           | 3:1           |
 | UI component boundaries & graphical objects | 3:1           |
 
-These are the WCAG 2.2 AA numbers (SC 1.4.3, SC 1.4.11) — the floor every token pairing Droppy
-ships (text on surface, icon on fill, border on background) targets, in both themes.
-[Base UI's own documentation](https://base-ui.com/react/handbook) recommends measuring contrast
-with APCA rather than the WCAG ratio alone; unlike the WCAG formula, APCA weighs font size and
-weight into the perceived result, so it's more accurate for borderline pairings. Treat
-the ratios above as the enforced minimum — automated on every story, see Tooling & workflow below
-— and APCA as the better call when a pairing is close.
+### Focus outlines
 
-## The layered contract
+Our theme includes a visible focus outline for interactive elements, ensuring that keyboard users can easily track focus. The focus outline is applied using the `:focus-visible` pseudo-class, and its appearance is consistent across all components. We use a double shadow to make it easier for you to achieve contrast ratio regardless of the background color. Always use the Droppy focus outline to stay safe.
 
-The accessibility work divides three ways.
+### Touch target sizing
 
-**Base UI supplies the behavior, and Droppy builds on it.** Most interactive composites wrap a
-Base UI primitive, and that primitive is where the ARIA roles and attributes, keyboard navigation,
-focus management, and pointer interactions come from — `Tabs` renders
-`role="tablist"`/`role="tab"` and roves focus with arrow keys because `@base-ui/react/tabs` does;
-`Modal` traps focus and closes on Escape because `@base-ui/react/dialog` does. Droppy doesn't
-reimplement any of that. A few composites sit outside this pattern — see Keyboard navigation
-below for which ones, and what stands in for Base UI there.
+We ensure that all interactive elements meet the minimum touch target size of 48×48 CSS pixels, as recommended by WCAG 2.2. This sizing accommodates users with motor impairments and those using touch devices, providing a comfortable and accessible interaction experience. For instance, [Button](?path=/docs/actions-button--docs) and [IconButton](?path=/docs/actions-iconbutton--docs) components have a default size of 64×64 CSS pixels, and a `small` variant size of 48×48 CSS pixels.
 
-**Droppy supplies the visible layer** — the part a screen reader has no opinion about, but a
-sighted, low-vision, or motor-impaired person is relying on:
+### Reduced motion
 
-- **The focus ring** is one shared design decision, not a per-component choice: `--ds-shadow-focus`
-  stacks a 1px inner ring in `--ds-color-focus-ring` with a 4px outer halo in
-  `--ds-color-focus-halo` (the inner ring widens to 2px in dark mode), applied on `:focus-visible`
-  across every themed interactive part — buttons, form controls, tabs, accordion triggers, toolbar
-  items, and more.
-- **Color contrast** of every token pairing, to the ratios above.
-- **Touch-target sizing.** WCAG 2.2's own floor (SC 2.5.8) is 24×24 CSS px; Droppy aims well past
-  it — `IconButton` ships at 4rem (64px) square by default, with a 3rem (48px) `small` variant for
-  denser layouts, and `Button`'s padding scale keeps label and icon-only buttons in the same
-  comfortable range.
-- **Motion that respects the animation doctrine** (full doctrine:
-  [Technical guidelines](?path=/docs/technical-guidelines--docs)) — with one open gap: the shared
-  theme stylesheet has no `prefers-reduced-motion` rule of its own today. `Skeleton` and `Spinner`
-  each implement reduced motion per component; any other motion Droppy or the app layers on top
-  still needs something to check that preference.
-
-**The consuming app still owns** page heading structure and landmark order, labels and alt text
-for content it provides, reduced-motion respect for animation it drives itself, and form error
-text — Droppy reserves the space and the styling hook, the app supplies the message.
+Droppy currently does not handle reduced motion for you. It is your responsibility, in app code, to apply the `prefers-reduced-motion` media query to any motion you layer on top of Droppy components.
 
 ## Keyboard navigation of composite components
 
-Base UI's own composites share one model: one Tab stop for the whole widget, arrow keys move a
-roving highlight among its members, and a separate activation is sometimes required rather than
-implied by focus alone. Every Droppy composite that wraps one of those primitives inherits that
-model unmodified. A few composites don't wrap a Base UI composite at all; their keyboard
-model comes from somewhere else, noted below.
+Every Droppy composite component is built on a Base UI composite primitive, or on a small number of ordinary HTML elements. Simple components use single Tab stops, but composite components have more complex keyboard navigation models that must match WCAG Authoring Practice Guidelines to be predictable for keyboard and screenreader users. The table below summarizes the keyboard navigation model for each Droppy composite component.
+
 
 | Component                                                        | Built on                                         | Model                                                                                                                                                                                                                                              |
 | :--------------------------------------------------------------- | :----------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -95,29 +81,8 @@ model comes from somewhere else, noted below.
 | [NumberField](?path=/docs/forms-input-numberfield--docs)         | `@base-ui/react/number-field`                    | Up/Down arrow steps the value; Home/End jump to `min`/`max` when set; typing replaces it directly.                                                                                                                                                 |
 | [ScrollArea](?path=/docs/layout-structure-scrollarea--docs)      | `@base-ui/react/scroll-area`                     | Arrow keys and Page Up/Down scroll the focused viewport; the scrollbar thumb itself is never a Tab stop.                                                                                                                                           |
 | [Select](?path=/docs/forms-input-select--docs)                   | Native `<select>` — no Base UI primitive         | The platform's own picker rather than a scripted listbox: Up/Down/Home/End and native typeahead once open, Enter/Escape to commit or cancel.                                                                                                       |
-| [Carousel](?path=/docs/media-content-carousel--docs)             | Embla Carousel — no Base UI primitive            | The scroll track itself is drag/wheel-only, the same tradeoff most carousel implementations make. Only the Previous/Next arrows (Droppy's `IconButton`, itself built on Base UI's `Button`) are keyboard-operable, each its own ordinary Tab stop. |
+| [Carousel](?path=/docs/media-content-carousel--docs)             | Embla Carousel — no Base UI primitive            | The scroll track itself is drag/wheel-only, the same tradeoff most carousel implementations make. Only the Previous/Next arrows (Droppy's `IconButton`) are keyboard-operable, each its own ordinary Tab stop. |
 | [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) | Two `Button`s — no dedicated composite primitive | Two ordinary Tab stops, standard Enter/Space per button. The surrounding `role="group"` and the value's `aria-live` announcement are authored directly in Droppy, since Base UI has no dedicated stepper primitive.                                |
-
-## Tooling & workflow
-
-`@storybook/addon-a11y` runs on every story — a workspace-wide addon, not an opt-in per component
-— and `a11y: { test: 'error' }` in `.storybook/preview.tsx` means an axe violation fails the story
-outright, rather than just flagging it in the Accessibility panel.
-
-`@storybook/addon-vitest` turns every story into a browser test, run through Playwright's
-Chromium. The same `test: 'error'` setting applies there too: a component that fails its
-accessibility check fails the test run, not just the visual review. There's nothing to hand-write
-for this — the assertion comes from the addon wiring itself, not a call inside a test file.
-
-Automated coverage has a shape: axe catches missing labels, bad contrast, and invalid ARIA, not
-whether the tab order makes sense or a screen reader announces a state change usefully. Give every
-new component — especially one that isn't wrapping a Base UI primitive — a manual keyboard pass
-and a screen-reader smoke test before it ships.
-
-When a rule genuinely needs to be relaxed for a deliberate design choice, document why at the
-point of the override — the way `Carousel`'s story disables the `color-contrast` rule for its
-intentionally dimmed, non-interactive slide previews, with a comment explaining the exception
-rather than a silent rule change.
 
 ## Related
 
@@ -125,4 +90,3 @@ rather than a silent rule change.
   and the animation doctrine this page assumes.
 - [Choosing components](?path=/docs/choosing-components--docs) — which component fits a given
   interaction pattern.
-- [Getting started](?path=/docs/getting-started--docs) — installing the package and its stylesheet.
