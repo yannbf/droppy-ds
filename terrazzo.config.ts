@@ -12,9 +12,6 @@ export default defineConfig(
       css({
         filename: 'tokens.css',
         legacyHex: false,
-        // @property definitions are off until plugin-css stops emitting
-        // `initial-value: var(...)` for alias tokens — invalid per spec,
-        // and lightningcss rejects the stylesheet during the library build.
         propertyDefinitions: true,
         permutations: [
           { input: { theme: 'light' }, prepare: (c) => `:root {\n${c}\n}` },

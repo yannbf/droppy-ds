@@ -1,15 +1,3 @@
-/*
- * @droppy/design-system — the one stylesheet a consuming app imports.
- *
- *   import '@droppy/design-system/styles.css'
- *
- * It carries the Droppy tokens and Base UI part chrome from the theme layer
- * in `src/theme`, then Droppy's own component layer on top. Order is the
- * cascade contract: the theme first, components second, so a component rule
- * wins over the theme rule it refines at equal specificity. Anything the
- * consuming app writes comes later still and wins over both.
- */
-
 @import '../theme/tokens.css';
 @import '../theme/styles.css';
 
