@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@terrazzo/plugin-css':
+    hash: 6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e
+    path: patches/@terrazzo__plugin-css.patch
+
 importers:
 
   .:
@@ -44,7 +49,7 @@ importers:
         version: 2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)
       '@terrazzo/plugin-css':
         specifier: ^2.7.1
-        version: 2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))
+        version: 2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))
       '@terrazzo/token-tools':
         specifier: 2.7.1
         version: 2.7.1
@@ -59,13 +64,13 @@ importers:
         version: 19.2.3(@types/react@19.2.17)
       '@unpunnyfuns/swatchbook-addon':
         specifier: ^2.0.0
-        version: 2.0.0(@humanwhocodes/momoa@3.3.10)(@storybook/react-vite@10.5.5(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.28.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.5(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.8))(typescript@5.9.3)(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.5(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.8))(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(yaml-to-momoa@0.1.0)
+        version: 2.0.0(@humanwhocodes/momoa@3.3.10)(@storybook/react-vite@10.5.5(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.28.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.5(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.8))(typescript@5.9.3)(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.5(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.8))(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(yaml-to-momoa@0.1.0)
       '@unpunnyfuns/swatchbook-blocks':
         specifier: ^2.0.0
-        version: 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(yaml-to-momoa@0.1.0)
+        version: 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(yaml-to-momoa@0.1.0)
       '@unpunnyfuns/swatchbook-core':
         specifier: ^2.0.0
-        version: 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(yaml-to-momoa@0.1.0)
+        version: 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(yaml-to-momoa@0.1.0)
       '@vitejs/plugin-react':
         specifier: ^6.0.3
         version: 6.0.4(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))
@@ -4715,7 +4720,7 @@ snapshots:
     optionalDependencies:
       yaml-to-momoa: 0.1.0
 
-  '@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))':
+  '@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))':
     dependencies:
       '@terrazzo/cli': 2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)
       '@terrazzo/parser': 2.7.1(yaml-to-momoa@0.1.0)
@@ -4943,11 +4948,11 @@ snapshots:
       '@typescript-eslint/types': 8.65.0
       eslint-visitor-keys: 5.0.1
 
-  '@unpunnyfuns/swatchbook-addon@2.0.0(@humanwhocodes/momoa@3.3.10)(@storybook/react-vite@10.5.5(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.28.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.5(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.8))(typescript@5.9.3)(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.5(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.8))(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(yaml-to-momoa@0.1.0)':
+  '@unpunnyfuns/swatchbook-addon@2.0.0(@humanwhocodes/momoa@3.3.10)(@storybook/react-vite@10.5.5(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.28.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.5(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.8))(typescript@5.9.3)(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0)))(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.5(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.8))(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(yaml-to-momoa@0.1.0)':
     dependencies:
       '@storybook/react-vite': 10.5.5(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(esbuild@0.28.1)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(storybook@10.5.5(@types/react@19.2.17)(prettier@3.9.6)(react@19.2.8))(typescript@5.9.3)(vite@8.1.5(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))
-      '@unpunnyfuns/swatchbook-blocks': 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(yaml-to-momoa@0.1.0)
-      '@unpunnyfuns/swatchbook-core': 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(yaml-to-momoa@0.1.0)
+      '@unpunnyfuns/swatchbook-blocks': 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(yaml-to-momoa@0.1.0)
+      '@unpunnyfuns/swatchbook-core': 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(yaml-to-momoa@0.1.0)
       '@unpunnyfuns/swatchbook-switcher': 2.0.0(react@19.2.8)
       jiti: 2.7.0
       picomatch: 4.0.5
@@ -4962,10 +4967,10 @@ snapshots:
       - '@terrazzo/plugin-css'
       - yaml-to-momoa
 
-  '@unpunnyfuns/swatchbook-blocks@2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(yaml-to-momoa@0.1.0)':
+  '@unpunnyfuns/swatchbook-blocks@2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(yaml-to-momoa@0.1.0)':
     dependencies:
       '@tanstack/react-virtual': 3.14.5(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@unpunnyfuns/swatchbook-core': 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(yaml-to-momoa@0.1.0)
+      '@unpunnyfuns/swatchbook-core': 2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(yaml-to-momoa@0.1.0)
       clsx: 2.1.1
       colorjs.io: 0.6.1
       react: 19.2.8
@@ -4977,12 +4982,12 @@ snapshots:
       - '@terrazzo/plugin-css'
       - yaml-to-momoa
 
-  '@unpunnyfuns/swatchbook-core@2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(yaml-to-momoa@0.1.0)':
+  '@unpunnyfuns/swatchbook-core@2.0.0(@humanwhocodes/momoa@3.3.10)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))(@terrazzo/plugin-css@2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0)))(yaml-to-momoa@0.1.0)':
     dependencies:
       '@leeoniya/ufuzzy': 1.0.19
       '@terrazzo/json-schema-tools': 0.2.2(@humanwhocodes/momoa@3.3.10)(yaml-to-momoa@0.1.0)
       '@terrazzo/parser': 2.7.1(yaml-to-momoa@0.1.0)
-      '@terrazzo/plugin-css': 2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))
+      '@terrazzo/plugin-css': 2.7.1(patch_hash=6f7661621f1b1742509e20135b7f9c0ef6d349243f94d4c1365a6cf755a4804e)(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))
       '@terrazzo/plugin-token-listing': 0.1.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))
       '@terrazzo/token-tools': 2.7.1
       colorjs.io: 0.6.1

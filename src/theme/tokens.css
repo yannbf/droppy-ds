@@ -27,183 +27,219 @@
 }
 
 @property --ds-color-action-on-primary {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(100% 100% 100%);
 }
 
 @property --ds-color-action-primary {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(12.549% 12.549% 12.549%);
 }
 
 @property --ds-color-action-primary-hover {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(17.255% 17.255% 17.255%);
 }
 
 @property --ds-color-action-progress {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(12.549% 12.549% 12.549%);
 }
 
 @property --ds-color-action-subtle-hover {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(96.078% 96.471% 96.863%);
 }
 
 @property --ds-color-badge-bg {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(91.373% 91.373% 91.373%);
 }
 
 @property --ds-color-badge-positive-bg {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(89.804% 97.255% 73.725%);
 }
 
 @property --ds-color-badge-positive-text {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(17.255% 17.255% 17.255%);
 }
 
 @property --ds-color-badge-text {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(38.824% 38.824% 38.824%);
 }
 
 @property --ds-color-border-subtle {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(91.373% 91.373% 91.373%);
 }
 
 @property --ds-color-chip-contrast-bg {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(12.549% 12.549% 12.549%);
 }
 
 @property --ds-color-chip-contrast-text {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(100% 100% 100%);
 }
 
 @property --ds-color-focus-halo {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(84.706% 93.333% 94.902%);
 }
 
 @property --ds-color-focus-ring {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(55.686% 69.412% 71.373%);
 }
 
 @property --ds-color-icon-default {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(17.255% 17.255% 17.255%);
 }
 
 @property --ds-color-progress-fill {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(12.549% 12.549% 12.549%);
 }
 
 @property --ds-color-progress-track {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(96.078% 96.471% 96.863%);
 }
 
 @property --ds-color-skeleton-base {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(91.373% 91.373% 91.373%);
 }
 
 @property --ds-color-skeleton-highlight {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(96.078% 96.471% 96.863%);
 }
 
 @property --ds-color-surface-card {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(97.647% 97.647% 97.647%);
 }
 
 @property --ds-color-surface-default {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(100% 100% 100%);
 }
 
 @property --ds-color-surface-highlight {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(89.804% 97.255% 73.725%);
 }
 
 @property --ds-color-surface-info {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(69.412% 86.667% 89.412%);
 }
 
 @property --ds-color-surface-inverse {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(17.255% 17.255% 17.255%);
 }
 
 @property --ds-color-surface-overlay {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(100% 100% 100%);
 }
 
 @property --ds-color-surface-page {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(100% 100% 100%);
 }
 
 @property --ds-color-surface-sunken {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(96.078% 96.471% 96.863%);
 }
 
 @property --ds-color-text-default {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(17.255% 17.255% 17.255%);
 }
 
 @property --ds-color-text-error {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(71.765% 10.98% 10.98%);
 }
 
 @property --ds-color-text-hint {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(47.451% 47.451% 47.451%);
 }
 
 @property --ds-color-text-label {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(21.176% 21.176% 21.176%);
 }
 
 @property --ds-color-text-label-active {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(12.549% 12.549% 12.549%);
 }
 
 @property --ds-color-text-on-inverse {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(100% 100% 100%);
 }
 
 @property --ds-color-text-primary {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(17.255% 17.255% 17.255%);
 }
 
 @property --ds-color-text-review {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(34.902% 43.529% 44.706%);
 }
 
 @property --ds-color-text-secondary {
-  syntax: '*';
+  syntax: '<color>';
   inherits: true;
+  initial-value: rgb(38.824% 38.824% 38.824%);
 }
 
 @property --ds-motion-base {
@@ -591,13 +627,13 @@
 @property --ds-type-style-body-font-size {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-size-md);
+  initial-value: 1.125rem;
 }
 
 @property --ds-type-style-body-font-weight {
   syntax: '<integer>';
   inherits: true;
-  initial-value: var(--ds-type-weight-regular);
+  initial-value: 400;
 }
 
 @property --ds-type-style-body-line-height {
@@ -608,7 +644,7 @@
 @property --ds-type-style-body-letter-spacing {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-tracking-default);
+  initial-value: 0px;
 }
 
 @property --ds-type-style-body {
@@ -624,13 +660,13 @@
 @property --ds-type-style-h1-font-size {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-size-3xl);
+  initial-value: 2.74rem;
 }
 
 @property --ds-type-style-h1-font-weight {
   syntax: '<integer>';
   inherits: true;
-  initial-value: var(--ds-type-weight-bold);
+  initial-value: 700;
 }
 
 @property --ds-type-style-h1-line-height {
@@ -641,7 +677,7 @@
 @property --ds-type-style-h1-letter-spacing {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-tracking-display);
+  initial-value: -2px;
 }
 
 @property --ds-type-style-h1 {
@@ -657,13 +693,13 @@
 @property --ds-type-style-h2-font-size {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-size-2xl);
+  initial-value: 2.19rem;
 }
 
 @property --ds-type-style-h2-font-weight {
   syntax: '<integer>';
   inherits: true;
-  initial-value: var(--ds-type-weight-bold);
+  initial-value: 700;
 }
 
 @property --ds-type-style-h2-line-height {
@@ -674,7 +710,7 @@
 @property --ds-type-style-h2-letter-spacing {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-tracking-display);
+  initial-value: -2px;
 }
 
 @property --ds-type-style-h2 {
@@ -690,13 +726,13 @@
 @property --ds-type-style-h3-font-size {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-size-xl);
+  initial-value: 1.75rem;
 }
 
 @property --ds-type-style-h3-font-weight {
   syntax: '<integer>';
   inherits: true;
-  initial-value: var(--ds-type-weight-bold);
+  initial-value: 700;
 }
 
 @property --ds-type-style-h3-line-height {
@@ -707,7 +743,7 @@
 @property --ds-type-style-h3-letter-spacing {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-tracking-default);
+  initial-value: 0px;
 }
 
 @property --ds-type-style-h3 {
@@ -723,13 +759,13 @@
 @property --ds-type-style-h4-font-size {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-size-lg);
+  initial-value: 1.4rem;
 }
 
 @property --ds-type-style-h4-font-weight {
   syntax: '<integer>';
   inherits: true;
-  initial-value: var(--ds-type-weight-bold);
+  initial-value: 700;
 }
 
 @property --ds-type-style-h4-line-height {
@@ -740,7 +776,7 @@
 @property --ds-type-style-h4-letter-spacing {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-tracking-default);
+  initial-value: 0px;
 }
 
 @property --ds-type-style-h4 {
@@ -756,13 +792,13 @@
 @property --ds-type-style-small-font-size {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-size-sm);
+  initial-value: 1rem;
 }
 
 @property --ds-type-style-small-font-weight {
   syntax: '<integer>';
   inherits: true;
-  initial-value: var(--ds-type-weight-regular);
+  initial-value: 400;
 }
 
 @property --ds-type-style-small-line-height {
@@ -773,7 +809,7 @@
 @property --ds-type-style-small-letter-spacing {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-tracking-default);
+  initial-value: 0px;
 }
 
 @property --ds-type-style-small {
@@ -789,13 +825,13 @@
 @property --ds-type-style-xs-font-size {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-size-xs);
+  initial-value: 0.9rem;
 }
 
 @property --ds-type-style-xs-font-weight {
   syntax: '<integer>';
   inherits: true;
-  initial-value: var(--ds-type-weight-regular);
+  initial-value: 400;
 }
 
 @property --ds-type-style-xs-line-height {
@@ -806,7 +842,7 @@
 @property --ds-type-style-xs-letter-spacing {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-tracking-default);
+  initial-value: 0px;
 }
 
 @property --ds-type-style-xs {
@@ -822,13 +858,13 @@
 @property --ds-type-style-xxs-font-size {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-size-2xs);
+  initial-value: 0.72rem;
 }
 
 @property --ds-type-style-xxs-font-weight {
   syntax: '<integer>';
   inherits: true;
-  initial-value: var(--ds-type-weight-regular);
+  initial-value: 400;
 }
 
 @property --ds-type-style-xxs-line-height {
@@ -839,7 +875,7 @@
 @property --ds-type-style-xxs-letter-spacing {
   syntax: '<length>';
   inherits: true;
-  initial-value: var(--ds-type-tracking-default);
+  initial-value: 0px;
 }
 
 @property --ds-type-style-xxs {
