@@ -11,7 +11,7 @@ const preview = definePreview({
   parameters: {
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
     a11y: { test: 'error' },
-    docs: { codePanel: true, toc: { headingSelector: 'h2, h3, h4' } },
+    docs: { codePanel: true, toc: { headingSelector: 'h2, h3, h4' }},
     options: {
       storySort: {
         order: [
@@ -20,8 +20,7 @@ const preview = definePreview({
           'Accessibility guidelines',
           'Brand guidelines',
           'Choosing components',
-          'Component browser (Live)',
-          'Component browser (Icons)',
+          'Component browser',
           'Design tokens',
           'Actions',
           'Forms & input',
