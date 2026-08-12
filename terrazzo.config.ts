@@ -15,7 +15,7 @@ export default defineConfig(
         // @property definitions are off until plugin-css stops emitting
         // `initial-value: var(...)` for alias tokens — invalid per spec,
         // and lightningcss rejects the stylesheet during the library build.
-        propertyDefinitions: false,
+        propertyDefinitions: true,
         permutations: [
           { input: { theme: 'light' }, prepare: (c) => `:root {\n${c}\n}` },
           { input: { theme: 'dark' }, prepare: (c) => `${DARK_ATTR} {\n${c}\n}` },
