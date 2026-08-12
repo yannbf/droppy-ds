@@ -9,4 +9,3 @@ storybook-static/
 .env
 .env.*
 !.env.example
-src/theme/tokens.css
