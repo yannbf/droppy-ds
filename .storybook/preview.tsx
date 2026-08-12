@@ -1,13 +1,12 @@
 import React from 'react'
 import { definePreview } from '@storybook/react-vite'
 import addonDocs from '@storybook/addon-docs'
-import { DocsContainer } from '@storybook/addon-docs/blocks'
-import type { DocsContainerProps } from '@storybook/addon-docs/blocks'
 import addonA11y from '@storybook/addon-a11y'
 import addonVitest from '@storybook/addon-vitest'
 import addonSwatchbook from '@unpunnyfuns/swatchbook-addon'
 
 import '../src/styles/index.css'
+import { DocsContainer, type DocsContainerProps } from '@storybook/addon-docs/blocks'
 
 // Docs pages with no story never run the decorator above, and without an
 // explicit `data-theme` the stylesheet's `prefers-color-scheme` fallback kicks
