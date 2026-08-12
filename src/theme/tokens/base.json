@@ -595,10 +595,11 @@
         }
       },
       "default": {
-        "$type": "string",
-        "$value": "normal",
-        "$description": "The CSS `normal` keyword for default letter-spacing — no extra tracking."
-      }
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        }
     },
     "style": {
       "h1": {
@@ -631,7 +632,7 @@
           "fontSize": "{type.size.xl}",
           "fontWeight": "{type.weight.bold}",
           "lineHeight": 1.2,
-          "letterSpacing": "normal"
+          "letterSpacing": "{type.tracking.default}"
         }
       },
       "h4": {
@@ -642,7 +643,7 @@
           "fontSize": "{type.size.lg}",
           "fontWeight": "{type.weight.bold}",
           "lineHeight": 1.2,
-          "letterSpacing": "normal"
+          "letterSpacing": "{type.tracking.default}"
         }
       },
       "body": {
@@ -653,7 +654,7 @@
           "fontSize": "{type.size.md}",
           "fontWeight": "{type.weight.regular}",
           "lineHeight": 1.2,
-          "letterSpacing": "normal"
+          "letterSpacing": "{type.tracking.default}"
         }
       },
       "small": {
@@ -664,7 +665,7 @@
           "fontSize": "{type.size.sm}",
           "fontWeight": "{type.weight.regular}",
           "lineHeight": 1.2,
-          "letterSpacing": "normal"
+          "letterSpacing": "{type.tracking.default}"
         }
       },
       "xs": {
@@ -675,7 +676,7 @@
           "fontSize": "{type.size.xs}",
           "fontWeight": "{type.weight.regular}",
           "lineHeight": 1.2,
-          "letterSpacing": "normal"
+          "letterSpacing": "{type.tracking.default}"
         }
       },
       "xxs": {
@@ -686,7 +687,7 @@
           "fontSize": "{type.size.2xs}",
           "fontWeight": "{type.weight.regular}",
           "lineHeight": 1.2,
-          "letterSpacing": "normal"
+          "letterSpacing": "{type.tracking.default}"
         }
       }
     }
