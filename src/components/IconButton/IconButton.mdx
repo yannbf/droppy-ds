@@ -90,6 +90,33 @@ bare `box-shadow` on focus would drop the shadow and the button would flatten.
   token, because `IconButton` is deliberately theme-independent.
 - `className` merges with the component's own classes.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2025-03**: IconButton's `icon` prop was retyped from `string` to the `IconName` string-literal union alongside Icon and Button, making invalid names a compile-time error ([IconName union](https://github.com/yannbf/mealdrop/commit/14cf17a324a99c4744eec1495810f96d4e17bc5d)).
+- **2025-10**: Base UI Button — beneath IconButton — was accepted into the library purely for accessibility (focusableWhenDisabled, Enter/Space normalization on non-native tags), making the wrapper's value keyboard/AT semantics rather than styling ([Button research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/button/brief.md)).
+- **2026-07**: IconButton deliberately kept its theme-independent light-pill look — it sits on photography (carousel arrows over images), not on a themed surface, making it the one component in the set that does not respond to the theme — gaining only the DS focus ring and round-radius token in the migration ([buttons migration commit](https://github.com/yannbf/mealdrop/commit/c3c8adeb8e81c6e2c545b65728ed43a1aaf5d21e), [mealdrop #62](https://github.com/yannbf/mealdrop/pull/62), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#79](https://github.com/yannbf/droppy-ds/issues/79): onClick is typed () =&gt; void, rejecting handlers that use the MouseEvent delivered at runtime (open; has workaround: cast the handler (e.g. `as IconButtonProps['onClick']`) — the MouseEvent still arrives at runtime — or use the still-natively-typed onClickCapture/onMouseDown).
+- [#82](https://github.com/yannbf/droppy-ds/issues/82): disabled, hover, and pressed states have no visual treatment — only rest and focus-visible are styled (open; has workaround: add app CSS on the shipped hooks, e.g. `.droppy-IconButton:disabled, .droppy-IconButton[data-disabled] { opacity: 0.4; cursor: default; }` plus a `:hover:not(:disabled)` rule).
+- [#84](https://github.com/yannbf/droppy-ds/issues/84): aria-label is documented as mandatory but neither type-enforced nor warned about (open; has workaround: always pass `aria-label` (or `aria-labelledby`) at each call site, and enforce it via an app-level wrapper type or lint rule — the package will not catch the omission).
+- [#86](https://github.com/yannbf/droppy-ds/issues/86): unknown name value throws a TypeError during render (open; has workaround: validate candidate names against the exported `iconNames` array before rendering, and wrap usage in an error boundary).
+- [#88](https://github.com/yannbf/droppy-ds/issues/88): children are accepted by the type but silently discarded (open; has workaround: never pass children — use Button for controls with visible text (optionally wrap with a `children?: never` type in app code)).
+- [#90](https://github.com/yannbf/droppy-ds/issues/90): native button name attribute cannot be set — the name prop is repurposed for the icon (open; has workaround: carry the submitted pair in a hidden `<input name value>` (or handle it in onClick/onSubmit) instead of the button's own name/value).
+- [#92](https://github.com/yannbf/droppy-ds/issues/92): docs: the disabled "known limitation" bullet is inaccurate on both claims (open; has workaround: no app change needed — reality is milder than documented, and `focusableWhenDisabled` does reach Base UI via a typed cast if needed).
+- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only) (open, systemic).
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode (open, systemic).
+- [#133](https://github.com/yannbf/droppy-ds/issues/133): the shared `--ds-shadow-focus` ring is below the 3:1 non-text contrast minimum in light theme (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={IconButtonStories} />

@@ -92,6 +92,32 @@ full.
 
 `className` merges onto the root, so it composes with the theme layer rather than replacing it.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-06**: Base UI Accordion — the primitive underneath Droppy's Accordion — removed APG-style arrow-key roving navigation and the redundant `role="region"` on Root in a same-day pair citing the upstream w3c/aria-practices debate (deprecating orientation/loopFocus), after earlier renaming `openMultiple` to `multiple` with the default flipped to `false` and moving item identity to a `useId` fallback so values survive reordering ([Accordion research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/accordion/brief.md)).
+- **2026-07**: Droppy's Accordion took a data-driven `items: {value, title, content}[]` array instead of exposing Base UI's compound-component composition, keeping call sites declarative while Base UI still supplies roving focus, activation timing, and panel wiring; item values fall back to the item's index ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#30](https://github.com/yannbf/droppy-ds/issues/30): theme caps the root at max-width 20rem (320px); undocumented and not liftable via any prop (open; has workaround: pass a className and set max-width: none in app CSS loaded after the DS stylesheet).
+- [#32](https://github.com/yannbf/droppy-ds/issues/32): closed panels unmount their content, destroying all descendant state; keepMounted/hiddenUntilFound are not exposed (open; has workaround: lift content state out of the panel (or use openMultiple to reduce churn); panels cannot be kept mounted through this wrapper).
+- [#35](https://github.com/yannbf/droppy-ds/issues/35): index-fallback item values bind open state and React keys to list position; dynamic lists shift open panels and values can collide (open; has workaround: always pass explicit stable string values per item; avoid mixing the index fallback with stringified-integer explicit values).
+- [#38](https://github.com/yannbf/droppy-ds/issues/38): controlled `value` becoming undefined after mount throws a TypeError on the next trigger click; starting undefined locks the accordion uncontrolled (open; has workaround: always pass an array once controlled ([] for all closed), never undefined; reset uncontrolled accordions by remounting with a new key).
+- [#40](https://github.com/yannbf/droppy-ds/issues/40): heading level is hardcoded to &lt;h3&gt; with no way to fit it to the page outline (open; has workaround (structural only): arrange surrounding headings so h3 fits the outline; the level itself cannot be changed).
+- [#111](https://github.com/yannbf/droppy-ds/issues/111): onValueChange is typed with one parameter, hiding Base UI's runtime eventDetails argument and its cancel() veto (open; has workaround: cast the handler in TS (or just declare the second param in JS); the runtime forwards eventDetails unchanged).
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM (open, systemic).
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode (open, systemic).
+- [#133](https://github.com/yannbf/droppy-ds/issues/133): the shared `--ds-shadow-focus` ring is below the 3:1 non-text contrast minimum in light theme (open, systemic).
+- [#138](https://github.com/yannbf/droppy-ds/issues/138): theme chrome is bound to unnamespaced global classes (`.Button`, `.Input`, `.FieldRoot`, …) with no cascade layer, so host-app CSS collides in both directions (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={AccordionStories} />

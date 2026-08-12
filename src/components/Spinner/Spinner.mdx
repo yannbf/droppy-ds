@@ -78,6 +78,35 @@ tree either way.
 
 `className` merges with the component's own `droppy-Spinner` class.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: the brand teal (#22ACA7 ramp) was reserved for brand moments only — logo, loading spinner, celebration — never UI chrome; because Mealdrop hardcoded the teal in Logo.tsx/Spinner.tsx and its theme never knew about it, the extraction promoted teal into the palette (constrained by that rule) so the identity colour couldn't get lost again, with the spinner shifting to a lime ramp in dark mode ([brand rule 3](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/principles.md), [brand ramp](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/tokens.json)).
+- **2026-07**: Spinner got a real accessible name — `role="status"` with an aria-label from its `label` prop — replacing Mealdrop's off-canvas SVG `<text>` that nothing announced; the spin is CSS keyframes so prefers-reduced-motion slows the rotation to stay perceivable without strobing, rather than freezing it ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [wave 2 commit](https://github.com/yannbf/droppy-ds/commit/4b20c0eca2ee66fb2a7f05aef13522621430fe67)).
+- **2026-08**: Spinner was deliberately not adopted in Mealdrop's initial migration to keep the bespoke "Looking for some food..." SVG animation; wave 2 reversed this, the package Spinner replacing the local SVG and helping lift DS coverage from 49.6% to 55.3% ([kept local by design](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [wave-2 adoption](https://github.com/yannbf/mealdrop/commit/71a21463d7b75816803b074f1a21dcd1866f8562), [mealdrop #67](https://github.com/yannbf/mealdrop/pull/67)).
+- **2026-08**: a visual-parity audit found the CSS port had carried the dot/arc motion but dropped the source SVG's SMIL opacity animation, and proposed restoring the mount fade as an opacity-only keyframe (safe to keep at full speed under `prefers-reduced-motion`). The PR was closed unmerged, so the spinner still pops in at full opacity and it is tracked as [#15](https://github.com/yannbf/droppy-ds/issues/15) ([droppy-ds #8](https://github.com/yannbf/droppy-ds/pull/8)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#179](https://github.com/yannbf/droppy-ds/issues/179): role="status" region has no text content, so the documented "announces label on mount" behaviour is not delivered (open; has workaround: keep your own permanently-mounted visually-hidden live region and write status text into it, treating Spinner as the visual half only).
+- [#183](https://github.com/yannbf/droppy-ds/issues/183): graphic is below the 3:1 non-text contrast minimum in the default light theme (open; has workaround: override the `.droppy-Spinner-dot` / `.droppy-Spinner-arc` fills (or the two brand tokens) with darker values for light mode, or pair the spinner with visible loading text).
+- [#187](https://github.com/yannbf/droppy-ds/issues/187): the hidden attribute has no effect — display: inline-flex on .droppy-Spinner overrides the UA [hidden] rule (open; has workaround: conditionally render instead of using `hidden`, or add `.droppy-Spinner[hidden] { display: none }` to app CSS).
+- [#189](https://github.com/yannbf/droppy-ds/issues/189): graphic is fixed at 100x100px with no size prop, and className targets the wrapper rather than the SVG (open; has workaround: override the internal `.droppy-Spinner-graphic` class in app CSS, scoped through your own className).
+- [#15](https://github.com/yannbf/droppy-ds/issues/15): spinner lost its mount fade-in (open; has workaround: add a one-shot opacity keyframe on `.droppy-Spinner` in app CSS).
+- [#192](https://github.com/yannbf/droppy-ds/issues/192): prefers-reduced-motion rescales animation-duration but not the dots' negative delays, so the three dots bunch together (open; has workaround: rescale the delays to -1.6s / -3.2s inside a `prefers-reduced-motion` block in app CSS).
+- [#195](https://github.com/yannbf/droppy-ds/issues/195): ref is accepted by SpinnerProps but never attached on React 18, which is inside the supported peer range (open; has workaround: on React 18, attach the ref to a wrapper element you own; the passthrough already works on React 19).
+- [#197](https://github.com/yannbf/droppy-ds/issues/197): children are silently discarded and dangerouslySetInnerHTML throws, though both are accepted by SpinnerProps (open; has workaround: pass neither prop — render caption text as a sibling, and your own element for custom artwork).
+- [#199](https://github.com/yannbf/droppy-ds/issues/199): root is a hard-coded &lt;div&gt; with no polymorphic escape hatch, so inline placements produce invalid nesting (open; has workaround: keep Spinner out of `<p>`/`<button>`/`<label>` — render it as a sibling, and pass `aria-hidden` if it must sit inside a button).
+- [#202](https://github.com/yannbf/droppy-ds/issues/202): a passthrough aria-label silently overrides the label prop, and role="status" can be replaced the same way (open; has workaround: set the accessible name only through `label` and never pass `aria-label` or `role` to Spinner).
+- [#203](https://github.com/yannbf/droppy-ds/issues/203): AnnouncesLoading story description says a visually-hidden label carries the accessible name, which the component does not render (open; has workaround: ignore the story description and follow the MDX "The accessible name" section, which is accurate).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={SpinnerStories} />

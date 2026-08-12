@@ -76,6 +76,35 @@ Droppy's own stylesheet sets only the popup's stacking order:
 
 Colors, padding, and border come from the theme layer's `TooltipPopup` class, layered before Droppy's own rule — the cascade is theme first, component second, consuming app last. `className` merges onto the popup, so it composes with both layers rather than replacing them.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2024-05**: Base UI Tooltip — underneath Droppy's Tooltip — deliberately ships without `role="tooltip"` or automatic aria-describedby: the consumer owns naming and description wiring, a documented deviation verified in source; later polarity work renamed `hoverable` to `disableHoverablePopup` so the prop states what it disables, and `closeOnClick` made click-dismiss configurable ([Tooltip research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/tooltip/brief.md), [a11y deviations verified](https://github.com/storybook-tmp/base-ui/blob/research/research/SUMMARY.md)).
+- **2026-07**: the first DS Tooltip re-implemented a stashed tooltip experiment on Base UI Tooltip, wrapping the Header theme-toggle Button as trigger with the popup styled entirely from tokens (overlay surface, card radius, lift shadow, fast ease-in motion) ([tooltip commit](https://github.com/yannbf/mealdrop/commit/08bdd61d8ced42c2b7dad3c7e9f20329bb51d9c2), [mealdrop #62](https://github.com/yannbf/mealdrop/pull/62)).
+- **2026-07**: Mealdrop's Header was excluded from the design system as an application component (routing, cart state, a logo), but its tooltip was judged reusable and extracted as the standalone Tooltip component ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [initial component set](https://github.com/yannbf/droppy-ds/commit/8790c8460335870f6ca26be9850710ff6023cc61)).
+- **2026-07**: because `shadow.overlay` is "comically heavy" at tooltip size, small floaters were mapped to `shadow.lift` instead — part of the two-shadow elevation rule where elevation means floating, never important ([brand rule 6](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/principles.md), [shadow clash](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/CLASHES.md)).
+- **2026-07**: the hover interaction story is deliberately skipped under Chromatic's capture because its synthetic pointer events never open the tip; the same interaction is already driven in a real browser by the Vitest story tests, so coverage is not lost ([Chromatic setup](https://github.com/yannbf/droppy-ds/commit/7497b11ac2afc2ce77ea6e3afcdfc2642f9f441b)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#159](https://github.com/yannbf/droppy-ds/issues/159): non-functional under React 18 with Droppy component children — trigger ref never attaches, tip never shows (open; has workaround: on React 18 pass a host element (or your own forwardRef wrapper) as the child, or upgrade to React 19).
+- [#163](https://github.com/yannbf/droppy-ds/issues/163): the shipped z-index: 3 rule targets a non-positioned element and does nothing — tips paint behind Droppy's own Modal/Sidebar and any z-indexed page chrome (open; has workaround: global CSS `div:has(> .droppy-Tooltip) { z-index: 100 }` raises the positioner; the className prop and .droppy-Tooltip overrides cannot fix it).
+- [#167](https://github.com/yannbf/droppy-ds/issues/167): never shows on a disabled Button or IconButton trigger, and the focusableWhenDisabled escape hatch is not exposed (open; has workaround: wrap the disabled control in a span with tabIndex=&#123;0&#125; and let the span be the tooltip child).
+- [#170](https://github.com/yannbf/droppy-ds/issues/170): tip is unreachable by keyboard when the child is not focusable — the documented Tab-to-open path silently does not exist (open; has workaround: only use focusable trigger children, or add tabIndex=&#123;0&#125; (plus an accessible name) to the child yourself).
+- [#172](https://github.com/yannbf/droppy-ds/issues/172): A Fragment or a non-prop-spreading component child type-checks but produces a silently dead tooltip (open; has workaround: only pass a single host element or a rest-spreading, ref-forwarding component as the child; never a Fragment).
+- [#175](https://github.com/yannbf/droppy-ds/issues/175): falsy label (undefined, null, false, empty string) still opens a fully styled empty bubble on hover/focus (open; has workaround: conditionally render the Tooltip wrapper only when the label is non-empty).
+- [#178](https://github.com/yannbf/droppy-ds/issues/178): no max-width or wrap rule on the popup — a sentence-length label becomes a viewport-wide strip, an unbroken string overflows the viewport (open; has workaround: pass a className and set max-width (optionally using the inherited --available-width var) plus overflow-wrap yourself).
+- [#182](https://github.com/yannbf/droppy-ds/issues/182): open state is fully encapsulated — no controlled mode, no onOpenChange, no disable, no per-tooltip delay; the TooltipProvider timing props that do exist are undocumented (open; has workaround (partial): TooltipProvider delay/closeDelay for timing, conditional rendering to disable, or compose @base-ui/react/tooltip directly with the shipped global classes for full control).
+- [#186](https://github.com/yannbf/droppy-ds/issues/186): placement is hardcoded to top/center — sideOffset is exposed but the side/align it offsets from are not (open; has workaround: compose @base-ui/react/tooltip directly with the shipped TooltipPopup/droppy-Tooltip classes when a non-top placement is needed).
+- [#191](https://github.com/yannbf/droppy-ds/issues/191): interaction docs omit click-to-close and that the open tip is hoverable and intercepts pointer events (open; has workaround (partial): pointer-events:none on the positioner via div:has(&gt; .droppy-Tooltip) stops the open tip from blocking content; click-to-close itself cannot be changed through the wrapper).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={TooltipStories} />

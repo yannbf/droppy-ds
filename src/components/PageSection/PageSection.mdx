@@ -78,6 +78,32 @@ exactly.
 
 `className` merges with the component's own `droppy-PageSection` class.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: PageSection kept Mealdrop's API unchanged through the Droppy migration — a required `title` rendered as a level-2 heading plus an optional top-right action via `topButtonLabel`/`onTopButtonClick` that renders a clear Button — and was adopted as a drop-in with no parity deltas ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
+- **2026-08**: PageSection was adopted in the agentic-reference Mealdrop as part of the 17-component, 49.6%-coverage baseline ([mealdrop #66](https://github.com/yannbf/mealdrop/pull/66)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#93](https://github.com/yannbf/droppy-ds/issues/93): onTopButtonClick is typed () =&gt; void but is invoked with the click MouseEvent at runtime (open; has workaround: always wrap handlers with parameters (onTopButtonClick=&#123;() =&gt; refetch()&#125;), and use a capture-phase wrapper element when the event itself is needed).
+- [#95](https://github.com/yannbf/droppy-ds/issues/95): the documented "view all" action can only render as a &lt;button&gt; — no href or element escape hatch for navigation (open; has workaround (partial): omit topButtonLabel and render your own &lt;a&gt; via the global classes/relative root, or accept button semantics and navigate in onTopButtonClick).
+- [#97](https://github.com/yannbf/droppy-ds/issues/97): root div forces height: 100%, so stacked sections stretch to full parent height inside definite-height panes (open; has workaround: pass a className and set height: auto in app CSS (style prop is unavailable), or avoid definite-height ancestors).
+- [#98](https://github.com/yannbf/droppy-ds/issues/98): no programmatic link between the action button and the section title; closed props make ARIA disambiguation impossible (open; has workaround: make each label self-describing (e.g. "View all sushi restaurants") — no ARIA channel exists).
+- [#100](https://github.com/yannbf/droppy-ds/issues/100): docs claim "side padding" below 1024px, but right padding is 0 — the action button sits flush against the right edge on mobile (open; has workaround: add padding-right: var(--ds-space-xs) below 1024px via a merged className, or give scrolling children trailing padding).
+- [#101](https://github.com/yannbf/droppy-ds/issues/101): desktop side inset (1.5rem) does not match default Container's (4rem), so composed content edges misalign (open; has workaround: pair PageSection with Container desktopOnly (same 1.5rem inset), or override padding-inline in app CSS).
+- [#103](https://github.com/yannbf/droppy-ds/issues/103): heading level is hardcoded to h2 with no override, so the component cannot fit outlines where another level is correct (open; has workaround: recompose the markup with the global droppy-PageSection classes plus Heading level=&#123;n&#125; size=&#123;2&#125; and Button clear).
+- [#104](https://github.com/yannbf/droppy-ds/issues/104): action button is gated solely on topButtonLabel truthiness — label and handler are unpaired, and an empty-string label removes the button (open; has workaround: always pass label+handler together and use topButtonLabel=&#123;label || undefined&#125; for dynamic strings).
+- [#106](https://github.com/yannbf/droppy-ds/issues/106): A long unbroken title overflows the section — no min-width or overflow-wrap guard on the heading flex item (open; has workaround: app CSS setting min-width: 0 and overflow-wrap: anywhere on the heading (plus white-space: nowrap on the button), or truncate the title in app code).
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={PageSectionStories} />

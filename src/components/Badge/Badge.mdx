@@ -74,6 +74,31 @@ The pill grows with its content — there's no truncation or fixed width.
 
 `className` merges with the component's own `droppy-Badge` class.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: Badge absorbed RestaurantCard's hand-rolled NewTag styled-span as `<Badge text="new" variant="positive" />`, collapsing Mealdrop's two implementations of one visual role and establishing the `variant` API for semantic colour roles while keeping the original text-as-prop API; absolute positioning over the card photo was judged a call-site concern and stays in the app ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [wave 1 commit](https://github.com/yannbf/droppy-ds/commit/4a2c0c7d4c11e9d22a4373712fe750deefc436e6), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [mealdrop #63](https://github.com/yannbf/mealdrop/pull/63)).
+- **2026-07**: casing moved into CSS per brand rule 8: badge labels are written lowercase in source and `text-transform: capitalize` does the rest, so writers never uppercase by hand ([brand principles](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/principles.md)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#28](https://github.com/yannbf/droppy-ds/issues/28): variant="positive" is illegible in dark theme: white text on pastel green (~1.1:1 contrast) (open; has workaround: pin the text colour via .droppy-Badge--positive or the --ds-color-badge-positive-text token).
+- [#29](https://github.com/yannbf/droppy-ds/issues/29): docs promise casing-normalized rendering, but CSS `capitalize` never lowercases — "VEGAN" renders as-is (open; has workaround: lowercase the label at the call site (`text={label.toLowerCase()}`), and query the raw string in tests).
+- [#31](https://github.com/yannbf/droppy-ds/issues/31): JSX children are silently discarded at runtime; empty or missing `text` renders a visible empty pill (open; has workaround: always use the `text` prop and guard falsy labels at the call site (`{tag ? <Badge text={tag}/> : null}`); typecheck JSX in JS projects).
+- [#34](https://github.com/yannbf/droppy-ds/issues/34): no wrap/overflow strategy — multi-word labels wrap into cramped line-height:1 lines; unbroken strings overflow the container (open; has workaround: add `white-space: nowrap` via className/app CSS and handle oversized labels at the call site).
+- [#37](https://github.com/yannbf/droppy-ds/issues/37): `dangerouslySetInnerHTML` is accepted by the types but always crashes on render (open; has workaround: never pass `dangerouslySetInnerHTML`; render markup around the badge instead).
+- [#41](https://github.com/yannbf/droppy-ds/issues/41): positive variant's bold is synthesized — the theme ships no Hind 700 face, and it disappears under `font-synthesis: none` (open; has workaround: declare a real Hind 700 @font-face in app CSS (merges into the family), or avoid `font-synthesis: none` on badge text).
+- [#43](https://github.com/yannbf/droppy-ds/issues/43): excluded from the theme cross-fade — colors snap on theme toggle while theme-layer parts fade over 250ms (open; has workaround: add a matching background-color/color transition on `.droppy-Badge` in app CSS).
+- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only) (open, systemic).
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={BadgeStories} />

@@ -78,6 +78,31 @@ The 240px band height is a literal value — no token in the current scale match
 
 `className` merges with the component's own `droppy-TopBanner` class.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2025-03**: an accessibility pass made the heading conditional — it renders only when a `title` is passed, instead of always emitting a possibly empty heading element — while keeping the optional `photoUrl` background with inverted (white) title text over photos; Droppy inherits this optional-title contract ([a11y fix](https://github.com/yannbf/mealdrop/commit/1c89bf7541a7b2b028338294fefe183dc70ac8e9), [adopted in migration](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
+- **2026-07**: the colour system placed top/promo banners among the handful of sites where soft green means "good news or progress" — the accent is a surface carrying dark text, never ink, in a UI where the neutral ramp does ~80% of the work ([brand rules 1–2](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/principles.md), [semantic colour roles](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/tokens.json)).
+- **2026-07**: `onBackClick` is accepted but deliberately unwired: Mealdrop's own back button is commented out in the source app, so the prop stays purely for call-site parity until either side puts the button back; otherwise the component was ported with props unchanged ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [wave 2 commit](https://github.com/yannbf/droppy-ds/commit/4b20c0eca2ee66fb2a7f05aef13522621430fe67)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#254](https://github.com/yannbf/droppy-ds/issues/254): on-photo white title is driven by photoUrl truthiness, with no scrim — illegible over a missing, still-loading, or light photo (open; has workaround: preload the image and only pass photoUrl after onload succeeds, and/or add an app-CSS scrim (::before overlay on the band, which is already position: relative) or text-shadow so the white title stays readable).
+- [#255](https://github.com/yannbf/droppy-ds/issues/255): long titles break the documented centered layout: wrapped lines left-align, unbroken strings overflow the band, tall wraps spill past the fixed 240px height (open; has workaround: add app CSS (text-align: center and overflow-wrap: anywhere on the heading, padding-inline and overflow: hidden on the band), or truncate titles before passing them).
+- [#256](https://github.com/yannbf/droppy-ds/issues/256): accepts no children — the docs' pointer to "composing" a back control leads nowhere, and JSX children are silently dropped in non-TS apps (open; has workaround: wrap TopBanner in your own position: relative container and absolutely position the back control (or other content) over the band instead of passing children).
+- [#257](https://github.com/yannbf/droppy-ds/issues/257): dark theme: the no-photo band is nearly invisible — surface-highlight collapses to #2c2c2c on a #202020 page (open; has workaround: override the band's dark-theme background in app CSS (e.g. surface-sunken plus a subtle border, mirrored in the prefers-color-scheme fallback), or always pass a photoUrl).
+- [#258](https://github.com/yannbf/droppy-ds/issues/258): onBackClick is accepted by the type but never invoked — dead prop (open; has workaround: don't pass onBackClick; render your own back control absolutely positioned over the band inside a position: relative wrapper).
+- [#259](https://github.com/yannbf/droppy-ds/issues/259): photoUrl is interpolated into url("...") unescaped — a double quote silently disables the background image (open; has workaround: encode the URL before passing it (encodeURIComponent for data-URI payloads, encodeURI or new URL().toString() for http(s) URLs)).
+- [#260](https://github.com/yannbf/droppy-ds/issues/260): heading level hard-coded to h2 — a hero banner cannot be the page's h1 (open; has workaround: keep the page's real h1 elsewhere (optionally visually hidden) with the same title; there is no prop-level fix).
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={TopBannerStories} />

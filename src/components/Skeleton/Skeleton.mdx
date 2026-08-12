@@ -90,6 +90,28 @@ and the background falls back to the flat base token.
 | `--ds-color-skeleton-highlight` | The gradient's sweep color                                   |
 | `--ds-radius-control`           | The default border radius                                    |
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: Skeleton shipped as a dependency-free CSS shimmer reading skeleton tokens directly, replacing the react-loading-skeleton dependency and Mealdrop's `<SkeletonTheme>` provider (which needed an @ts-expect-error for wrong types and manual base/highlight colours per theme); the per-instance `width`/`height` sizing API was kept so loading layouts port over line-for-line ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [wave 1 commit](https://github.com/yannbf/droppy-ds/commit/4a2c0c7d4c11e9d22a4373712fe750deefc436e6), [mealdrop #63](https://github.com/yannbf/mealdrop/pull/63)).
+- **2026-08**: a visual-parity audit traced the shimmer's choppy double pulse to keyframes travelling two tile periods per cycle over a 200%-wide gradient, and proposed 100%/−100% stops for one evenly-eased sweep per 1.6s cycle. The PR was closed unmerged, so the defect is tracked as [#11](https://github.com/yannbf/droppy-ds/issues/11) ([droppy-ds #8](https://github.com/yannbf/droppy-ds/pull/8)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#168](https://github.com/yannbf/droppy-ds/issues/168): no prop forwarding: data-\* and aria-\* attributes type-check but are silently dropped (open; has workaround: put ids, test ids, handlers and refs on a wrapper element you own, and select the placeholder in tests via the stable `.droppy-Skeleton` class).
+- [#171](https://github.com/yannbf/droppy-ds/issues/171): width/height are always emitted as inline styles, so className-based sizing has no effect (open; has workaround: size skeletons with the `width`/`height` props or the `style` prop, or mark stylesheet sizing `!important`).
+- [#11](https://github.com/yannbf/droppy-ds/issues/11): skeleton shimmer completes two uneven passes per cycle (open; has workaround: redeclare the shimmer keyframes with 100%/−100% stops in app CSS).
+- [#174](https://github.com/yannbf/droppy-ds/issues/174): unitless numeric strings and non-finite numbers silently fall back to the default size (open; has workaround: normalize dimensions at the call site — pass finite numbers guarded with `Number.isFinite`, or strings that carry a unit).
+- [#176](https://github.com/yannbf/droppy-ds/issues/176): docs list aria-busy="true" as an alternative to role="status", but it announces nothing (open; has workaround: ignore the `aria-busy` option and use the docs' `role="status"` + `aria-label` container pattern, as the TextBlock story does).
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={SkeletonStories} />

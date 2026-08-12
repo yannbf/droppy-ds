@@ -116,6 +116,36 @@ default. Pass `type="submit"` explicitly to opt in.
 Everything else — the base fill, focus ring, and typeface — comes from the theme layer, which
 this component doesn't override.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2025-03**: the `icon` prop was retyped from plain `string` to the `IconName` string-literal union, making invalid icon names a compile-time error; Droppy inherits this closed, typed icon set ([IconName union](https://github.com/yannbf/mealdrop/commit/14cf17a324a99c4744eec1495810f96d4e17bc5d), [mealdrop #42](https://github.com/yannbf/mealdrop/pull/42)).
+- **2025-10**: Base UI Button — the base of Droppy's Button — exists only for accessibility: a headless button was first rejected by the library's own scope test, then reversed purely for focusableWhenDisabled and Enter/Space normalization on non-native tags, making the wrapper's value proposition keyboard/AT semantics, not styling convenience ([Button research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/button/brief.md)).
+- **2026-07**: Button swapped its internals to Base UI's Button while preserving Mealdrop's boolean-modifier API (`clear`, `round`, `large`, `icon`, `iconSize`) rather than a variant enum, so every call site — including icon-only close buttons like `<Button clear round icon="cross" />` — swapped without prop changes; styles moved onto tokens with a single :focus-visible ring and data-disabled styling ([buttons migration commit](https://github.com/yannbf/mealdrop/commit/c3c8adeb8e81c6e2c545b65728ed43a1aaf5d21e), [mealdrop #62](https://github.com/yannbf/mealdrop/pull/62), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
+- **2026-07**: brand rules made buttons body text with a background — Hind, regular weight, never the heading face, bold, or uppercase, so a CTA earns attention through its fill — while dark mode re-decides the primary action's role rather than inverting it (neutral ink in light, branded green.200 in dark) ([brand principles](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/principles.md), [tokens.json](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/tokens.json)).
+- **2026-07**: icon-to-label spacing moved to CSS `gap` instead of Mealdrop's dedicated spacer element — one fewer DOM node for the same 1rem — with the icon slot as a typed `icon?: IconName` prop rendering before the label ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [initial component set](https://github.com/yannbf/droppy-ds/commit/8790c8460335870f6ca26be9850710ff6023cc61)).
+- **2026-07**: the theme ships `line-height: 1` and `gap: 0.5rem` as brand defaults; Mealdrop had to restore `line-height: normal` and zero gap in overrides to keep its original 54px height, documenting Button's height and built-in icon gap as theme opinions that diverge from the pre-migration design ([button height commit](https://github.com/yannbf/mealdrop/commit/8de6ca1aecc1febd479ed80245430c1d810dcf66)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#45](https://github.com/yannbf/droppy-ds/issues/45): onClick is typed () =&gt; void, so standard MouseEventHandler callbacks fail to compile and the runtime event is hidden (open; has workaround: cast the handler to ButtonProps['onClick'] (event is delivered at runtime) or use onClickCapture/onPointerDown which keep native typing).
+- [#47](https://github.com/yannbf/droppy-ds/issues/47): `large` is silently negated whenever `icon` is set — `--withIcon` padding overrides `--large` at equal specificity (open; has workaround: add a custom className and restore the large padding with a two-class selector that out-specifies .droppy-Button--withIcon).
+- [#50](https://github.com/yannbf/droppy-ds/issues/50): unrecognized `icon` string crashes the render tree — Icon's lookup is unguarded (open; has workaround: validate dynamic names against the exported iconNames array before passing, and keep an error boundary around CMS-driven UI).
+- [#52](https://github.com/yannbf/droppy-ds/issues/52): setting `disabled` while focused drops keyboard focus to &lt;body&gt;, and the component exposes no counter-measure — the library's own QuantityStepper triggers it (open; has workaround: keep the button enabled with a guarded handler + aria-disabled, or spread the untyped focusableWhenDisabled through rest-props).
+- [#54](https://github.com/yannbf/droppy-ds/issues/54): disabled-state docs make two false claims: removal from the accessibility tree, and "no built-in way" to stay focusable (open; has workaround: unmount or aria-hidden-wrap buttons that must be hidden from AT; spread the untyped focusableWhenDisabled for focusable disabled states).
+- [#56](https://github.com/yannbf/droppy-ds/issues/56): `icon="star"` renders as a hairline outline instead of the filled glyph — only `stroke` is bridged to currentcolor and star is the set's one fill-based path (open; has workaround: scope `fill: currentcolor; stroke: none` to the specific button's .droppy-Icon in app CSS (never globally)).
+- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only) (open, systemic).
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode (open, systemic).
+- [#133](https://github.com/yannbf/droppy-ds/issues/133): the shared `--ds-shadow-focus` ring is below the 3:1 non-text contrast minimum in light theme (open, systemic).
+- [#138](https://github.com/yannbf/droppy-ds/issues/138): theme chrome is bound to unnamespaced global classes (`.Button`, `.Input`, `.FieldRoot`, …) with no cascade layer, so host-app CSS collides in both directions (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={ButtonStories} />

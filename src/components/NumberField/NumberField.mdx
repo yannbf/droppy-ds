@@ -79,6 +79,32 @@ amount that also needs a keyboard or direct-entry path.
 Colors, spacing, and the scrub cursor come entirely from the theme layer's `NumberField*`
 classes — this component adds no styling of its own beyond forwarding `className` to the root.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2024-04**: Base UI NumberField — underneath Droppy's NumberField — was one of the library's founding trio of components, and its spinbutton ARIA research resolved by deliberately never adding `role=spinbutton`; formatting and clamping were decoupled into independent props over time (`locale`, `snapOnStep`, `allowOutOfRange` letting typed values trigger native range validation instead of silent clamping), with Unicode/locale/rounding correctness treated as continually-invested core surface ([NumberField research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/number-field/brief.md)).
+- **2026-07**: NumberField was added as the typeable numeric input — Base UI's NumberField wrapped in Field so the label associates with the control the same way Input does it, with keyboard entry, arrow keys, increment/decrement buttons, and label scrub — positioned explicitly against QuantityStepper, which stays a tap-tap bounded stepper; the label sits inside the ScrubArea so dragging it changes the value ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [NumberField.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/NumberField/NumberField.tsx)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#94](https://github.com/yannbf/droppy-ds/issues/94): touch: the label blocks page scrolling entirely, and horizontal swipes on it can change the value (open; has workaround: app CSS `pointer-events: none` on `.NumberFieldScrubArea` restores page scrolling, at the cost of scrub and label-click-to-focus; or omit `label` and label externally via `id`).
+- [#96](https://github.com/yannbf/droppy-ds/issues/96): clicking the label fires onValueCommitted with the unchanged value (reason 'scrub') (open; has workaround: dedupe in the handler — ignore onValueCommitted calls whose value equals the last committed value, or skip reason 'scrub' events with an unchanged value).
+- [#99](https://github.com/yannbf/droppy-ds/issues/99): mouse scrubbing hides the pointer but renders no replacement cursor — the drag is invisible in Chromium/Firefox (open; has workaround: app CSS on the global `.NumberFieldScrubAreaCursor` class — give the span an explicit size and a visible background/glyph).
+- [#102](https://github.com/yannbf/droppy-ds/issues/102): className, style, and ref land on an inner div — not the outermost element — and inputRef targets Base UI's hidden input (open; has workaround: wrap in your own element for layout/ref (or target `.droppy-Field` from app CSS), and reach the visible input via `id` or `querySelector("input[type=\"text\"]")` instead of `inputRef`).
+- [#105](https://github.com/yannbf/droppy-ds/issues/105): docs omit that onValueChange fires null and that controlled-empty requires value=&#123;null&#125;, not undefined (open; has workaround: type controlled state as number | null, represent empty as null (never undefined), and null-check before numeric operations).
+- [#107](https://github.com/yannbf/droppy-ds/issues/107): aria-label / aria-labelledby / aria-describedby type-check but are inert — a field without the label prop has no accessible name (open; has workaround: pass `id` and supply your own (optionally visually hidden) external `<label htmlFor>`; descriptions require a post-mount DOM patch on the input).
+- [#110](https://github.com/yannbf/droppy-ds/issues/110): accessible strings "Increase", "Decrease", and "Number field" are hardcoded English with no way to localize them (open; has workaround (fragile): post-mount DOM setAttribute patch of the three ARIA strings from a wrapper ref, or bypass the wrapper and compose Base UI parts directly).
+- [#113](https://github.com/yannbf/droppy-ds/issues/113): no 'use client' directive — passing function props from a React Server Component module throws at the Base UI boundary (open; has workaround: add 'use client' to the consuming module, or create a single client re-export file and import the DS through it in server trees).
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode (open, systemic).
+- [#138](https://github.com/yannbf/droppy-ds/issues/138): theme chrome is bound to unnamespaced global classes (`.Button`, `.Input`, `.FieldRoot`, …) with no cascade layer, so host-app CSS collides in both directions (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={NumberFieldStories} />

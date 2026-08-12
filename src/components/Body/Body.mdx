@@ -92,6 +92,32 @@ step down from there.
 `className` is merged onto the rendered tag, so it composes with the tokens above rather than
 overriding them wholesale.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: the brand extraction fixed typography as two faces with clear jobs — Hind for body and UI text, Montserrat reserved for display/headings — which Body's styles encode ([brand rules 4 & 7](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/principles.md), [typography styles](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/tokens.json)).
+- **2026-08**: Body carried Mealdrop's polymorphic text API into Droppy — a `type` prop selecting the rendered element ('p' | 'span' | 'label' | 'figcaption'), an S/XS/XXS size scale, and named font weights (regular/medium/bold/black) — and wave 2 established `styled(Body)` as the sanctioned way to restyle text, converting the app's remaining text-bearing styled divs into Body hosts ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [styled(Body) conversion](https://github.com/yannbf/mealdrop/commit/71a21463d7b75816803b074f1a21dcd1866f8562), [mealdrop #67](https://github.com/yannbf/mealdrop/pull/67)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#33](https://github.com/yannbf/droppy-ds/issues/33): props are not correlated with `type` — wrong-element attributes compile silently, and inline handlers/callback refs fail with TS7006 (open; has workaround: annotate handler/ref parameters explicitly and enforce type="label"+htmlFor pairing by convention or a typed wrapper).
+- [#36](https://github.com/yannbf/droppy-ds/issues/36): `display: block` forces the `span` and `label` variants out of inline flow (open; has workaround: pass a consumer className that sets display:inline; app CSS loaded after the DS stylesheet wins at equal specificity).
+- [#39](https://github.com/yannbf/droppy-ds/issues/39): `fontWeight="bold"` and `"black"` have no real font faces — Hind ships only at 400/500, so both render as identical synthesized bold (open; has workaround: add an app-level @font-face for Hind 700 to fix bold; black has no Hind cut and needs a font-family override).
+- [#42](https://github.com/yannbf/droppy-ds/issues/42): literal `color` values silently break in dark mode, which the stylesheet activates from OS preference without any app opt-in (open; has workaround: pass --ds-color-\* tokens to `color` instead of literals, or pin the scheme with data-theme on the root).
+- [#44](https://github.com/yannbf/droppy-ds/issues/44): `type="label"` does not match the design system's own field labels — different color token, size, capitalization, and no focus-active state (open; has workaround (partial): size="S" + color="var(--ds-color-text-label)" approximates the resting look; capitalization and focus state need custom CSS).
+- [#46](https://github.com/yannbf/droppy-ds/issues/46): no margin reset — the default `<p>` keeps user-agent margins, unlike Heading, so spacing depends on the host app's CSS reset (open; has workaround: use a global CSS reset or an app rule like `.droppy-Body { margin: 0 }`).
+- [#48](https://github.com/yannbf/droppy-ds/issues/48): no line-height — paragraph leading is inherited from the host app, contradicting the Typography doc's per-component claim (open; has workaround: set line-height in app CSS globally on .droppy-Body or per instance).
+- [#49](https://github.com/yannbf/droppy-ds/issues/49): default `<p>` plus unconstrained ReactNode children — block-level children produce invalid HTML and SSR hydration errors, undocumented (open; has workaround: use type="span"/"figcaption" for rich children, or keep default-&lt;p&gt; children to phrasing content).
+- [#51](https://github.com/yannbf/droppy-ds/issues/51): required `children` makes `dangerouslySetInnerHTML` a trap — the natural call is a compile error and the compiling variant throws at runtime (open; has workaround: pass children=&#123;undefined&#125; alongside dangerouslySetInnerHTML, or use a raw element with the droppy-Body class).
+- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only) (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={BodyStories} />

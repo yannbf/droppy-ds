@@ -70,6 +70,29 @@ literal values — no token in the current scale matches them exactly.
 
 `className` merges with the component's own `droppy-Container` class.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: Container replaced Mealdrop's global `.container`/`.container-desktop` stylesheet classes with a component; the `desktopOnly` prop covers the second class and is named for what it does — defer the width bound to the 1024px breakpoint — rather than for the old class suffix ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [wave 2 commit](https://github.com/yannbf/droppy-ds/commit/4b20c0eca2ee66fb2a7f05aef13522621430fe67)).
+- **2026-08**: Container was deliberately not adopted in Mealdrop's initial migration because the width constraint lived as global CSS classes; wave 2 reversed this, the classes becoming the Container component and helping lift measured DS coverage from 49.6% to 55.3% ([kept local by design](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [wave-2 adoption](https://github.com/yannbf/mealdrop/commit/71a21463d7b75816803b074f1a21dcd1866f8562), [mealdrop #67](https://github.com/yannbf/mealdrop/pull/67)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#166](https://github.com/yannbf/droppy-ds/issues/166): desktopOnly variant gets 1.5rem side padding at &gt;=1024px instead of the documented parity with the default variant's 4rem (open; has workaround: app CSS loaded after the DS stylesheet can re-apply `padding: 0 4rem` to `.droppy-Container--desktopOnly` at &gt;=1024px).
+- [#180](https://github.com/yannbf/droppy-ds/issues/180): unlayered package CSS defeats cascade-layered app overrides — Tailwind v4 utilities like px-0 or max-w-\* via className have no effect (open; has workaround: import the DS stylesheet into a low-priority named layer (`@import ... layer(droppy)`) or use important/unlayered overrides).
+- [#184](https://github.com/yannbf/droppy-ds/issues/184): docs recommend placing PageSection inside Container, but the two compound padding (5.5rem/side at &gt;=1024px, asymmetric below) — the exact nesting failure Container.mdx warns about (open; has workaround: use PageSection standalone instead of nesting, or neutralize one layer's insets with a descendant override in app CSS).
+- [#188](https://github.com/yannbf/droppy-ds/issues/188): desktopOnly below 1024px is an active CSS reset, not the documented "no constraint", so consumer mobile classes can be zeroed depending on stylesheet order (open; has workaround: import the DS stylesheet before app CSS, raise selector specificity, or use the style prop).
+- [#193](https://github.com/yannbf/droppy-ds/issues/193): MDX claims no token matches the 640px/1024px breakpoints, but --ds-breakpoint-sm/--ds-breakpoint-lg match them exactly (open; has workaround: treat 640px/1024px as --ds-breakpoint-sm/--ds-breakpoint-lg per the tokens in styles.css, ignoring the MDX claim).
+- [#196](https://github.com/yannbf/droppy-ds/issues/196): crossing the 640px breakpoint shrinks available content width (591px to 512px), and the rem-based 4rem padding scales with browser font settings while the px breakpoint does not (open; has workaround: override the &gt;=640px padding in app CSS after the DS stylesheet, or use desktopOnly and own the mobile padding).
+- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only) (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={ContainerStories} />

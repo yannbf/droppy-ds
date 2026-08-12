@@ -78,6 +78,34 @@ Numeric options come back as numbers, not strings, so a caller can use the value
 
 The chevron itself is a `mask` over a token-colored layer rather than a data-URL SVG, specifically so `--ds-color-icon-default` can resolve inside it — colors embedded in SVG XML can't read CSS custom properties, so a baked-in-color chevron would need a JavaScript theme lookup to flip in dark mode; this one doesn't. `className` merges onto the outer wrapper.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: Select intentionally stayed a native `<select>` instead of adopting Base UI's scripted listbox: react-hook-form registers it uncontrolled and the platform picker beats any custom listbox for accessibility and muscle memory on touch devices — only the styling moved onto DS tokens ([forms commit](https://github.com/yannbf/mealdrop/commit/0b4027271b30a4e31360eadaf41f5e1ea46a5f55), [mealdrop #62](https://github.com/yannbf/mealdrop/pull/62), [Select.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/Select/Select.tsx)).
+- **2026-07**: onChange now coerces numeric options to numbers but returns strings for non-numeric ones — fixing Mealdrop's behaviour of running every value through `Number()`, which turned text options into NaN ([Select.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/Select/Select.tsx), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
+- **2026-07**: the chevron changed from a data-URL SVG with a baked-in colour (string-replaced per theme via a JavaScript lookup) to a CSS mask over a token-coloured layer that flips themes in pure CSS, and the label moved before the control in the DOM so reading order matches visual order — Mealdrop had it after only so a sibling selector could drive the focus highlight, which `:has()` handles now ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [mealdrop #63](https://github.com/yannbf/mealdrop/pull/63)).
+- **2026-07**: because Droppy's spacing scale is offset one step from Mealdrop's original tokens (`--ds-space-xs` is 1rem, not 0.5rem), spacing must be migrated by value rather than by token name: Select's field padding was remapped to the nearest DS step (`--ds-space-sm` for a 1.25rem original with no exact match) and its label gap to the exact `--ds-space-2xs` ([select spacing commit](https://github.com/yannbf/mealdrop/commit/05231ffb1b8a1a7475f148dbfdbba448daef701d)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#146](https://github.com/yannbf/droppy-ds/issues/146): always controlled: with no value/onChange state loop the control renders blank and reverts every pick, and defaultValue is ignored (open; has workaround: always drive it from state — hold the value in the consumer and pass both `value` and `onChange`; never pass `defaultValue`).
+- [#152](https://github.com/yannbf/droppy-ds/issues/152): onChange rewrites numeric-looking option strings ("01" → 1), so the returned value no longer matches any option and the control blanks (open; has workaround: pass numeric options as real numbers and keep string options canonical (`String(Number(s)) === s`), or read the raw string from an `onInput` handler passed through rest props).
+- [#156](https://github.com/yannbf/droppy-ds/issues/156): the control's text is left at the browser's default form-control font — no type tokens are applied (open; has workaround: app CSS `.droppy-Select-control { font-family: var(--ds-type-family-body); font-size: var(--ds-type-size-sm); }`).
+- [#161](https://github.com/yannbf/droppy-ds/issues/161): A disabled Select is visually indistinguishable from an enabled one (open; has workaround: app CSS for `.droppy-Select-control:disabled` plus `:has()` rules for the label and chevron).
+- [#165](https://github.com/yannbf/droppy-ds/issues/165): in dark mode the native option list opens with the light UA palette — the stylesheet never declares color-scheme (open; has workaround: declare `color-scheme` in app CSS alongside the `data-theme` switch, or pass `style={{ colorScheme: 'dark' }}` (style reaches the inner select)).
+- [#169](https://github.com/yannbf/droppy-ds/issues/169): children are silently discarded — &lt;option&gt; markup, &lt;optgroup&gt;, and label-different-from-value are not possible (open; has workaround for plain lists (use the `options` prop); none within this component when option text must differ from the submitted value, or for optgroups/disabled options).
+- [#173](https://github.com/yannbf/droppy-ds/issues/173): A long option string makes the control overflow its container — the flex item has no min-width: 0 (open; has workaround: app CSS `.droppy-Select-control { min-width: 0; }`).
+- [#177](https://github.com/yannbf/droppy-ds/issues/177): className styles the wrapper while style and every other prop land on the &lt;select&gt;, so the style prop cannot size the control and no prop targets it (open; has workaround: size the field with `className` on the wrapper and reach the control with a descendant selector (`.myClass .droppy-Select-control`)).
+- [#181](https://github.com/yannbf/droppy-ds/issues/181): id="" defeats the generated-id fallback and leaves the label associated with nothing (open; has workaround: never pass an empty-string id — use `id={maybeId || undefined}` or omit the prop).
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode (open, systemic).
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={SelectStories} />
