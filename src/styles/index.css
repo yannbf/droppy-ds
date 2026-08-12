@@ -10,6 +10,7 @@
  * consuming app writes comes later still and wins over both.
  */
 
+@import '../theme/tokens.css';
 @import '../theme/styles.css';
 
 @import '../components/Icon/Icon.css';

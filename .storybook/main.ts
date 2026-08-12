@@ -1,7 +1,7 @@
-import type { StorybookConfig } from '@storybook/react-vite'
+import { defineMain } from '@storybook/react-vite/node'
 import remarkGfm from 'remark-gfm'
 
-const config: StorybookConfig = {
+const config = defineMain({
   stories: ['../src/**/*.mdx', '../src/**/*.stories.tsx'],
   addons: [
     {
@@ -17,19 +17,7 @@ const config: StorybookConfig = {
     '@storybook/addon-mcp',
     {
       name: '@unpunnyfuns/swatchbook-addon',
-      options: {
-        config: {
-          tokens: ['src/theme/tokens/base.json'],
-          axes: [
-            {
-              name: 'Theme',
-              contexts: { Light: [], Dark: ['src/theme/tokens/dark.json'] },
-              default: 'Light',
-            },
-          ],
-          cssVarPrefix: 'ds',
-        },
-      },
+      options: { configPath: '../swatchbook.config.ts' },
     },
   ],
   framework: '@storybook/react-vite',
@@ -55,6 +43,6 @@ const config: StorybookConfig = {
       exclude: ['**/*.stories.tsx', '.storybook/**'],
     },
   },
-}
+})
 
 export default config

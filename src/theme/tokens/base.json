@@ -359,6 +359,11 @@
       "info": {
         "$type": "color",
         "$value": "{color.palette.blue.200}"
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.surface.page}",
+        "$description": "The canonical page-chrome surface role — read by the Storybook swatchbook addon."
       }
     },
     "text": {
@@ -393,6 +398,11 @@
       "review": {
         "$type": "color",
         "$value": "{color.palette.blue.700}"
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.text.primary}",
+        "$description": "The canonical page-chrome text role — read by the Storybook swatchbook addon."
       }
     },
     "action": {
@@ -585,11 +595,9 @@
         }
       },
       "default": {
-        "$type": "dimension",
-        "$value": {
-          "value": 0,
-          "unit": "px"
-        }
+        "$type": "string",
+        "$value": "normal",
+        "$description": "The CSS `normal` keyword for default letter-spacing — no extra tracking."
       }
     },
     "style": {
@@ -623,7 +631,7 @@
           "fontSize": "{type.size.xl}",
           "fontWeight": "{type.weight.bold}",
           "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
+          "letterSpacing": "normal"
         }
       },
       "h4": {
@@ -634,7 +642,7 @@
           "fontSize": "{type.size.lg}",
           "fontWeight": "{type.weight.bold}",
           "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
+          "letterSpacing": "normal"
         }
       },
       "body": {
@@ -645,7 +653,7 @@
           "fontSize": "{type.size.md}",
           "fontWeight": "{type.weight.regular}",
           "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
+          "letterSpacing": "normal"
         }
       },
       "small": {
@@ -656,7 +664,7 @@
           "fontSize": "{type.size.sm}",
           "fontWeight": "{type.weight.regular}",
           "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
+          "letterSpacing": "normal"
         }
       },
       "xs": {
@@ -667,7 +675,7 @@
           "fontSize": "{type.size.xs}",
           "fontWeight": "{type.weight.regular}",
           "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
+          "letterSpacing": "normal"
         }
       },
       "xxs": {
@@ -678,7 +686,7 @@
           "fontSize": "{type.size.2xs}",
           "fontWeight": "{type.weight.regular}",
           "lineHeight": 1.2,
-          "letterSpacing": "{type.tracking.default}"
+          "letterSpacing": "normal"
         }
       }
     }
@@ -769,12 +777,9 @@
       "$description": "Switch track."
     },
     "round": {
-      "$type": "dimension",
-      "$value": {
-        "value": 9999,
-        "unit": "px"
-      },
-      "$description": "Avatar, radio, switch thumb."
+      "$type": "string",
+      "$value": "50%",
+      "$description": "A CSS percentage that turns a square element into a circle regardless of its size. Avatar, radio, switch thumb."
     }
   },
   "shadow": {

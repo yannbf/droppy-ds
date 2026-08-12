@@ -55,7 +55,7 @@ Run `pnpm storybook` for the props, the variants and what each one looks like in
 
 ## Dark mode
 
-Set `data-theme="dark"` on the root element. Unset, the tokens follow the OS preference.
+Set `data-ds-theme="dark"` on the root element. Unset, the tokens follow the OS preference.
 
 ```tsx
 document.documentElement.dataset.theme = isDark ? 'dark' : 'light'
