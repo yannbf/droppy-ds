@@ -4,7 +4,7 @@ import { expect } from 'storybook/test'
 import { Card } from './Card'
 
 const meta = {
-  title: 'Components/Card',
+  title: 'Media & content/Card',
   component: Card,
   args: { children: 'Card content' },
 } satisfies Meta<typeof Card>

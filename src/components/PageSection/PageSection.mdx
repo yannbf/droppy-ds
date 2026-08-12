@@ -9,19 +9,19 @@ A titled content section — a heading with an optional "view all" action above 
 caller composes below it, like a home page's Categories or Restaurants row.
 
 - **Import:** `import { PageSection } from '@droppy/design-system'`
-- **Built on:** [Heading](?path=/docs/components-heading--docs) and
-  [Button](?path=/docs/components-button--docs).
+- **Built on:** [Heading](?path=/docs/typography-heading--docs) and
+  [Button](?path=/docs/actions-button--docs).
 
 <Canvas of={PageSectionStories.Default} />
 
 ## Features
 
-- Renders `title` as a level-2 [Heading](?path=/docs/components-heading--docs), with an optional
+- Renders `title` as a level-2 [Heading](?path=/docs/typography-heading--docs), with an optional
   `Button` beside it when `topButtonLabel` is set.
 - `onTopButtonClick` fires from that button; the button is a `clear` variant, so it reads as a
   secondary action next to the heading rather than competing with it.
 - Caps width at 1600px and centers from the 1024px breakpoint up, matching
-  [Container](?path=/docs/components-container--docs)'s desktop bound; below that it fills its
+  [Container](?path=/docs/layout-structure-container--docs)'s desktop bound; below that it fills its
   parent with its own side padding.
 - Merges any incoming `className` with its own `droppy-PageSection` class.
 
@@ -33,8 +33,8 @@ caller composes below it, like a home page's Categories or Restaurants row.
 ## When not to use
 
 - A page's own outer width bound with no heading — use
-  [Container](?path=/docs/components-container--docs) directly.
-- A raised, self-contained surface — use [Card](?path=/docs/components-card--docs) for a tile or
+  [Container](?path=/docs/layout-structure-container--docs) directly.
+- A raised, self-contained surface — use [Card](?path=/docs/media-content-card--docs) for a tile or
   panel instead of a full-width section.
 
 ## How it works
@@ -59,7 +59,7 @@ isn't there.
 no keyboard behavior of their own.
 
 - **ARIA:** none on the section wrapper; the heading is a native `<h2>`, and the optional button
-  is a real [Button](?path=/docs/components-button--docs) with its own focus and activation
+  is a real [Button](?path=/docs/actions-button--docs) with its own focus and activation
   behavior.
 - **Screen reader:** the heading announces as a level-2 heading, so it shows up in a heading-level
   page scan; the button announces its label.
@@ -84,7 +84,7 @@ exactly.
 
 ## Related
 
-- [Container](?path=/docs/components-container--docs) — the same desktop-width bound, without a
+- [Container](?path=/docs/layout-structure-container--docs) — the same desktop-width bound, without a
   heading or action slot.
-- [Heading](?path=/docs/components-heading--docs) — the title's underlying component.
-- [Button](?path=/docs/components-button--docs) — the action slot's underlying component.
+- [Heading](?path=/docs/typography-heading--docs) — the title's underlying component.
+- [Button](?path=/docs/actions-button--docs) — the action slot's underlying component.

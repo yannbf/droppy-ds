@@ -4,7 +4,7 @@ import { expect, within } from 'storybook/test'
 import { Heading } from './Heading'
 
 const meta = {
-  title: 'Components/Heading',
+  title: 'Typography/Heading',
   component: Heading,
   args: { children: 'Best food in town' },
 } satisfies Meta<typeof Heading>

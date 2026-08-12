@@ -34,7 +34,7 @@ profile's sub-views, anything reviewed one part at a time rather than all at onc
   "next"/"back" navigation instead — tabs imply free jumping between sections, not a required
   order.
 - For content that benefits from being scanned all at once rather than switched between, don't
-  hide it behind tabs — an [Accordion](?path=/docs/components-accordion--docs) at least keeps
+  hide it behind tabs — an [Accordion](?path=/docs/layout-structure-accordion--docs) at least keeps
   every section's title visible, and plain layout keeps everything visible outright.
 
 ## How it works
@@ -75,13 +75,13 @@ theme layer transitions on top of them to produce the sliding underline.
 
 ## Keyboard & screen reader
 
-| Key / interaction   | Context        | Action                                                |
-| -------------------- | -------------- | ------------------------------------------------------ |
-| Tab                  | outside tablist | Moves focus into the tablist, landing on the active tab |
-| Left/Right arrow     | horizontal tablist | Moves focus between tabs, wrapping at the ends; does not activate |
-| Up/Down arrow        | vertical tablist   | Same as above, on the vertical axis |
-| Enter / Space        | focused tab     | Activates the focused tab, showing its panel          |
-| Click                | any tab         | Activates that tab immediately                          |
+| Key / interaction | Context            | Action                                                            |
+| ----------------- | ------------------ | ----------------------------------------------------------------- |
+| Tab               | outside tablist    | Moves focus into the tablist, landing on the active tab           |
+| Left/Right arrow  | horizontal tablist | Moves focus between tabs, wrapping at the ends; does not activate |
+| Up/Down arrow     | vertical tablist   | Same as above, on the vertical axis                               |
+| Enter / Space     | focused tab        | Activates the focused tab, showing its panel                      |
+| Click             | any tab            | Activates that tab immediately                                    |
 
 - **ARIA:** the tab row carries `role="tablist"`; each tab is `role="tab"` with `aria-selected`
   and `aria-controls` pointing at its panel; each panel is `role="tabpanel"` with
@@ -106,6 +106,6 @@ state, and indicator animation in full.
 ## Related
 
 - For several independent sections whose titles should all stay visible at once, see
-  [Accordion](?path=/docs/components-accordion--docs) instead of hiding content behind tabs.
+  [Accordion](?path=/docs/layout-structure-accordion--docs) instead of hiding content behind tabs.
 - To group a tab panel's content into a raised surface, see
-  [Card](?path=/docs/components-card--docs).
+  [Card](?path=/docs/media-content-card--docs).

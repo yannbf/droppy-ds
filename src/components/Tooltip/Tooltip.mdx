@@ -28,7 +28,7 @@ A hover and focus hint for a control whose purpose isn't obvious from its face.
 ## When not to use
 
 - To give the trigger its accessible name, don't rely on the tooltip alone — set `aria-label` directly on the trigger, as the stories on this page do. A tooltip never opens on touch and carries no ARIA link to the trigger, so it's invisible to touch users and to assistive technology either way.
-- For content a touch-only user must be able to reach, or information critical to understanding the control, a tooltip is the wrong place regardless of styling — put it in visible text instead, or, if it truly must block the page until acknowledged, use [Modal](?path=/docs/components-modal--docs).
+- For content a touch-only user must be able to reach, or information critical to understanding the control, a tooltip is the wrong place regardless of styling — put it in visible text instead, or, if it truly must block the page until acknowledged, use [Modal](?path=/docs/overlays-modal--docs).
 - For a transient confirmation message like "Copied," reach for a dedicated status notification, not a `Tooltip` — a tooltip's content isn't announced to screen readers, which a confirmation message needs to be.
 
 ## How it works
@@ -82,6 +82,6 @@ Colors, padding, and border come from the theme layer's `TooltipPopup` class, la
 
 ## Related
 
-- For a circular icon-only trigger — the shape most tooltips end up labelling — see [IconButton](?path=/docs/components-iconbutton--docs). The stories on this page use a plain [Button](?path=/docs/components-button--docs) instead.
-- To label a form field rather than a floating hint, use [Input](?path=/docs/components-input--docs).
+- For a circular icon-only trigger — the shape most tooltips end up labelling — see [IconButton](?path=/docs/actions-iconbutton--docs). The stories on this page use a plain [Button](?path=/docs/actions-button--docs) instead.
+- To label a form field rather than a floating hint, use [Input](?path=/docs/forms-input-input--docs).
 - For a richer hint that touch and screen reader users also need to reach, use Base UI's `Popover` with `openOnHover` instead of `Tooltip`.

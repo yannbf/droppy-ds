@@ -15,7 +15,7 @@ const tabs: readonly [Tab, Tab, Tab] = [
 ]
 
 const meta = {
-  title: 'Components/Tabs',
+  title: 'Navigation/Tabs',
   component: Tabs,
   args: {
     tabs: [...tabs],
@@ -121,9 +121,7 @@ export const AnimatedIndicator: Story = {
     const canvas = within(canvasElement)
     const indicator = canvasElement.querySelector('.TabsIndicator') as HTMLElement
 
-    await waitFor(() =>
-      expect(indicator.style.getPropertyValue('--active-tab-width')).not.toBe(''),
-    )
+    await waitFor(() => expect(indicator.style.getPropertyValue('--active-tab-width')).not.toBe(''))
     const initialLeft = indicator.style.getPropertyValue('--active-tab-left')
 
     const tab3 = canvas.getByRole('tab', { name: 'Settings' })

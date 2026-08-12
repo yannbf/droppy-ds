@@ -26,7 +26,14 @@ export type ProgressProps = DefaultProps &
  * wait whose length or step count isn't known — something `ProgressBar` has
  * no way to express.
  */
-export const Progress = ({ value = null, max = 100, label, showValue, className, ...rest }: ProgressProps) => (
+export const Progress = ({
+  value = null,
+  max = 100,
+  label,
+  showValue,
+  className,
+  ...rest
+}: ProgressProps) => (
   <BaseProgress.Root
     value={value}
     max={max}

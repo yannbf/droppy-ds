@@ -9,8 +9,8 @@ A titled message with an optional illustration and a single recovery action — 
 category, a 404, a failed request.
 
 - **Import:** `import { ErrorBlock } from '@droppy/design-system'`
-- **Built on:** [Heading](?path=/docs/components-heading--docs), [Body](?path=/docs/components-body--docs),
-  and [Button](?path=/docs/components-button--docs) — no Base UI primitive of its own.
+- **Built on:** [Heading](?path=/docs/typography-heading--docs), [Body](?path=/docs/typography-body--docs),
+  and [Button](?path=/docs/actions-button--docs) — no Base UI primitive of its own.
 
 <Canvas of={ErrorBlockStories.Default} />
 
@@ -32,7 +32,7 @@ category, a 404, a failed request.
 ## When not to use
 
 - A shape-matching placeholder while content is still on its way — use
-  [Skeleton](?path=/docs/components-skeleton--docs) instead. `ErrorBlock` is for a state that has
+  [Skeleton](?path=/docs/feedback-status-skeleton--docs) instead. `ErrorBlock` is for a state that has
   already resolved to "nothing here," not one still loading.
 
 ## How it works
@@ -71,5 +71,5 @@ for those.
 
 ## Related
 
-- [Skeleton](?path=/docs/components-skeleton--docs) — a shape-matching placeholder for content
+- [Skeleton](?path=/docs/feedback-status-skeleton--docs) — a shape-matching placeholder for content
   that's still loading, rather than a state that has already resolved to empty or failed.
