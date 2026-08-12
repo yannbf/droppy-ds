@@ -4,13 +4,6 @@
   input[type="search"]::-webkit-search-results-button,
   input[type="search"]::-webkit-search-results-decoration { display: none; }
 
-  /*
-   * A Droppy app styles its page chrome with the theme tokens (Mealdrop does it
-   * in its global stylesheet); the preview body mirrors that so stories render
-   * against app-like surroundings — bare story text otherwise falls back to the
-   * browser's #000, which breaks color-contrast a11y checks against themed
-   * component text.
-   */
   body {
     background: var(--ds-color-surface-page);
     color: var(--ds-color-text-primary);

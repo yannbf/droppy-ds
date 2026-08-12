@@ -1,0 +1,133 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+
+<Meta title="Technical guidelines" tags={['general-do-dont']} />
+
+# How to use Droppy components
+
+Droppy components are driven through props. Unlike Base UI, you do not need to pass `className` for styling or to compose sub-parts for component functionality. For example, `<Button clear round icon="cross" />` applies clear and round styling, and injects an icon sub-part with the appropriate glyph. In other words, Droppy is designed for consistent usage rather than flexible composition.
+
+This page covers the rules every component shares, in more detail: styling, theming, composition, overlay mechanics, animation, and form participation. It also explains how to build a new component on the system.
+
+## Styling contract
+
+Droppy components are styled by default. Every component appends an incoming `className` to its own,
+so you can still wrap it in `styled()` or add a utility class. Droppy does not use CSS `@layer`, so
+you can override a theme rule at equal specificity. 
+
+Use external style to handle layout concerns, such as adding margins to components, or for edge cases
+like making a component screenreader-only.
+
+State is exposed as data attributes on the rendered DOM. A [Button](?path=/docs/actions-button--docs)
+carries `data-disabled`, `data-checked`, `data-starting-style`, etc., as set by the Base UI primitive
+it's built on top of. Droppy's own CSS is written against those hooks. Consult each component's
+documentation page for available styling primitives.
+
+## Theming
+
+Droppy flips light and dark with a `data-theme` attribute on the root element. When the attribute is
+missing, Droppy follows the OS's own `prefers-color-scheme` instead. You can set the theme in JS like so:
+
+```tsx
+document.documentElement.dataset.theme = isDark ? 'dark' : 'light'
+```
+
+[IconButton](?path=/docs/actions-iconbutton--docs) is the only component that opts out from
+theming. It's built for floating over photography (carousel arrows, overlay dismissals), so
+it stays a light pill regardless of theme. Its background and icon color do not use `--ds-color-*`
+tokens.
+
+Your own components should use `--ds-color-*` tokens to be compatible with Droppy's theme switch.
+Only opt out if you meet the same usage conditions as [IconButton](?path=/docs/actions-iconbutton--docs),
+for components that always overlay on top of photo content.
+
+## Composition
+
+Composition happens through props, not through assembling sub-parts. Components that use
+Base UI's `render` internally (like [Tooltip](?path=/docs/overlays-tooltip--docs) and [Sidebar](?path=/docs/overlays-sidebar--docs)),
+do not expose the prop as public API. This decision is intentional, to ensure Droppy components
+are used consistently across products and pages. If you need new use cases to be supported,
+open a feature request issue on GitHub.
+
+`render` is only exposed to support router-aware link composition. 
+[Link](?path=/docs/actions-link--docs), [Breadcrumb](?path=/docs/navigation-breadcrumb--docs) and
+[FooterCard](?path=/docs/navigation-footercard--docs)'s links all expose `render`, so that you may
+pass a router-aware link (`react-router`'s `Link`, Next's `Link`) instead of the default `<a>`.
+All three take the element form only (`render?: ReactElement`), but not a render function.
+
+## Overlays
+
+[Modal](?path=/docs/overlays-modal--docs), [Sidebar](?path=/docs/overlays-sidebar--docs), and
+[ToastProvider](?path=/docs/feedback-status-toast--docs) all portal their
+content, and all three take the same
+`container?: HTMLElement | string | null` prop: pass an element, a CSS selector, or leave it
+unset to default to `document.body`. If using a selector, it's resolved in an effect, one frame
+after mount, for SSR compatibility.
+
+
+Each overlay's popup and backdrop carry their own fixed `z-index` in the theme stylesheet.
+There's no use of `isolation: isolate`. Each backdrop sits just below its own popup.
+`Tooltip`'s `z-index` is low, just above sticky page content. [Modal](?path=/docs/overlays-modal--docs) and [Sidebar](?path=/docs/overlays-sidebar--docs) sit
+higher, clearing ordinary page content. Don't add a competing `z-index` in app CSS to
+referee between Droppy overlays; use `container` to change where one portals instead.
+
+[Modal](?path=/docs/overlays-modal--docs) and [Sidebar](?path=/docs/overlays-sidebar--docs)
+are controlled components. You own `isOpen` and it's your responsibility
+to add an `onClose` handler. Both components close on Escape and outside-press, and
+[Sidebar](?path=/docs/overlays-sidebar--docs) can also be dismissed with a swipe. [Toast](?path=/docs/feedback-status-toast--docs)
+has no trigger and no `isOpen` at all: you must use wrap your app in `ToastProvider` then
+raise toasts imperatively with `useToast().add(...)`. It will close when it clears a `timeout`
+or when the user presses its own `Dismiss` button.
+
+## Animation
+
+Popups animate with CSS transitions gated on `[data-starting-style]`/`[data-ending-style]`, not
+keyframes, because a transition can reverse mid-flight: closing a modal before its opening
+transition finishes just plays backwards instead of jumping. [Modal](?path=/docs/overlays-modal--docs), [Sidebar](?path=/docs/overlays-sidebar--docs), [Tooltip](?path=/docs/overlays-tooltip--docs), and
+[Accordion](?path=/docs/layout-structure-accordion--docs)'s panel all follow this
+pattern: a `transition` paired with a rule that zeroes out `opacity`/`transform`/`height`
+under the starting/ending-style attributes, whether that CSS lives in the component's own
+stylesheet ([Modal](?path=/docs/overlays-modal--docs), [Sidebar](?path=/docs/overlays-sidebar--docs)) or in the shared theme layer ([Tooltip](?path=/docs/overlays-tooltip--docs), [Accordion](?path=/docs/layout-structure-accordion--docs)).
+
+Motion timing comes from tokens defined once, in `:root`: `--ds-motion-fast` (150ms),
+`--ds-motion-base` (250ms), `--ds-motion-slow` (300ms), and `--ds-motion-ease` (`ease-in`).
+
+
+## Form participation
+
+| Component                                                        | Built on                        | Native constraint props                                                                                                                                       |
+| ---------------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Input](?path=/docs/forms-input-input--docs)                     | Base UI `Field` + `Input`       | every native attribute passes through (`required`, `pattern`, `minLength`, `type`, …)|
+| [Select](?path=/docs/forms-input-select--docs)                   | a plain native `<select>`       | every native attribute passes through (`required`, `multiple`, `name`, …)                                                                                     |
+| [NumberField](?path=/docs/forms-input-numberfield--docs)         | Base UI `Field` + `NumberField` | its prop type is `NumberField.Root`'s own props (minus `render`), so whatever Root accepts (`min`, `max`, `step`, `name`, `required`) passes straight through |
+| [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) | two `Button`s and a `Body`      | none — a controlled `value`/`onChange` pair with no `name` and no rendered `<input>`                                                                          |
+
+Input and Select are already native elements, so participating in a form is just the browser's
+own mechanism. NumberField adds no form logic of its own: its props follow Base UI's `NumberField.Root`.
+QuantityStepper is the outlier: it isn't a form control. The caller owns `value`, and nothing about the component
+assumes a `<form>` exists.
+
+## Extending the system
+
+Building a new component on top of Droppy follows the same recipe every existing one does:
+
+1. **Import the Base UI primitive directly**, from its own subpath (`@base-ui/react/switch`,
+   `@base-ui/react/collapsible`, …).
+2. **Bind the shared theme class** from `src/theme` alongside your own. `theme.SwitchRoot` (or
+   whichever part you're styling) carries that Base UI part's base; add your own class to it
+   for anything specific to the new component, so that a Base UI component can be used in several
+   Droppy components without conflict.
+3. **Merge, don't replace, an incoming `className`.** Pass the caller's `className` last, to allow
+   for customisation.
+4. **Use `--ds-*` tokens** (colors, spacing, radius, motion, type) before a literal value.
+   A literal value is correct only where a component opts out of theming on purpose,
+   like `IconButton`; document it when you do.
+5. **Decide the composition surface deliberately.** Default to no `render` prop. Only add one,
+     in the narrow `render?: ReactElement` shape, when the component needs to consume router-aware links.
+6. **Document the component** in Storybook, with stories highlight all important aspects of the
+   component behaviour.
+
+## Related
+
+- For brand usage, tone of voice and color meaning, see [Brand guidelines](?path=/docs/brand-guidelines--docs).
+- For the full token list, see [Design tokens](?path=/docs/design-tokens--docs).
+
