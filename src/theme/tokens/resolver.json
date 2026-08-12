@@ -2,15 +2,15 @@
   "version": "2025.10",
   "name": "droppy",
   "description": "Droppy design tokens: one base set, themed by a light/dark modifier.",
-  "sets": [
-    {
+  "sets": {
+    "base": {
       "name": "base",
       "type": "set",
       "sources": [{ "$ref": "./base.json" }]
     }
-  ],
-  "modifiers": [
-    {
+  },
+  "modifiers": {
+    "theme": {
       "name": "theme",
       "type": "modifier",
       "default": "light",
@@ -19,5 +19,6 @@
         "dark": [{ "$ref": "./dark.json" }]
       }
     }
-  ]
+  },
+  "resolutionOrder": [{ "$ref": "#/sets/base" }, { "$ref": "#/modifiers/theme" }]
 }

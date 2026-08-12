@@ -20,7 +20,10 @@ export default defineConfig(
       css({
         filename: 'tokens.css',
         legacyHex: false,
-        propertyDefinitions: true,
+        // @property definitions are off until plugin-css stops emitting
+        // `initial-value: var(...)` for alias tokens — invalid per spec,
+        // and lightningcss rejects the stylesheet during the library build.
+        propertyDefinitions: false,
         variableName: (token) => dsVarName(token.id),
         permutations: [
           { input: { theme: 'light' }, prepare: (c) => `:root {\n${c}\n}` },
@@ -34,6 +37,6 @@ export default defineConfig(
     ],
   },
   {
-    cwd: import.meta.url,
+    cwd: new URL(import.meta.url),
   }
 )

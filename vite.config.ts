@@ -6,9 +6,8 @@ import dts from 'vite-plugin-dts'
 
 const entry = (path: string) => fileURLToPath(new URL(path, import.meta.url))
 
-// Library build. Three entries: the component barrel (`.`), the stylesheet
-// (`./styles.css`), and the generated token data module (`./tokens`).
-// Components never import CSS themselves — consumers import
+// Library build. Two entries: the component barrel (`.`) and the stylesheet
+// (`./styles.css`). Components never import CSS themselves — consumers import
 // `@droppy/design-system/styles.css` once — so the JS stays side-effect free
 // and tree-shakes.
 export default defineConfig({
@@ -32,7 +31,6 @@ export default defineConfig({
       entry: {
         index: entry('src/index.ts'),
         styles: entry('src/styles/index.css'),
-        tokens: entry('src/theme/tokens.ts'),
       },
       formats: ['es'],
     },

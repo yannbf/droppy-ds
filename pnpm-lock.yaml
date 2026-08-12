@@ -45,6 +45,9 @@ importers:
       '@terrazzo/plugin-css':
         specifier: ^2.7.1
         version: 2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))
+      '@terrazzo/token-tools':
+        specifier: 2.7.1
+        version: 2.7.1
       '@types/node':
         specifier: ^26.1.2
         version: 26.1.2
@@ -1187,14 +1190,8 @@ packages:
       '@terrazzo/cli': ^2.3.0
       '@terrazzo/parser': ^2.3.0
 
-  '@terrazzo/token-tools@2.5.0':
-    resolution: {integrity: sha512-CREnj4kmbskWugkNCA8SYFcjJmlNpXci2ft9U8GjLOdi5eNkWGjDSW5U3oxn+BQkm0mNjWrWBloyg/L6vzFnWA==}
-
   '@terrazzo/token-tools@2.7.1':
     resolution: {integrity: sha512-ylPpuUi5se/uzvpTiiTnOZqXMqVEpfhYBt8UY4D10NijZV76tjN55KNyRlSMPA1zg+loO06BktL1CR1/EhBtvQ==}
-
-  '@terrazzo/token-types@2.5.0':
-    resolution: {integrity: sha512-KJIG2a20UbG1+fCCuh9TvmyJ5NjHrZ8byFAEiNNJ8FZZ1Ut0DTo4V2vJY1i62bEYRm1kkLd+PkRM7KjsU1JgxQ==}
 
   '@terrazzo/token-types@2.7.1':
     resolution: {integrity: sha512-ahMSS4i4yXbtVyXRupbdMP2gkotSIh2sXHEyM2fBVRcmcydggxeVs9qJ+x7e6M4hacqFDiaDigcbpRRS2lrvdQ==}
@@ -4728,14 +4725,7 @@ snapshots:
     dependencies:
       '@terrazzo/cli': 2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0)
       '@terrazzo/parser': 2.7.1(yaml-to-momoa@0.1.0)
-      '@terrazzo/token-tools': 2.5.0
-
-  '@terrazzo/token-tools@2.5.0':
-    dependencies:
-      '@humanwhocodes/momoa': 3.3.10
-      '@terrazzo/token-types': 2.5.0
-      colorjs.io: 0.6.1
-      wildcard-match: 5.1.4
+      '@terrazzo/token-tools': 2.7.1
 
   '@terrazzo/token-tools@2.7.1':
     dependencies:
@@ -4743,8 +4733,6 @@ snapshots:
       '@terrazzo/token-types': 2.7.1
       colorjs.io: 0.7.1
       wildcard-match: 5.1.4
-
-  '@terrazzo/token-types@2.5.0': {}
 
   '@terrazzo/token-types@2.7.1': {}
 
@@ -4996,7 +4984,7 @@ snapshots:
       '@terrazzo/parser': 2.7.1(yaml-to-momoa@0.1.0)
       '@terrazzo/plugin-css': 2.7.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))
       '@terrazzo/plugin-token-listing': 0.1.1(@terrazzo/cli@2.7.1(@types/node@26.1.2)(esbuild@0.28.1)(jiti@2.7.0))(@terrazzo/parser@2.7.1(yaml-to-momoa@0.1.0))
-      '@terrazzo/token-tools': 2.5.0
+      '@terrazzo/token-tools': 2.7.1
       colorjs.io: 0.6.1
     transitivePeerDependencies:
       - '@humanwhocodes/momoa'

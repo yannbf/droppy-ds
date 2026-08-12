@@ -59,21 +59,17 @@ document.documentElement.dataset.theme = isDark ? 'dark' : 'light'
 `IconButton` is the one component that doesn't respond to the theme — it stays a light pill in
 dark mode because it's built for floating over photography, not over a themed surface.
 
-## Tokens in JS
+## Tokens in app code
 
-Every design token is also available as data, for app code that styles outside the
-stylesheet — a styled-components theme, a canvas, color math:
+The stylesheet defines every design token as a CSS custom property (`--ds-color-text-primary`,
+`--ds-space-md`, …). Use them directly wherever CSS goes — plain CSS, styled-components,
+inline styles — and they follow the active theme:
 
-```ts
-import { tokens, cssVar } from '@droppy/design-system/tokens'
-
-cssVar('color.text.primary') // 'var(--ds-color-text-primary)' — follows the active theme
-tokens['color.text.primary'] // { css: '--ds-color-text-primary', light: '#2c2c2c', dark: '#fff' }
+```tsx
+const Price = styled.span`
+  color: var(--ds-color-text-secondary);
+`
 ```
-
-Prefer `cssVar()` wherever a CSS variable can go — it stays correct when the theme flips.
-The `light`/`dark` literals are fully resolved and always match what the stylesheet renders;
-`dark` is present only where the themes differ.
 
 ## Portaling
 
