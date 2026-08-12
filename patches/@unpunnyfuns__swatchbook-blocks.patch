@@ -1,0 +1,13 @@
+diff --git a/dist/index.mjs b/dist/index.mjs
+index b9c965d40c4d86067ade99503032b3f71a88fe91..2983d5ba2db10bdeb0e86bfad02798021506c4b3 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -2289,7 +2289,7 @@ function SwatchbookProvider({ snapshot, axes, defaultAxes, presenters, mountCss
+ 	const value = useMemo(() => assemble(snapshot, activeAxes), [snapshot, activeAxes]);
+ 	const merged = useMemo(() => mergePresenters(presenters), [presenters]);
+ 	const setAxes = controlled ? null : setInternalAxes;
+-	return /* @__PURE__ */ jsx("div", {
++	return /* @__PURE__ */ jsx("span", {
+ 		...perAxisAttrs(snapshot.cssVarPrefix, activeAxes),
+ 		children: /* @__PURE__ */ jsx(SwatchbookContext.Provider, {
+ 			value,
