@@ -17,6 +17,7 @@ export default defineConfig({
       include: ['src'],
       exclude: ['src/**/*.stories.tsx'],
       rollupTypes: true,
+      bundledPackages: ['@base-ui/react'],
       tsconfigPath: './tsconfig.json',
     }),
   ],
@@ -35,10 +36,11 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      // Everything the consumer already has (React, Base UI) stays external so
-      // there is exactly one instance of each in the app — Base UI's portals
-      // and context break with duplicates.
-      external: [/^react($|\/)/, /^react-dom($|\/)/, /^@base-ui\/react($|\/)/],
+      // React and react-dom stay external so there is exactly one instance of
+      // each in the consumer app. Base UI is bundled into the output instead —
+      // it never appears in the consumer's dependency graph, and the copy
+      // shipped inside this package is the only instance that exists.
+      external: [/^react($|\/)/, /^react-dom($|\/)/],
       output: {
         entryFileNames: '[name].js',
         assetFileNames: '[name][extname]',
