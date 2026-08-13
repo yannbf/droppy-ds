@@ -45,32 +45,32 @@ import { Link } from '@droppy/design-system'
 
 ## How it works
 
-### Inline
+### Inline in a sentence
 
-`Link` inherits the font of whatever it's dropped into, so it reads as part of the sentence.
+`Link` is for a sentence link, not a button or a nav item — it inherits the surrounding text's
+font rather than setting its own.
 
 <Canvas of={LinkStories.Inline} />
 
-### Router links via `render`
+### Inheriting colour
 
-Pass `render` with a router's own link element (`react-router`'s `Link`, Next's `Link`, etc.) and
-`Link` clones it with its own class and the rest of its props — the same composition pattern
-`Breadcrumb` uses for its crumbs. `href` is ignored when `render` is set; the router element owns
-its own destination.
-
-<Canvas of={LinkStories.WithRouterLink} />
-
-### On a dark surface
-
-`Link`'s default color is a token, not a hardcoded value, so a caller on a dark surface (a footer,
-an overlay) overrides `color` to `currentColor` or another token to keep it legible — see
-[FooterCard](?path=/docs/navigation-footercard--docs), which does exactly this for its own links.
+On a dark surface, `Link` follows `currentColor` from the wrapping context rather than fighting it
+with a hard-coded light-mode token.
 
 <Canvas of={LinkStories.OnDarkSurface} />
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Link` is a single-part component. By default it renders an `<a>`; with `render` it clones the element you pass, so the part is whatever your router link renders.
+
+<Canvas of={LinkStories.Anatomy} />
+
+| Part | `data-part` | Renders                         | Purpose                                     |
+| :--- | :---------- | :------------------------------ | :------------------------------------------ |
+| Root | `root`      | `<a>` (or the `render` element) | The link: colour, underline, and focus ring |
 
 {/* END: anatomy */}
 
@@ -119,6 +119,31 @@ caller can override it with an inline `style`, a `className`, or `currentColor` 
 
 <ArgTypes of={LinkStories} />
 
+### `children`
+
+The link text — keep it descriptive out of context.
+
+<Canvas of={LinkStories.Children} />
+
+### `href`
+
+The destination for the default `<a>`.
+
+<Canvas of={LinkStories.Href} />
+
+### `render`
+
+Swaps the `<a>` for a router-aware link, so the design system itself carries no router dependency.
+The passed element owns its own destination, so `href` is dropped rather than spread on top of it
+— a present-but-`undefined` key would still clobber a router `Link`'s `to`.
+
+<Canvas of={LinkStories.Render} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Link` class.
+
+<Canvas of={LinkStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

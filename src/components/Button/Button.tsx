@@ -40,6 +40,7 @@ export const Button = ({
   ...rest
 }: PropsWithChildren<ButtonProps>) => (
   <BaseButton
+    data-part="root"
     type="button"
     className={cx(
       theme.Button,
@@ -52,7 +53,7 @@ export const Button = ({
     )}
     {...rest}
   >
-    {icon && <Icon name={icon} size={iconSize} />}
+    {icon && <Icon data-part="icon" name={icon} size={iconSize} />}
     {children}
   </BaseButton>
 )

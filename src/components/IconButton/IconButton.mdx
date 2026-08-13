@@ -54,32 +54,28 @@ import { IconButton } from '@droppy/design-system'
 
 ## How it works
 
-### Sizes
+### It never goes dark
 
-`small` swaps the `4rem` control for a `3rem` one, and scales the inner icon from `24` to `15`
-to match.
+Deliberately not theme-reactive: it stays a light pill in dark mode so it reads against arbitrary
+imagery. Only the radius and focus ring are tokens, and the glyph colour is hard-coded rather than
+following the icon token — which is the right call for a control that floats over photography
+rather than over a themed surface.
 
-<Canvas of={IconButtonStories.Sizes} />
-
-### Icon rendering
-
-`name` selects the icon from the same set `Icon` and `Button` draw from. The icon's stroke is
-fixed at `#202020` rather than a token, matching the rest of the control's fixed appearance.
-
-### Staying light in dark mode
-
-Carried over deliberately: `IconButton` sits on photography, not on a themed surface, so it is
-the one component in the set that doesn't respond to `data-ds-theme`. Only its radius and focus
-ring are tokens; everything else is a fixed value.
-
-### Focus ring
-
-Focus adds `--ds-shadow-focus` alongside the existing drop shadow rather than replacing it — a
-bare `box-shadow` on focus would drop the shadow and the button would flatten.
-
+<Canvas of={IconButtonStories.StaysLightOnAnySurface} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+The circular control and the glyph it centres. There is no label part — the button is icon-only, so its accessible name comes from `aria-label`.
+
+<Canvas of={IconButtonStories.Anatomy} />
+
+| Part | `data-part` | Renders    | Purpose                                                             |
+| :--- | :---------- | :--------- | :------------------------------------------------------------------ |
+| Root | `root`      | `<button>` | The circle: fixed size, radius, and focus ring                      |
+| Icon | `icon`      | `<svg>`    | The glyph, sized by `small` and coloured independently of the theme |
 
 {/* END: anatomy */}
 
@@ -133,6 +129,23 @@ bare `box-shadow` on focus would drop the shadow and the button would flatten.
 
 <ArgTypes of={IconButtonStories} />
 
+### `name`
+
+Picks the glyph. The button is icon-only, so pass `aria-label` alongside it.
+
+<Canvas of={IconButtonStories.Name} />
+
+### `small`
+
+Swaps the 4rem control for the 3rem one, glyph included.
+
+<Canvas of={IconButtonStories.Small} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-IconButton` class.
+
+<Canvas of={IconButtonStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

@@ -50,31 +50,25 @@ import { Card } from '@droppy/design-system'
 
 ## How it works
 
-### Padding
+### Clipping
 
-Bare by default, since most of the components this shell replaces already own their internal
-padding. Pass `padded` for the ones that don't.
-
-<Canvas of={CardStories.Padded} />
-
-### Interactive
-
-`interactive` adds a pointer cursor and dims the card to `opacity: 0.9` on hover — the same
-treatment Mealdrop's restaurant and category cards used for their whole clickable surface.
-`Card` doesn't attach the click handler itself; wrap it or spread `onClick` at the call site.
-
-<Canvas of={CardStories.Interactive} />
-
-### Clipping children to the radius
-
-`overflow: hidden` means an edge-to-edge image child clips to the card's corner radius instead of
-squaring off past it.
+`overflow: hidden`, so an edge-to-edge image child clips to the card's own corner radius instead
+of squaring off past it.
 
 <Canvas of={CardStories.WithImage} />
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Card` is a single-part component: one `<div>` that provides the surface, with children in normal flow. There are deliberately no slots — no image, title, or footer part — so the composition inside belongs entirely to the caller.
+
+<Canvas of={CardStories.Anatomy} />
+
+| Part | `data-part` | Renders | Purpose                                                                                |
+| :--- | :---------- | :------ | :------------------------------------------------------------------------------------- |
+| Root | `root`      | `<div>` | The surface: background, radius, resting shadow, and the clipping that keeps images in |
 
 {/* END: anatomy */}
 
@@ -126,6 +120,31 @@ squaring off past it.
 
 <ArgTypes of={CardStories} />
 
+### `children`
+
+Compose freely — `Card` provides the surface and nothing else.
+
+<Canvas of={CardStories.Children} />
+
+### `padded`
+
+Adds `--ds-space-sm` on all sides. Bare by default, since most of the components it replaces
+already own their internal padding.
+
+<Canvas of={CardStories.Padded} />
+
+### `interactive`
+
+Appearance only: a pointer cursor and a hover dim. It wires no `onClick`, `role`, or `tabIndex` —
+compose the interactive semantics yourself, or wrap the card in a real control.
+
+<Canvas of={CardStories.Interactive} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Card` class.
+
+<Canvas of={CardStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

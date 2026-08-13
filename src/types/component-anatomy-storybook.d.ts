@@ -33,3 +33,10 @@ declare module '@component-anatomy/storybook' {
     disable?: boolean
   }
 }
+
+/** The addon's preview entry, registered in `.storybook/preview.tsx`. */
+declare module '@component-anatomy/storybook/preview' {
+  import type { Decorator } from '@storybook/react-vite'
+
+  export const decorators: Decorator[]
+}

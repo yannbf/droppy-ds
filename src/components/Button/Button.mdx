@@ -60,48 +60,32 @@ import { Button } from '@droppy/design-system'
 
 ## How it works
 
-### Variants
+### Icon-only buttons need a label
 
-`clear`, `round`, and `large` are independent booleans and combine freely: `clear` strips the
-fill for secondary actions, `round` gives a pill radius for icon-only affordances, and `large`
-adds taller padding for primary calls to action.
+Drop `children` and the button has no text to read, so its accessible name has to come from
+`aria-label`. The glyph itself is `aria-hidden` and contributes nothing.
+
+<Canvas of={ButtonStories.IconOnlyNeedsALabel} />
+
+### The variant vocabulary
+
+The variants side by side — one obvious primary per screen, `clear` for the secondary beside it.
 
 <Canvas of={ButtonStories.Variants} />
-
-### Icon handling
-
-`icon` takes an `IconName` and renders it before `children`, spaced with the theme's `xs` gap
-token rather than a spacer element. `iconSize` overrides the icon's default rendered size when
-the button's own padding calls for a different proportion.
-
-<Canvas of={ButtonStories.WithIcon} />
-
-### Icon-only buttons
-
-Passing `icon` with no `children` — typically combined with `round` and `clear` — renders a
-button with no visible text. The icon itself is decorative (`aria-hidden`), so the button needs
-an explicit `aria-label` to carry an accessible name.
-
-<Canvas of={ButtonStories.IconOnly} />
-
-### Disabled state
-
-`disabled` maps straight to the native `disabled` attribute, so the button is skipped by Tab and
-every interaction handler no-ops — verified even when a click is forced past `pointer-events`
-(see the `DisabledSwallowsClicks` story). Droppy's `Button` doesn't expose Base UI's
-`focusableWhenDisabled`, so there's no built-in way to keep a disabled button focusable — every
-disabled `Button` drops out of the tab order.
-
-<Canvas of={ButtonStories.Disabled} />
-
-### In a form
-
-The rendered element always starts as `type="button"`, so it won't submit an enclosing form by
-default. Pass `type="submit"` explicitly to opt in.
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+The control and its optional leading glyph. There is no label part: `children` render directly inside the button, spaced from the icon with `gap` rather than a spacer node.
+
+<Canvas of={ButtonStories.Anatomy} />
+
+| Part | `data-part` | Renders    | Purpose                                                      |
+| :--- | :---------- | :--------- | :----------------------------------------------------------- |
+| Root | `root`      | `<button>` | Fill, radius, focus ring, and the disabled state             |
+| Icon | `icon`      | `<svg>`    | The optional leading glyph, rendered only when `icon` is set |
 
 {/* END: anatomy */}
 
@@ -159,6 +143,54 @@ this component doesn't override.
 
 <ArgTypes of={ButtonStories} />
 
+### `children`
+
+The label. Omitted, the button is icon-only and needs an `aria-label`.
+
+<Canvas of={ButtonStories.Children} />
+
+### `clear`
+
+Strips the fill, for the secondary action beside a primary one.
+
+<Canvas of={ButtonStories.Clear} />
+
+### `large`
+
+Adds height, for the one action a screen is really about.
+
+<Canvas of={ButtonStories.Large} />
+
+### `round`
+
+Fully rounds the control — pair it with an icon and no label.
+
+<Canvas of={ButtonStories.Round} />
+
+### `icon`
+
+Renders a glyph before the label, spaced with `gap` rather than a spacer element — one fewer DOM
+node than Mealdrop's original, for the same 1rem.
+
+<Canvas of={ButtonStories.IconProp} />
+
+### `iconSize`
+
+Overrides the glyph size without touching the button's own padding.
+
+<Canvas of={ButtonStories.IconSize} />
+
+### `disabled`
+
+Dims the control and stops it firing `onClick`.
+
+<Canvas of={ButtonStories.Disabled} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Button` class.
+
+<Canvas of={ButtonStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}
