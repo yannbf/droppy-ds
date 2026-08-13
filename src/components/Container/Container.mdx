@@ -74,8 +74,7 @@ literal values — no token in the current scale matches them exactly.
 
 ## Decision log
 
-- **2026-07**: Container replaced Mealdrop's global `.container`/`.container-desktop` stylesheet classes with a component; the `desktopOnly` prop covers the second class and is named for what it does — defer the width bound to the 1024px breakpoint — rather than for the old class suffix ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [wave 2 commit](https://github.com/yannbf/droppy-ds/commit/4b20c0eca2ee66fb2a7f05aef13522621430fe67)).
-- **2026-08**: Container was deliberately not adopted in Mealdrop's initial migration because the width constraint lived as global CSS classes; wave 2 reversed this, the classes becoming the Container component and helping lift measured DS coverage from 49.6% to 55.3% ([kept local by design](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [wave-2 adoption](https://github.com/yannbf/mealdrop/commit/71a21463d7b75816803b074f1a21dcd1866f8562), [mealdrop #67](https://github.com/yannbf/mealdrop/pull/67)).
+- **2026-07**: Container replaced Mealdrop's global `.container`/`.container-desktop` stylesheet classes with a component; the `desktopOnly` prop covers the second class and is named for what it does — defer the width bound to the 1024px breakpoint — rather than for the old class suffix ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 
 {/* END: history */}
 

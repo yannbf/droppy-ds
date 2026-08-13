@@ -78,7 +78,7 @@ The pill grows with its content — there's no truncation or fixed width.
 
 ## Decision log
 
-- **2026-07**: Badge absorbed RestaurantCard's hand-rolled NewTag styled-span as `<Badge text="new" variant="positive" />`, collapsing Mealdrop's two implementations of one visual role and establishing the `variant` API for semantic colour roles while keeping the original text-as-prop API; absolute positioning over the card photo was judged a call-site concern and stays in the app ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [wave 1 commit](https://github.com/yannbf/droppy-ds/commit/4a2c0c7d4c11e9d22a4373712fe750deefc436e6), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [mealdrop #63](https://github.com/yannbf/mealdrop/pull/63)).
+- **2026-07**: Badge absorbed RestaurantCard's hand-rolled NewTag styled-span as `<Badge text="new" variant="positive" />`, collapsing Mealdrop's two implementations of one visual role and establishing the `variant` API for semantic colour roles while keeping the original text-as-prop API; absolute positioning over the card photo was judged a call-site concern and stays in the app ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
 - **2026-07**: casing moved into CSS per brand rule 8: badge labels are written lowercase in source and `text-transform: capitalize` does the rest, so writers never uppercase by hand ([brand principles](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/principles.md)).
 
 {/* END: history */}

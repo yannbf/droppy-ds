@@ -69,8 +69,7 @@ for those.
 
 ## Decision log
 
-- **2026-07**: the `image` prop was renamed `illustration` and made optional: the Lottie player and its animation JSON are application assets, so the slot takes any node or nothing rather than baking a player dependency into the package; the rest of the API (title, body, buttonText, onButtonClick) carried over unchanged from Mealdrop, and the inner gap moved from 20px to `--ds-space-sm` (24px) because spacing.m has no exact token and the scale is the source of truth ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [wave 2 commit](https://github.com/yannbf/droppy-ds/commit/4b20c0eca2ee66fb2a7f05aef13522621430fe67), [mealdrop #63](https://github.com/yannbf/mealdrop/pull/63)).
-- **2026-08**: ErrorBlock was adopted in the agentic-reference Mealdrop as part of the 17-component, 49.6%-coverage baseline ([mealdrop #66](https://github.com/yannbf/mealdrop/pull/66)).
+- **2026-07**: the `image` prop was renamed `illustration` and made optional: the Lottie player and its animation JSON are application assets, so the slot takes any node or nothing rather than baking a player dependency into the package; the rest of the API (title, body, buttonText, onButtonClick) carried over unchanged from Mealdrop, and the inner gap moved from 20px to `--ds-space-sm` (24px) because spacing.m has no exact token and the scale is the source of truth ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 
 {/* END: history */}
 
