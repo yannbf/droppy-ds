@@ -2962,22 +2962,40 @@ https://pkg.pr.new/yannbf/droppy-ds/@droppy/design-system@experiment/<name>
 ```
 ````
 
-- [ ] **Step 4: Run the full verification suite**
+- [ ] **Step 4: Keep Prettier out of the SDD scratch directory**
+
+Add one line to `.prettierignore`:
+
+```
+.superpowers
+```
+
+That directory holds git-ignored review artifacts. Without this, every one of them shows up as a `format:check` failure.
+
+- [ ] **Step 5: Run the full verification suite**
 
 ```bash
 pnpm experiment:check
 pnpm experiment:test
 pnpm check
 pnpm lint
-pnpm format:check
 pnpm build
 ```
 
-Expected: all six succeed. `pnpm check` and `pnpm build` prove the tool has not disturbed the library build — they are the reason `tools/` got its own tsconfig rather than joining the root's `include`.
+Expected: all five succeed. `pnpm check` and `pnpm build` prove the tool has not disturbed the library build — they are the reason `tools/` got its own tsconfig rather than joining the root's `include`.
 
-Report the actual output of each. If any fails, fix it before committing; do not report the task complete with a failing command.
+Then the formatting gate, scoped to what this branch added:
 
-- [ ] **Step 5: Confirm nothing under `src/` was touched**
+```bash
+pnpm exec prettier --check 'tools/**/*.{ts,json}' classification-labels.jsonc experiments.config.ts \
+  .github/workflows/experiment-preview.yml README.md docs/superpowers
+```
+
+Expected: clean. **Do not run a repo-wide `pnpm format:check` and expect it to pass.** Six files fail it on `main` already — `.storybook/preview-head.html`, `.storybook/preview.tsx`, and four `src/docs/*.mdx` — and `src/` is off-limits to this work, so fixing them is not this branch's job. Reformatting them to make the gate green would collide with the parallel classification sessions.
+
+Report the actual output of each command. If any fails, fix it before committing; do not report the task complete with a failing command.
+
+- [ ] **Step 6: Confirm nothing under `src/` was touched**
 
 ```bash
 git diff --stat main...HEAD -- src/
@@ -2985,10 +3003,10 @@ git diff --stat main...HEAD -- src/
 
 Expected: no output. Any output is a bug in the implementation — revert those files. `src/` belongs to the parallel classification sessions.
 
-- [ ] **Step 6: Commit**
+- [ ] **Step 7: Commit**
 
 ```bash
-git add .github/workflows/experiment-preview.yml README.md
+git add .github/workflows/experiment-preview.yml README.md .prettierignore
 git commit -m "$(cat <<'EOF'
 feat: publish experiment branches to pkg.pr.new
 
@@ -3001,7 +3019,7 @@ EOF
 )"
 ```
 
-- [ ] **Step 7: Report, and stop before the first real freeze**
+- [ ] **Step 8: Report, and stop before the first real freeze**
 
 Summarise: the commands that ran and their results, the branch, and the fact that no real freeze has happened yet.
 
