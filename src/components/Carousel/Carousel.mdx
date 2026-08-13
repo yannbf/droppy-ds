@@ -52,21 +52,36 @@ and the design system's own `IconButton` for the arrows.
 
 ## How it works
 
-### Fewer items than fit in view
+### Arrows appear only where there is somewhere to go
 
-When every child already fits in the viewport, neither arrow renders — there's nowhere to scroll.
+Neither arrow renders when that direction can't scroll, and both are desktop-only besides —
+smaller screens scroll by dragging or by horizontal wheel gesture.
 
-<Canvas of={CarouselStories.FewerItemsThanFitInView} />
+<Canvas of={CarouselStories.ArrowsOnlyWhenThereIsSomewhereToGo} />
 
-### Paging by more than one slide
+### Dimmed slides
 
-`slidesToScroll` decouples how many items are visible from how far an arrow click moves.
+Slides that aren't almost fully visible drop to 0.5 opacity, so a partially scrolled row signals
+there is more to reach rather than looking clipped.
 
-<Canvas of={CarouselStories.AdvanceByPage} />
-
+<Canvas of={CarouselStories.OffscreenSlidesDim} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A rail wrapping a clipped viewport and the track inside it, one wrapper per child, with the arrows as siblings of the viewport. The per-breakpoint counts reach the CSS as custom properties rather than inline widths, so the stylesheet owns the breakpoints.
+
+<Canvas of={CarouselStories.Anatomy} />
+
+| Part      | `data-part` | Renders    | Purpose                                                    |
+| :-------- | :---------- | :--------- | :--------------------------------------------------------- |
+| Root      | `root`      | `<div>`    | Carries the item counts as CSS custom properties           |
+| Viewport  | `viewport`  | `<div>`    | The clipped window Embla drives                            |
+| Container | `container` | `<div>`    | The track that slides horizontally                         |
+| Slide     | `slide`     | `<div>`    | One wrapper per child; dims when not almost fully in view  |
+| Nav       | `nav`       | `<button>` | Previous/next; mounted only when that direction can scroll |
 
 {/* END: anatomy */}
 
@@ -121,6 +136,30 @@ with the component's own `droppy-Carousel` class.
 
 <ArgTypes of={CarouselStories} />
 
+### `children`
+
+Become the slides — one wrapper is added per child.
+
+<Canvas of={CarouselStories.Children} />
+
+### `itemsPerView`
+
+How many items fit per breakpoint, mobile-first. Fractions are deliberate: `1.2` shows a sliver of
+the next tile so the row reads as scrollable.
+
+<Canvas of={CarouselStories.ItemsPerView} />
+
+### `slidesToScroll`
+
+How many items each arrow click advances, per breakpoint. Defaults to 1.
+
+<Canvas of={CarouselStories.SlidesToScroll} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Carousel` class.
+
+<Canvas of={CarouselStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

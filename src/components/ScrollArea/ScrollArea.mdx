@@ -40,19 +40,29 @@ import { ScrollArea } from '@droppy/design-system'
 
 ## How it works
 
-### Sizing
-
-`ScrollArea`'s dimensions are fixed by the theme layer, matching how [Modal](?path=/docs/overlays-modal--docs)'s dimensions are fixed rather than left to props. Use `className` for one-off layout changes.
-
-### Choosing an axis
-
-<Canvas of={ScrollAreaStories.Horizontal} />
+Scrollbars are only mounted once the content actually overflows, and only on the axes
+`orientation` asks for. With `both`, a corner part fills the square where the two tracks would
+otherwise intersect.
 
 <Canvas of={ScrollAreaStories.BothAxes} />
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A clipped root, the scrolling viewport and its content wrapper, then a scrollbar with a thumb per axis. Sizing is fixed by the theme layer — `className` is the escape hatch for one-off layout changes.
+
+<Canvas of={ScrollAreaStories.Anatomy} />
+
+| Part      | `data-part` | Renders | Purpose                                               |
+| :-------- | :---------- | :------ | :---------------------------------------------------- |
+| Root      | `root`      | `<div>` | The clipped box                                       |
+| Viewport  | `viewport`  | `<div>` | The scrolling window                                  |
+| Content   | `content`   | `<div>` | The wrapper the viewport scrolls                      |
+| Scrollbar | `scrollbar` | `<div>` | One per axis; mounted only once the content overflows |
+| Thumb     | `thumb`     | `<div>` | The draggable handle                                  |
+| Corner    | `corner`    | `<div>` | Only with `orientation="both"`                        |
 
 {/* END: anatomy */}
 
@@ -96,6 +106,23 @@ Colors, track/thumb sizing, and the hover/scroll-gated opacity come entirely fro
 
 <ArgTypes of={ScrollAreaStories} />
 
+### `children`
+
+Whatever overflows. Sizing comes from the theme layer, not from the content.
+
+<Canvas of={ScrollAreaStories.Children} />
+
+### `orientation`
+
+Picks which axes get a scrollbar.
+
+<Canvas of={ScrollAreaStories.Orientation} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-ScrollArea` class.
+
+<Canvas of={ScrollAreaStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

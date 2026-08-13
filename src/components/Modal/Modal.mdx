@@ -15,7 +15,7 @@ import { Modal } from '@droppy/design-system'
 
 {/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
 
-<Canvas of={ModalStories.Open} story={{ inline: false, height: '480px' }} />
+<Canvas of={ModalStories.Default} story={{ inline: false, height: '480px' }} />
 
 ## Features
 
@@ -46,35 +46,41 @@ import { Modal } from '@droppy/design-system'
 
 ## How it works
 
-### Open and close
+### Where focus lands
 
-`Modal` is controlled: `isOpen` decides whether it's rendered, and `onClose` fires whenever Base UI's `Dialog` decides it should close — clicking the close button, pressing Escape, or clicking the backdrop. There's no uncontrolled mode; the caller always owns `isOpen`.
+Focus goes to the popup itself, not the close button: the content is what the reader asked for,
+and landing on "close" reads as an invitation to leave. Tab still reaches the close button first.
 
-<Canvas of={ModalStories.OpensAndCloses} />
+<Canvas of={ModalStories.InitialFocusIsThePopup} />
 
-### Dismissal
+### Responsive shape
 
-Escape closes the modal from anywhere inside it, and clicking the backdrop closes it without needing to find the close button.
+Below 768px the card becomes a bottom sheet and slides up from the edge.
 
-<Canvas of={ModalStories.EscapeDismisses} />
+<Canvas of={ModalStories.Mobile} />
 
-### Focus behavior
+### Open and close motion
 
-On open, focus moves to the popup itself rather than the close button — landing on "close" the instant a modal opens reads as an invitation to leave before the content's been seen. Tab still reaches the close button first from there, and it stays reachable by keyboard throughout.
+Backdrop and popup both transition off `[data-starting-style]` and `[data-ending-style]`, and the
+popup stays mounted through the exit so the close animation runs before it disappears.
 
-### Portaling
-
-`container` decides where the modal is portaled: pass an element, a CSS selector string, or leave it unset to default to `document.body`. A selector is resolved after mount, so on first paint the modal portals nowhere — the correct order, since it starts closed anyway.
-
-### Responsive behavior
-
-Below 768px, `Modal` renders as a bottom sheet: full width, docked to the bottom edge, rounded on its top corners only, sliding up from the bottom on open. At 768px and above it becomes a fixed-size card, centered on the screen, fading and scaling in instead of sliding — there's no screen edge for it to slide from.
-
-<Canvas of={ModalStories.Mobile} story={{ inline: false, height: '480px' }} />
-
+<Canvas of={ModalStories.OpenCloseTransition} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A backdrop and the dialog card, with a supplied top bar holding the close affordance. Base UI supplies the modal behaviour — focus trap, Escape, outside press, scroll lock, `aria-modal`. The anatomy story portals into a node inside the story canvas via `container`, so the **Anatomy** panel can reach the parts — it only scans the canvas, and the default portal target is the document body.
+
+<Canvas of={ModalStories.Anatomy} />
+
+| Part     | `data-part` | Renders    | Purpose                                               |
+| :------- | :---------- | :--------- | :---------------------------------------------------- |
+| Backdrop | `backdrop`  | `<div>`    | The dimmed layer behind the dialog                    |
+| Popup    | `root`      | `<div>`    | The card: `aria-modal`, the focus trap, and the shape |
+| Top bar  | `topbar`    | `<div>`    | Holds the close affordance                            |
+| Close    | `close`     | `<button>` | The round icon button that dismisses                  |
 
 {/* END: anatomy */}
 
@@ -121,6 +127,37 @@ Modal has no CSS custom properties of its own to override — its dimensions and
 
 <ArgTypes of={ModalStories} />
 
+### `isOpen` and `onClose`
+
+Fully controlled — the component holds no open state of its own. `onClose` fires for the button,
+Escape, and an outside press alike.
+
+<Canvas of={ModalStories.IsOpen} />
+
+### `children`
+
+The dialog body; the top bar and its close button are supplied.
+
+<Canvas of={ModalStories.Children} />
+
+### `aria-label`
+
+Names the dialog, since the body has no guaranteed heading.
+
+<Canvas of={ModalStories.AriaLabel} />
+
+### `container`
+
+Where to portal — an element or a selector. Mealdrop portals into its own `#modal` node; a package
+can't assume that exists, so it became a prop (docs/MEALDROP-PARITY.md).
+
+<Canvas of={ModalStories.Container} />
+
+### `className`
+
+Merged onto the popup alongside the component's own `droppy-Modal` class.
+
+<Canvas of={ModalStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

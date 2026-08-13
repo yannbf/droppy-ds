@@ -51,43 +51,45 @@ import { Tabs } from '@droppy/design-system'
 
 ## How it works
 
-### Switching tabs
+### Focus does not activate
 
-Clicking a tab activates it and swaps the visible panel.
+Tabs activate on click, not on focus: arrowing along the row moves focus without swapping the
+panel, so a keyboard user can read the labels before committing. Only Enter, Space, or a click
+activates.
 
-<Canvas of={TabsStories.ClickToActivate} />
-
-### Keyboard focus doesn't activate
-
-Arrow-keying between tabs moves focus without changing the active panel — an explicit click,
-Enter, or Space is what activates the focused tab.
-
-<Canvas of={TabsStories.KeyboardFocusDoesNotActivate} />
-
-### Disabled tabs
-
-A disabled tab stays focusable, so arrow-key navigation can still land on it, but neither click
-nor keyboard ever activates it.
-
-<Canvas of={TabsStories.DisabledTab} />
+<Canvas of={TabsStories.FocusDoesNotActivate} />
 
 ### Controlled value
 
-Pass `value` and `onValueChange` to drive the active tab from state outside the component, instead
-of `defaultValue`.
+`value` with `onValueChange` hands the active tab to the caller's state. One without the other
+leaves the row stuck — the callback fires, the tab never moves.
 
 <Canvas of={TabsStories.ControlledValue} />
 
-### The animated indicator
+### The sliding indicator
 
-`Tabs.Indicator` measures the active tab's position and writes it as CSS custom properties; the
-theme layer transitions on top of them to produce the sliding underline.
+`Tabs.Indicator` writes the active tab's measured position and size to CSS custom properties,
+which the theme transitions on top of.
 
 <Canvas of={TabsStories.AnimatedIndicator} />
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A tab row with its indicator, and one panel per tab. The list is flat — `tabs` renders the whole set, so there is no `Tabs.Tab`/`Tabs.Panel` to compose by hand.
+
+<Canvas of={TabsStories.Anatomy} />
+
+| Part      | `data-part` | Renders    | Purpose                                                                  |
+| :-------- | :---------- | :--------- | :----------------------------------------------------------------------- |
+| Root      | `root`      | `<div>`    | Owns the active value and links tabs to panels                           |
+| List      | `list`      | `<div>`    | The `role="tablist"` row                                                 |
+| Tab       | `tab`       | `<button>` | One per entry, carrying `aria-selected`                                  |
+| Indicator | `indicator` | `<span>`   | The sliding underline; writes the active tab's position as CSS variables |
+| Viewport  | `viewport`  | `<div>`    | Wraps the panels                                                         |
+| Panel     | `panel`     | `<div>`    | One per tab; only the active one shows                                   |
 
 {/* END: anatomy */}
 
@@ -143,6 +145,35 @@ state, and indicator animation in full.
 
 <ArgTypes of={TabsStories} />
 
+### `tabs`
+
+The whole set, as `{ value, label, content, disabled? }`.
+
+<Canvas of={TabsStories.TabsProp} />
+
+### Item `disabled`
+
+Keeps a tab focusable but never lets it activate.
+
+<Canvas of={TabsStories.DisabledTab} />
+
+### `defaultValue`
+
+The tab active on first render, for an uncontrolled Tabs.
+
+<Canvas of={TabsStories.DefaultValue} />
+
+### `value` and `onValueChange`
+
+The controlled pairing.
+
+<Canvas of={TabsStories.ControlledValue} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Tabs` class.
+
+<Canvas of={TabsStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

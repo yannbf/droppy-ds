@@ -22,22 +22,31 @@ export type ScrollAreaProps = {
  * every other Droppy overlay; use `className` for one-off layout changes.
  */
 export const ScrollArea = ({ children, orientation = 'vertical', className }: ScrollAreaProps) => (
-  <BaseScrollArea.Root className={cx(theme.ScrollAreaRoot, 'droppy-ScrollArea', className)}>
-    <BaseScrollArea.Viewport className={theme.ScrollAreaViewport}>
-      <BaseScrollArea.Content className={theme.ScrollAreaContent}>
+  <BaseScrollArea.Root
+    data-part="root"
+    className={cx(theme.ScrollAreaRoot, 'droppy-ScrollArea', className)}
+  >
+    <BaseScrollArea.Viewport data-part="viewport" className={theme.ScrollAreaViewport}>
+      <BaseScrollArea.Content data-part="content" className={theme.ScrollAreaContent}>
         {children}
       </BaseScrollArea.Content>
     </BaseScrollArea.Viewport>
     {orientation !== 'horizontal' && (
-      <BaseScrollArea.Scrollbar className={theme.ScrollAreaScrollbar}>
-        <BaseScrollArea.Thumb className={theme.ScrollAreaThumb} />
+      <BaseScrollArea.Scrollbar data-part="scrollbar" className={theme.ScrollAreaScrollbar}>
+        <BaseScrollArea.Thumb data-part="thumb" className={theme.ScrollAreaThumb} />
       </BaseScrollArea.Scrollbar>
     )}
     {orientation !== 'vertical' && (
-      <BaseScrollArea.Scrollbar className={theme.ScrollAreaScrollbar} orientation="horizontal">
-        <BaseScrollArea.Thumb className={theme.ScrollAreaThumb} />
+      <BaseScrollArea.Scrollbar
+        data-part="scrollbar"
+        className={theme.ScrollAreaScrollbar}
+        orientation="horizontal"
+      >
+        <BaseScrollArea.Thumb data-part="thumb" className={theme.ScrollAreaThumb} />
       </BaseScrollArea.Scrollbar>
     )}
-    {orientation === 'both' && <BaseScrollArea.Corner className={theme.ScrollAreaCorner} />}
+    {orientation === 'both' && (
+      <BaseScrollArea.Corner data-part="corner" className={theme.ScrollAreaCorner} />
+    )}
   </BaseScrollArea.Root>
 )

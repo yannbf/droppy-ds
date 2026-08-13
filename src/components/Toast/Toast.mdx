@@ -42,25 +42,38 @@ import { ToastProvider, useToast } from '@droppy/design-system'
 
 ## How it works
 
-### Raising a toast
+### The close affordance
 
-`useToast()` returns the same manager everywhere it's called beneath `ToastProvider`. `add({ title, description })` queues a toast and returns its id, which can be passed to `close(id)` or `update(id, ...)` later.
+The close button is `aria-hidden` until the stack is hovered or focused, so a single passing
+notification doesn't compete with the page for keyboard attention.
 
-<Canvas of={ToastStories.AppearsOnDemand} />
+<Canvas of={ToastStories.CloseAppearsOnHover} />
 
-### Dismissing a toast
+### Enter and exit motion
 
-Every toast renders a `Dismiss` button that closes it immediately, without waiting out its timeout.
+Each toast enters and leaves off `[data-starting-style]` and `[data-ending-style]`, and the exit
+additionally reads `[data-swipe-direction]` so a swiped toast leaves the way it was pushed rather
+than fading in place.
 
-<Canvas of={ToastStories.DismissesOnClose} />
-
-### Auto-dismiss timing
-
-`timeout` on `ToastProvider` sets the default time (in ms) before a toast dismisses itself; `0` disables auto-dismiss for every toast raised through that provider. `limit` caps how many toasts show at once — older ones beyond the limit stay mounted but hidden until newer ones close.
-
+<Canvas of={ToastStories.EnterExitTransition} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A portalled viewport holding one node per queued toast. There is no trigger part — a toast is raised imperatively through `useToast().add(...)`, so nothing here is composed by hand. The anatomy story portals into a node inside the story canvas via `container`, so the **Anatomy** panel can reach the parts — it only scans the canvas, and the default portal target is the document body.
+
+<Canvas of={ToastStories.Anatomy} />
+
+| Part        | `data-part`   | Renders    | Purpose                                             |
+| :---------- | :------------ | :--------- | :-------------------------------------------------- |
+| Viewport    | `root`        | `<div>`    | The stack region the toasts portal into             |
+| Toast       | `toast`       | `<div>`    | One notification; owns the enter/exit states        |
+| Content     | `content`     | `<div>`    | Lays the text out against the close button          |
+| Title       | `title`       | `<div>`    | The headline                                        |
+| Description | `description` | `<div>`    | The supporting line                                 |
+| Close       | `close`       | `<button>` | `aria-hidden` until the stack is hovered or focused |
 
 {/* END: anatomy */}
 
@@ -107,6 +120,35 @@ Colors, spacing, and the stacking/swipe transforms come entirely from the theme 
 
 <ArgTypes of={ToastStories} />
 
+### `children`
+
+The tree that raises toasts; the provider renders it as-is.
+
+<Canvas of={ToastStories.Children} />
+
+### `timeout`
+
+Milliseconds before a toast auto-dismisses. `0` keeps it until dismissed.
+
+<Canvas of={ToastStories.Timeout} />
+
+### `limit`
+
+How many show at once. Older toasts are marked limited rather than dropped.
+
+<Canvas of={ToastStories.Limit} />
+
+### `container`
+
+Where to portal the stack — an element or a selector.
+
+<Canvas of={ToastStories.Container} />
+
+### `className`
+
+Merged onto the viewport alongside the component's own `droppy-Toast` class.
+
+<Canvas of={ToastStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

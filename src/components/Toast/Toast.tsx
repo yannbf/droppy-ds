@@ -22,13 +22,15 @@ function ToastStack() {
 
   return toasts.map((toast) => (
     <Fragment key={toast.id}>
-      <BaseToast.Root toast={toast} className={theme.ToastRoot}>
-        <BaseToast.Content className={theme.ToastContent}>
+      <BaseToast.Root data-part="toast" toast={toast} className={theme.ToastRoot}>
+        <BaseToast.Content data-part="content" className={theme.ToastContent}>
           <div className={theme.ToastText}>
-            <BaseToast.Title className={theme.ToastTitle} />
-            <BaseToast.Description className={theme.ToastDescription} />
+            <BaseToast.Title data-part="title" className={theme.ToastTitle} />
+            <BaseToast.Description data-part="description" className={theme.ToastDescription} />
           </div>
-          <BaseToast.Close className={theme.ToastClose}>Dismiss</BaseToast.Close>
+          <BaseToast.Close data-part="close" className={theme.ToastClose}>
+            Dismiss
+          </BaseToast.Close>
         </BaseToast.Content>
       </BaseToast.Root>
     </Fragment>
@@ -57,7 +59,10 @@ export const ToastProvider = ({
     <BaseToast.Provider timeout={timeout} limit={limit}>
       {children}
       <BaseToast.Portal container={resolvedContainer}>
-        <BaseToast.Viewport className={cx(theme.ToastViewport, 'droppy-Toast', className)}>
+        <BaseToast.Viewport
+          data-part="root"
+          className={cx(theme.ToastViewport, 'droppy-Toast', className)}
+        >
           <ToastStack />
         </BaseToast.Viewport>
       </BaseToast.Portal>

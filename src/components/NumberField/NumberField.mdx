@@ -53,26 +53,32 @@ labelled via [`Field`](https://base-ui.com/react/components/field) the same way
 
 ## How it works
 
-### Increment, decrement, and clamping
+Three ways in, not one: type a value, press the buttons, or drag the label itself — the scrub area
+sits behind the label text. That third route is what separates this from
+[QuantityStepper](?path=/docs/forms-input-quantitystepper--docs), which only does tap-tap
+increments.
 
-<Canvas of={NumberFieldStories.IncrementAndDecrement} />
-<Canvas of={NumberFieldStories.MinMaxClamping} />
-
-### Typing a value directly
-
-<Canvas of={NumberFieldStories.Typing} />
-
-### Scrubbing the label
-
-<Canvas of={NumberFieldStories.Scrub} />
-
-### Disabled
-
-<Canvas of={NumberFieldStories.Disabled} />
-
+<Canvas of={NumberFieldStories.ThreeWaysToChangeTheValue} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A `Field` wrapper for the label association, a scrub area holding the label, and a group of decrement, input, and increment. The label being inside the scrub area is what makes dragging it change the value.
+
+<Canvas of={NumberFieldStories.Anatomy} />
+
+| Part       | `data-part` | Renders    | Purpose                                             |
+| :--------- | :---------- | :--------- | :-------------------------------------------------- |
+| Field      | `field`     | `<div>`    | Base UI's `Field.Root`, associating label and input |
+| Root       | `root`      | `<div>`    | Owns the value, the bounds, and the formatting      |
+| Scrub area | `scrub`     | `<span>`   | Wraps the label; dragging it steps the value        |
+| Label      | `label`     | `<label>`  | The visible label and accessible name               |
+| Group      | `group`     | `<div>`    | Holds the buttons and the input                     |
+| Decrement  | `decrement` | `<button>` | Disabled at `min`                                   |
+| Input      | `input`     | `<input>`  | The typeable control                                |
+| Increment  | `increment` | `<button>` | Disabled at `max`                                   |
 
 {/* END: anatomy */}
 
@@ -123,6 +129,47 @@ classes — this component adds no styling of its own beyond forwarding `classNa
 
 <ArgTypes of={NumberFieldStories} />
 
+### `label`
+
+Names the field, and doubles as the scrub handle.
+
+<Canvas of={NumberFieldStories.Label} />
+
+### `defaultValue`
+
+Seeds the field without making it controlled.
+
+<Canvas of={NumberFieldStories.DefaultValue} />
+
+### `min` and `max`
+
+Bound the range; the buttons disable at each end.
+
+<Canvas of={NumberFieldStories.MinAndMax} />
+
+### `step`
+
+How far each increment moves the value.
+
+<Canvas of={NumberFieldStories.Step} />
+
+### `format`
+
+`Intl.NumberFormat` options — currency, percent, decimal places.
+
+<Canvas of={NumberFieldStories.Format} />
+
+### `disabled`
+
+Dims the input and both buttons together.
+
+<Canvas of={NumberFieldStories.Disabled} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-NumberField` class.
+
+<Canvas of={NumberFieldStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

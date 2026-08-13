@@ -43,26 +43,37 @@ import { Select } from '@droppy/design-system'
 
 ## How it works
 
-### Numeric and text options
+### Value coercion
 
-Options can be numbers or strings; `Select` renders both the value and the visible text identically, so quantities ("2", "3") and free-form labels ("ASAP", "Tonight") work with the same `options` prop.
+Numeric options come back as numbers and text options as strings, so a caller never parses the
+value first — and a non-numeric option is never turned into `NaN`, which is what Mealdrop's
+blanket `Number()` did (docs/MEALDROP-PARITY.md).
 
-<Canvas of={SelectStories.TextOptions} />
+<Canvas of={SelectStories.ValueCoercion} />
 
-### Value coercion in `onChange`
+### A native control
 
-Numeric options come back as numbers, not strings, so a caller can use the value directly. The coercion checks for an empty string before calling `Number()` on it, so a genuinely non-numeric option is never turned into `NaN` — the failure mode of running every value through `Number()` unconditionally.
+The control is the native `<select>`. On touch devices that opens the platform picker, which no
+scripted listbox matches for accessibility or muscle memory — Droppy only restyles it and supplies
+its own chevron.
 
-<Canvas of={SelectStories.ReportsNumericValues} />
-<Canvas of={SelectStories.ReportsTextValues} />
-
-### Disabled state
-
-<Canvas of={SelectStories.Disabled} />
-
+<Canvas of={SelectStories.NativeControl} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A label above a wrapper that positions the chevron over the native control. There is no listbox part: the options are real `<option>` elements the platform renders.
+
+<Canvas of={SelectStories.Anatomy} />
+
+| Part    | `data-part` | Renders    | Purpose                                |
+| :------ | :---------- | :--------- | :------------------------------------- |
+| Root    | `root`      | `<div>`    | The field: label above, control below  |
+| Label   | `label`     | `<label>`  | Tied to the control by `for`/`id`      |
+| Wrapper | `wrapper`   | `<div>`    | Positions the chevron over the control |
+| Control | `control`   | `<select>` | The native control                     |
 
 {/* END: anatomy */}
 
@@ -121,6 +132,35 @@ The chevron itself is a `mask` over a token-colored layer rather than a data-URL
 
 <ArgTypes of={SelectStories} />
 
+### `label`
+
+The visible label, wired to the control with `for`/`id`.
+
+<Canvas of={SelectStories.Label} />
+
+### `options`
+
+Rendered as both the value and the visible text.
+
+<Canvas of={SelectStories.Options} />
+
+### `value` and `onChange`
+
+The control is fully controlled; `onChange` receives the coerced value.
+
+<Canvas of={SelectStories.Value} />
+
+### `disabled`
+
+Native, and passed straight through — as is every other `<select>` attribute.
+
+<Canvas of={SelectStories.Disabled} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Select` class.
+
+<Canvas of={SelectStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

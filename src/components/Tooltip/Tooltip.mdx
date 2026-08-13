@@ -44,27 +44,34 @@ import { Tooltip, TooltipProvider } from '@droppy/design-system'
 
 ## How it works
 
-### Opens on hover
+### Never the only label
 
-<Canvas of={TooltipStories.ShowsOnHover} />
+The tip repeats the trigger's accessible name rather than supplying it. A tooltip never appears
+for touch, and a screen reader user who doesn't hover never meets it — so anything said only here
+is said to nobody. Give the trigger its own `aria-label` as well.
 
-### Opens on focus, with no delay
+<Canvas of={TooltipStories.NeverTheOnlyLabel} />
 
-Focus and hover use separate paths: tabbing to the trigger opens the tip immediately, without waiting out the hover delay.
+### Open and close motion
 
-<Canvas of={TooltipStories.ShowsOnFocus} />
+The tip fades and scales in off `[data-starting-style]` and `[data-ending-style]`, staying mounted
+through the exit so the close runs before it leaves the DOM.
 
-### Positioning
-
-`sideOffset` sets the gap between the trigger and the tip (the Default story above uses the default of 8). Droppy's own stylesheet raises the popup's `z-index` above sticky page chrome, since a tip anchored to a header button is useless if the header paints over it.
-
-### The tip never replaces the trigger's accessible name
-
-The label text shown in the tip is meant to repeat the trigger's own `aria-label`, not substitute for it — every story on this page passes the same string to both. A tooltip is a supplement; if the tooltip text disappeared, the trigger would still need to make sense on its own.
-
+<Canvas of={TooltipStories.OpenCloseTransition} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+Two parts, and only the trigger is reachable by the **Anatomy** panel: the popup is portalled to the document body, outside the canvas the panel scans, and `Tooltip` exposes no `container` prop the way `Modal` and `Sidebar` do. The popup still carries its `data-part` for anyone inspecting the DOM. Note the trigger is the child element itself — `Tooltip` renders no wrapper around it, so the layout stays flat.
+
+<Canvas of={TooltipStories.Anatomy} />
+
+| Part    | `data-part` | Renders           | Purpose                                     |
+| :------ | :---------- | :---------------- | :------------------------------------------ |
+| Trigger | `trigger`   | the child element | Rendered as the trigger itself, not wrapped |
+| Popup   | `popup`     | `<div>`           | The tip; portalled outside the canvas       |
 
 {/* END: anatomy */}
 
@@ -119,6 +126,29 @@ Colors, padding, and border come from the theme layer's `TooltipPopup` class, la
 
 <ArgTypes of={TooltipStories} />
 
+### `label`
+
+The tip's content — it repeats the trigger's name, never replaces it.
+
+<Canvas of={TooltipStories.Label} />
+
+### `children`
+
+Becomes the trigger itself rather than being wrapped in one.
+
+<Canvas of={TooltipStories.Children} />
+
+### `sideOffset`
+
+The gap between the trigger and the tip.
+
+<Canvas of={TooltipStories.SideOffset} />
+
+### `className`
+
+Merged onto the popup alongside the component's own `droppy-Tooltip` class.
+
+<Canvas of={TooltipStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

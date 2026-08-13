@@ -28,24 +28,27 @@ export type NumberFieldProps = DefaultProps &
  * to typing, arrow keys, and the increment/decrement buttons.
  */
 export const NumberField = ({ label, disabled, className, ...rest }: NumberFieldProps) => (
-  <Field.Root className={cx(theme.FieldRoot, 'droppy-Field')} disabled={disabled}>
+  <Field.Root data-part="field" className={cx(theme.FieldRoot, 'droppy-Field')} disabled={disabled}>
     <BaseNumberField.Root
+      data-part="root"
       disabled={disabled}
       className={cx(theme.NumberFieldRoot, 'droppy-NumberField', className)}
       {...rest}
     >
       {label && (
-        <BaseNumberField.ScrubArea className={theme.NumberFieldScrubArea}>
-          <Field.Label className={theme.FieldLabel}>{label}</Field.Label>
+        <BaseNumberField.ScrubArea data-part="scrub" className={theme.NumberFieldScrubArea}>
+          <Field.Label data-part="label" className={theme.FieldLabel}>
+            {label}
+          </Field.Label>
           <BaseNumberField.ScrubAreaCursor className={theme.NumberFieldScrubAreaCursor} />
         </BaseNumberField.ScrubArea>
       )}
-      <BaseNumberField.Group className={theme.NumberFieldGroup}>
-        <BaseNumberField.Decrement className={theme.NumberFieldDecrement}>
+      <BaseNumberField.Group data-part="group" className={theme.NumberFieldGroup}>
+        <BaseNumberField.Decrement data-part="decrement" className={theme.NumberFieldDecrement}>
           <Icon name="minus" />
         </BaseNumberField.Decrement>
-        <BaseNumberField.Input className={theme.NumberFieldInput} />
-        <BaseNumberField.Increment className={theme.NumberFieldIncrement}>
+        <BaseNumberField.Input data-part="input" className={theme.NumberFieldInput} />
+        <BaseNumberField.Increment data-part="increment" className={theme.NumberFieldIncrement}>
           <Icon name="plus" />
         </BaseNumberField.Increment>
       </BaseNumberField.Group>

@@ -15,7 +15,7 @@ import { Sidebar } from '@droppy/design-system'
 
 {/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
 
-<Canvas of={SidebarStories.Open} story={{ inline: false, height: '480px' }} />
+<Canvas of={SidebarStories.Default} story={{ inline: false, height: '480px' }} />
 
 ## Features
 
@@ -48,45 +48,45 @@ import { Sidebar } from '@droppy/design-system'
 
 ## How it works
 
-### Open and close
+### The pinned footer
 
-`Sidebar` is controlled: `isOpen` decides whether it's rendered, and `onClose` fires whenever Base UI's `Drawer` decides it should close.
+The footer stays put and the content scrolls above it, so a long order never pushes the checkout
+button out of reach.
 
-<Canvas of={SidebarStories.OpensAndCloses} />
+<Canvas of={SidebarStories.PinnedFooterWithScrollingContent} />
 
-### Dismissal
+### Responsive width
 
-Escape closes the panel from anywhere inside it, clicking the backdrop closes it without needing to find the close button, and on touch devices swiping the panel toward its trailing edge dismisses it as well — the direction Base UI's `Drawer` is configured with (`swipeDirection="right"`).
+Below the mobile breakpoint the panel takes the full width.
 
-### Focus behavior
+<Canvas of={SidebarStories.FullWidthOnMobile} />
 
-On open, focus moves into the panel rather than the close button, for the same reason as Modal: landing on "close" reads as an invitation to leave before the content's been seen. Tab still reaches the close button, and the title and content stay reachable by keyboard throughout.
+### Slide motion
 
-### Portaling
+The panel slides from the trailing edge off `[data-starting-style]` and `[data-ending-style]`, and
+stays mounted through the exit so the close animation runs before it leaves. Base UI drives
+swipe-to-dismiss from the same states.
 
-`container` decides where the panel is portaled: pass an element, a CSS selector string, or leave it unset to default to `document.body`. A selector is resolved after mount, so on first paint the panel portals nowhere — the correct order, since it starts closed anyway.
-
-### Responsive behavior
-
-Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px it uses at 768px and above — there's no room on a small screen to leave part of the page visible beside it.
-
-<Canvas of={SidebarStories.FullWidthOnMobile} story={{ inline: false, height: '480px' }} />
-
-### Footer slot
-
-`footer` renders in a region pinned to the bottom of the panel, separated from the content above it by a border. The content area's scroll bound is calculated to leave room for both the top bar and the footer, so long lists scroll independently of the pinned total and action underneath.
-
-<Canvas of={SidebarStories.WithFooter} story={{ inline: false, height: '480px' }} />
-
-### Naming the dialog
-
-`title` is required, not optional as it is on Modal — it renders in the top bar and also names the dialog for assistive technology, since Sidebar has no separate `aria-label` prop.
-
-<Canvas of={SidebarStories.TitleNamesTheDialog} story={{ inline: false, height: '480px' }} />
-
+<Canvas of={SidebarStories.SlideTransition} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A backdrop and the sliding panel, split into a top bar, a scrolling content region, and an optional pinned footer. The anatomy story portals into a node inside the story canvas via `container`, so the **Anatomy** panel can reach the parts — it only scans the canvas, and the default portal target is the document body.
+
+<Canvas of={SidebarStories.Anatomy} />
+
+| Part     | `data-part` | Renders    | Purpose                                     |
+| :------- | :---------- | :--------- | :------------------------------------------ |
+| Backdrop | `backdrop`  | `<div>`    | The dimmed layer behind the panel           |
+| Popup    | `root`      | `<div>`    | The sliding panel: focus trap, swipe, shape |
+| Top bar  | `topbar`    | `<div>`    | Holds the title and the close button        |
+| Title    | `title`     | `<h4>`     | The heading; also names the dialog          |
+| Close    | `close`     | `<button>` | The round icon button that dismisses        |
+| Content  | `content`   | `<div>`    | The scrolling region between the two        |
+| Footer   | `footer`    | `<div>`    | Pinned to the bottom; absent without one    |
 
 {/* END: anatomy */}
 
@@ -136,6 +136,41 @@ The panel's desktop width (420px) is fixed by the design system and isn't expose
 
 <ArgTypes of={SidebarStories} />
 
+### `isOpen` and `onClose`
+
+Fully controlled. `onClose` fires for the button, Escape, a swipe, and an outside press alike.
+
+<Canvas of={SidebarStories.IsOpen} />
+
+### `title`
+
+The top-bar heading, and the dialog's accessible name.
+
+<Canvas of={SidebarStories.Title} />
+
+### `children`
+
+The scrolling panel content.
+
+<Canvas of={SidebarStories.Children} />
+
+### `footer`
+
+Pinned to the bottom — a plain flex container the caller fills.
+
+<Canvas of={SidebarStories.Footer} />
+
+### `container`
+
+Where to portal — an element or a selector.
+
+<Canvas of={SidebarStories.Container} />
+
+### `className`
+
+Merged onto the popup alongside the component's own `droppy-Sidebar` class.
+
+<Canvas of={SidebarStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}
