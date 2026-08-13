@@ -21,6 +21,14 @@
   height: 3rem;
 }
 
+/* Icon.css defaults the glyph to the theme-flipping icon token, but this
+   pill never flips — bind the glyph to the button's own fixed `color`
+   instead so it stays legible on both themes. Overridable, unlike an
+   inline style: a consumer can still beat this class selector. */
+.droppy-IconButton .droppy-Icon {
+  stroke: currentcolor;
+}
+
 /* Keep the drop shadow while adding the focus ring — a bare `box-shadow`
    would replace it and the button would flatten on focus. */
 .droppy-IconButton:focus-visible {
