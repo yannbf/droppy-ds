@@ -10,6 +10,12 @@ import { defineConfig } from 'vitest/config'
 // in sync with the stories.
 export default defineConfig({
   plugins: [storybookTest({ configDir: fileURLToPath(new URL('.storybook', import.meta.url)) })],
+  optimizeDeps: {
+    // react-dom is CJS and only imported from the addon-vitest setup file,
+    // which Vite's dependency scanner skips — without pre-bundling, its named
+    // exports (flushSync) are missing in the browser.
+    include: ['react-dom', 'react-dom/client'],
+  },
   test: {
     name: 'storybook',
     browser: {

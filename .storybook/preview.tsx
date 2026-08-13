@@ -1,17 +1,12 @@
-import { definePreview } from '@storybook/react-vite'
-import addonDocs from '@storybook/addon-docs'
-import addonA11y from '@storybook/addon-a11y'
-import addonVitest from '@storybook/addon-vitest'
-import addonSwatchbook from '@unpunnyfuns/swatchbook-addon'
+import type { Preview } from "@storybook/react-vite";
 
 import '../src/styles/index.css'
 
-const preview = definePreview({
-  addons: [addonDocs(), addonA11y(), addonVitest(), addonSwatchbook()],
+const preview: Preview = {
   parameters: {
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
     a11y: { test: 'error' },
-    docs: { codePanel: true, toc: { headingSelector: 'h2, h3, h4' }},
+    docs: { codePanel: true, toc: { headingSelector: 'h2, h3, h4' } },
     options: {
       storySort: {
         order: [
@@ -34,6 +29,6 @@ const preview = definePreview({
       },
     },
   },
-})
+}
 
 export default preview
