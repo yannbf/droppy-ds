@@ -5,6 +5,8 @@ import * as CardStories from './Card.stories'
 
 # Card
 
+{/* BEGIN: general */}
+
 A rounded, clipped surface for grouping content — a restaurant tile, a food item, an order
 summary. Flat at rest: elevation is the consumer's choice to add.
 
@@ -27,6 +29,10 @@ summary. Flat at rest: elevation is the consumer's choice to add.
   of squaring off past it.
 - Merges any incoming `className` with its own `droppy-Card` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A tile or panel that groups related content and should read as a single surface — a grid
@@ -37,6 +43,10 @@ summary. Flat at rest: elevation is the consumer's choice to add.
 - An overlay that blocks or floats above the page — use [Modal](?path=/docs/overlays-modal--docs)
   for a blocking decision or [Sidebar](?path=/docs/overlays-sidebar--docs) for a panel reviewed
   alongside the page. `Card` has no portal, backdrop, or dismissal behavior.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
 
 ## How it works
 
@@ -62,6 +72,10 @@ squaring off past it.
 
 <Canvas of={CardStories.WithImage} />
 
+{/* END: behavior */}
+
+{/* BEGIN: a11y */}
+
 ## Keyboard & screen reader
 
 `Card` renders a non-interactive `<div>` — there is no keyboard interaction to document, even with
@@ -72,6 +86,10 @@ squaring off past it.
 - **Screen reader:** not announced as a distinct region; its children are read in document order.
 - **You must provide:** any interactive semantics (role, `tabIndex`, keyboard handling, accessible
   name) if the card as a whole is meant to be actionable — `interactive` only changes how it looks.
+
+{/* END: a11y */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -84,12 +102,22 @@ squaring off past it.
 
 `className` merges with the component's own `droppy-Card` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
 ## API reference
 
 <ArgTypes of={CardStories} />
+
+{/* END: props */}
+
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Modal](?path=/docs/overlays-modal--docs) — for a blocking overlay instead of an inline
   surface.
 - [Sidebar](?path=/docs/overlays-sidebar--docs) — for a panel reviewed alongside the page.
+
+{/* END: when-to-use */}
