@@ -10,22 +10,11 @@ export interface Labels {
   isKept(facet: Facet, keep: ReadonlySet<Facet>): boolean
 }
 
-const CONTENT_CATEGORIES = [
-  'source-jsdoc',
-  'csf-jsdoc',
-  'mdx',
-  'general',
-  'story',
-] as const
+const CONTENT_CATEGORIES = ['source-jsdoc', 'csf-jsdoc', 'mdx', 'general', 'story'] as const
 
 export function loadLabels(jsoncPath: string): Labels {
-  const raw = parseJsonc(readFileSync(jsoncPath, 'utf8')) as Record<
-    string,
-    unknown
-  >
-  const deleteFacets = new Set<Facet>(
-    (raw.delete as string[] | undefined) ?? []
-  )
+  const raw = parseJsonc(readFileSync(jsoncPath, 'utf8')) as Record<string, unknown>
+  const deleteFacets = new Set<Facet>((raw.delete as string[] | undefined) ?? [])
   const definedFacets: Facet[] = []
   const storyTags = new Set<string>()
 
@@ -50,7 +39,6 @@ export function loadLabels(jsoncPath: string): Labels {
     definedFacets,
     deleteFacets,
     storyTags,
-    isKept: (facet, keep) =>
-      !deleteFacets.has(facet) && keep.has(facet),
+    isKept: (facet, keep) => !deleteFacets.has(facet) && keep.has(facet),
   }
 }
