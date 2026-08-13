@@ -122,19 +122,19 @@ Verified against the classification branch, so the ported regexes and AST checks
 
 ## Taxonomy
 
-`classification-labels.jsonc` is derived from what the classification branch actually uses, not
-copied from base-ui:
+`classification-labels.jsonc` describes the facets Droppy's classification uses, rather than being
+copied from base-ui wholesale:
 
 - `source-jsdoc`: `component`, `props`
 - `csf-jsdoc`: `meta`, `story`
 - `mdx` (12): `a11y`, `anatomy`, `behavior`, `brand`, `do-dont`, `examples`, `general`,
   `history`, `known-issues`, `props`, `styling`, `when-to-use`
-- `general` (7): `general-a11y`, `general-brand`, `general-do-dont`, `general-infra`,
-  `general-setup`, `general-tokens`, `general-when-to-use`
+- `general` (6): `general-a11y`, `general-brand`, `general-do-dont`, `general-setup`,
+  `general-tokens`, `general-when-to-use`
 - `story` (7): `animation`, `api-ref`, `examples`, `highlight`, `infra`, `showcase`, `tests`
-- `delete`: `story.infra`, `general.general-infra`
+- `delete`: `story.infra`
 
-Four deliberate differences from base-ui:
+Three deliberate differences from base-ui:
 
 1. **No `story.base`.** That tag marked base-ui's 1:1 copies of base-ui.com doc content and has
    no Droppy equivalent. Nothing replaces it: `BASE_FACETS` carries no story facet at all, so a
@@ -143,11 +143,17 @@ Four deliberate differences from base-ui:
 3. **`mdx.styling` is a selectable facet, not always-deleted.** base-ui strips it because those
    sections were unwritten stubs. Droppy has 33 real styling sections documenting its own token
    hooks, so it becomes ordinary content and is included in `experiment/full`.
-4. **`general.general-infra` is new and always deleted.** `src/docs/ComponentBrowser.mdx` is
-   currently untagged, so it would survive every branch and confound the experiments. It gets
-   `<Meta title="Component browser" tags={['general-infra']} />` — the whole-file equivalent of
-   `story.infra`. This is a one-line content change, the only file outside `tools/` and CI that
-   this work touches.
+
+**This work touches no content.** Story tags, MDX markers and `<Meta tags>` are being prepared in
+parallel sessions, so the corpus is in flux and nothing here edits `src/`. The taxonomy file
+records the facets the tooling understands; whichever annotations exist on the branch being frozen
+are what actually get acted on. Two consequences of that, both fine to leave alone:
+
+- An MDX file with no `general-*` tag and no `BEGIN:` markers survives every branch untouched —
+  currently `src/docs/ComponentBrowser.mdx`.
+- A `BEGIN:` marker naming a facet the taxonomy does not define can never be in `keep`, so it is
+  stripped from every branch. Facets added to the content later need a line in
+  `classification-labels.jsonc` before they can be selected.
 
 ### Consequence of dropping the baseline facet
 
