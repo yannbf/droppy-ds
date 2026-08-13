@@ -146,7 +146,7 @@ export const CurrentPageIsMarked: Story = {
 
 /** The landmark, the list, and one crumb per item with its separator. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('items', 'className'),
   parameters: {
     anatomy: {

@@ -145,7 +145,7 @@ export const SizeDecoupledFromLevel: Story = {
 
 /** A single part, whose tag follows `level`. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('children', 'level', 'size', 'className'),
   parameters: {
     anatomy: {

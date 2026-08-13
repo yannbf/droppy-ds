@@ -162,7 +162,7 @@ export const BothAxes: Story = {
 
 /** Root, viewport, content, and a scrollbar with its thumb per axis. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('children', 'orientation', 'className'),
   args: { orientation: 'both', children: wideGrid },
   parameters: {

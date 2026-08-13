@@ -169,7 +169,7 @@ export const ClassName: Story = {
 
 /** The column, its heading, and the list of links inside it. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('title', 'links', 'children', 'className'),
   parameters: {
     anatomy: {

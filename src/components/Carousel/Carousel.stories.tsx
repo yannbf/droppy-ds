@@ -149,7 +149,7 @@ export const OffscreenSlidesDim: Story = {
 
 /** The rail, its viewport and track, one wrapper per slide, and the arrows. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('children', 'itemsPerView', 'slidesToScroll', 'className'),
   parameters: {
     anatomy: {

@@ -128,7 +128,7 @@ export const StaysLightOnAnySurface: Story = {
 
 /** The circular control and the glyph it centres. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('name', 'small', 'className'),
   parameters: {
     anatomy: {

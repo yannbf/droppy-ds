@@ -136,7 +136,7 @@ export const WithImage: Story = {
 
 /** A single part: one `<div>` providing the surface, with children in normal flow. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('children', 'interactive', 'padded', 'className'),
   args: { padded: true },
   parameters: {

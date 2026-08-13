@@ -200,7 +200,7 @@ export const RendersMatchingTag: Story = {
 
 /** A single part, whose tag follows `type`. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('size', 'fontWeight', 'type', 'color', 'className'),
   parameters: {
     anatomy: {

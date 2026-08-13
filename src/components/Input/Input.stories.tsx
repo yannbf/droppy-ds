@@ -153,7 +153,7 @@ export const ErrorDoesNotShiftLayout: Story = {
 
 /** Field root, label, control, and the always-mounted error slot. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('label', 'error', 'className'),
   args: { error: 'Enter your full name' },
   parameters: {

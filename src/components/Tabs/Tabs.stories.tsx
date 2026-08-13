@@ -183,7 +183,7 @@ export const AnimatedIndicator: Story = {
 
 /** The tab row, its indicator, and one panel per tab. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('tabs', 'defaultValue', 'value', 'onValueChange', 'className'),
   parameters: {
     anatomy: {

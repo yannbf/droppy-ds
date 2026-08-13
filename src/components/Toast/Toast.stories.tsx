@@ -195,7 +195,7 @@ export const EnterExitTransition: Story = {
  * isn't empty.
  */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('children', 'timeout', 'limit', 'container', 'className'),
   args: { container: '#toast-anatomy-host', timeout: 0 },
   render: (args) => (

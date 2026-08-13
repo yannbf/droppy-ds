@@ -128,7 +128,7 @@ export const ShortPageKeepsFooterDown: Story = {
 
 /** The shell and its `<main>` landmark. Header and footer are the caller's nodes. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('header', 'footer', 'children', 'className'),
   parameters: {
     anatomy: {

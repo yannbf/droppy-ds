@@ -220,7 +220,7 @@ export const OpenCloseTransition: Story = {
  * portal target is the document body.
  */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('isOpen', 'children', 'container', 'className'),
   args: { isOpen: true, container: '#modal-anatomy-host' },
   render: (args) => (

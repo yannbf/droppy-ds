@@ -185,7 +185,7 @@ export const ShimmerAnimation: Story = {
 
 /** A single part: one `aria-hidden` `<span>` with no children. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('width', 'height', 'className', 'style'),
   args: { width: 200, height: 24 },
   parameters: {

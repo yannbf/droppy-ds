@@ -133,7 +133,7 @@ export const NoReviews: Story = {
 
 /** A wrapper and the text line inside it. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('rating', 'color', 'className'),
   parameters: {
     anatomy: {

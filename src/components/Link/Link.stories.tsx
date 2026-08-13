@@ -152,7 +152,7 @@ export const OnDarkSurface: Story = {
 
 /** A single part, whose tag is the `<a>` — or whatever `render` supplies. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('children', 'href', 'render', 'className'),
   parameters: {
     anatomy: {

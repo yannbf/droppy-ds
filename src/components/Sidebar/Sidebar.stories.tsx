@@ -237,7 +237,7 @@ export const SlideTransition: Story = {
  * portal target is the document body.
  */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('isOpen', 'title', 'children', 'footer', 'container', 'className'),
   args: {
     isOpen: true,

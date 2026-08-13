@@ -115,7 +115,7 @@ export const LongerText: Story = {
 
 /** A single part: `Badge` renders one `<span>` and nothing inside it. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('text', 'variant', 'className'),
   parameters: {
     anatomy: {
