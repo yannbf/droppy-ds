@@ -33,7 +33,7 @@
   /* Right padding clears the chevron so long option text never runs under it.
      In em so it tracks the control's own font-size instead of staying pinned
      to the root size when a consumer shrinks the control. */
-  padding: 13px 2.5em 13px 16px;
+  padding: 13px 2em 13px 16px;
   appearance: none;
   border: none;
   border-radius: var(--ds-radius-control);
@@ -50,9 +50,13 @@
   content: '';
   position: absolute;
   top: 50%;
-  right: 0.5rem;
-  width: 1.5em;
-  height: 1.5em;
+  right: 0.5em;
+  /* The mask's portrait viewBox (448×512) leaves the glyph ~60% of the box
+     height — a 1em box renders a ~14×8px arrow at the default size, in
+     proportion with the control's text rather than dominating compact
+     controls. */
+  width: 1em;
+  height: 1em;
   transform: translateY(-50%);
   pointer-events: none;
   background-color: var(--ds-color-icon-default);
