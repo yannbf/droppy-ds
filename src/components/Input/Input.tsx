@@ -23,9 +23,14 @@ export type InputProps = DefaultProps & Omit<ComponentProps<'input'>, keyof Defa
  * doing it.
  */
 export const Input = ({ label = '', type = 'text', id, error, className, ...rest }: InputProps) => (
-  <Field.Root className={cx(theme.FieldRoot, 'droppy-Field')}>
-    {label && <Field.Label className={theme.FieldLabel}>{label}</Field.Label>}
+  <Field.Root data-part="root" className={cx(theme.FieldRoot, 'droppy-Field')}>
+    {label && (
+      <Field.Label data-part="label" className={theme.FieldLabel}>
+        {label}
+      </Field.Label>
+    )}
     <BaseInput
+      data-part="control"
       id={id}
       type={type}
       className={cx(theme.Input, 'droppy-Input', className)}
@@ -35,7 +40,7 @@ export const Input = ({ label = '', type = 'text', id, error, className, ...rest
     {/* `match` keeps the slot mounted whether or not there is an error, so the
         reserved min-height holds the layout steady. The child overrides Field's
         own computed message while keeping the aria-describedby wiring. */}
-    <Field.Error className={cx(theme.FieldError, 'droppy-Field-error')} match>
+    <Field.Error data-part="error" className={cx(theme.FieldError, 'droppy-Field-error')} match>
       {error || ' '}
     </Field.Error>
   </Field.Root>

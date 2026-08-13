@@ -14,7 +14,7 @@ an upload, a form with a fixed page count.
 import { ProgressBar } from '@droppy/design-system'
 ```
 
-<Canvas of={ProgressBarStories.Mid} />
+<Canvas of={ProgressBarStories.Default} />
 
 ## Features
 
@@ -47,21 +47,25 @@ import { ProgressBar } from '@droppy/design-system'
 
 ## How it works
 
-### Values
-
-<Canvas of={ProgressBarStories.Empty} />
-<Canvas of={ProgressBarStories.Full} />
-
-### Clamping
-
-A `value` past `max` (or below `0`) clamps to the nearest bound rather than overflowing the
-track — the ARIA attributes and the rendered width always agree.
+A value past `max` clamps rather than overflowing the track, so a caller that counts one step too
+far still renders a full bar instead of a broken one — and `aria-valuenow` reports the clamped
+number, not the raw one.
 
 <Canvas of={ProgressBarStories.OverMaxClamps} />
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+Two parts: the track carries the `progressbar` role and the whole ARIA range, and the fill is a plain width-driven sibling underneath it with no semantics of its own. There is no label part — the copy around the bar is the caller's own markup.
+
+<Canvas of={ProgressBarStories.Anatomy} />
+
+| Part | `data-part` | Renders | Purpose                                                              |
+| :--- | :---------- | :------ | :------------------------------------------------------------------- |
+| Root | `root`      | `<div>` | `role="progressbar"` with `aria-valuenow`/`-min`/`-max` and the name |
+| Fill | `fill`      | `<div>` | The width-driven bar; purely visual                                  |
 
 {/* END: anatomy */}
 
@@ -114,6 +118,30 @@ document.
 
 <ArgTypes of={ProgressBarStories} />
 
+### `value`
+
+Positions the fill, from empty through to full. Clamped to `0`–`max` before it reaches the DOM.
+
+<Canvas of={ProgressBarStories.Value} />
+
+### `max`
+
+The upper bound — step counts, not just percentages.
+
+<Canvas of={ProgressBarStories.Max} />
+
+### `label`
+
+The accessible name. Nothing visible is rendered from it; the title and copy around the bar live in
+the caller's own markup.
+
+<Canvas of={ProgressBarStories.Label} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-ProgressBar` class.
+
+<Canvas of={ProgressBarStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

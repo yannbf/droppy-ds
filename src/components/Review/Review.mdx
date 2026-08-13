@@ -47,25 +47,31 @@ import { Review } from '@droppy/design-system'
 
 ### Rating bands
 
-<Canvas of={ReviewStories.VeryPoor} />
-<Canvas of={ReviewStories.Adequate} />
-<Canvas of={ReviewStories.Excellent} />
+The bands are fixed: under 2 is "Very poor", 2–4 "Adequate", 4–5 "Very good", and exactly 5
+"Excellent". The number always shows one decimal, so `4` and `4.0` read identically.
 
-### No reviews yet
+<Canvas of={ReviewStories.RatingBands} />
+
+### No rating
+
+A missing or falsy `rating` renders a plain fallback line rather than a zero-star score, so a
+newly-listed restaurant doesn't look badly reviewed.
 
 <Canvas of={ReviewStories.NoReviews} />
-
-### Overriding the color
-
-The default text color is intentionally low-contrast. A caller that wants a different look — a
-higher-contrast rating in a dense list, say — overrides it with `color` rather than fighting the
-token with an external stylesheet.
-
-<Canvas of={ReviewStories.CustomColor} />
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A wrapper and the text line inside it. The star, the number, and the band label are one string rather than separate parts — there is no per-star markup to target.
+
+<Canvas of={ReviewStories.Anatomy} />
+
+| Part | `data-part` | Renders  | Purpose                                        |
+| :--- | :---------- | :------- | :--------------------------------------------- |
+| Root | `root`      | `<div>`  | The wrapper the caller positions               |
+| Text | `text`      | `<span>` | The score line, in the quiet review text token |
 
 {/* END: anatomy */}
 
@@ -114,6 +120,24 @@ inline.
 
 <ArgTypes of={ReviewStories} />
 
+### `rating`
+
+Drives both the number and the word beside it.
+
+<Canvas of={ReviewStories.Rating} />
+
+### `color`
+
+Overrides the deliberately quiet default (`--ds-color-text-review`) — for a caller like Mealdrop's
+restaurant tiles that wants its own treatment.
+
+<Canvas of={ReviewStories.Color} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Review` class.
+
+<Canvas of={ReviewStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}
