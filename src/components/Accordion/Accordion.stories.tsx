@@ -268,7 +268,9 @@ export const ClassName: Story = {
  * item starts open, since the panel and content parts only mount while open.
  */
 export const Anatomy: Story = {
-  tags: ['highlight'],
+  // `infra`, not `highlight`: this story exists to feed the docs' own Anatomy
+  // panel rather than to document a behaviour of the component.
+  tags: ['infra'],
   argTypes: hide(...ALL_BUT_ITEMS),
   args: { defaultValue: ['delivery-time'] },
   parameters: {
