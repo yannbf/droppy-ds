@@ -1,6 +1,6 @@
 import MagicString from 'magic-string'
 
-import { leadingBlockComment, parse } from './oxc-utils'
+import { leadingBlockComment, parse, type Comment } from './oxc-utils'
 
 export interface TransformResult {
   code: string
@@ -32,12 +32,32 @@ function typeLiterals(node: any, found: any[] = []): any[] {
 }
 
 /**
+ * True when the leading-comment range MagicString would remove is a JSDoc-style block comment
+ * (one starting `/**`) rather than some other block comment, e.g. a lint directive. The facet is
+ * `source-jsdoc.*`, so only JSDoc is in its remit — a plain block comment must survive regardless
+ * of the keep set.
+ */
+function isJSDocRange(
+  range: { start: number; end: number } | null,
+  comments: readonly Comment[]
+): range is { start: number; end: number } {
+  if (!range) {
+    return false
+  }
+  const comment = comments.find((candidate) => candidate.start === range.start)
+  return comment !== undefined && comment.value.startsWith('*')
+}
+
+/**
  * Strip the JSDoc that documents components and their props.
  *
  * Droppy documents a component with a block comment on its exported declaration, and its props
- * on the members of a `*Props` type — usually the local `type DefaultProps = { … }` rather than
- * the exported alias built from it. Both are matched structurally rather than by name, except
- * for the `Props` suffix, which is what separates a props type from a mock-data type.
+ * on the members of a documented type — usually the local `type DefaultProps = { … }` rather
+ * than the exported alias built from it, but sometimes a companion item type such as `TabItem`
+ * or `FooterCardLink`. Rather than trying to name-match every such shape, every top-level type
+ * alias and interface in the file is treated as fair game: this also strips member docs from
+ * demo/mock-data types, which is an accepted trade for a rule that cannot silently miss a new
+ * companion type.
  */
 export function transformSource(
   filename: string,
@@ -56,7 +76,7 @@ export function transformSource(
 
   const strip = (node: { start: number }): void => {
     const range = leadingBlockComment(node, comments, code)
-    if (range) {
+    if (isJSDocRange(range, comments)) {
       ms.remove(range.start, range.end)
       changed = true
     }
@@ -76,10 +96,6 @@ export function transformSource(
     }
 
     if (keepProps) {
-      continue
-    }
-    const named = declaration.id?.type === 'Identifier' ? declaration.id.name : undefined
-    if (!named?.endsWith('Props')) {
       continue
     }
     if (declaration.type === 'TSInterfaceDeclaration') {

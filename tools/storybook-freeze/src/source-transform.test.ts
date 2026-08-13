@@ -81,7 +81,7 @@ describe('transformSource', () => {
     expect(result.code).toContain('value?: string')
   })
 
-  it('leaves non-props types documented', () => {
+  it('strips member JSDoc from any documented type, not just *Props', () => {
     const code = [
       'type Order = {',
       '  /** Cents, not currency units. */',
@@ -90,8 +90,63 @@ describe('transformSource', () => {
       '',
     ].join('\n')
     const result = transformSource('Review.tsx', code, new Set(['source-jsdoc.component']))
+    expect(result.changed).toBe(true)
+    expect(result.code).not.toContain('Cents, not currency units.')
+    expect(result.code).toContain('total: number')
+  })
+
+  it('keeps JSDoc on a non-exported top-level const', () => {
+    const code = [
+      '/** local helper. */',
+      'const Item = () => null',
+      'export const List = () => null',
+      '',
+    ].join('\n')
+    const result = transformSource('List.tsx', code, new Set(['source-jsdoc.props']))
     expect(result.changed).toBe(false)
-    expect(result.code).toContain('Cents, not currency units.')
+    expect(result.code).toContain('local helper.')
+  })
+
+  it('does not throw on an unparseable file when both facets are kept', () => {
+    const result = transformSource(
+      'junk.tsx',
+      'const ((( not valid ts at all',
+      new Set(['source-jsdoc.component', 'source-jsdoc.props'])
+    )
+    expect(result.changed).toBe(false)
+  })
+
+  it('leaves a non-JSDoc block comment untouched', () => {
+    const code = [
+      '/* eslint-disable react-hooks/rules-of-hooks */',
+      'export const Badge = () => null',
+      '',
+    ].join('\n')
+    const result = transformSource('Badge.tsx', code, new Set(['source-jsdoc.props']))
+    expect(result.changed).toBe(false)
+    expect(result.code).toContain('eslint-disable react-hooks/rules-of-hooks')
+  })
+
+  it('leaves a /** module banner above a non-declaration statement untouched', () => {
+    const code = [
+      '/**',
+      ' * @droppy/design-system — internal helpers.',
+      ' */',
+      '',
+      "export { helper } from './helper'",
+      '',
+    ].join('\n')
+    const result = transformSource('index.ts', code, new Set(['source-jsdoc.props']))
+    expect(result.changed).toBe(false)
+    expect(result.code).toContain('internal helpers.')
+  })
+
+  it('strips a /** comment above an exported const', () => {
+    const code = ['/**', ' * A card.', ' */', 'export const Card = () => null', ''].join('\n')
+    const result = transformSource('Card.tsx', code, new Set(['source-jsdoc.props']))
+    expect(result.changed).toBe(true)
+    expect(result.code).not.toContain('A card.')
+    expect(result.code).toContain('export const Card')
   })
 
   it('does not mistake a documented type alias above a component for its component JSDoc', () => {
