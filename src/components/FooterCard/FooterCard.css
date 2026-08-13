@@ -2,28 +2,36 @@
   color: var(--ds-color-text-on-inverse);
 }
 
-.droppy-FooterCard-title {
+/* Child rules are ancestor-qualified: the link doubles as a `droppy-Link`,
+   whose own single-class rules tie with a bare class here and win or lose on
+   bundle order; and a consumer's universal reset (`* { color: … }`) re-declares
+   color on the list hops, so the chain down to `currentcolor` must be restated
+   with `color: inherit` rather than relied on implicitly. */
+.droppy-FooterCard .droppy-FooterCard-title {
   color: inherit;
   margin-bottom: var(--ds-space-xs);
+  font-size: var(--ds-type-size-lg);
 }
 
-.droppy-FooterCard-list {
+.droppy-FooterCard .droppy-FooterCard-list {
+  color: inherit;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.droppy-FooterCard-item {
+.droppy-FooterCard .droppy-FooterCard-item {
+  color: inherit;
   margin-bottom: var(--ds-space-2xs);
 }
 
-.droppy-FooterCard-link {
+.droppy-FooterCard .droppy-FooterCard-link {
   color: currentcolor;
   text-decoration: none;
 }
 
 @media (hover: hover) {
-  .droppy-FooterCard-link:hover {
+  .droppy-FooterCard .droppy-FooterCard-link:hover {
     text-decoration: underline;
   }
 }
