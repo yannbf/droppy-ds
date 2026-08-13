@@ -10,19 +10,18 @@ facet (story tags, MDX `BEGIN:`/`END:` markers, JSDoc kinds), and one git branch
 experiment holding only the facets that experiment keeps. Agentic reference experiments then
 install one branch's package and measure what that content subset is worth.
 
-## Prerequisite
+## Prerequisite — satisfied
 
-The taxonomy already exists in this repo, but only partly on `main`:
+This was written while the classification lived on an unmerged branch. It landed on `main` in
+[#27](https://github.com/yannbf/droppy-ds/pull/27) partway through implementation, so the corpus
+is now classified in place: 406 story `tags` across the 33 component CSF files, `{/* BEGIN: … */}`
+/ `{/* END: … */}` facet markers in all 33 component MDX files, and `<Meta tags={['general-*']} />`
+on the repo-wide `src/docs/*.mdx`.
 
-- **On `main`:** the nine repo-wide `src/docs/*.mdx` files carry `<Meta tags={['general-*']} />`.
-- **Only on the unmerged `origin/claude/classify-droppy-stories-mdx-q8uivb`:** story `tags`
-  (`api-ref`, `animation`, `examples`, `highlight`, `infra`, `showcase`, `tests`) and the
-  per-component MDX `{/* BEGIN: <facet> */}` / `{/* END: <facet> */}` markers.
-
-`freeze` builds every branch from whatever `HEAD` is, so it must run from that classification
-branch (or after merging it). Run from `main` today and all branches come out identical — there
-are no story tags or MDX markers to strip. This design covers the tooling only; landing the
-classification is separate work.
+`freeze` builds every branch from whatever `HEAD` is, so it now produces genuinely different
+branches when run from `main`. Nothing in the tooling depends on that having happened — the
+transforms strip whatever classification they find and leave unclassified content alone — but it
+is what makes a real freeze meaningful rather than a no-op.
 
 ## Layout
 
