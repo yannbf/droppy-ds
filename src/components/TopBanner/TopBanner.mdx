@@ -51,23 +51,24 @@ import { TopBanner } from '@droppy/design-system'
 
 ## How it works
 
-### Theme color background
+With a photo behind it the heading takes its on-photo treatment, so the text holds contrast
+against arbitrary imagery rather than trusting the surface token underneath.
 
-Without `photoUrl`, the band fills with the theme's accent surface color and the title uses the
-regular primary text color.
-
-<Canvas of={TopBannerStories.Default} />
-
-### Photo background
-
-`photoUrl` replaces the color with the given image, covering the band; the title switches to the
-on-inverse text color so it stays legible over a photo.
-
-<Canvas of={TopBannerStories.WithImage} />
-
+<Canvas of={TopBannerStories.HeadingOverPhoto} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A band with an optional heading. Both are optional: with neither `title` nor `photoUrl` the band renders empty.
+
+<Canvas of={TopBannerStories.Anatomy} />
+
+| Part  | `data-part` | Renders | Purpose                                                        |
+| :---- | :---------- | :------ | :------------------------------------------------------------- |
+| Root  | `root`      | `<div>` | The band, carrying the background image when `photoUrl` is set |
+| Title | `title`     | `<h2>`  | Switched to its on-photo treatment when there is a photo       |
 
 {/* END: anatomy */}
 
@@ -121,6 +122,30 @@ The 240px band height is a literal value — no token in the current scale match
 
 <ArgTypes of={TopBannerStories} />
 
+### `title`
+
+Rendered as an `h2` inside the band. Omitted, the band is bare.
+
+<Canvas of={TopBannerStories.Title} />
+
+### `photoUrl`
+
+Sets the background and switches the heading to its on-photo treatment.
+
+<Canvas of={TopBannerStories.PhotoUrl} />
+
+### `onBackClick`
+
+Accepted for call-site parity with Mealdrop's own `TopBanner`, whose back button is commented out
+in its source. Nothing here renders a control, so the callback never fires.
+
+<Canvas of={TopBannerStories.OnBackClick} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-TopBanner` class.
+
+<Canvas of={TopBannerStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

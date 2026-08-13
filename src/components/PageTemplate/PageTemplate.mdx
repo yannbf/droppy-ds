@@ -47,15 +47,24 @@ import { PageTemplate } from '@droppy/design-system'
 
 ## How it works
 
-### Content only
+The content area carries a minimum height, so a short page's footer still lands at the bottom of
+the viewport instead of riding up under the fold.
 
-`header` and `footer` are both optional — omit them for a bare content shell.
-
-<Canvas of={PageTemplateStories.ContentOnly} />
-
+<Canvas of={PageTemplateStories.ShortPageKeepsFooterDown} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A column of header, content, and footer. Only the content area is a part the template owns — header and footer are whatever nodes the caller passes, rendered as-is outside the landmark.
+
+<Canvas of={PageTemplateStories.Anatomy} />
+
+| Part    | `data-part` | Renders  | Purpose                                                         |
+| :------ | :---------- | :------- | :-------------------------------------------------------------- |
+| Root    | `root`      | `<div>`  | The column: header, content, footer in order                    |
+| Content | `content`   | `<main>` | The landmark, carrying the min-height that pins the footer down |
 
 {/* END: anatomy */}
 
@@ -105,6 +114,29 @@ component's own `droppy-PageTemplate` class.
 
 <ArgTypes of={PageTemplateStories} />
 
+### `header`
+
+Rendered above the content area, outside the `<main>` landmark.
+
+<Canvas of={PageTemplateStories.HeaderProp} />
+
+### `footer`
+
+Rendered below it, also outside the landmark.
+
+<Canvas of={PageTemplateStories.FooterProp} />
+
+### `children`
+
+The page content — the only part inside `<main>`.
+
+<Canvas of={PageTemplateStories.Children} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-PageTemplate` class.
+
+<Canvas of={PageTemplateStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

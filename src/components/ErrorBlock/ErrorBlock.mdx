@@ -49,16 +49,28 @@ and [Button](?path=/docs/actions-button--docs) — no Base UI primitive of its o
 
 ## How it works
 
-`ErrorBlock` stacks its four parts in a column: the `title` as a level-2 `Heading`, the
-`illustration` slot (only rendered when one is passed), the `body` as plain `Body` copy, and the
-action as a `Button`. Composition, not configuration — the illustration is whatever the caller
-renders, so a Lottie animation, a static image, or an inline SVG all work the same way.
+The block is a fixed sequence — title, optional illustration, body, one action — so an empty state
+and a failure read the same way wherever they appear. There is deliberately one action, not two:
+an error state with competing choices is a decision the page should have made already.
 
 <Canvas of={ErrorBlockStories.WithoutIllustration} />
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+Title, optional illustration, body, and one action — in that DOM order. The heading comes first in the DOM even though the illustration sits above it visually, so the announcement leads with what happened.
+
+<Canvas of={ErrorBlockStories.Anatomy} />
+
+| Part         | `data-part`    | Renders    | Purpose                                                 |
+| :----------- | :------------- | :--------- | :------------------------------------------------------ |
+| Root         | `root`         | `<div>`    | The centred column holding the whole message            |
+| Title        | `title`        | `<h2>`     | What happened                                           |
+| Illustration | `illustration` | `<div>`    | The optional slot; absent, nothing renders in its place |
+| Body         | `body`         | `<p>`      | The explanation                                         |
+| Action       | `action`       | `<button>` | The single recovery action                              |
 
 {/* END: anatomy */}
 
@@ -109,6 +121,36 @@ for those.
 
 <ArgTypes of={ErrorBlockStories} />
 
+### `title`
+
+The `h2` — say what happened, not just that something did.
+
+<Canvas of={ErrorBlockStories.Title} />
+
+### `body`
+
+The explanation and, ideally, what to try next.
+
+<Canvas of={ErrorBlockStories.Body} />
+
+### `buttonText` and `onButtonClick`
+
+The single recovery action.
+
+<Canvas of={ErrorBlockStories.ButtonText} />
+
+### `illustration`
+
+Optional, and takes any node. The Lottie player and its animation JSON are application assets, so
+the slot accepts whatever the caller drives rather than owning an animation itself.
+
+<Canvas of={ErrorBlockStories.Illustration} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-ErrorBlock` class.
+
+<Canvas of={ErrorBlockStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

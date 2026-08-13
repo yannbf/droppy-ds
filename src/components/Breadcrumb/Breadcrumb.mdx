@@ -48,29 +48,38 @@ import { Breadcrumb } from '@droppy/design-system'
 
 ## How it works
 
-### A single crumb
-
-A one-item trail still renders — typically the current page, with no ancestor to link to.
-
-<Canvas of={BreadcrumbStories.SingleCrumb} />
-
 ### The current page
+
+The last crumb carries `aria-current="page"` whether it renders as a link or as plain text, and
+the whole trail sits inside a `<nav aria-label="breadcrumb">` landmark — the semantics Mealdrop's
+`div`/`p` version had none of.
 
 <Canvas of={BreadcrumbStories.CurrentPageIsMarked} />
 
 ### Router links via `render`
 
-Pass `render` with a router's own link element (`react-router`'s `Link`, Next's `Link`, etc.) and
-`Breadcrumb` clones it with the crumb's class and, on the last item, `aria-current` — the same
-composition pattern Base UI's own parts use for `render` props elsewhere in this library (see
-`Sidebar`'s `Drawer.Title`). `href` is ignored on that item; the router element owns its own
-destination.
+Item `render` swaps the default `<a>` for a router-aware link, so the design system carries no
+router dependency of its own.
 
-<Canvas of={BreadcrumbStories.WithRouterLink} />
-
+<Canvas of={BreadcrumbStories.ItemRender} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A labelled landmark around an ordered list, one item per crumb. A crumb renders as a link when it has a destination and as text when it does not — usually the last one.
+
+<Canvas of={BreadcrumbStories.Anatomy} />
+
+| Part      | `data-part` | Renders  | Purpose                                    |
+| :-------- | :---------- | :------- | :----------------------------------------- |
+| Root      | `root`      | `<nav>`  | The `aria-label="breadcrumb"` landmark     |
+| List      | `list`      | `<ol>`   | Crumb order is document order              |
+| Item      | `item`      | `<li>`   | Holds one crumb and its trailing separator |
+| Link      | `link`      | `<a>`    | A crumb with a destination                 |
+| Text      | `text`      | `<span>` | A crumb without one                        |
+| Separator | `separator` | `<span>` | The `aria-hidden` slash; never announced   |
 
 {/* END: anatomy */}
 
@@ -124,6 +133,28 @@ keyboard behaviour applies, no custom handling.
 
 <ArgTypes of={BreadcrumbStories} />
 
+### `items`
+
+The trail, as `{ label, href?, render? }`. The last item is the current page.
+
+<Canvas of={BreadcrumbStories.Items} />
+
+A single crumb is the current page on its own, and no separator renders.
+
+<Canvas of={BreadcrumbStories.SingleCrumb} />
+
+### Item `render`
+
+Cloned with the crumb's link class and, on the last item, `aria-current`. The passed element owns
+its own destination, so `href` is dropped rather than spread on top of it.
+
+<Canvas of={BreadcrumbStories.ItemRender} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Breadcrumb` class.
+
+<Canvas of={BreadcrumbStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

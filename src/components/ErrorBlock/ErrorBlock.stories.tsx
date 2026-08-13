@@ -1,7 +1,13 @@
+import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn } from 'storybook/test'
+import { expect, fn, userEvent } from 'storybook/test'
 
+import type { ErrorBlockProps } from './ErrorBlock'
 import { ErrorBlock } from './ErrorBlock'
+
+/** Hides props that aren't a story's point, so its controls stay actionable. */
+const hide = (...props: Array<keyof ErrorBlockProps>) =>
+  Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
 
 const sushiIllustration = (
   <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
@@ -20,32 +26,170 @@ const meta = {
     buttonText: 'See all restaurants',
     onButtonClick: fn(),
   },
+  argTypes: {
+    title: { control: 'text', description: 'Rendered as an `h2` at the top of the block.' },
+    body: { control: 'text', description: 'The explanation, as body copy.' },
+    buttonText: { control: 'text', description: 'Label for the single recovery action.' },
+    onButtonClick: { description: 'Fired by that action.' },
+    illustration: {
+      control: false,
+      description:
+        'Optional slot — an inline SVG, an image, or an animation the caller drives itself.',
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the root alongside the component’s own `droppy-ErrorBlock` class.',
+    },
+  },
 } satisfies Meta<typeof ErrorBlock>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
+/**
+ * An empty category with a way out. Title, body, and action are all set below,
+ * so the controls start populated.
+ */
 export const Default: Story = {
   tags: ['showcase'],
-  args: {
-    illustration: sushiIllustration,
-  },
+  args: { illustration: sushiIllustration },
+  argTypes: hide('className'),
 }
 
-/** The illustration slot is optional — omitted, the block renders with just the
- *  title, body, and action. */
-export const WithoutIllustration: Story = {
+/* ------------------------------------------------------------------ */
+/* api-ref — one story per prop                                        */
+/* ------------------------------------------------------------------ */
+
+/** `title` is the `h2` — say what happened, not just that something did. */
+export const Title: Story = {
   tags: ['api-ref'],
+  argTypes: hide('illustration', 'className'),
+  args: { title: 'We couldn’t reach the kitchen.' },
 }
 
-export const ActionIsReachable: Story = {
-  tags: ['tests'],
-  args: {
-    illustration: sushiIllustration,
-  },
-  play: async ({ canvas }) => {
-    const button = canvas.getByRole('button', { name: 'See all restaurants' })
+/** `body` carries the explanation and, ideally, what to try next. */
+export const Body: Story = {
+  tags: ['api-ref'],
+  argTypes: hide('illustration', 'className'),
+  args: { body: 'The restaurant stopped taking orders while you were browsing.' },
+}
 
-    await expect(button).toBeVisible()
+/** `buttonText` and `onButtonClick` are the single recovery action. */
+export const ButtonText: Story = {
+  tags: ['api-ref'],
+  argTypes: hide('illustration', 'className'),
+  args: { buttonText: 'Back to restaurants', onButtonClick: fn() },
+}
+
+/** `illustration` takes any node — the Lottie player and its JSON stay app assets. */
+export const Illustration: Story = {
+  tags: ['api-ref'],
+  argTypes: hide('className'),
+  args: { illustration: sushiIllustration },
+}
+
+/** `className` merges with the component's own class rather than replacing it. */
+export const ClassName: Story = {
+  tags: ['api-ref'],
+  argTypes: hide('illustration'),
+  args: { className: 'errorblock-demo-narrow' },
+  render: (args) => (
+    <>
+      <style>{`.errorblock-demo-narrow { max-width: 22rem; }`}</style>
+      <ErrorBlock {...args} />
+    </>
+  ),
+}
+
+/* ------------------------------------------------------------------ */
+/* highlight — features and behaviours worth calling out               */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The illustration slot is optional, and the block reads fine without it — the
+ * title, body, and action carry the whole message on their own.
+ */
+export const WithoutIllustration: Story = {
+  tags: ['highlight'],
+  argTypes: hide('className'),
+  args: { illustration: undefined },
+}
+
+/* ------------------------------------------------------------------ */
+/* anatomy — the rendered part tree                                    */
+/* ------------------------------------------------------------------ */
+
+/** Title, optional illustration, body, and one action — in that DOM order. */
+export const Anatomy: Story = {
+  tags: ['infra'],
+  argTypes: hide('title', 'body', 'buttonText', 'illustration', 'className'),
+  args: { illustration: sushiIllustration },
+  parameters: {
+    anatomy: {
+      parts: [
+        { id: 'root', name: 'Root', description: 'The centred column holding the whole message.' },
+        { id: 'title', name: 'Title', description: 'The `h2`, first in the DOM.' },
+        {
+          id: 'illustration',
+          name: 'Illustration',
+          description: 'The optional slot; absent, nothing is rendered in its place.',
+        },
+        { id: 'body', name: 'Body', description: 'The explanation copy.' },
+        { id: 'action', name: 'Action', description: 'The single recovery Button.' },
+      ],
+    } satisfies AnatomyParameters,
+  },
+}
+
+/* ------------------------------------------------------------------ */
+/* examples — Mealdrop / DropBoard compositions                        */
+/* ------------------------------------------------------------------ */
+
+/**
+ * TODO — real content lands in the dedicated examples session.
+ *
+ * Mined from Mealdrop (`agentic-reference/droppy`): two importers —
+ * `CategoryDetailPage` (empty category) and `RestaurantDetailPage` (restaurant
+ * not found), which drive the Lottie animations in `src/assets/animations`.
+ * The story to write: those two side by side with the real copy — 'This is not
+ * the food you're looking for.' over an empty category, and the not-found
+ * case — showing the same block doing an empty state and an error. The
+ * illustration slot should hold a plain inline SVG, since the Lottie player
+ * and its JSON are application assets rather than design-system ones
+ * (docs/MEALDROP-PARITY.md).
+ */
+export const MealdropEmptyAndNotFound: Story = {
+  tags: ['examples'],
+  render: () => <>TODO</>,
+}
+
+/* ------------------------------------------------------------------ */
+/* tests — assertions only, one behaviour each                         */
+/* ------------------------------------------------------------------ */
+
+export const TestTitleIsALevelTwoHeading: Story = {
+  tags: ['tests'],
+  play: async ({ canvas }) => {
+    await expect(
+      canvas.getByRole('heading', { level: 2, name: 'This is not the food you’re looking for.' })
+    ).toBeInTheDocument()
+  },
+}
+
+export const TestActionFiresItsCallback: Story = {
+  tags: ['tests'],
+  play: async ({ args, canvas }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'See all restaurants' }))
+
+    await expect(args.onButtonClick).toHaveBeenCalledOnce()
+  },
+}
+
+export const TestIllustrationIsOptional: Story = {
+  tags: ['tests'],
+  args: { illustration: undefined },
+  play: async ({ canvas, canvasElement }) => {
+    await expect(canvasElement.querySelector('.droppy-ErrorBlock-illustration')).toBeNull()
+    await expect(canvas.getByRole('button', { name: 'See all restaurants' })).toBeVisible()
   },
 }

@@ -51,23 +51,26 @@ import { PageSection } from '@droppy/design-system'
 
 ## How it works
 
-### Title only
+The action is optional and renders nothing at all when `topButtonLabel` is absent — the title row
+doesn't reserve space for a button that isn't there.
 
-Without `topButtonLabel`, only the heading renders — no empty space is reserved for a button that
-isn't there.
-
-<Canvas of={PageSectionStories.Default} />
-
-### With an action
-
-`topButtonLabel` renders a `clear` `Button` on the opposite side of the heading, wired to
-`onTopButtonClick`.
-
-<Canvas of={PageSectionStories.WithAction} />
-
+<Canvas of={PageSectionStories.ActionIsOptional} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A title row above caller-supplied content. The row holds the heading and, when a label is given, one `clear` Button.
+
+<Canvas of={PageSectionStories.Anatomy} />
+
+| Part   | `data-part` | Renders    | Purpose                                                     |
+| :----- | :---------- | :--------- | :---------------------------------------------------------- |
+| Root   | `root`      | `<div>`    | The section: title row above, content below                 |
+| Top    | `top`       | `<div>`    | The title row — heading one side, optional action the other |
+| Title  | `title`     | `<h2>`     | The section heading                                         |
+| Action | `action`    | `<button>` | Rendered only when `topButtonLabel` is set                  |
 
 {/* END: anatomy */}
 
@@ -122,6 +125,29 @@ exactly.
 
 <ArgTypes of={PageSectionStories} />
 
+### `title`
+
+Rendered as an `h2`, so sections nest correctly under a page `h1`.
+
+<Canvas of={PageSectionStories.Title} />
+
+### `topButtonLabel` and `onTopButtonClick`
+
+Add a `clear` Button beside the title. Omit the label and no control renders.
+
+<Canvas of={PageSectionStories.TopButtonLabel} />
+
+### `children`
+
+The section body, laid out by the caller.
+
+<Canvas of={PageSectionStories.Children} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-PageSection` class.
+
+<Canvas of={PageSectionStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}
