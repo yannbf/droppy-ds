@@ -144,7 +144,7 @@
         },
         "positive-text": {
           "$type": "color",
-          "$value": "{ds.color.text.primary}"
+          "$value": "{ds.palette.neutral.900}"
         }
       },
       "progress": {

@@ -931,7 +931,7 @@
   --ds-color-action-subtle-hover: var(--ds-palette-neutral-100);
   --ds-color-badge-bg: var(--ds-palette-neutral-150);
   --ds-color-badge-positive-bg: var(--ds-palette-green-200);
-  --ds-color-badge-positive-text: var(--ds-color-text-primary);
+  --ds-color-badge-positive-text: var(--ds-palette-neutral-900);
   --ds-color-badge-text: var(--ds-palette-neutral-700);
   --ds-color-border-subtle: var(--ds-palette-neutral-150);
   --ds-color-chip-contrast-bg: var(--ds-palette-neutral-950);
@@ -1153,7 +1153,7 @@
   --ds-color-action-subtle-hover: var(--ds-palette-neutral-800);
   --ds-color-badge-bg: var(--ds-palette-neutral-800);
   --ds-color-badge-positive-bg: var(--ds-palette-green-200);
-  --ds-color-badge-positive-text: var(--ds-color-text-primary);
+  --ds-color-badge-positive-text: var(--ds-palette-neutral-900);
   --ds-color-badge-text: var(--ds-palette-neutral-400);
   --ds-color-border-subtle: var(--ds-palette-neutral-800);
   --ds-color-chip-contrast-bg: var(--ds-palette-neutral-950);
@@ -1376,7 +1376,7 @@
     --ds-color-action-subtle-hover: var(--ds-palette-neutral-800);
     --ds-color-badge-bg: var(--ds-palette-neutral-800);
     --ds-color-badge-positive-bg: var(--ds-palette-green-200);
-    --ds-color-badge-positive-text: var(--ds-color-text-primary);
+    --ds-color-badge-positive-text: var(--ds-palette-neutral-900);
     --ds-color-badge-text: var(--ds-palette-neutral-400);
     --ds-color-border-subtle: var(--ds-palette-neutral-800);
     --ds-color-chip-contrast-bg: var(--ds-palette-neutral-950);
