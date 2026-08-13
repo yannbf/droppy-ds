@@ -40,7 +40,12 @@ export default defineConfig({
       // each in the consumer app. Base UI is bundled into the output instead —
       // it never appears in the consumer's dependency graph, and the copy
       // shipped inside this package is the only instance that exists.
-      external: [/^react($|\/)/, /^react-dom($|\/)/],
+      // use-sync-external-store (a CJS transitive of Base UI) must also stay
+      // external: bundled, its `require("react")` cannot be rewritten against
+      // external react and survives as a runtime `require` that browsers
+      // don't have. As a regular dependency the consumer's bundler converts
+      // it where react is internal.
+      external: [/^react($|\/)/, /^react-dom($|\/)/, /^use-sync-external-store($|\/)/],
       output: {
         entryFileNames: '[name].js',
         assetFileNames: '[name][extname]',
