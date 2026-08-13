@@ -50,7 +50,7 @@ const deliveryFaq: readonly [Faq, Faq, Faq] = [
     value: 'order-changes',
     title: 'Can I change my order after paying?',
     content:
-      'Until the restaurant accepts it, yes — open the order and tap Edit. After that, contact the restaurant directly.',
+      'Until the restaurant accepts it, yes. Open the order and tap Edit. After that, we can no longer modify orders, as restaurants are too busy to handle last-second changes.',
   },
 ]
 
@@ -87,8 +87,9 @@ const meta = {
       description: 'Called with the full array of open item values whenever it changes.',
     },
     className: {
-      control: 'text',
-      description: 'Merged onto the root alongside the theme’s own classes.',
+      table: {
+        disable: true,
+      }
     },
   },
 } satisfies Meta<typeof Accordion>
@@ -107,13 +108,13 @@ export const Default: Story = {
   args: {
     items: [...deliveryFaq],
     openMultiple: false,
-    defaultValue: ['delivery-time'],
     onValueChange: fn(),
+    defaultValue: ['delivery-time'],
   },
-  // `value` would make the accordion controlled with nothing driving it, and
-  // `className` is a styling escape hatch — neither belongs in the first story
-  // a human opens.
-  argTypes: hide('value', 'className'),
+  argTypes: {
+    value: { table: { disable: true } },
+    onValueChange: { table: { disable: true } },
+  },
 }
 
 /* ------------------------------------------------------------------ */
@@ -238,7 +239,11 @@ function ControlledAccordion({ onValueChange, ...args }: React.ComponentProps<ty
  */
 export const ControlledValue: Story = {
   tags: ['api-ref', 'highlight'],
-  argTypes: hide('defaultValue', 'openMultiple', 'className'),
+  argTypes:{
+    defaultValue: { table: { disable: true } }, 
+    value: { table: { disable: false } },
+    onValueChange: { table: { disable: false } },
+  },
   render: (args) => <ControlledAccordion {...args} />,
 }
 
