@@ -2,18 +2,16 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Card } from '../Card'
+import { Heading } from '../Heading'
+
 import type { SpinnerProps } from './Spinner'
 import { Spinner } from './Spinner'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof SpinnerProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -155,20 +153,52 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
+const payouts = [
+  { period: '4–10 Aug', amount: '€1,284.60' },
+  { period: '28 Jul–3 Aug', amount: '€1,102.35' },
+  { period: '21–27 Jul', amount: '€987.10' },
+]
+
 /**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import; the app
- * shows loading with `Skeleton` placeholders instead. Per the brand guidelines
- * the spinner is one of only two places teal appears in DropBoard (the other
- * being the wordmark), so the story to write is a DropBoard one: the payouts
- * panel mid-fetch — a centred spinner labelled 'Loading payouts' — paired with
- * the same panel resolved, to make the point that a spinner is for waits whose
- * shape you can't predict, where `Skeleton` is for waits whose layout you can.
+ * DropBoard's payouts panel mid-fetch beside the same panel resolved. The
+ * spinner sits centred in the space the list will occupy, labelled for what
+ * is actually loading — a spinner is for waits whose shape you can't predict,
+ * where `Skeleton` holds the space for layouts you can. Per the brand
+ * guidelines the spinner is one of only two places teal appears in DropBoard,
+ * the other being the wordmark.
  */
 export const DropBoardPayoutsLoading: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('label', 'className'),
+  render: () => (
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', maxWidth: 560 }}>
+      <Card padded>
+        <Heading level={3} style={{ margin: 0 }}>
+          Payouts
+        </Heading>
+        <div style={{ display: 'grid', placeContent: 'center', minHeight: 140 }}>
+          <Spinner label="Loading payouts" />
+        </div>
+      </Card>
+      <Card padded>
+        <Heading level={3} style={{ margin: 0 }}>
+          Payouts
+        </Heading>
+        <div style={{ display: 'grid', gap: '0.75rem', paddingTop: '1rem' }}>
+          {payouts.map((payout) => (
+            <div key={payout.period} style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Body size="S" type="span">
+                {payout.period}
+              </Body>
+              <Body size="S" type="span" fontWeight="bold">
+                {payout.amount}
+              </Body>
+            </div>
+          ))}
+        </div>
+      </Card>
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

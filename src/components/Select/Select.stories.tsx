@@ -1,6 +1,11 @@
+import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent } from 'storybook/test'
+
+import { Body } from '../Body'
+import { Button } from '../Button'
+import { Heading } from '../Heading'
 
 import type { SelectProps } from './Select'
 import { Select } from './Select'
@@ -14,12 +19,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const meta = {
@@ -174,21 +173,46 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
+const CHEESEBURGER_PRICE = 8.5
+
+const euro = (amount: number) => `€${amount.toFixed(2)}`
+
+/** The food-item modal row: the picker multiplies the dish into a line total. */
+const ServingsPickerRow = () => {
+  const [servings, setServings] = useState<string | number>(2)
+  const total = euro(Number(servings) * CHEESEBURGER_PRICE)
+
+  return (
+    <div style={{ display: 'grid', gap: '1rem' }}>
+      <div>
+        <Heading level={3}>Cheeseburger</Heading>
+        <Body size="S" type="p" style={{ margin: 0 }}>
+          {euro(CHEESEBURGER_PRICE)}
+        </Body>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '1rem' }}>
+        <div style={{ width: 89 }}>
+          <Select label="servings" options={[1, 2, 3, 4, 5]} value={servings} onChange={setServings} />
+        </div>
+        <Button icon="cart">Add to cart · {total}</Button>
+      </div>
+    </div>
+  )
+}
+
 /**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): one import, in the food
- * item modal, where it picks how many servings to add to the cart. The story
- * to write: that modal row — 'Cheeseburger €8.50' with a servings `Select`
- * and an 'Add to cart' Button, the line total following the selection —
- * because it needs the numeric coercion to work without a parse at the call
- * site. Worth pairing with a text-valued 'delivery window' select, since
- * Mealdrop ran every value through `Number()` and turned those into `NaN`
+ * Mealdrop's food-item modal: 'Cheeseburger €8.50' with a servings picker and
+ * an 'Add to cart' button whose line total follows the selection. The picker
+ * column is a compact ~89px — a single digit and the chevron are all it holds,
+ * so the control has to keep its proportions at real-world size rather than
+ * only at this file's roomy default width. Numeric options come back as
+ * numbers, so the total is a plain multiply with no parse at the call site
  * (docs/MEALDROP-PARITY.md).
  */
 export const MealdropServingsPicker: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('label', 'options', 'value', 'onChange', 'disabled', 'className'),
+  render: () => <ServingsPickerRow />,
 }
 
 /* ------------------------------------------------------------------ */

@@ -1,8 +1,12 @@
+import type { CSSProperties } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Card } from '../Card'
 import { Heading } from '../Heading'
+import { Review } from '../Review'
 
 import type { SkeletonProps } from './Skeleton'
 import { Skeleton } from './Skeleton'
@@ -10,12 +14,6 @@ import { Skeleton } from './Skeleton'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof SkeletonProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -206,23 +204,70 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
+/** The rows below the photo share this layout on both cards, so the
+ *  placeholder widths land exactly where the real copy does. */
+const cardBody: CSSProperties = {
+  display: 'grid',
+  gap: '0.5rem',
+  padding: 'var(--ds-space-sm)',
+}
+
 /**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): imported by
- * `RestaurantCard`, which renders a skeleton twin of itself while the
- * restaurant list loads. The story to write: that card's loading state, a
- * `Skeleton` photo block above skeleton lines matching the real title,
- * `Review`, and category rows — wrapped in one `role="status"` labelled
- * 'Loading restaurants' with the placeholders `aria-hidden` beneath it. Worth
- * showing beside the resolved card so the widths visibly line up. Mealdrop
- * needed a `<SkeletonTheme>` wrapper around `react-loading-skeleton` to colour
- * it; Droppy's reads the skeleton tokens directly, so the wrapper and the
- * dependency both disappear (docs/MEALDROP-PARITY.md).
+ * Mealdrop's restaurant tile while the list loads: `RestaurantCard` renders a
+ * skeleton twin of itself — photo block, then lines standing in for the title,
+ * the `Review`, and the category row — shown here beside the resolved tile so
+ * each placeholder's width visibly matches the copy it reserves space for. One
+ * `role="status"` on the loading card owns the announcement; the placeholders
+ * beneath it are hidden. The skeletons take their colour from the skeleton
+ * tokens directly, where Mealdrop needed a `<SkeletonTheme>` wrapper around
+ * `react-loading-skeleton` (docs/MEALDROP-PARITY.md).
  */
 export const MealdropRestaurantCardLoading: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('width', 'height', 'className', 'style'),
+  render: () => (
+    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', maxWidth: 560 }}>
+      <Card role="status" aria-label="Loading restaurants">
+        <div aria-hidden="true">
+          <Skeleton width="100%" height={120} style={{ display: 'block', borderRadius: 0 }} />
+          <div style={cardBody}>
+            <Heading level={3} size={4}>
+              <Skeleton width="70%" />
+            </Heading>
+            <p style={{ margin: 0 }}>
+              <Skeleton width="45%" />
+            </p>
+            <p style={{ margin: 0 }}>
+              <Skeleton width="60%" />
+            </p>
+          </div>
+        </div>
+      </Card>
+      <Card>
+        <div
+          aria-hidden="true"
+          style={{
+            height: 120,
+            display: 'grid',
+            placeContent: 'center',
+            fontSize: '2.5rem',
+            background: 'var(--ds-color-surface-sunken)',
+          }}
+        >
+          🍔
+        </div>
+        <div style={cardBody}>
+          <Heading level={3} size={4} style={{ margin: 0 }}>
+            Burger Kingdom
+          </Heading>
+          <Review rating={4.5} />
+          <Body size="S" type="p" style={{ margin: 0 }}>
+            Burgers · Fries · Milkshakes
+          </Body>
+        </div>
+      </Card>
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */
