@@ -42,27 +42,33 @@ import { Heading } from '@droppy/design-system'
 
 ## How it works
 
-### `level` renders the matching tag
-
-The same prop that picks the rendered element also picks the size step by default — `level={3}` is an `<h3>` at the level-3 size, not a styled `<div>`.
-
-<Canvas of={HeadingStories.RendersMatchingTag} />
-
 ### `size` decouples the visual size from the tag
 
-`size` defaults to `level`, so most call sites never set it. Pass it explicitly to pick a different visual size while `level` keeps choosing the rendered tag — a card title that needs to stay an `<h2>` in the outline but look like a level-4 heading, for instance. Dense layouts (card titles, compact sections) are the usual reason to reach for it; the outline still reads `level`.
+`size` defaults to `level`, so most call sites never set it. Pass it explicitly to pick a
+different visual size while `level` keeps choosing the rendered tag — a card title that needs to
+stay an `<h2>` in the outline but look like a level-4 heading, for instance. Dense layouts (card
+titles, compact sections) are the usual reason to reach for it; the outline still reads `level`.
 
 <Canvas of={HeadingStories.SizeDecoupledFromLevel} />
 
 ### Type scale across levels
 
-Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and below are section headings and use the default tracking. Level 5 has its own size step, so it never falls back to whatever type size happens to surround it.
-
-<Canvas of={HeadingStories.Levels} />
-
+Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and below are section
+headings and use the default tracking. Level 5 has its own size step, so it never falls back to
+whatever type size happens to surround it.
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Heading` is a single-part component. It forwards its ref and remaining props, so composition wrappers — Base UI's `Dialog.Title`, `Drawer.Title` — can point `aria-labelledby` at the real heading element.
+
+<Canvas of={HeadingStories.Anatomy} />
+
+| Part | `data-part` | Renders       | Purpose                                            |
+| :--- | :---------- | :------------ | :------------------------------------------------- |
+| Root | `root`      | `<h1>`–`<h5>` | The heading, tagged by `level` and sized by `size` |
 
 {/* END: anatomy */}
 
@@ -114,6 +120,30 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 
 <ArgTypes of={HeadingStories} />
 
+### `children`
+
+The heading text; nodes work as well as strings.
+
+<Canvas of={HeadingStories.Children} />
+
+### `level`
+
+Picks the rendered tag and, on its own, the matching size step — `level={3}` is an `<h3>` at the
+level-3 size, not a styled `<div>`.
+
+<Canvas of={HeadingStories.Levels} />
+
+### `size`
+
+Picks the visual step on its own; the tag still follows `level`.
+
+<Canvas of={HeadingStories.Sizes} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Heading` class.
+
+<Canvas of={HeadingStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

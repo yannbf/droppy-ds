@@ -29,6 +29,7 @@ export const Heading = forwardRef<HTMLHeadingElement, PropsWithChildren<HeadingP
     return (
       <Tag
         ref={ref}
+        data-part="root"
         className={cx('droppy-Heading', `droppy-Heading--${visualSize}`, className)}
         {...rest}
       >

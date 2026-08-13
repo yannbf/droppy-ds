@@ -24,6 +24,7 @@ const toDimension = (value: string | number | undefined): string | undefined =>
  */
 export const Skeleton = ({ width, height, className, style }: SkeletonProps) => (
   <span
+    data-part="root"
     className={cx('droppy-Skeleton', className)}
     aria-hidden="true"
     style={{

@@ -53,28 +53,31 @@ import { Icon } from '@droppy/design-system'
 
 ## How it works
 
-### The icon set
+### Decorative by default
 
-Every icon in the set, decorative by default — the control it sits in carries the accessible
-name.
+Every icon renders `aria-hidden="true"` and `focusable="false"`, so it never reaches the
+accessibility tree. The control an icon sits inside is what carries the accessible name — reach
+for `Icon` directly and that naming becomes your job.
 
-<Canvas of={IconStories.Gallery} />
-
-### Sizing
-
-`size` takes any CSS length or a number of pixels and drives width, height, and `minWidth`
-together, so the icon holds its size even inside a shrinking flex row.
-
-<Canvas of={IconStories.Sizes} />
+<Canvas of={IconStories.DecorativeByDefault} />
 
 ### Colour
 
 Unset, the stroke follows `--ds-color-icon-default` and changes with the theme. Passing `color`
 sets the stroke inline instead, which wins over the class rule.
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Icon` is a single-part component: one `<svg>`, whose paths come from the bundled set that `name` indexes into. Nothing inside it is addressable.
+
+<Canvas of={IconStories.Anatomy} />
+
+| Part | `data-part` | Renders | Purpose                                                               |
+| :--- | :---------- | :------ | :-------------------------------------------------------------------- |
+| Root | `root`      | `<svg>` | The glyph: viewBox, stroke colour, and the width/height/minWidth trio |
 
 {/* END: anatomy */}
 
@@ -119,6 +122,30 @@ Icon renders a non-interactive `<svg>` — there is no keyboard interaction to d
 
 <ArgTypes of={IconStories} />
 
+### `name`
+
+Indexes into the bundled set — every icon in it, below.
+
+<Canvas of={IconStories.Name} />
+
+### `size`
+
+Takes any CSS length or a number of pixels, and drives width, height, and `minWidth` together, so
+the icon holds its size even inside a shrinking flex row.
+
+<Canvas of={IconStories.Size} />
+
+### `color`
+
+Sets the stroke inline, ahead of the theme's icon token.
+
+<Canvas of={IconStories.Color} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Icon` class.
+
+<Canvas of={IconStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

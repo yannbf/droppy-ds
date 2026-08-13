@@ -50,22 +50,22 @@ import { Container } from '@droppy/design-system'
 
 ## How it works
 
-### Default
-
 Padding applies immediately and widens at 640px; the width cap and centering hold at every size.
-
-<Canvas of={ContainerStories.Default} />
-
-### Desktop only
-
-Below 1024px, `Container` renders with no width cap and no padding of its own. From 1024px up, it
-behaves exactly like the default variant.
-
-<Canvas of={ContainerStories.DesktopOnly} />
-
+`desktopOnly` defers both until 1024px, so a caller can supply its own mobile layout and let
+`Container` take over once the page is wide enough to want the bound.
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Container` is a single-part component: one `<div>` that bounds the page width. It adds no layout of its own inside — children render in normal flow.
+
+<Canvas of={ContainerStories.Anatomy} />
+
+| Part | `data-part` | Renders | Purpose                                                  |
+| :--- | :---------- | :------ | :------------------------------------------------------- |
+| Root | `root`      | `<div>` | The max-width bound, the centering, and the side padding |
 
 {/* END: anatomy */}
 
@@ -113,6 +113,25 @@ literal values — no token in the current scale matches them exactly.
 
 <ArgTypes of={ContainerStories} />
 
+### `children`
+
+Rendered in normal flow; the wrapper only bounds the width.
+
+<Canvas of={ContainerStories.Children} />
+
+### `desktopOnly`
+
+Below 1024px, `Container` renders with no width cap and no padding of its own. From 1024px up, it
+behaves exactly like the default. This covers what Mealdrop's second global `.container-desktop`
+class did, named for what it does rather than for the old suffix.
+
+<Canvas of={ContainerStories.DesktopOnly} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Container` class.
+
+<Canvas of={ContainerStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

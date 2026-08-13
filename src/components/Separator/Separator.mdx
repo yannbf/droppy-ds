@@ -13,7 +13,7 @@ A visual and semantic divider between two blocks of content.
 import { Separator } from '@droppy/design-system'
 ```
 
-<Canvas of={SeparatorStories.Horizontal} />
+<Canvas of={SeparatorStories.Default} />
 
 ## Features
 
@@ -45,17 +45,22 @@ import { Separator } from '@droppy/design-system'
 
 ## How it works
 
-### Horizontal (default)
-
-<Canvas of={SeparatorStories.Horizontal} />
-
-### Vertical
-
-<Canvas of={SeparatorStories.Vertical} />
-
+`Separator` renders `role="separator"` unconditionally, so it is a semantic divider rather than a
+decorative line. For a purely ornamental rule with no grouping meaning, a styled border is the
+lighter choice — there is no presentational escape hatch here.
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Separator` is a single-part component: one `<div>` with `role="separator"` and no children. The caller sizes it — width or height in CSS — to read visually as a line.
+
+<Canvas of={SeparatorStories.Anatomy} />
+
+| Part | `data-part` | Renders | Purpose                                                                              |
+| :--- | :---------- | :------ | :----------------------------------------------------------------------------------- |
+| Root | `root`      | `<div>` | The divider, carrying `role="separator"`, `aria-orientation`, and `data-orientation` |
 
 {/* END: anatomy */}
 
@@ -97,6 +102,18 @@ adds no styling of its own beyond forwarding `className` to the root.
 
 <ArgTypes of={SeparatorStories} />
 
+### `orientation`
+
+Drives `aria-orientation` and `data-orientation` together, so styling by `[data-orientation]` never
+needs the prop value duplicated in your own class logic.
+
+<Canvas of={SeparatorStories.Orientation} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Separator` class.
+
+<Canvas of={SeparatorStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

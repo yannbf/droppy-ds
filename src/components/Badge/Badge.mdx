@@ -48,23 +48,24 @@ import { Badge } from '@droppy/design-system'
 
 ## How it works
 
-### Variants
-
-The neutral default matches Mealdrop's original badge; `positive` matches its hand-rolled "new"
-tag look, minus the absolute positioning that was specific to a restaurant card's photo —
-placement is now the call site's job.
-
-<Canvas of={BadgeStories.Positive} />
-
 ### Longer labels
 
 The pill grows with its content — there's no truncation or fixed width.
 
 <Canvas of={BadgeStories.LongerText} />
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Badge` is a single-part component: one `<span>` with the label as its only child. There are no slots, so anything around it — placement, spacing, a photo behind it — belongs to the call site.
+
+<Canvas of={BadgeStories.Anatomy} />
+
+| Part | `data-part` | Renders  | Purpose                                                            |
+| :--- | :---------- | :------- | :----------------------------------------------------------------- |
+| Root | `root`      | `<span>` | The pill: background, radius, padding, and the capitalization rule |
 
 {/* END: anatomy */}
 
@@ -117,6 +118,27 @@ The pill grows with its content — there's no truncation or fixed width.
 
 <ArgTypes of={BadgeStories} />
 
+### `text`
+
+The label, and the only content the badge renders. Capitalization is a CSS rule, so the DOM keeps
+whatever casing you passed.
+
+<Canvas of={BadgeStories.Text} />
+
+### `variant`
+
+The neutral default matches Mealdrop's original badge; `positive` matches its hand-rolled "new"
+tag look, minus the absolute positioning that was specific to a restaurant card's photo —
+placement is now the call site's job. The variant changes background, text color, and weight;
+padding, radius, and size stay put.
+
+<Canvas of={BadgeStories.Variant} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Badge` class.
+
+<Canvas of={BadgeStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

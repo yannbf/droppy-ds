@@ -58,29 +58,19 @@ primitive.
 a label rather than merely look like one.
 
 <Canvas of={BodyStories.RendersMatchingTag} />
-
-<Canvas of={BodyStories.ElementChoice} />
-
-### Size steps
-
-`size` is optional — unset renders the base body size (`--ds-type-size-md`). `S`, `XS`, and `XXS`
-step down from there.
-
-<Canvas of={BodyStories.Sizes} />
-
-### Font weight
-
-<Canvas of={BodyStories.Weights} />
-
-### Color override
-
-`color` sets the text color inline, ahead of the theme's token.
-
-<Canvas of={BodyStories.ColorOverride} />
-
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Body` is a single-part component. The tag it renders follows `type`; `size` and `fontWeight` only add classes, so all four elements can land on the same scale.
+
+<Canvas of={BodyStories.Anatomy} />
+
+| Part | `data-part` | Renders                                       | Purpose                                                |
+| :--- | :---------- | :-------------------------------------------- | :----------------------------------------------------- |
+| Root | `root`      | `<p>` / `<span>` / `<label>` / `<figcaption>` | The text element, carrying the size and weight classes |
 
 {/* END: anatomy */}
 
@@ -136,6 +126,42 @@ overriding them wholesale.
 
 <ArgTypes of={BodyStories} />
 
+### `children`
+
+The text, or any nodes to render inside it.
+
+<Canvas of={BodyStories.Children} />
+
+### `size`
+
+Optional — unset renders the base body size (`--ds-type-size-md`). `S`, `XS`, and `XXS` step down
+from there.
+
+<Canvas of={BodyStories.Sizes} />
+
+### `fontWeight`
+
+Independent of both `size` and `type`.
+
+<Canvas of={BodyStories.Weights} />
+
+### `type`
+
+Picks the rendered element. All four share the same styling.
+
+<Canvas of={BodyStories.ElementChoice} />
+
+### `color`
+
+Sets the text color inline, ahead of the theme's token.
+
+<Canvas of={BodyStories.ColorOverride} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Body` class.
+
+<Canvas of={BodyStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}
