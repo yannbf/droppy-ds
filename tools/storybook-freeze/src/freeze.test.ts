@@ -9,9 +9,9 @@ import { type Labels } from './labels'
 
 const labels: Labels = {
   definedFacets: ['story.showcase', 'story.api-ref'],
-  deleteFacets: new Set(['story.infra']),
-  storyTags: new Set(['showcase', 'api-ref', 'infra']),
-  isKept: (f, keep) => f !== 'story.infra' && keep.has(f),
+  deleteFacets: new Set(['story.anatomy']),
+  storyTags: new Set(['showcase', 'api-ref', 'anatomy']),
+  isKept: (f, keep) => f !== 'story.anatomy' && keep.has(f),
 }
 
 const experiments = [

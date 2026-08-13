@@ -9,9 +9,9 @@ import { loadLabels, type Labels } from './labels'
 
 const labels: Labels = {
   definedFacets: ['story.showcase', 'story.api-ref', 'mdx.general'],
-  deleteFacets: new Set(['story.infra']),
-  storyTags: new Set(['showcase', 'api-ref', 'infra']),
-  isKept: (f, keep) => f !== 'story.infra' && keep.has(f),
+  deleteFacets: new Set(['story.anatomy']),
+  storyTags: new Set(['showcase', 'api-ref', 'anatomy']),
+  isKept: (f, keep) => f !== 'story.anatomy' && keep.has(f),
 }
 
 describe('validateExperiments', () => {
@@ -51,8 +51,8 @@ describe('validateExperiments', () => {
   })
 
   it('rejects a delete facet, which is never selectable', () => {
-    const raw = [{ branchName: 'experiment/x', facets: ['story.infra'] }]
-    expect(() => validateExperiments(raw, labels)).toThrow(/unknown facets: story\.infra/)
+    const raw = [{ branchName: 'experiment/x', facets: ['story.anatomy'] }]
+    expect(() => validateExperiments(raw, labels)).toThrow(/unknown facets: story\.anatomy/)
   })
 
   it('rejects a non-string facets list', () => {

@@ -110,7 +110,7 @@ export const ClassName: Story = {
 
 /** A single part: one `<div>` that bounds width and adds side padding. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('children', 'desktopOnly', 'className'),
   render: (args) => <Container {...args} style={tinted} />,
   parameters: {

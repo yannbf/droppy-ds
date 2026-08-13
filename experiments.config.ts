@@ -26,6 +26,7 @@ const BASE_FACETS = [
   'csf-jsdoc.meta',
   'csf-jsdoc.story',
   'mdx.anatomy',
+  'story.anatomy',
   'general.general-setup',
   'general.general-brand',
 ]
@@ -61,6 +62,7 @@ const ALL_STORIES = [
   'story.examples',
   'story.animation',
   'story.tests',
+  'story.anatomy',
 ]
 
 const experiments: Experiment[] = [

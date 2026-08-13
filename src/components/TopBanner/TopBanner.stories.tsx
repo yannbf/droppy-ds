@@ -142,7 +142,7 @@ export const HeadingOverPhoto: Story = {
 
 /** The band and its optional heading. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('title', 'photoUrl', 'onBackClick', 'className'),
   args: { photoUrl: photoDataUri },
   parameters: {

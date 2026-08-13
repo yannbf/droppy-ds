@@ -133,7 +133,7 @@ export const OverMaxClamps: Story = {
 
 /** The track carries the ARIA; the fill is a decorative sibling underneath it. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('value', 'max', 'label', 'className'),
   parameters: {
     anatomy: {

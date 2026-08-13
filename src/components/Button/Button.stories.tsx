@@ -195,7 +195,7 @@ export const Variants: Story = {
 
 /** The control and its optional leading glyph. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('children', 'clear', 'large', 'round', 'icon', 'iconSize', 'className'),
   args: { icon: 'cart', children: 'Order now' },
   parameters: {

@@ -22,10 +22,6 @@ describe('loadLabels', () => {
     expect(labels.definedFacets).toContain('mdx.styling')
   })
 
-  it('never offers a delete facet', () => {
-    expect(labels.definedFacets).not.toContain('story.infra')
-  })
-
   it('does not define base-ui-only facets', () => {
     expect(labels.definedFacets).not.toContain('story.base')
     expect(labels.definedFacets).not.toContain('mdx.testing')
@@ -35,15 +31,9 @@ describe('loadLabels', () => {
     expect(labels.definedFacets).toEqual([...labels.definedFacets].sort())
   })
 
-  it('exposes bare story tag leaves, including deleted ones', () => {
+  it('exposes bare story tag leaves', () => {
     expect(labels.storyTags.has('showcase')).toBe(true)
-    expect(labels.storyTags.has('infra')).toBe(true)
     expect(labels.storyTags.has('base')).toBe(false)
-  })
-
-  it('isKept is false for a delete facet even when it is in the keep set', () => {
-    expect(labels.isKept('story.infra', new Set(['story.infra']))).toBe(false)
-    expect(labels.isKept('story.showcase', new Set(['story.showcase']))).toBe(true)
   })
 
   it('isKept is false for a facet absent from the keep set', () => {

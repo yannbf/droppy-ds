@@ -148,7 +148,7 @@ export const BoundsDisableRatherThanClamp: Story = {
 
 /** The group, its two round buttons, and the live value between them. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('value', 'min', 'max', 'aria-label', 'className'),
   parameters: {
     anatomy: {

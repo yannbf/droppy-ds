@@ -157,7 +157,7 @@ export const ThreeWaysToChangeTheValue: Story = {
 
 /** A field wrapper, the scrub area holding the label, and the button group. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('label', 'defaultValue', 'value', 'min', 'max', 'step', 'format', 'className'),
   parameters: {
     anatomy: {

@@ -125,7 +125,7 @@ export const SpinAnimation: Story = {
 
 /** The status wrapper, the decorative graphic, and the shapes inside it. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('label', 'className'),
   parameters: {
     anatomy: {

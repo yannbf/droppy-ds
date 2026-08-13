@@ -139,7 +139,7 @@ export const DecorativeByDefault: Story = {
 
 /** A single part: one `<svg>`, its paths supplied by `name`. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('name', 'size', 'color', 'className'),
   args: { size: '3rem' },
   parameters: {

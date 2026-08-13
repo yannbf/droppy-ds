@@ -164,7 +164,7 @@ export const OpenCloseTransition: Story = {
  * DOM.
  */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('label', 'sideOffset', 'className'),
   parameters: {
     anatomy: {

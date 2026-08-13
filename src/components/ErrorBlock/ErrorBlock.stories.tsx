@@ -140,7 +140,7 @@ export const WithoutIllustration: Story = {
 
 /** Title, optional illustration, body, and one action — in that DOM order. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('title', 'body', 'buttonText', 'illustration', 'className'),
   args: { illustration: sushiIllustration },
   parameters: {

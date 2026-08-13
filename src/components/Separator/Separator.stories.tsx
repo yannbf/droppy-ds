@@ -116,7 +116,7 @@ export const ClassName: Story = {
 
 /** A single part: one `<div>` with `role="separator"` and no children. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('orientation', 'className'),
   render: (args) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

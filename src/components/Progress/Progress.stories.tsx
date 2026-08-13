@@ -145,7 +145,7 @@ export const Complete: Story = {
 
 /** Root, the optional label and value, and the track holding the indicator. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('value', 'max', 'label', 'showValue', 'className'),
   parameters: {
     anatomy: {

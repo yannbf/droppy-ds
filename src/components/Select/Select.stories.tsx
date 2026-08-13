@@ -152,7 +152,7 @@ export const NativeControl: Story = {
 
 /** Label, a wrapper carrying the chevron, and the native control inside it. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('label', 'options', 'value', 'disabled', 'className'),
   parameters: {
     anatomy: {

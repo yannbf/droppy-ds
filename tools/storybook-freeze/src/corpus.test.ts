@@ -8,9 +8,9 @@ import { type Labels } from './labels'
 
 const labels: Labels = {
   definedFacets: [],
-  deleteFacets: new Set(['story.infra']),
-  storyTags: new Set(['showcase', 'highlight', 'infra']),
-  isKept: (f, keep) => f !== 'story.infra' && keep.has(f),
+  deleteFacets: new Set(['story.anatomy']),
+  storyTags: new Set(['showcase', 'highlight', 'anatomy']),
+  isKept: (f, keep) => f !== 'story.anatomy' && keep.has(f),
 }
 
 const storyFile = (exports: string[]): string =>
@@ -46,12 +46,12 @@ describe('runCorpus', () => {
       path.join(checkbox, 'Checkbox.stories.tsx'),
       storyFile([
         "export const Hero: Story = { tags: ['showcase'], render: () => null }",
-        "export const Grid: Story = { tags: ['infra'], render: () => null }",
+        "export const Grid: Story = { tags: ['anatomy'], render: () => null }",
       ])
     )
     await writeFile(
       path.join(gallery, 'Gallery.stories.tsx'),
-      storyFile(["export const Only: Story = { tags: ['infra'], render: () => null }"])
+      storyFile(["export const Only: Story = { tags: ['anatomy'], render: () => null }"])
     )
     await writeFile(
       path.join(checkbox, 'Checkbox.mdx'),
@@ -108,7 +108,7 @@ describe('runCorpus', () => {
     )
     await writeFile(
       path.join(radio, 'Radio.stories.tsx'),
-      storyFile(["export const Only: Story = { tags: ['infra'], render: () => null }"])
+      storyFile(["export const Only: Story = { tags: ['anatomy'], render: () => null }"])
     )
     await writeFile(
       path.join(radio, 'Radio.mdx'),

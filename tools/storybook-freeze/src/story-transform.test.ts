@@ -5,9 +5,9 @@ import { transformStory } from './story-transform'
 
 const labels: Labels = {
   definedFacets: [],
-  deleteFacets: new Set(['story.infra']),
-  storyTags: new Set(['showcase', 'highlight', 'api-ref', 'infra']),
-  isKept: (f, keep) => f !== 'story.infra' && keep.has(f),
+  deleteFacets: new Set(['story.anatomy']),
+  storyTags: new Set(['showcase', 'highlight', 'api-ref', 'anatomy']),
+  isKept: (f, keep) => f !== 'story.anatomy' && keep.has(f),
 }
 
 const STORY = [
@@ -121,15 +121,15 @@ describe('transformStory', () => {
     expect(result.code).toContain('export const Hero')
   })
 
-  it('always strips story.infra exports, because delete wins over keep', () => {
+  it('always strips story.anatomy exports, because delete wins over keep', () => {
     const code = [
       'const meta = {} satisfies Meta',
       'export default meta',
       'type Story = StoryObj<typeof meta>',
-      "export const Anatomy: Story = { tags: ['infra'], render: () => null }",
+      "export const Anatomy: Story = { tags: ['anatomy'], render: () => null }",
       '',
     ].join('\n')
-    const result = transformStory('A.stories.tsx', code, new Set(['story.infra']), labels)
+    const result = transformStory('A.stories.tsx', code, new Set(['story.anatomy']), labels)
     expect(result.code).not.toContain('export const Anatomy')
     expect(result.remainingStoryExports).toBe(0)
     expect(result.removedStoryExports).toBe(1)

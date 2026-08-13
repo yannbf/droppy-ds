@@ -133,7 +133,7 @@ export const ActionIsOptional: Story = {
 
 /** The section, its title row, and the optional action inside it. */
 export const Anatomy: Story = {
-  tags: ['infra'],
+  tags: ['anatomy'],
   argTypes: hide('title', 'topButtonLabel', 'className'),
   args: { topButtonLabel: 'View all categories', onTopButtonClick: fn() },
   parameters: {
