@@ -4,7 +4,7 @@ import { expect, fn, userEvent, within } from 'storybook/test'
 import { IconButton } from './IconButton'
 
 const meta = {
-  title: 'Components/IconButton',
+  title: 'Actions/IconButton',
   component: IconButton,
   args: {
     name: 'arrow-right',

@@ -68,11 +68,11 @@ instead of `defaultValue`.
 
 ## Keyboard & screen reader
 
-| Key / interaction     | Context | Action                                                     |
-| ---------------------- | ------- | ----------------------------------------------------------- |
-| Tab / Shift+Tab        | any     | Moves focus between triggers, in document order             |
-| Enter / Space          | focused trigger | Toggles that item's panel open or closed             |
-| Arrow keys             | any     | No effect — Accordion does not use roving focus between headers |
+| Key / interaction | Context         | Action                                                          |
+| ----------------- | --------------- | --------------------------------------------------------------- |
+| Tab / Shift+Tab   | any             | Moves focus between triggers, in document order                 |
+| Enter / Space     | focused trigger | Toggles that item's panel open or closed                        |
+| Arrow keys        | any             | No effect — Accordion does not use roving focus between headers |
 
 <Canvas of={AccordionStories.KeyboardTabFlow} />
 
@@ -126,6 +126,6 @@ full.
 - For a single independent show/hide section rather than a managed list, reach for Base UI's
   `Collapsible` directly.
 - To group related content into a raised surface without collapse behavior, see
-  [Card](?path=/docs/components-card--docs).
+  [Card](?path=/docs/media-content-card--docs).
 - For switching between panels where only one is ever relevant at a time, see
-  [Tabs](?path=/docs/components-tabs--docs) instead of collapsing all of them into one column.
+  [Tabs](?path=/docs/navigation-tabs--docs) instead of collapsing all of them into one column.

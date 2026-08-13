@@ -1,0 +1,16 @@
+.droppy-Link {
+  color: var(--ds-color-text-primary);
+  font: inherit;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .droppy-Link:hover {
+    text-decoration: underline;
+  }
+}
+
+.droppy-Link:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-shadow-focus);
+}

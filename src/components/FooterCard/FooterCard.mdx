@@ -1,0 +1,88 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as FooterCardStories from './FooterCard.stories'
+
+<Meta of={FooterCardStories} />
+
+# FooterCard
+
+A titled column of links for a page footer — "Discover us", "Our social media", or any other
+grouped set of footer navigation.
+
+- **Import:** `import { FooterCard } from '@droppy/design-system'`
+- **Built on:** `Heading` (level 2) and `Link` for each item.
+
+<Canvas of={FooterCardStories.Default} />
+
+## Features
+
+- `title` renders as an `<h2>` via `Heading` — a footer typically stacks several `FooterCard`s
+  side by side, each its own labeled section.
+- `links` is an ordered list of `{ name, href?, external?, render? }`. Each renders through `Link`,
+  so it inherits the same `render` escape hatch for router-aware links.
+- `external` links get `target="_blank"` and `rel="noopener noreferrer"` automatically.
+- `children` renders after the link list (or on its own, when `links` is omitted) — for content
+  that isn't a link, like app store badges or a short paragraph.
+- Text and link color default to `--ds-color-text-on-inverse` and `currentColor`, so the card reads
+  correctly on the dark surface a footer typically sits on, without hardcoding white.
+- Merges any incoming `className` with its own `droppy-FooterCard` class.
+
+## When to use
+
+- Inside a page footer, grouping a titled set of links — site navigation, social links, legal
+  links.
+
+## When not to use
+
+- A single standalone link — use [Link](?path=/docs/actions-link--docs) directly.
+- A trail of ancestor pages — use [Breadcrumb](?path=/docs/navigation-breadcrumb--docs).
+
+## How it works
+
+### External links
+
+<Canvas of={FooterCardStories.ExternalLinks} />
+
+### Router links via `render`
+
+Pass `render` on a link item with a router's own link element, the same pattern `Breadcrumb` and
+`Link` use elsewhere in this library.
+
+<Canvas of={FooterCardStories.WithRouterLinks} />
+
+### Non-link content
+
+`children` renders alongside (or instead of) the link list.
+
+<Canvas of={FooterCardStories.WithChildren} />
+
+## Keyboard & screen reader
+
+Each link is a real `<a>` (or the router element passed via `render`) — standard link keyboard
+behaviour applies, no custom handling.
+
+- **ARIA:** the title is a real `<h2>`, so assistive tech can jump between footer sections by
+  heading; links sit in a plain `<ul>`.
+- **Screen reader:** announced as a heading followed by a list of links.
+- **You must provide:** nothing further — heading level and list semantics are built in. Make sure
+  each footer only has one `FooterCard` per topic so the headings stay meaningful.
+
+## Styling
+
+| Token                        | Used for                 |
+| ---------------------------- | ------------------------ |
+| `--ds-color-text-on-inverse` | Default text color       |
+| `--ds-space-xs`              | Space below the title    |
+| `--ds-space-2xs`             | Space between list items |
+
+Links inherit their color from the card via `currentColor`, so overriding `--ds-color-text-on-inverse`
+(or setting `color` on a wrapping element) re-colors both the title and the links together.
+`className` merges with the component's own `droppy-FooterCard` class.
+
+## API reference
+
+<ArgTypes of={FooterCardStories} />
+
+## Related
+
+- [Link](?path=/docs/actions-link--docs) — the link primitive `FooterCard` builds on.
+- [Heading](?path=/docs/typography-heading--docs) — the heading primitive `FooterCard` builds on.

@@ -4,7 +4,7 @@ import { expect } from 'storybook/test'
 import { Body } from './Body'
 
 const meta = {
-  title: 'Components/Body',
+  title: 'Typography/Body',
   component: Body,
   args: { children: 'The kitchen closes at 10pm, last orders 9:30.' },
 } satisfies Meta<typeof Body>

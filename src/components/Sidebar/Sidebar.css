@@ -1,7 +1,7 @@
 .droppy-Sidebar-backdrop {
   z-index: 98;
   background-color: rgb(0 0 0 / 40%);
-  transition: opacity 300ms;
+  transition: opacity var(--ds-motion-slow) var(--ds-motion-ease);
 }
 
 /* A flex shell rather than a fixed panel: the panel then stretches to the

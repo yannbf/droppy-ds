@@ -17,16 +17,16 @@ A stack of transient, self-dismissing notifications for things the reader doesn'
 - **No markup to write per toast.** `ToastProvider` renders the viewport and the toast list for you — call `useToast().add(...)` from anywhere beneath it and a toast appears.
 - **Auto-dismisses on a timer**, and stacks newest-first when more than one is visible at once.
 - **Announced to screen readers** through the viewport's live region, without stealing focus on open.
-- **Portals to `document.body`** by default, so a parent's `overflow: hidden` or stacking context can't clip it. `container` retargets the portal, matching [Modal](?path=/docs/components-modal--docs)'s prop of the same name.
+- **Portals to `document.body`** by default, so a parent's `overflow: hidden` or stacking context can't clip it. `container` retargets the portal, matching [Modal](?path=/docs/overlays-modal--docs)'s prop of the same name.
 
 ## When to use
 
 - A confirmation of something that already happened — a draft saved, a file archived, an export finished — that the reader doesn't need to dismiss to keep working.
-- A transient status message like "Copied," which [Tooltip](?path=/docs/components-tooltip--docs) explicitly can't provide, since a tooltip's content is never announced to screen readers.
+- A transient status message like "Copied," which [Tooltip](?path=/docs/overlays-tooltip--docs) explicitly can't provide, since a tooltip's content is never announced to screen readers.
 
 ## When not to use
 
-- A decision the reader must make before continuing — use [Modal](?path=/docs/components-modal--docs) instead, which blocks the page and traps focus until it's answered.
+- A decision the reader must make before continuing — use [Modal](?path=/docs/overlays-modal--docs) instead, which blocks the page and traps focus until it's answered.
 - Content the reader must be able to reach at their own pace rather than within a timeout — put it on the page instead.
 
 ## How it works
@@ -49,12 +49,12 @@ Every toast renders a `Dismiss` button that closes it immediately, without waiti
 
 ## Keyboard & screen reader
 
-| Key / interaction | Context | Action |
-| --- | --- | --- |
-| F6 | anywhere | Jumps focus to the toast stack |
-| Tab (from the stack) | open | Enters the stack at the newest toast |
-| Escape | a toast is focused | Closes that toast; focus moves to the next one |
-| Shift+Tab (from the stack) | open | Returns focus to wherever it was before |
+| Key / interaction          | Context            | Action                                         |
+| -------------------------- | ------------------ | ---------------------------------------------- |
+| F6                         | anywhere           | Jumps focus to the toast stack                 |
+| Tab (from the stack)       | open               | Enters the stack at the newest toast           |
+| Escape                     | a toast is focused | Closes that toast; focus moves to the next one |
+| Shift+Tab (from the stack) | open               | Returns focus to wherever it was before        |
 
 - **ARIA:** the viewport is a live region so a new toast is announced without moving focus; each toast is announced according to its priority.
 - **Screen reader:** hears the toast's title and description as it appears, and can reach its `Dismiss` button by tabbing into the stack.
@@ -96,5 +96,5 @@ Colors, spacing, and the stacking/swipe transforms come entirely from the theme 
 
 ## Related
 
-- For a decision that must block the page until it's answered, use [Modal](?path=/docs/components-modal--docs).
-- For a hint about a control before it's activated — never for a confirmation message — use [Tooltip](?path=/docs/components-tooltip--docs).
+- For a decision that must block the page until it's answered, use [Modal](?path=/docs/overlays-modal--docs).
+- For a hint about a control before it's activated — never for a confirmation message — use [Tooltip](?path=/docs/overlays-tooltip--docs).

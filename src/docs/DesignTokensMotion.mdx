@@ -1,0 +1,37 @@
+import { Meta } from '@storybook/addon-docs/blocks'
+import {
+  Diagnostics,
+  ColorPalette,
+  ColorTable,
+  FontFamilyPreview,
+  FontWeightScale,
+  DimensionScale,
+  TokenTable,
+  ShadowPreview,
+  MotionPreview,
+  TokenDetail,
+  TypographyScale,
+} from '@unpunnyfuns/swatchbook-addon'
+
+<Meta title="Design tokens/Motion and shadows" tags={['general-tokens']} />
+
+# Motion and shadow tokens
+
+## Shadows
+
+Droppy has two types of shadows: `lift` and `overlay` are used to animate interactions and provide playfulness, and `focus` is the on-brand focus ring.
+
+<ShadowPreview filter="ds.shadow.*" caption="" />
+
+## Motion
+
+Animation is built on top of minimal choices: a single easing and three animation durations: `fast` (150ms, for hover states), `base` (250ms, for theme cross-fades), and `slow` (300ms, for overlay transitions).
+
+<MotionPreview filter="ds.motion.*" caption="" />
+
+The `ease` is a traditional `ease-in` value:
+
+<TokenDetail path="ds.motion.ease" caption="" />
+
+The theme stylesheet has no `prefers-reduced-motion` handling of its own. Where reduced motion is respected (the
+`Skeleton` and `Spinner` components), it's implemented per component, not as a shared token or global rule.

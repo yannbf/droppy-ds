@@ -31,7 +31,7 @@ A scrollable panel with a themed scrollbar in place of the platform's own.
 
 ### Sizing
 
-`ScrollArea`'s dimensions are fixed by the theme layer, matching how [Modal](?path=/docs/components-modal--docs)'s dimensions are fixed rather than left to props. Use `className` for one-off layout changes.
+`ScrollArea`'s dimensions are fixed by the theme layer, matching how [Modal](?path=/docs/overlays-modal--docs)'s dimensions are fixed rather than left to props. Use `className` for one-off layout changes.
 
 ### Choosing an axis
 
@@ -41,10 +41,10 @@ A scrollable panel with a themed scrollbar in place of the platform's own.
 
 ## Keyboard & screen reader
 
-| Key / interaction | Action |
-| --- | --- |
-| Arrow keys / Page Up / Page Down (viewport focused) | Scrolls the content |
-| Tab | Scrollbar thumb is not part of tab order — scroll the viewport directly instead |
+| Key / interaction                                   | Action                                                                          |
+| --------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Arrow keys / Page Up / Page Down (viewport focused) | Scrolls the content                                                             |
+| Tab                                                 | Scrollbar thumb is not part of tab order — scroll the viewport directly instead |
 
 - **ARIA:** none of the parts carry a role beyond the plain `<div>` Base UI renders — a scroll area is a layout affordance, not a distinct landmark.
 - **Screen reader:** reads the content inside as it would any other block; the scrollbar itself is not announced.
@@ -84,5 +84,5 @@ Colors, track/thumb sizing, and the hover/scroll-gated opacity come entirely fro
 
 ## Related
 
-- For a panel of content the reader reviews alongside the page, in a full-width layout, see [Container](?path=/docs/components-container--docs).
-- For a panel that slides in from the trailing edge instead of sitting in the page flow, see [Sidebar](?path=/docs/components-sidebar--docs).
+- For a panel of content the reader reviews alongside the page, in a full-width layout, see [Container](?path=/docs/layout-structure-container--docs).
+- For a panel that slides in from the trailing edge instead of sitting in the page flow, see [Sidebar](?path=/docs/overlays-sidebar--docs).

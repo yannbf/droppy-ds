@@ -24,7 +24,7 @@ const QuantityStepperDemo = ({
 }
 
 const meta = {
-  title: 'Components/QuantityStepper',
+  title: 'Forms & input/QuantityStepper',
   component: QuantityStepper,
   args: {
     value: 1,

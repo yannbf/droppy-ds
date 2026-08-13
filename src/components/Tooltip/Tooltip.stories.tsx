@@ -7,7 +7,7 @@ import { Button } from '../Button'
 import { Tooltip } from './Tooltip'
 
 const meta = {
-  title: 'Components/Tooltip',
+  title: 'Overlays/Tooltip',
   component: Tooltip,
   args: {
     label: 'turn on dark mode',

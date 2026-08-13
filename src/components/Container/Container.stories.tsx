@@ -4,7 +4,7 @@ import { expect } from 'storybook/test'
 import { Container } from './Container'
 
 const meta = {
-  title: 'Components/Container',
+  title: 'Layout & structure/Container',
   component: Container,
   args: { children: 'Page content' },
   parameters: {

@@ -14,7 +14,7 @@ const RouterLink = ({ to, children, ...rest }: { to: string } & ComponentProps<'
 )
 
 const meta = {
-  title: 'Components/Breadcrumb',
+  title: 'Navigation/Breadcrumb',
   component: Breadcrumb,
   args: {
     items: [{ label: 'categories', href: '/categories' }, { label: 'sushi' }],

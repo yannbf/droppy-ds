@@ -5,7 +5,8 @@ import * as CardStories from './Card.stories'
 
 # Card
 
-A raised surface for grouping content — a restaurant tile, a food item, an order summary.
+A rounded, clipped surface for grouping content — a restaurant tile, a food item, an order
+summary. Flat at rest: elevation is the consumer's choice to add.
 
 - **Import:** `import { Card } from '@droppy/design-system'`
 - **Built on:** a plain `<div>` element.
@@ -14,8 +15,10 @@ A raised surface for grouping content — a restaurant tile, a food item, an ord
 
 ## Features
 
-- Deliberately minimal: background, radius, shadow, and clipping only — no layout, image slot, or
+- Deliberately minimal: background, radius, and clipping only — no layout, image slot, or
   title slot. Callers compose those from their own markup and Droppy's other components.
+- No resting shadow. A card that should lift adds it at the call site — for example
+  `box-shadow: var(--ds-shadow-lift)` on hover, the treatment food-item tiles use.
 - `padded` adds `--ds-space-sm` padding on all sides; unset, the shell is bare, since most of the
   components it replaces already own their internal padding.
 - `interactive` adds a pointer cursor and a hover dim — the shell only. It wires no `onClick`;
@@ -26,13 +29,13 @@ A raised surface for grouping content — a restaurant tile, a food item, an ord
 
 ## When to use
 
-- A tile or panel that groups related content and should read as a single raised surface — a grid
+- A tile or panel that groups related content and should read as a single surface — a grid
   item, a summary block, a preview card.
 
 ## When not to use
 
-- An overlay that blocks or floats above the page — use [Modal](?path=/docs/components-modal--docs)
-  for a blocking decision or [Sidebar](?path=/docs/components-sidebar--docs) for a panel reviewed
+- An overlay that blocks or floats above the page — use [Modal](?path=/docs/overlays-modal--docs)
+  for a blocking decision or [Sidebar](?path=/docs/overlays-sidebar--docs) for a panel reviewed
   alongside the page. `Card` has no portal, backdrop, or dismissal behavior.
 
 ## How it works
@@ -76,7 +79,6 @@ squaring off past it.
 | --------------------------------------- | ---------------------------------------- |
 | `--ds-color-surface-card`               | Background                               |
 | `--ds-radius-card`                      | Corner radius                            |
-| `--ds-shadow-lift`                      | Box shadow                               |
 | `--ds-space-sm`                         | Padding, when `padded`                   |
 | `--ds-motion-fast` / `--ds-motion-ease` | Hover-dim transition, when `interactive` |
 
@@ -113,6 +115,6 @@ squaring off past it.
 
 ## Related
 
-- [Modal](?path=/docs/components-modal--docs) — for a blocking overlay instead of an inline
+- [Modal](?path=/docs/overlays-modal--docs) — for a blocking overlay instead of an inline
   surface.
-- [Sidebar](?path=/docs/components-sidebar--docs) — for a panel reviewed alongside the page.
+- [Sidebar](?path=/docs/overlays-sidebar--docs) — for a panel reviewed alongside the page.

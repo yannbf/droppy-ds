@@ -1,0 +1,63 @@
+.droppy-Carousel {
+  position: relative;
+}
+
+.droppy-Carousel-viewport {
+  overflow: hidden;
+}
+
+.droppy-Carousel-container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+}
+
+.droppy-Carousel-slide {
+  flex: 0 0 calc(100% / var(--droppy-Carousel-items-mobile));
+  min-width: 0;
+  padding-right: var(--ds-space-sm);
+  opacity: 1;
+  transition: opacity var(--ds-motion-base) linear;
+}
+
+.droppy-Carousel-slide--dimmed {
+  opacity: 0.5;
+}
+
+/* 640px matches --ds-breakpoint-sm; media queries can't read custom properties. */
+@media (min-width: 640px) {
+  .droppy-Carousel-slide {
+    flex-basis: calc(100% / var(--droppy-Carousel-items-tablet));
+  }
+}
+
+/* 1024px matches --ds-breakpoint-lg. */
+@media (min-width: 1024px) {
+  .droppy-Carousel-slide {
+    flex-basis: calc(100% / var(--droppy-Carousel-items-desktop));
+  }
+}
+
+.droppy-Carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+
+  /* Arrows only appear on desktop; smaller screens scroll by dragging. */
+  display: none;
+}
+
+/* 1024px matches --ds-breakpoint-lg. */
+@media (min-width: 1024px) {
+  .droppy-Carousel-nav {
+    display: flex;
+  }
+}
+
+.droppy-Carousel-nav--prev {
+  left: 0;
+}
+
+.droppy-Carousel-nav--next {
+  right: 0;
+}

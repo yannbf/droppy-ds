@@ -1,0 +1,63 @@
+diff --git a/dist/build.js b/dist/build.js
+index 98d53ee70eeeab607af53e65b41b9f839e32522f..b2d33c80aea557a2f72a200cd7d685683ed690cb 100644
+--- a/dist/build.js
++++ b/dist/build.js
+@@ -63,6 +63,34 @@ function generatePropertyDefinitions(getTransforms, options) {
+     const tokens = getTransforms({ format: FORMAT_ID });
+     const properties = [];
+     const seen = new Set();
++    // @property initial-value must be computationally independent, so a var()
++    // alias reference can't be emitted as-is. Aliases are resolvable at build
++    // time, though: chase full-string var() refs through the transformed
++    // values so aliased tokens keep their typed syntax with a literal
++    // initial-value instead of degrading to '*'.
++    const valueByLocalID = new Map();
++    for (const t of tokens) {
++        if (!t.localID) continue;
++        if (t.type === 'SINGLE_VALUE') {
++            valueByLocalID.set(t.localID, t.value);
++        }
++        else if (t.type === 'MULTI_VALUE') {
++            for (const [n, v] of Object.entries(t.value)) {
++                valueByLocalID.set(n === '.' ? t.localID : `${t.localID}-${n}`, v);
++            }
++        }
++    }
++    const FULL_VAR_RE = /^var\((--[^)]+)\)$/;
++    function resolveInitialValue(value, depth = 0) {
++        if (typeof value !== 'string' || depth > 8) return value;
++        const m = value.match(FULL_VAR_RE);
++        if (!m) return value;
++        const target = valueByLocalID.get(m[1]);
++        return target === undefined ? value : resolveInitialValue(target, depth + 1);
++    }
++    function isIndependent(value) {
++        return typeof value === 'string' && !value.includes('var(');
++    }
+     for (const token of tokens) {
+         const localID = token.localID;
+         if (!localID) {
+@@ -77,8 +105,9 @@ function generatePropertyDefinitions(getTransforms, options) {
+                 continue;
+             }
+             seen.add(localID);
+-            if (!token.token.aliasOf && cssSyntax !== '*') {
+-                properties.push(generatePropertyDefinition(localID, cssSyntax, token.value));
++            const resolvedValue = resolveInitialValue(token.value);
++            if (cssSyntax !== '*' && isIndependent(resolvedValue)) {
++                properties.push(generatePropertyDefinition(localID, cssSyntax, resolvedValue));
+             }
+             else {
+                 properties.push(generatePropertyDefinition(localID, '*'));
+@@ -92,8 +121,9 @@ function generatePropertyDefinitions(getTransforms, options) {
+                 }
+                 seen.add(subID);
+                 const subSyntax = SUB_PROPERTY_SYNTAX[token.token.$type]?.[name] ?? '*';
+-                if (!token.token.aliasOf && subSyntax !== '*') {
+-                    properties.push(generatePropertyDefinition(subID, subSyntax, subValue));
++                const resolvedSubValue = resolveInitialValue(subValue);
++                if (subSyntax !== '*' && isIndependent(resolvedSubValue)) {
++                    properties.push(generatePropertyDefinition(subID, subSyntax, resolvedSubValue));
+                 }
+                 else {
+                     properties.push(generatePropertyDefinition(subID, '*'));

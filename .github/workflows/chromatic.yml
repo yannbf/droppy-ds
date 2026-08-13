@@ -16,9 +16,23 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
       - uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           buildScriptName: build-storybook
           exitZeroOnChanges: true
+          # TurboSnap: only snapshot stories whose module graph the push
+          # touched. Two kinds of files affect rendering without appearing
+          # in the dependency trace — treat them as external so edits still
+          # snapshot everything:
+          # - token JSON, consumed through the swatchbook preset's virtual
+          #   module;
+          # - pnpm patches, which change installed package code while the
+          #   lockfile keeps the same package version.
+          onlyChanged: true
+          externals: |
+            src/theme/tokens/**
+            patches/**
+            pnpm-workspace.yaml
