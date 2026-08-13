@@ -144,11 +144,22 @@ Merged onto the root alongside the component's own `droppy-Review` class.
 
 ## Decision log
 
+- **2021-01**: Review was added to Mealdrop as a single text line; a real `<Icon name="star"/>` was sketched in the first draft but never shipped, and the literal ★ glyph baked into the label string remains to this day ([review component](https://github.com/yannbf/mealdrop/commit/21d209f4bfc8f4bf96411e52ddad39915676c955), [icon sketch removed](https://github.com/yannbf/mealdrop/commit/8a0a9fedd786deb75865776e61b4b6beffe38912)).
+- **2021-12**: the rating-to-label banding settled on exclusive ranges — below 2 "Very poor", 2–4 "Adequate", 4–5 "Very good", 5 "Excellent" — after two buggy iterations whose overlapping comparisons made 2 and 4 ambiguous; Droppy ports this final logic verbatim ([banding fix](https://github.com/yannbf/mealdrop/commit/1f5e590b8c73f2bd996b36e69e1a893d9dc13e35)).
+- **2026-08**: ported to Droppy on token-driven CSS with a new `color` escape hatch for opting out of the deliberately quiet default ink ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267)).
+- **2026-08**: the review ink implements the brand's pale-blue exception asymmetrically per theme: light theme darkens the accent (`blue-700`) so it works as ink, dark theme uses the brand's pale blue verbatim — per the [brand guidelines](?path=/docs/brand-guidelines--docs), review-star text is one of the two deliberate exceptions to "accents are surfaces, not ink".
 - **Built on `Body`, sized `S` and rendered as a `span`.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
 {/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#276](https://github.com/yannbf/droppy-ds/issues/276): `rating={0}` and `NaN` both render "No reviews yet" — a genuine zero score, or a division-by-zero upstream, is indistinguishable from the empty state. **Workaround:** validate upstream and pass `undefined` only when there are truly no reviews.
+- [#277](https://github.com/yannbf/droppy-ds/issues/277): out-of-range ratings render unclamped — `rating={9}` gives "★ 9.0 Excellent" and negative values fall through to "★ -2.0 Very poor". **Workaround:** clamp at the call site before passing (`Math.min(Math.max(rating, 0), 5)`).
+- [#278](https://github.com/yannbf/droppy-ds/issues/278): the star is a bare ★ text glyph with no ARIA — screen readers announce the line as plain text with no "out of 5" scale context, and rendering depends on the active font's glyph coverage. **Workaround:** wrap Review in an element with an explicit `aria-label` (e.g. "Rated 4.5 out of 5").
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
 
 {/* END: known-issues */}
 
