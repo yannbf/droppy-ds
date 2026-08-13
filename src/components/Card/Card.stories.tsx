@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Badge } from '../Badge'
+import { Body } from '../Body'
+import { Heading } from '../Heading'
+import { Review } from '../Review'
 import { Card } from './Card'
 
 const meta = {
@@ -13,7 +17,6 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-  tags: ['showcase'],
   play: async ({ canvas }) => {
     const card = canvas.getByText('Card content')
 
@@ -52,4 +55,31 @@ export const WithImage: Story = {
 
     await expect(getComputedStyle(card).overflow).toBe('hidden')
   },
+}
+
+/** The composition Mealdrop's restaurant tiles are built from: an interactive
+ *  `Card` holding an edge-to-edge photo, then a padded block of `Heading`,
+ *  `Review`, `Body`, and `Badge` children. The tile wires its own click
+ *  handling and elevation at the call site. */
+export const RestaurantTile: Story = {
+  tags: ['examples'],
+  render: () => (
+    <Card interactive style={{ width: '18rem' }}>
+      <img
+        src="https://placehold.co/320x180"
+        alt=""
+        style={{ display: 'block', width: '100%', height: '10rem', objectFit: 'cover' }}
+      />
+      <div style={{ padding: 'var(--ds-space-sm)' }}>
+        <Heading level={2} size={4}>
+          Burger Kingdom
+        </Heading>
+        <Review rating={4.4} />
+        <Body type="p" size="S">
+          The best burgers in town
+        </Body>
+        <Badge text="burgers" />
+      </div>
+    </Card>
+  ),
 }

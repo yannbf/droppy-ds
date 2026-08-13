@@ -31,21 +31,6 @@ summary. Flat at rest: elevation is the consumer's choice to add.
 
 {/* END: general */}
 
-{/* BEGIN: when-to-use */}
-
-## When to use
-
-- A tile or panel that groups related content and should read as a single surface — a grid
-  item, a summary block, a preview card.
-
-## When not to use
-
-- An overlay that blocks or floats above the page — use [Modal](?path=/docs/overlays-modal--docs)
-  for a blocking decision or [Sidebar](?path=/docs/overlays-sidebar--docs) for a panel reviewed
-  alongside the page. `Card` has no portal, backdrop, or dismissal behavior.
-
-{/* END: when-to-use */}
-
 {/* BEGIN: behavior */}
 
 ## How it works
@@ -74,6 +59,90 @@ squaring off past it.
 
 {/* END: behavior */}
 
+{/* BEGIN: examples */}
+
+## Examples
+
+The composition Mealdrop's restaurant tiles are built from: an interactive `Card` holding an
+edge-to-edge photo, then a padded block of `Heading`, `Review`, `Body`, and `Badge` children. The
+tile wires its own click handling and elevation at the call site.
+
+<Canvas of={CardStories.RestaurantTile} />
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+## Do / Don't
+
+**Do**
+
+- Compose the card's contents — image, title, badges, layout — from your own markup and Droppy's
+  other components; `Card` deliberately provides no slots.
+- Add elevation at the call site when a card should lift — for example
+  `box-shadow: var(--ds-shadow-lift)` on hover — rather than expecting a resting shadow.
+- Pass `padded` only when the children don't already own their internal padding.
+
+**Don't**
+
+- Don't expect `interactive` to make the card actually clickable or focusable — it only changes
+  appearance. Wire `onClick`, `role`, `tabIndex`, and keyboard handling yourself, or wrap the card
+  in a real interactive element.
+- Don't use `Card` for content that floats above or blocks the page — it has no portal, backdrop,
+  or dismissal behavior.
+
+{/* END: do-dont */}
+
+{/* BEGIN: when-to-use */}
+
+## When to use
+
+- A tile or panel that groups related content and should read as a single surface — a grid
+  item, a summary block, a preview card.
+
+## When not to use
+
+- An overlay that blocks or floats above the page — use [Modal](?path=/docs/overlays-modal--docs)
+  for a blocking decision or [Sidebar](?path=/docs/overlays-sidebar--docs) for a panel reviewed
+  alongside the page. `Card` has no portal, backdrop, or dismissal behavior.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Card` is a single-part component: one `<div>` that provides the surface, and children render
+inside it in normal document flow.
+
+```tsx
+import { Card } from '@droppy/design-system'
+
+;<Card>{/* your own markup and other Droppy components */}</Card>
+```
+
+| Part   | Renders | Purpose                                                    | Optional? |
+| :----- | :------ | :--------------------------------------------------------- | :-------- |
+| `Card` | `<div>` | The clipped, rounded surface; background, radius, clipping | required  |
+
+{/* END: anatomy */}
+
+{/* BEGIN: history */}
+
+## Decision log
+
+{/* Placeholder — populated by the history-mining pass. */}
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+{/* Placeholder — populated by the history-mining pass. */}
+
+{/* END: known-issues */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -89,8 +158,6 @@ squaring off past it.
 
 {/* END: a11y */}
 
-{/* BEGIN: styling */}
-
 ## Styling
 
 | Token                                   | Used for                                 |
@@ -101,8 +168,6 @@ squaring off past it.
 | `--ds-motion-fast` / `--ds-motion-ease` | Hover-dim transition, when `interactive` |
 
 `className` merges with the component's own `droppy-Card` class.
-
-{/* END: styling */}
 
 {/* BEGIN: props */}
 
