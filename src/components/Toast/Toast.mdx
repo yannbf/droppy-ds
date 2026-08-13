@@ -69,7 +69,7 @@ Colors, spacing, and the stacking/swipe transforms come entirely from the theme 
 ## Decision log
 
 - **2026-07**: Toast shipped provider-only: it has no trigger and no `open` prop — an app wraps its tree once in ToastProvider and raises toasts imperatively through `useToast().add()`, with the provider owning the only rendering of the toast list; it reuses the same element-or-selector `container` prop as Modal and Sidebar, with `timeout` and `limit` as the tuning knobs ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [Toast.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/Toast/Toast.tsx)).
-- **2026-07**: because Mealdrop has no status system beyond `text.error`, toast success/info/warning inks were collapsed to `text.primary` as a neutral-first gap fill; proper status surface/ink tokens were proposed but explicitly left for the owner to decide ([CLASHES.md](https://github.com/storybook-tmp/base-ui/blob/research/research/f-brand-v2/CLASHES.md)).
+- **2026-07**: because Mealdrop has no status system beyond `text.error`, toast success/info/warning inks were collapsed to `text.primary` as a neutral-first gap fill; proper status surface/ink tokens (success/danger/warning/info surface + on-surface pairs) were identified as the missing piece but deliberately left for the system owner to decide rather than invented during extraction.
 
 {/* END: history */}
 
