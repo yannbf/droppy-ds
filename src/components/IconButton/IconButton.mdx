@@ -20,10 +20,11 @@ import { IconButton } from '@droppy/design-system'
 
 - Keyboard activation and disabled semantics come from Base UI's `Button` under the hood — the
   same native-button contract `Button` gets.
-- Deliberately not theme-reactive: it stays a light pill (white fill, dark icon) in dark mode,
-  because it's built to sit on photography, not a themed surface.
-- Only the radius and the focus ring are tokens — the fill, text colour, icon stroke, and drop
-  shadow are fixed, by design.
+- Deliberately not theme-reactive on its fill: the pill stays white regardless of theme, because
+  it's built to sit on photography, not a themed surface.
+- Only the radius, the focus ring, and the icon colour are tokens — the fill, text colour, and
+  drop shadow are fixed, by design. The glyph reads `--ds-color-icon-default`, the same token
+  every icon uses, so it follows the theme even though the pill around it doesn't.
 - Two sizes, `4rem` default and `3rem` with `small`, with the icon scaled to match (`24` and
   `15`).
 - The focus ring layers on top of the existing drop shadow instead of replacing it, so the
@@ -56,10 +57,10 @@ import { IconButton } from '@droppy/design-system'
 
 ### It never goes dark
 
-Deliberately not theme-reactive: it stays a light pill in dark mode so it reads against arbitrary
-imagery. Only the radius and focus ring are tokens, and the glyph colour is hard-coded rather than
-following the icon token — which is the right call for a control that floats over photography
-rather than over a themed surface.
+Deliberately not theme-reactive: the pill stays light in dark mode so it reads against arbitrary
+imagery. The radius, focus ring, and fill are fixed; the glyph colour is the exception — it reads
+`--ds-color-icon-default`, the same token every icon uses, so it follows the theme independently
+of the fixed pill around it.
 
 <Canvas of={IconButtonStories.StaysLightOnAnySurface} />
 {/* END: behavior */}
@@ -75,7 +76,7 @@ The circular control and the glyph it centres. There is no label part — the bu
 | Part | `data-part` | Renders    | Purpose                                                             |
 | :--- | :---------- | :--------- | :------------------------------------------------------------------ |
 | Root | `root`      | `<button>` | The circle: fixed size, radius, and focus ring                      |
-| Icon | `icon`      | `<svg>`    | The glyph, sized by `small` and coloured independently of the theme |
+| Icon | `icon`      | `<svg>`    | The glyph, sized by `small` and coloured via the shared icon token  |
 
 {/* END: anatomy */}
 
@@ -117,8 +118,9 @@ The circular control and the glyph it centres. There is no label part — the bu
 
 - `--ds-radius-round` — border radius.
 - `--ds-shadow-focus` — focus ring, layered with the existing drop shadow.
-- Everything else — background, text colour, icon stroke, drop shadow — is a fixed value, not a
-  token, because `IconButton` is deliberately theme-independent.
+- `--ds-color-icon-default` — glyph colour, read by `Icon` itself rather than set on the button.
+- Everything else — background, text colour, and drop shadow — is a fixed value, not a token,
+  because the pill is deliberately theme-independent.
 - `className` merges with the component's own classes.
 
 {/* END: styling */}
@@ -154,6 +156,7 @@ Merged onto the root alongside the component's own `droppy-IconButton` class.
 
 - **2025-03**: IconButton's `icon` prop was retyped from `string` to the `IconName` string-literal union alongside Icon and Button, making invalid names a compile-time error ([IconName union](https://github.com/yannbf/mealdrop/commit/14cf17a324a99c4744eec1495810f96d4e17bc5d)).
 - **2026-07**: IconButton deliberately kept its theme-independent light-pill look — it sits on photography (carousel arrows over images), not on a themed surface, making it the one component in the set that does not respond to the theme — gaining only the DS focus ring and round-radius token in the migration ([buttons migration commit](https://github.com/yannbf/mealdrop/commit/c3c8adeb8e81c6e2c545b65728ed43a1aaf5d21e), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+- **2026-08**: the glyph's colour moved from a hardcoded inline style to `--ds-color-icon-default`, the token every icon reads — the inline style had bypassed the token and blocked any consumer override; the pill's own fill stays a fixed value, unaffected ([droppy-ds #289](https://github.com/yannbf/droppy-ds/pull/289), closing [#266](https://github.com/yannbf/droppy-ds/issues/266)).
 - **Built on Base UI [`Button`](https://base-ui.com/react/components/button).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
