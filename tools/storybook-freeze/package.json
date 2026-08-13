@@ -1,0 +1,11 @@
+{
+  "name": "@droppy/storybook-freeze",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "CLI that freezes the Storybook corpus into experiment branches for ML experiments.",
+  "bin": {
+    "storybook-freeze": "./src/cli.ts",
+    "storybook-freeze-publish": "./src/publish-branches.ts"
+  }
+}

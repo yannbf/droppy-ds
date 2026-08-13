@@ -23,5 +23,13 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     },
   },
+  {
+    // The AST walkers work against oxc-parser's untyped ESTree output, so `any`
+    // is the honest type here rather than a shortcut.
+    files: ['tools/**/*.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
   prettier
 )
