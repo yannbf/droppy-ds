@@ -37,6 +37,9 @@ const config: StorybookConfig = {
     experimentalReview: true,
     experimentalReactComponentMeta: true,
   },
+  tags: {
+    anatomy: { excludeFromSidebar: true },
+  },
   typescript: {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {

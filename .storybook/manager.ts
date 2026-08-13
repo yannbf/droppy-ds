@@ -10,7 +10,7 @@ addons.setConfig({
         style: 'grey',
       },
       display: {
-        sidebar: true,
+        sidebar: [{ type: 'story', skipInherited: false }],
         toolbar: true,
         mdx: true,
       },
@@ -22,7 +22,19 @@ addons.setConfig({
         style: 'blue',
       },
       display: {
-        sidebar: true,
+        sidebar: [{ type: 'story', skipInherited: false }],
+        toolbar: true,
+        mdx: true,
+      },
+    },
+    {
+      tags: 'anatomy',
+      badge: {
+        text: 'Anatomy',
+        style: 'red',
+      },
+      display: {
+        sidebar: [{ type: 'story', skipInherited: false }],
         toolbar: true,
         mdx: true,
       },
@@ -34,7 +46,7 @@ addons.setConfig({
         style: 'green',
       },
       display: {
-        sidebar: true,
+        sidebar: [{ type: 'story', skipInherited: false }],
         toolbar: true,
         mdx: true,
       },
@@ -46,7 +58,7 @@ addons.setConfig({
         style: 'orange',
       },
       display: {
-        sidebar: true,
+        sidebar: [{ type: 'story', skipInherited: false }],
         toolbar: true,
         mdx: true,
       },
@@ -58,7 +70,7 @@ addons.setConfig({
         style: 'purple',
       },
       display: {
-        sidebar: true,
+        sidebar: [{ type: 'story', skipInherited: false }],
         toolbar: true,
         mdx: true,
       },
@@ -74,7 +86,7 @@ addons.setConfig({
         },
       },
       display: {
-        sidebar: true,
+        sidebar: [{ type: 'story', skipInherited: false }],
         toolbar: true,
         mdx: true,
       },
