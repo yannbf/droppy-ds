@@ -87,9 +87,10 @@ const meta = {
       description: 'Called with the full array of open item values whenever it changes.',
     },
     className: {
-      table: {
-        disable: true,
-      }
+      // Kept in the meta so the API reference table lists it, then hidden per
+      // story — every story except ClassName passes it to `hide()`.
+      control: 'text',
+      description: 'Merged onto the root alongside the theme’s own classes.',
     },
   },
 } satisfies Meta<typeof Accordion>
@@ -111,10 +112,7 @@ export const Default: Story = {
     onValueChange: fn(),
     defaultValue: ['delivery-time'],
   },
-  argTypes: {
-    value: { table: { disable: true } },
-    onValueChange: { table: { disable: true } },
-  },
+  argTypes: hide('value', 'onValueChange', 'className'),
 }
 
 /* ------------------------------------------------------------------ */
@@ -239,11 +237,8 @@ function ControlledAccordion({ onValueChange, ...args }: React.ComponentProps<ty
  */
 export const ControlledValue: Story = {
   tags: ['api-ref', 'highlight'],
-  argTypes:{
-    defaultValue: { table: { disable: true } }, 
-    value: { table: { disable: false } },
-    onValueChange: { table: { disable: false } },
-  },
+  // `openMultiple` stays visible: it composes with a controlled value.
+  argTypes: hide('defaultValue', 'className'),
   render: (args) => <ControlledAccordion {...args} />,
 }
 
