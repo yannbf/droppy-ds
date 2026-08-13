@@ -31,6 +31,10 @@
   transform-origin: 50px 50px;
 }
 
+.droppy-Spinner-arc--base {
+  transform: rotate(90deg);
+}
+
 .droppy-Spinner-arc--a {
   animation: droppy-spinner-arc-a 1.2s ease-in-out infinite;
 }
