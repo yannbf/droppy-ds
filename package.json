@@ -53,6 +53,7 @@
     "@base-ui/react": "^1.7.0",
     "@changesets/cli": "^2.31.1",
     "@eslint/js": "^9.39.5",
+    "@github-ui/storybook-addon-performance-panel": "^1.1.4",
     "@storybook/addon-a11y": "^10.5.7",
     "@storybook/addon-docs": "^10.5.7",
     "@storybook/addon-mcp": "^0.7.0",
