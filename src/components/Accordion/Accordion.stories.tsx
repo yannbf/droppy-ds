@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent, waitFor } from 'storybook/test'
 
@@ -255,6 +256,63 @@ export const ClassName: Story = {
       <Accordion {...args} />
     </>
   ),
+}
+
+/* ------------------------------------------------------------------ */
+/* anatomy — the rendered part tree                                    */
+/* ------------------------------------------------------------------ */
+
+/**
+ * The seven parts an Accordion renders. Hover an entry in the Anatomy panel to
+ * highlight it in the canvas, or hover the canvas to activate the entry. One
+ * item starts open, since the panel and content parts only mount while open.
+ */
+export const Anatomy: Story = {
+  tags: ['highlight'],
+  argTypes: hide(...ALL_BUT_ITEMS),
+  args: { defaultValue: ['delivery-time'] },
+  parameters: {
+    anatomy: {
+      parts: [
+        {
+          id: 'root',
+          name: 'Root',
+          description: 'Owns the shared open state, the border, and the column layout.',
+        },
+        {
+          id: 'item',
+          name: 'Item',
+          description: 'One collapsible section. Carries `[data-panel-open]` while open.',
+        },
+        {
+          id: 'header',
+          name: 'Header',
+          description: 'The `<h3>` wrapper that puts each trigger in the page outline.',
+        },
+        {
+          id: 'trigger',
+          name: 'Trigger',
+          description: 'The `<button>` that toggles its panel, carrying `aria-expanded`.',
+        },
+        {
+          id: 'icon',
+          name: 'Icon',
+          description: 'The plus glyph, rotated 45° into a cross while the item is open.',
+        },
+        {
+          id: 'panel',
+          name: 'Panel',
+          description:
+            'The animated region, mounted only while open; its height comes from `--accordion-panel-height`.',
+        },
+        {
+          id: 'content',
+          name: 'Content',
+          description: 'The padded inner wrapper that the panel clips as it animates.',
+        },
+      ],
+    } satisfies AnatomyParameters,
+  },
 }
 
 /* ------------------------------------------------------------------ */

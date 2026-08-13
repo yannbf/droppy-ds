@@ -10,8 +10,9 @@ import * as AccordionStories from './Accordion.stories'
 A stack of collapsible sections, each labelled by a header — an FAQ list, a set of grouped
 filters, a details panel with several independent parts.
 
-- **Import:** `import { Accordion } from '@droppy/design-system'`
-- **Built on:** Base UI [`Accordion`](https://base-ui.com/react/components/accordion).
+```tsx
+import { Accordion } from '@droppy/design-system'
+```
 
 <Canvas of={AccordionStories.Default} />
 
@@ -83,38 +84,30 @@ while `[data-panel-open]` is set. Nothing here needs a fixed height.
 
 {/* END: behavior */}
 
-{/* BEGIN: a11y */}
+{/* BEGIN: anatomy */}
 
-## Keyboard & screen reader
+## Anatomy
 
-| Key / interaction | Context         | Action                                                          |
-| ----------------- | --------------- | --------------------------------------------------------------- |
-| Tab / Shift+Tab   | any             | Moves focus between triggers, in document order                 |
-| Enter / Space     | focused trigger | Toggles that item's panel open or closed                        |
-| Arrow keys        | any             | No effect — Accordion does not use roving focus between headers |
+`Accordion` renders seven parts, each carrying a `data-part` attribute. Open the story below in
+the canvas and use the **Anatomy** panel to hover a part and see it highlighted, or hover the
+canvas to activate the matching entry.
 
-<Canvas of={AccordionStories.TestKeyboardTabFlow} />
+<Canvas of={AccordionStories.Anatomy} />
 
-- **ARIA:** each trigger is a `<button>` with `aria-expanded`, inside an `<h3>` header; each panel
-  carries `role="region"` linked to its trigger via `aria-labelledby`.
-- **Screen reader:** announces each header as a heading, and each trigger's expanded/collapsed
-  state; panel content is announced as a landmark region once open.
-- **You must provide:** a meaningful `title` per item — it becomes both the visible label and the
-  trigger's accessible name.
+| Part    | `data-part` | Renders    | Purpose                                                                    |
+| :------ | :---------- | :--------- | :------------------------------------------------------------------------- |
+| Root    | `root`      | `<div>`    | Owns the shared open state, the border, and the column layout              |
+| Item    | `item`      | `<div>`    | One collapsible section; carries `[data-panel-open]` while open            |
+| Header  | `header`    | `<h3>`     | Puts each trigger in the page outline                                      |
+| Trigger | `trigger`   | `<button>` | Toggles its panel; carries `aria-expanded`                                 |
+| Icon    | `icon`      | `<svg>`    | The plus glyph, rotated 45° into a cross while open                        |
+| Panel   | `panel`     | `<div>`    | The animated region; mounted only while open, sized by the height variable |
+| Content | `content`   | `<div>`    | The padded inner wrapper the panel clips as it animates                    |
 
-{/* END: a11y */}
+The tree is flat by design: `items` renders the whole list, so there is no sub-component to
+compose. Item order is the array's order.
 
-{/* BEGIN: styling */}
-
-## Styling
-
-Droppy's own stylesheet carries no rules for `Accordion` — the theme layer's `AccordionRoot`,
-`AccordionItem`, `AccordionHeader`, `AccordionTrigger`, `AccordionIcon`, `AccordionPanel`, and
-`AccordionContent` classes cover the border, spacing, icon rotation, and panel-height animation in
-full.
-
-`className` merges onto the root, so it composes with the theme layer rather than replacing it.
-{/* END: styling */}
+{/* END: anatomy */}
 
 {/* BEGIN: examples */}
 
@@ -143,6 +136,48 @@ rows kept for reference.
 <Canvas of={AccordionStories.DropBoardOrders} />
 
 {/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
+
+## Keyboard & screen reader
+
+| Key / interaction | Context         | Action                                                          |
+| ----------------- | --------------- | --------------------------------------------------------------- |
+| Tab / Shift+Tab   | any             | Moves focus between triggers, in document order                 |
+| Enter / Space     | focused trigger | Toggles that item's panel open or closed                        |
+| Arrow keys        | any             | No effect — Accordion does not use roving focus between headers |
+
+<Canvas of={AccordionStories.TestKeyboardTabFlow} />
+
+- **ARIA:** each trigger is a `<button>` with `aria-expanded`, inside an `<h3>` header; each panel
+  carries `role="region"` linked to its trigger via `aria-labelledby`.
+- **Screen reader:** announces each header as a heading, and each trigger's expanded/collapsed
+  state; panel content is announced as a landmark region once open.
+- **You must provide:** a meaningful `title` per item — it becomes both the visible label and the
+  trigger's accessible name.
+
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
+## Styling
+
+Droppy's own stylesheet carries no rules for `Accordion` — the theme layer's `AccordionRoot`,
+`AccordionItem`, `AccordionHeader`, `AccordionTrigger`, `AccordionIcon`, `AccordionPanel`, and
+`AccordionContent` classes cover the border, spacing, icon rotation, and panel-height animation in
+full.
+
+`className` merges onto the root, so it composes with the theme layer rather than replacing it.
+
+{/* END: styling */}
 
 {/* BEGIN: props */}
 
@@ -204,6 +239,9 @@ Merged onto the root alongside the theme's classes.
 ## Decision log
 
 - **2026-07**: Droppy's Accordion took a data-driven `items: {value, title, content}[]` array instead of exposing the underlying compound-component composition, keeping call sites declarative; item values fall back to the item's index ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868)).
+- **Built on Base UI [`Accordion`](https://base-ui.com/react/components/accordion).** The
+  expand/collapse behaviour, the panel measurement, and the ARIA wiring come from there; Droppy
+  supplies the `items` shape, the theme classes, and the plus icon.
 
 {/* END: history */}
 

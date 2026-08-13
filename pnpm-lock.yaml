@@ -32,6 +32,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.31.1
         version: 2.31.1(@types/node@26.2.0)
+      '@component-anatomy/storybook':
+        specifier: ^0.0.1
+        version: 0.0.1(storybook@10.5.7(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))
       '@eslint/js':
         specifier: ^9.39.5
         version: 9.39.5
@@ -319,6 +322,16 @@ packages:
   '@clack/prompts@1.7.0':
     resolution: {integrity: sha512-y7/yvZ2TPAnR9+jnc00klvNNLkJiXFFrQA/hlLCcxA9a2A4zQIOimyFQ9XfwYKiGD1fb5GY8vbKIIgO8d5Tb2A==}
     engines: {node: '>= 20.12.0'}
+
+  '@component-anatomy/core@0.0.1':
+    resolution: {integrity: sha512-mLcDQAsuwDM9Sr+AndT3waElnkSF1Tx5KuCfVrniBjSvNJ6rMm2594Yfp9IoHEaWpcS+Qz2jXh+xdsYJengRyg==}
+    engines: {node: '>=18.0.0'}
+
+  '@component-anatomy/storybook@0.0.1':
+    resolution: {integrity: sha512-WvqJKXKebZGjbWhX5i+O6WtMjC2M9eOPqGoERMB5X1IWofYi5bffnXJKOJDxh9dukO+6gd8mFCV4b9VHtjpTFw==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      storybook: '>=9.0.0'
 
   '@emnapi/core@1.11.2':
     resolution: {integrity: sha512-TC8MkTuZUtcTSiFeuC0ksCh9QIJ5+F21MvZ4Wn4ORfYaFJ/0dsiudv5tVkejgwZlwQ39jL9WWDe2lz8x0WglOA==}
@@ -3983,6 +3996,13 @@ snapshots:
       fast-string-width: 3.0.2
       fast-wrap-ansi: 0.2.2
       sisteransi: 1.0.5
+
+  '@component-anatomy/core@0.0.1': {}
+
+  '@component-anatomy/storybook@0.0.1(storybook@10.5.7(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8))':
+    dependencies:
+      '@component-anatomy/core': 0.0.1
+      storybook: 10.5.7(@types/react@19.2.18)(prettier@3.9.6)(react@19.2.8)
 
   '@emnapi/core@1.11.2':
     dependencies:
