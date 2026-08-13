@@ -48,7 +48,6 @@ export function transformMdx(
   let changed = false
   const beginRe = /\{\/\*\s*BEGIN:\s*([a-z0-9-]+)\s*\*\/\}/g
   let match: RegExpExecArray | null
-  // eslint-disable-next-line no-cond-assign
   while ((match = beginRe.exec(out)) !== null) {
     const label = match[1]
     if (keep.has(`mdx.${label}`)) {
