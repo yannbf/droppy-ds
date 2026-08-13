@@ -92,6 +92,14 @@ The pill grows with its content — there's no truncation or fixed width.
 
 {/* BEGIN: brand */}
 
+## Brand
+
+`variant="positive"` carries the [brand guidelines'](?path=/docs/brand-guidelines--docs) soft
+green "good news" accent, used for "new" tags among other positive moments. Per the guidelines,
+"Accents are surfaces, not ink" — soft green is a background that carries dark text, so the
+badge's text stays pinned to the ink color (`Ink/primary text: #2C2C2C`) in both light and dark
+theme rather than following the page's theme-flipping text color.
+
 {/* END: brand */}
 
 {/* BEGIN: styling */}
@@ -147,6 +155,7 @@ Merged onto the root alongside the component's own `droppy-Badge` class.
 
 - **2026-07**: Badge absorbed RestaurantCard's hand-rolled NewTag styled-span as `<Badge text="new" variant="positive" />`, collapsing Mealdrop's two implementations of one visual role and establishing the `variant` API for semantic colour roles while keeping the original text-as-prop API; absolute positioning over the card photo was judged a call-site concern and stays in the app ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
 - **2026-07**: casing moved into CSS per the [brand guidelines](?path=/docs/brand-guidelines--docs) rule "sentence case everywhere — never Title Case, never ALL CAPS": badge labels are written lowercase in source and `text-transform: capitalize` handles presentation, so labels are never uppercased by hand.
+- **2026-08**: `--ds-color-badge-positive-text` was pinned to the ink value (`ds.palette.neutral.900`) in both themes instead of following the theme-flipping `text.primary` role — the soft green "good news" accent is a fixed surface in both themes, and per the [brand guidelines](?path=/docs/brand-guidelines--docs) "Accents are surfaces, not ink", so text on it stays ink rather than inverting with the theme ([droppy-ds #292](https://github.com/yannbf/droppy-ds/pull/292), closing [#28](https://github.com/yannbf/droppy-ds/issues/28)).
 - **Built on a plain `<span>` element.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
@@ -155,7 +164,6 @@ Merged onto the root alongside the component's own `droppy-Badge` class.
 
 ## Known issues & open questions
 
-- [#28](https://github.com/yannbf/droppy-ds/issues/28): variant="positive" is illegible in dark theme: white text on pastel green (~1.1:1 contrast). The cause is a brand-rule violation — `--ds-color-badge-positive-text` follows the theme-flipping `text-primary` role, while the [brand guidelines](?path=/docs/brand-guidelines--docs) state "accents are surfaces, not ink" — backgrounds that carry dark text — with both themes "designed to meet contrast on their own terms". **Workaround:** pin the text colour via .droppy-Badge--positive or the --ds-color-badge-positive-text token.
 - [#29](https://github.com/yannbf/droppy-ds/issues/29): docs promise casing-normalized rendering, but CSS `capitalize` never lowercases — "VEGAN" renders as-is, against the brand's "never ALL CAPS" sentence-case rule. **Workaround:** lowercase the label at the call site (`text={label.toLowerCase()}`), and query the raw string in tests.
 - [#31](https://github.com/yannbf/droppy-ds/issues/31): JSX children are silently discarded at runtime; empty or missing `text` renders a visible empty pill. **Workaround:** always use the `text` prop and guard falsy labels at the call site (`{tag ? <Badge text={tag}/> : null}`); typecheck JSX in JS projects.
 - [#34](https://github.com/yannbf/droppy-ds/issues/34): no wrap/overflow strategy — multi-word labels wrap into cramped line-height:1 lines; unbroken strings overflow the container. **Workaround:** add `white-space: nowrap` via className/app CSS and handle oversized labels at the call site.
