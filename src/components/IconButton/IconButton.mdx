@@ -10,8 +10,9 @@ import * as IconButtonStories from './IconButton.stories'
 A circular icon-only control for floating affordances — carousel arrows, overlay dismissals —
 that stays legible over arbitrary imagery instead of following the page's theme.
 
-- **Import:** `import { IconButton } from '@droppy/design-system'`
-- **Built on:** Base UI [`Button`](https://base-ui.com/react/components/button)
+```tsx
+import { IconButton } from '@droppy/design-system'
+```
 
 <Canvas of={IconButtonStories.Default} />
 
@@ -78,6 +79,18 @@ bare `box-shadow` on focus would drop the shadow and the button would flatten.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -97,6 +110,10 @@ bare `box-shadow` on focus would drop the shadow and the button would flatten.
   accessibility tree — there's no `focusableWhenDisabled`-style escape hatch.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -124,6 +141,7 @@ bare `box-shadow` on focus would drop the shadow and the button would flatten.
 
 - **2025-03**: IconButton's `icon` prop was retyped from `string` to the `IconName` string-literal union alongside Icon and Button, making invalid names a compile-time error ([IconName union](https://github.com/yannbf/mealdrop/commit/14cf17a324a99c4744eec1495810f96d4e17bc5d)).
 - **2026-07**: IconButton deliberately kept its theme-independent light-pill look — it sits on photography (carousel arrows over images), not on a themed surface, making it the one component in the set that does not respond to the theme — gaining only the DS focus ring and round-radius token in the migration ([buttons migration commit](https://github.com/yannbf/mealdrop/commit/c3c8adeb8e81c6e2c545b65728ed43a1aaf5d21e), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+- **Built on Base UI [`Button`](https://base-ui.com/react/components/button).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

@@ -10,9 +10,11 @@ import * as ErrorBlockStories from './ErrorBlock.stories'
 A titled message with an optional illustration and a single recovery action — an empty
 category, a 404, a failed request.
 
-- **Import:** `import { ErrorBlock } from '@droppy/design-system'`
-- **Built on:** [Heading](?path=/docs/typography-heading--docs), [Body](?path=/docs/typography-body--docs),
-  and [Button](?path=/docs/actions-button--docs) — no Base UI primitive of its own.
+```tsx
+import { ErrorBlock } from '@droppy/design-system'
+```
+
+and [Button](?path=/docs/actions-button--docs) — no Base UI primitive of its own.
 
 <Canvas of={ErrorBlockStories.Default} />
 
@@ -56,6 +58,18 @@ renders, so a Lottie animation, a static image, or an inline SVG all work the sa
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -70,6 +84,10 @@ renders, so a Lottie animation, a static image, or an inline SVG all work the sa
   interactive element in the block.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -98,6 +116,7 @@ for those.
 ## Decision log
 
 - **2026-07**: the `image` prop was renamed `illustration` and made optional: the Lottie player and its animation JSON are application assets, so the slot takes any node or nothing rather than baking a player dependency into the package; the rest of the API (title, body, buttonText, onButtonClick) carried over unchanged from Mealdrop, and the inner gap moved from 20px to `--ds-space-sm` (24px) because spacing.m has no exact token and the scale is the source of truth ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+- **Built on [Heading](?path=/docs/typography-heading--docs), [Body](?path=/docs/typography-body--docs),.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

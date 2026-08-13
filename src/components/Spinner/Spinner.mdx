@@ -9,8 +9,9 @@ import * as SpinnerStories from './Spinner.stories'
 
 An indeterminate loading indicator — three dots crossing an arc, in the theme's brand colors.
 
-- **Import:** `import { Spinner } from '@droppy/design-system'`
-- **Built on:** a plain `<div>` wrapping an inline `<svg>` — no Base UI primitive.
+```tsx
+import { Spinner } from '@droppy/design-system'
+```
 
 <Canvas of={SpinnerStories.Default} />
 
@@ -69,6 +70,18 @@ tree either way.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -84,6 +97,10 @@ tree either way.
   for instance.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -113,6 +130,7 @@ tree either way.
 - **2026-07**: the brand teal ramp was promoted into the palette so the identity colour couldn't get lost again — Mealdrop hardcoded it in Logo.tsx/Spinner.tsx where its theme never saw it — under the [brand guidelines](?path=/docs/brand-guidelines--docs) teal rule — the identity colour is "reserved for brand surfaces: the logo, the loading spinner", never buttons, links, or interface chrome; the spinner shifts to the lime `brand-dark` ramp in dark mode.
 - **2026-07**: Spinner got a real accessible name — `role="status"` with an aria-label from its `label` prop — replacing Mealdrop's off-canvas SVG `<text>` that nothing announced; the spin is CSS keyframes so prefers-reduced-motion slows the rotation to stay perceivable without strobing, rather than freezing it ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 - **2026-08**: a visual-parity audit found the CSS port had carried the dot/arc motion but dropped the source SVG's SMIL opacity animation, and proposed restoring the mount fade as an opacity-only keyframe (safe to keep at full speed under `prefers-reduced-motion`). The PR was closed unmerged, so the spinner still pops in at full opacity and it is tracked as [#15](https://github.com/yannbf/droppy-ds/issues/15) ([droppy-ds #8](https://github.com/yannbf/droppy-ds/pull/8)).
+- **Built on a plain `<div>` wrapping an inline `<svg>` — no Base UI primitive.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

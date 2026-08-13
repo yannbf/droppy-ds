@@ -9,8 +9,9 @@ import * as ModalStories from './Modal.stories'
 
 A centered overlay that asks for one decision before the page continues.
 
-- **Import:** `import { Modal } from '@droppy/design-system'`
-- **Built on:** Base UI [`Dialog`](https://base-ui.com/react/components/dialog).
+```tsx
+import { Modal } from '@droppy/design-system'
+```
 
 {/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
 
@@ -73,6 +74,18 @@ Below 768px, `Modal` renders as a bottom sheet: full width, docked to the bottom
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -87,6 +100,10 @@ Below 768px, `Modal` renders as a bottom sheet: full width, docked to the bottom
 - **You must provide:** a meaningful `aria-label` — the default value is a placeholder, not a real description of the decision being asked. Content inside the modal should also be reachable by Tab; nothing else is required to make it focusable, since the popup itself receives initial focus.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -115,6 +132,7 @@ Modal has no CSS custom properties of its own to override — its dimensions and
 - **2026-07**: Modal took a `container` prop accepting an element or CSS selector (default document.body) because Mealdrop portalled into a `#modal` node hard-coded in its own index.html and a package cannot assume that node exists; selector resolution happens in an effect, safe because an overlay is closed on first paint anyway ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [useContainer.ts](https://github.com/yannbf/droppy-ds/blob/main/src/utils/useContainer.ts)).
 - **2026-07**: the pixel-parity pass separated theme opinion from structural behaviour: the theme's DialogPopup defaults (padding, flex gap, negative margin, border) were reset for edge-to-edge modal content, the backdrop darkened from the theme's 20% scrim to the original 40%, and the 120ms fade+scale desktop open restored over the theme's 300ms — establishing motion tokens as brand voice a consumer may legitimately retime ([popup padding commit](https://github.com/yannbf/mealdrop/commit/eee6cb87fefbef385265776839ba512cb04f5807), [scrim/spacing parity](https://github.com/yannbf/mealdrop/commit/e085f7d327906cc5568613e3fab91e343cd5ef6f), [animation timing](https://github.com/yannbf/mealdrop/commit/ac151a9710b9eb297274485d7bfa571f7acf19aa)).
 - **2026-07**: on open, focus goes to the popup container (tabindex −1) via initialFocus instead of the close button, so the modal opens without a visible focus ring while keyboard users can still Tab to the close button; popup overflow was restored to visible so a fixed-height card doesn't grow a scrollbar for its last few pixels ([initialFocus commit](https://github.com/yannbf/mealdrop/commit/7fd8d393288a13daff0295aa392f02e3f2acf94f)).
+- **Built on Base UI [`Dialog`](https://base-ui.com/react/components/dialog).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

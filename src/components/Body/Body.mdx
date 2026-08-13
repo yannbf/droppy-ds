@@ -10,9 +10,11 @@ import * as BodyStories from './Body.stories'
 Plain-text typography for paragraph copy, captions, and labels — the body-copy counterpart to
 `Heading`.
 
-- **Import:** `import { Body } from '@droppy/design-system'`
-- **Built on:** a plain `<p>`, `<span>`, `<label>`, or `<figcaption>` element — no Base UI
-  primitive.
+```tsx
+import { Body } from '@droppy/design-system'
+```
+
+primitive.
 
 <Canvas of={BodyStories.Default} />
 
@@ -78,6 +80,18 @@ step down from there.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -92,6 +106,10 @@ step down from there.
   `Body` forwards the prop but doesn't generate or match an id for you.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -126,6 +144,7 @@ overriding them wholesale.
 
 - **2026-07**: the brand extraction fixed typography as two faces with clear jobs — Hind for body and UI text, Montserrat reserved for headings — which Body's styles encode and the [Typography tokens](?path=/docs/design-tokens-typography--docs) document as the system rule.
 - **2026-08**: Body carried Mealdrop's polymorphic text API into Droppy — a `type` prop selecting the rendered element ('p' | 'span' | 'label' | 'figcaption'), an S/XS/XXS size scale, and named font weights (regular/medium/bold/black) ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
+- **Built on a plain `<p>`, `<span>`, `<label>`, or `<figcaption>` element — no Base UI.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

@@ -10,8 +10,9 @@ import * as TabsStories from './Tabs.stories'
 A set of panels, one visible at a time, switched by a row of tab buttons — settings sections, a
 profile's sub-views, anything reviewed one part at a time rather than all at once.
 
-- **Import:** `import { Tabs } from '@droppy/design-system'`
-- **Built on:** Base UI [`Tabs`](https://base-ui.com/react/components/tabs).
+```tsx
+import { Tabs } from '@droppy/design-system'
+```
 
 <Canvas of={TabsStories.Default} />
 
@@ -86,6 +87,18 @@ theme layer transitions on top of them to produce the sliding underline.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -107,6 +120,10 @@ theme layer transitions on top of them to produce the sliding underline.
   its accessible name.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -133,6 +150,7 @@ state, and indicator animation in full.
 ## Decision log
 
 - **2026-07**: Droppy's Tabs took a data-driven `tabs: {value, label, content}[]` array instead of exposing the underlying compound-component composition, keeping call sites declarative ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868)).
+- **Built on Base UI [`Tabs`](https://base-ui.com/react/components/tabs).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

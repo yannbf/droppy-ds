@@ -9,8 +9,9 @@ import * as LinkStories from './Link.stories'
 
 An inline text link — a link inside a sentence or a short list, not a button and not a nav item.
 
-- **Import:** `import { Link } from '@droppy/design-system'`
-- **Built on:** a plain `<a>` element.
+```tsx
+import { Link } from '@droppy/design-system'
+```
 
 <Canvas of={LinkStories.Default} />
 
@@ -69,6 +70,18 @@ an overlay) overrides `color` to `currentColor` or another token to keep it legi
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -81,6 +94,10 @@ applies, no custom handling.
 - **You must provide:** link text that makes sense out of context (avoid bare "click here").
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -103,6 +120,18 @@ caller can override it with an inline `style`, a `className`, or `currentColor` 
 <ArgTypes of={LinkStories} />
 
 {/* END: props */}
+
+{/* BEGIN: history */}
+
+## Decision log
+
+- **Built on a plain `<a>` element.** Droppy supplies the props, the theme classes, and the copy around it.
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+{/* END: known-issues */}
 
 {/* BEGIN: when-to-use */}
 

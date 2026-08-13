@@ -9,8 +9,9 @@ import * as TooltipStories from './Tooltip.stories'
 
 A hover and focus hint for a control whose purpose isn't obvious from its face.
 
-- **Import:** `import { Tooltip, TooltipProvider } from '@droppy/design-system'`
-- **Built on:** Base UI [`Tooltip`](https://base-ui.com/react/components/tooltip).
+```tsx
+import { Tooltip, TooltipProvider } from '@droppy/design-system'
+```
 
 <Canvas of={TooltipStories.Default} />
 
@@ -63,6 +64,18 @@ The label text shown in the tip is meant to repeat the trigger's own `aria-label
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -81,6 +94,10 @@ The label text shown in the tip is meant to repeat the trigger's own `aria-label
 - **You must provide:** an accessible name on the trigger — typically `aria-label` — whose text closely matches the tip, since the tooltip's content is otherwise invisible to assistive technology.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -112,6 +129,7 @@ Colors, padding, and border come from the theme layer's `TooltipPopup` class, la
 - **2026-07**: Mealdrop's Header was excluded from the design system as an application component (routing, cart state, a logo), but its tooltip was judged reusable and extracted as the standalone Tooltip component ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [initial component set](https://github.com/yannbf/droppy-ds/commit/8790c8460335870f6ca26be9850710ff6023cc61)).
 - **2026-07**: Mealdrop had no tooltip pattern to inherit a shadow from, and the dialog/drawer `--ds-shadow-overlay` is far too heavy at tooltip size, so small floaters were mapped to `--ds-shadow-lift` — per the [brand guidelines](?path=/docs/brand-guidelines--docs), "elevation means floating, not importance", and the lift shadow is the one for hover-scale floaters.
 - **2026-07**: the hover interaction story is deliberately skipped under Chromatic's capture because its synthetic pointer events never open the tip; the same interaction is already driven in a real browser by the Vitest story tests, so coverage is not lost ([Chromatic setup](https://github.com/yannbf/droppy-ds/commit/7497b11ac2afc2ce77ea6e3afcdfc2642f9f441b)).
+- **Built on Base UI [`Tooltip`](https://base-ui.com/react/components/tooltip).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

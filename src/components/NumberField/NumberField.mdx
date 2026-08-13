@@ -10,10 +10,12 @@ import * as NumberFieldStories from './NumberField.stories'
 A typeable numeric input with increment/decrement buttons and pointer scrub, for a quantity or
 amount that also needs a keyboard or direct-entry path.
 
-- **Import:** `import { NumberField } from '@droppy/design-system'`
-- **Built on:** Base UI [`NumberField`](https://base-ui.com/react/components/number-field),
-  labelled via [`Field`](https://base-ui.com/react/components/field) the same way
-  [Input](?path=/docs/forms-input-input--docs) is.
+```tsx
+import { NumberField } from '@droppy/design-system'
+```
+
+labelled via [`Field`](https://base-ui.com/react/components/field) the same way
+[Input](?path=/docs/forms-input-input--docs) is.
 
 <Canvas of={NumberFieldStories.Default} />
 
@@ -70,6 +72,18 @@ amount that also needs a keyboard or direct-entry path.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -89,6 +103,10 @@ amount that also needs a keyboard or direct-entry path.
 - **You must provide:** `label` — without it the field has no accessible name.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -112,6 +130,7 @@ classes — this component adds no styling of its own beyond forwarding `classNa
 ## Decision log
 
 - **2026-07**: NumberField was added as the typeable numeric input, wrapped in Field so the label associates with the control the same way Input does it — positioned explicitly against QuantityStepper, which stays a tap-tap bounded stepper; the label sits inside the ScrubArea so dragging it changes the value ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [NumberField.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/NumberField/NumberField.tsx)).
+- **Built on Base UI [`NumberField`](https://base-ui.com/react/components/number-field),.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

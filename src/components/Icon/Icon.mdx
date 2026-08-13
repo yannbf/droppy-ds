@@ -10,8 +10,9 @@ import * as IconStories from './Icon.stories'
 The icon set, inlined as SVG so it renders wherever the component tree renders, with no static
 asset to serve.
 
-- **Import:** `import { Icon } from '@droppy/design-system'`
-- **Built on:** a plain `<svg>` element.
+```tsx
+import { Icon } from '@droppy/design-system'
+```
 
 <Canvas of={IconStories.Default} />
 
@@ -73,6 +74,18 @@ sets the stroke inline instead, which wins over the class rule.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -85,6 +98,10 @@ Icon renders a non-interactive `<svg>` — there is no keyboard interaction to d
   visible text) — `Icon` itself carries none.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -109,6 +126,7 @@ Icon renders a non-interactive `<svg>` — there is no keyboard interaction to d
 ## Decision log
 
 - **2025-03**: the `name` prop was retyped from plain `string` to an `IconName` string-literal union (arrow-right, arrow-left, cross, cart, minus, plus, moon, sun, star), making invalid icon names a compile-time error; Droppy inherits this closed, typed icon set ([IconName union](https://github.com/yannbf/mealdrop/commit/14cf17a324a99c4744eec1495810f96d4e17bc5d), [mealdrop #42](https://github.com/yannbf/mealdrop/pull/42)).
+- **Built on a plain `<svg>` element.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

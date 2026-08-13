@@ -9,8 +9,9 @@ import * as SeparatorStories from './Separator.stories'
 
 A visual and semantic divider between two blocks of content.
 
-- **Import:** `import { Separator } from '@droppy/design-system'`
-- **Built on:** Base UI [`Separator`](https://base-ui.com/react/components/separator).
+```tsx
+import { Separator } from '@droppy/design-system'
+```
 
 <Canvas of={SeparatorStories.Horizontal} />
 
@@ -54,6 +55,18 @@ A visual and semantic divider between two blocks of content.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -64,6 +77,10 @@ A visual and semantic divider between two blocks of content.
 - **Screen reader:** announced as a separator; carries no accessible name of its own.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -87,6 +104,7 @@ adds no styling of its own beyond forwarding `className` to the root.
 ## Decision log
 
 - **2020-10**: dark mode was added to the app and Storybook simultaneously, converting overlay styles to theme variables and adding a Storybook theme switcher; dual light/dark theming has been a requirement for every component since, culminating in Droppy's data-theme token switching ([mealdrop #1](https://github.com/yannbf/mealdrop/pull/1), [dark mode commit](https://github.com/yannbf/mealdrop/commit/ffb87893515e58096e4984e020befc0267b84496)).
+- **Built on Base UI [`Separator`](https://base-ui.com/react/components/separator).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

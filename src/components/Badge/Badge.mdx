@@ -9,8 +9,9 @@ import * as BadgeStories from './Badge.stories'
 
 A small pill for a short, static label — a dietary tag, a category, a "new" flag.
 
-- **Import:** `import { Badge } from '@droppy/design-system'`
-- **Built on:** a plain `<span>` element.
+```tsx
+import { Badge } from '@droppy/design-system'
+```
 
 <Canvas of={BadgeStories.Default} />
 
@@ -63,6 +64,18 @@ The pill grows with its content — there's no truncation or fixed width.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -75,6 +88,10 @@ The pill grows with its content — there's no truncation or fixed width.
   `Badge` itself carries none.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -108,6 +125,7 @@ The pill grows with its content — there's no truncation or fixed width.
 
 - **2026-07**: Badge absorbed RestaurantCard's hand-rolled NewTag styled-span as `<Badge text="new" variant="positive" />`, collapsing Mealdrop's two implementations of one visual role and establishing the `variant` API for semantic colour roles while keeping the original text-as-prop API; absolute positioning over the card photo was judged a call-site concern and stays in the app ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
 - **2026-07**: casing moved into CSS per the [brand guidelines](?path=/docs/brand-guidelines--docs) rule "sentence case everywhere — never Title Case, never ALL CAPS": badge labels are written lowercase in source and `text-transform: capitalize` handles presentation, so labels are never uppercased by hand.
+- **Built on a plain `<span>` element.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

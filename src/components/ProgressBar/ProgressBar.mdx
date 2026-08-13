@@ -10,8 +10,9 @@ import * as ProgressBarStories from './ProgressBar.stories'
 A track-and-fill indicator for progress through a known number of steps — a multi-step checkout,
 an upload, a form with a fixed page count.
 
-- **Import:** `import { ProgressBar } from '@droppy/design-system'`
-- **Built on:** a plain `<div>` element.
+```tsx
+import { ProgressBar } from '@droppy/design-system'
+```
 
 <Canvas of={ProgressBarStories.Mid} />
 
@@ -60,6 +61,18 @@ track — the ARIA attributes and the rendered width always agree.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -76,6 +89,10 @@ document.
   associated with the control by markup alone.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -105,6 +122,7 @@ document.
 
 - **2026-07**: the checkout progress fill (`--ds-color-action-progress`) deliberately follows `--ds-color-action-primary` in both themes — the [brand guidelines](?path=/docs/brand-guidelines--docs) re-decide colour roles per theme (soft green even becomes the primary button in dark mode) rather than inverting light values.
 - **2026-07**: ProgressBar — ported from Mealdrop's checkout step indicator — stays a plain `role="progressbar"` track-and-fill for progress through a known number of steps, deliberately coexisting with the richer Progress rather than being replaced by it ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [Progress.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/Progress/Progress.tsx)).
+- **Built on a plain `<div>` element.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

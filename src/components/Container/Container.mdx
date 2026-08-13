@@ -10,8 +10,9 @@ import * as ContainerStories from './Container.stories'
 A max-width page wrapper with responsive side padding — the bound that keeps a page's content
 from stretching edge to edge on wide screens.
 
-- **Import:** `import { Container } from '@droppy/design-system'`
-- **Built on:** a plain `<div>` element.
+```tsx
+import { Container } from '@droppy/design-system'
+```
 
 <Canvas of={ContainerStories.Default} />
 
@@ -64,6 +65,18 @@ behaves exactly like the default variant.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -74,6 +87,10 @@ behaves exactly like the default variant.
 - **Screen reader:** not announced as a distinct region; its children are read in document order.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -103,6 +120,7 @@ literal values — no token in the current scale matches them exactly.
 ## Decision log
 
 - **2026-07**: Container replaced Mealdrop's global `.container`/`.container-desktop` stylesheet classes with a component; the `desktopOnly` prop covers the second class and is named for what it does — defer the width bound to the 1024px breakpoint — rather than for the old class suffix ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+- **Built on a plain `<div>` element.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

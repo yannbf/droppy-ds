@@ -10,8 +10,9 @@ import * as ProgressStories from './Progress.stories'
 A track-and-fill indicator for progress through a known or unknown-length task — an upload, an
 export, a multi-step process.
 
-- **Import:** `import { Progress } from '@droppy/design-system'`
-- **Built on:** Base UI [`Progress`](https://base-ui.com/react/components/progress).
+```tsx
+import { Progress } from '@droppy/design-system'
+```
 
 <Canvas of={ProgressStories.Default} />
 
@@ -69,6 +70,18 @@ export, a multi-step process.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -83,6 +96,10 @@ document.
 - **You must provide:** `label` — without it the progress bar has no accessible name.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -107,6 +124,7 @@ the root.
 ## Decision log
 
 - **2026-07**: Progress and ProgressBar deliberately coexist: Progress adds Label and formatted Value parts plus an indeterminate mode (`value={null}`) that the plain ProgressBar has no way to express ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [Progress.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/Progress/Progress.tsx)).
+- **Built on Base UI [`Progress`](https://base-ui.com/react/components/progress).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

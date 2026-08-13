@@ -10,8 +10,9 @@ import * as PageTemplateStories from './PageTemplate.stories'
 The page shell: header, a `<main>` content area, and footer — the top-level layout every routed
 page sits inside.
 
-- **Import:** `import { PageTemplate } from '@droppy/design-system'`
-- **Built on:** a plain `<div>` wrapping a `<main>` element.
+```tsx
+import { PageTemplate } from '@droppy/design-system'
+```
 
 <Canvas of={PageTemplateStories.Default} />
 
@@ -54,6 +55,18 @@ page sits inside.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -67,6 +80,10 @@ page sits inside.
   `<main>` — `PageTemplate` doesn't add one itself.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -89,6 +106,18 @@ component's own `droppy-PageTemplate` class.
 <ArgTypes of={PageTemplateStories} />
 
 {/* END: props */}
+
+{/* BEGIN: history */}
+
+## Decision log
+
+- **Built on a plain `<div>` wrapping a `<main>` element.** Droppy supplies the props, the theme classes, and the copy around it.
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+{/* END: known-issues */}
 
 {/* BEGIN: when-to-use */}
 

@@ -9,8 +9,9 @@ import * as InputStories from './Input.stories'
 
 A labelled text field with a reserved slot for its validation message.
 
-- **Import:** `import { Input } from '@droppy/design-system'`
-- **Built on:** Base UI [`Field`](https://base-ui.com/react/components/field) and [`Input`](https://base-ui.com/react/components/input).
+```tsx
+import { Input } from '@droppy/design-system'
+```
 
 <Canvas of={InputStories.Default} />
 
@@ -68,6 +69,18 @@ Any native `type` works — `Input` only supplies its own default (`text`) and o
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -82,6 +95,10 @@ Any native `type` works — `Input` only supplies its own default (`text`) and o
 - **You must provide:** a `label`. Without one, no `Field.Label` renders at all and the input has no accessible name — the same obligation every native form control has.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -113,6 +130,7 @@ Everything else — colors, borders, radius, focus ring — comes from the theme
 - **2026-07**: Input was rebuilt on Base UI Field.Root + Field.Label with real data-focused label wiring and aria-describedby pointing at the fixed-height error slot ([forms commit](https://github.com/yannbf/mealdrop/commit/0b4027271b30a4e31360eadaf41f5e1ea46a5f55)).
 - **2026-07**: the redundant `aria-label` mirroring the visible label was dropped — Field associates the real `<label htmlFor>` with the control, and an aria-label on top makes screen readers announce something other than what the page shows; the error message size also snapped from 12px to the `--ds-type-size-2xs` token (11.52px), making the type scale the source of truth ([drop aria-label](https://github.com/yannbf/mealdrop/commit/cf8f08e765c4fd56216e97dde3f2d5c198162307), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 - **2026-07**: the theme's Hind body font was judged right for buttons but wrong for input text: Mealdrop scoped its inputs back to Montserrat as an explicitly documented app-level typographic choice (labels deliberately stay Hind, the override later simplified to styled(DsInput)), and the theme's transparent input border was dropped by the consumer because validation speaks through the error message, not a border ([input font commit](https://github.com/yannbf/mealdrop/commit/8ccfa4fe54c8b8841648eadc09e24e9e7f501f63), [label font follow-up](https://github.com/yannbf/mealdrop/commit/dc0cfc9e1040131de6ecf8f7913c3d787049469b)).
+- **Built on Base UI [`Field`](https://base-ui.com/react/components/field) and [`Input`](https://base-ui.com/react/components/input).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

@@ -10,8 +10,9 @@ import * as FooterCardStories from './FooterCard.stories'
 A titled column of links for a page footer — "Discover us", "Our social media", or any other
 grouped set of footer navigation.
 
-- **Import:** `import { FooterCard } from '@droppy/design-system'`
-- **Built on:** `Heading` (level 2) and `Link` for each item.
+```tsx
+import { FooterCard } from '@droppy/design-system'
+```
 
 <Canvas of={FooterCardStories.Default} />
 
@@ -67,6 +68,18 @@ Pass `render` on a link item with a router's own link element, the same pattern 
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -81,6 +94,10 @@ behaviour applies, no custom handling.
   each footer only has one `FooterCard` per topic so the headings stay meaningful.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -105,6 +122,18 @@ Links inherit their color from the card via `currentColor`, so overriding `--ds-
 <ArgTypes of={FooterCardStories} />
 
 {/* END: props */}
+
+{/* BEGIN: history */}
+
+## Decision log
+
+- **Built on `Heading` (level 2) and `Link` for each item.** Droppy supplies the props, the theme classes, and the copy around it.
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+{/* END: known-issues */}
 
 {/* BEGIN: when-to-use */}
 

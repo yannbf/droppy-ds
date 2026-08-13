@@ -9,8 +9,9 @@ import * as HeadingStories from './Heading.stories'
 
 Display type for page and section titles, rendered as a real semantic heading.
 
-- **Import:** `import { Heading } from '@droppy/design-system'`
-- **Built on:** a plain `<h1>`–`<h5>` element — no Base UI primitive.
+```tsx
+import { Heading } from '@droppy/design-system'
+```
 
 <Canvas of={HeadingStories.Levels} />
 
@@ -61,6 +62,18 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -72,6 +85,10 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 - **You must provide:** a sequential `level` order (don't skip levels) and exactly one `h1` per page, so the outline a screen reader user navigates by stays meaningful — `size` only changes the visual step, so this holds whether or not you set it.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -107,6 +124,7 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 - **2026-07**: brand typography gave headings Montserrat with hierarchy through size and weight, never colour — the [brand guidelines](?path=/docs/brand-guidelines--docs) reserve text-colour changes for state (error, disabled) — with h1/h2 adding the tight −2px `--ds-type-tracking-display` from the guidelines' type scale.
 - **2026-07**: Sidebar's Drawer.Title renders Heading so the drawer has a real accessible name, which forced Heading to forward ref and rest props (id, `aria-*`) so the aria-labelledby id actually reaches the DOM ([heading commit](https://github.com/yannbf/mealdrop/commit/40f20f7aba828e146634d88e58cbb324541645c4), [sidebar commit](https://github.com/yannbf/mealdrop/commit/6d946fcf90684f3d87b79d6d081fbf29d41f26ce)).
 - **2026-07**: a `size` prop decoupled visual scale from semantic `level` — level picks the tag, size (defaulting to level) picks the scale, e.g. `<Heading level={2} size={4}>` — replacing the four styled(Heading) wrappers Mealdrop used to shrink correctly-levelled headings; level 5 also got a real size rule, where Mealdrop's scale had stopped at 4 ([size prop replaces wrappers](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+- **Built on a plain `<h1>`–`<h5>` element — no Base UI primitive.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

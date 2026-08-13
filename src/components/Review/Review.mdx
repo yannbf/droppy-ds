@@ -10,8 +10,9 @@ import * as ReviewStories from './Review.stories'
 A star-rating and text line — "★ 4.5 Very good" or "No reviews yet" — for a restaurant tile, an
 item card, or an order summary.
 
-- **Import:** `import { Review } from '@droppy/design-system'`
-- **Built on:** `Body`, sized `S` and rendered as a `span`.
+```tsx
+import { Review } from '@droppy/design-system'
+```
 
 <Canvas of={ReviewStories.Default} />
 
@@ -64,6 +65,18 @@ token with an external stylesheet.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -76,6 +89,10 @@ token with an external stylesheet.
   for the region the review sits in.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -98,6 +115,18 @@ inline.
 <ArgTypes of={ReviewStories} />
 
 {/* END: props */}
+
+{/* BEGIN: history */}
+
+## Decision log
+
+- **Built on `Body`, sized `S` and rendered as a `span`.** Droppy supplies the props, the theme classes, and the copy around it.
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+{/* END: known-issues */}
 
 {/* BEGIN: when-to-use */}
 

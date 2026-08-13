@@ -10,9 +10,11 @@ import * as PageSectionStories from './PageSection.stories'
 A titled content section — a heading with an optional "view all" action above whatever the
 caller composes below it, like a home page's Categories or Restaurants row.
 
-- **Import:** `import { PageSection } from '@droppy/design-system'`
-- **Built on:** [Heading](?path=/docs/typography-heading--docs) and
-  [Button](?path=/docs/actions-button--docs).
+```tsx
+import { PageSection } from '@droppy/design-system'
+```
+
+[Button](?path=/docs/actions-button--docs).
 
 <Canvas of={PageSectionStories.Default} />
 
@@ -65,6 +67,18 @@ isn't there.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -81,6 +95,10 @@ no keyboard behavior of their own.
   jump between headings rather than reading the page in order.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -111,6 +129,7 @@ exactly.
 ## Decision log
 
 - **2026-07**: PageSection kept Mealdrop's API unchanged through the Droppy migration — a required `title` rendered as a level-2 heading plus an optional top-right action via `topButtonLabel`/`onTopButtonClick` that renders a clear Button — and was adopted as a drop-in with no parity deltas ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
+- **Built on [Heading](?path=/docs/typography-heading--docs) and.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

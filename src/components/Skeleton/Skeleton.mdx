@@ -10,8 +10,9 @@ import * as SkeletonStories from './Skeleton.stories'
 A loading placeholder that stands in for content before it arrives, shaped to match what it will
 become.
 
-- **Import:** `import { Skeleton } from '@droppy/design-system'`
-- **Built on:** a plain `<span>`.
+```tsx
+import { Skeleton } from '@droppy/design-system'
+```
 
 <Canvas of={SkeletonStories.Default} />
 
@@ -83,6 +84,18 @@ and the background falls back to the flat base token.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -97,6 +110,10 @@ and the background falls back to the flat base token.
   announces nothing.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -124,6 +141,7 @@ and the background falls back to the flat base token.
 
 - **2026-07**: Skeleton shipped as a dependency-free CSS shimmer reading skeleton tokens directly, replacing the react-loading-skeleton dependency and Mealdrop's `<SkeletonTheme>` provider (which needed an @ts-expect-error for wrong types and manual base/highlight colours per theme); the per-instance `width`/`height` sizing API was kept so loading layouts port over line-for-line ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 - **2026-08**: a visual-parity audit traced the shimmer's choppy double pulse to keyframes travelling two tile periods per cycle over a 200%-wide gradient, and proposed 100%/−100% stops for one evenly-eased sweep per 1.6s cycle. The PR was closed unmerged, so the defect is tracked as [#11](https://github.com/yannbf/droppy-ds/issues/11) ([droppy-ds #8](https://github.com/yannbf/droppy-ds/pull/8)).
+- **Built on a plain `<span>`.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

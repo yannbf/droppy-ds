@@ -10,8 +10,9 @@ import * as ButtonStories from './Button.stories'
 The primary action control — chrome comes from the theme, variants and the icon slot come from
 Droppy.
 
-- **Import:** `import { Button } from '@droppy/design-system'`
-- **Built on:** Base UI [`Button`](https://base-ui.com/react/components/button)
+```tsx
+import { Button } from '@droppy/design-system'
+```
 
 <Canvas of={ButtonStories.Default} />
 
@@ -100,6 +101,18 @@ default. Pass `type="submit"` explicitly to opt in.
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -120,6 +133,10 @@ default. Pass `type="submit"` explicitly to opt in.
   that should stay focusable.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -153,6 +170,7 @@ this component doesn't override.
 - **2026-07**: buttons follow the [brand guidelines](?path=/docs/brand-guidelines--docs) type roles — Hind is the "text and UI face for body copy, labels, and buttons", set at the small step and regular weight, never the display face or ALL CAPS — so a CTA earns attention through its fill rather than its typography; dark mode re-decides the primary action's role rather than inverting it (neutral in light, soft green becoming "the primary button" in dark).
 - **2026-07**: icon-to-label spacing moved to CSS `gap` instead of Mealdrop's dedicated spacer element — one fewer DOM node for the same 1rem — with the icon slot as a typed `icon?: IconName` prop rendering before the label ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [initial component set](https://github.com/yannbf/droppy-ds/commit/8790c8460335870f6ca26be9850710ff6023cc61)).
 - **2026-07**: the theme ships `line-height: 1` and `gap: 0.5rem` as brand defaults; Mealdrop had to restore `line-height: normal` and zero gap in overrides to keep its original 54px height, documenting Button's height and built-in icon gap as theme opinions that diverge from the pre-migration design ([button height commit](https://github.com/yannbf/mealdrop/commit/8de6ca1aecc1febd479ed80245430c1d810dcf66)).
+- **Built on Base UI [`Button`](https://base-ui.com/react/components/button).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

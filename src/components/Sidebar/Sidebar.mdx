@@ -9,8 +9,9 @@ import * as SidebarStories from './Sidebar.stories'
 
 A panel that slides in from the trailing edge, for content reviewed alongside the page rather than instead of it.
 
-- **Import:** `import { Sidebar } from '@droppy/design-system'`
-- **Built on:** Base UI [`Drawer`](https://base-ui.com/react/components/drawer).
+```tsx
+import { Sidebar } from '@droppy/design-system'
+```
 
 {/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
 
@@ -85,6 +86,18 @@ Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px 
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -100,6 +113,10 @@ Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px 
 - **You must provide:** a `title` that actually describes the panel's contents ("Your order" rather than something generic) — it is the only accessible name the dialog gets.
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -130,6 +147,7 @@ The panel's desktop width (420px) is fixed by the design system and isn't expose
 - **2026-07**: Drawer.Portal's document.body default pushed the drawer outside the story canvas and forced tests to query the document body; rather than keep rewritten story queries (an earlier workaround, reversed), the drawer portals into the same in-app `#modal` container Modal uses, falling back to body, keeping interaction stories byte-identical to their pre-migration versions ([portal-target commit](https://github.com/yannbf/mealdrop/commit/798e2fad44b666c3f4165b3b447a2b636a0b8a07), [earlier query-scope commit](https://github.com/yannbf/mealdrop/commit/5b449fe827cfbf9238a59c0d6b5a0efc24604ce4)).
 - **2026-07**: Sidebar took a `container` prop accepting an element or CSS selector (default document.body) because Mealdrop portalled into a `#modal` node hard-coded in its own index.html and a package cannot assume that node exists; selector resolution happens in an effect, safe because an overlay is closed on first paint ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [useContainer.ts](https://github.com/yannbf/droppy-ds/blob/main/src/utils/useContainer.ts)).
 - **2026-07**: the pixel-parity pass separated theme opinion from behaviour: the Drawer backdrop was darkened from the theme's 20% black scrim to the original 40%, and the 300ms slide reverted to default ease over the theme's slower easing — establishing motion tokens as brand voice a consumer may legitimately retime ([scrim parity commit](https://github.com/yannbf/mealdrop/commit/e085f7d327906cc5568613e3fab91e343cd5ef6f), [animation timing commit](https://github.com/yannbf/mealdrop/commit/ac151a9710b9eb297274485d7bfa571f7acf19aa)).
+- **Built on Base UI [`Drawer`](https://base-ui.com/react/components/drawer).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 

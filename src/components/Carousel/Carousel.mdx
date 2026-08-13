@@ -10,9 +10,11 @@ import * as CarouselStories from './Carousel.stories'
 A horizontally scrolling row of items — restaurant cards, category tiles — showing a fixed number
 per breakpoint, with drag, wheel-gesture, and arrow navigation.
 
-- **Import:** `import { Carousel } from '@droppy/design-system'`
-- **Built on:** [Embla Carousel](https://www.embla-carousel.com/) with the wheel-gestures plugin,
-  and the design system's own `IconButton` for the arrows.
+```tsx
+import { Carousel } from '@droppy/design-system'
+```
+
+and the design system's own `IconButton` for the arrows.
 
 <Canvas of={CarouselStories.Default} />
 
@@ -64,6 +66,18 @@ When every child already fits in the viewport, neither arrow renders — there's
 
 {/* END: behavior */}
 
+{/* BEGIN: anatomy */}
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -81,6 +95,10 @@ own content remains independently focusable and readable in document order.
   page needs one (e.g. wrap it with `aria-label` or a preceding heading).
 
 {/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
 
 {/* BEGIN: styling */}
 
@@ -104,6 +122,18 @@ with the component's own `droppy-Carousel` class.
 <ArgTypes of={CarouselStories} />
 
 {/* END: props */}
+
+{/* BEGIN: history */}
+
+## Decision log
+
+- **Built on [Embla Carousel](https://www.embla-carousel.com/) with the wheel-gestures plugin,.** Droppy supplies the props, the theme classes, and the copy around it.
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+{/* END: known-issues */}
 
 {/* BEGIN: when-to-use */}
 
