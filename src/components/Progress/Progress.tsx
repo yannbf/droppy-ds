@@ -35,6 +35,7 @@ export const Progress = ({
   ...rest
 }: ProgressProps) => (
   <BaseProgress.Root
+    data-part="root"
     value={value}
     max={max}
     className={cx(theme.ProgressRoot, 'droppy-Progress', className)}
@@ -42,12 +43,16 @@ export const Progress = ({
   >
     {(label || showValue) && (
       <>
-        {label && <BaseProgress.Label className={theme.ProgressLabel}>{label}</BaseProgress.Label>}
-        {showValue && <BaseProgress.Value className={theme.ProgressValue} />}
+        {label && (
+          <BaseProgress.Label data-part="label" className={theme.ProgressLabel}>
+            {label}
+          </BaseProgress.Label>
+        )}
+        {showValue && <BaseProgress.Value data-part="value" className={theme.ProgressValue} />}
       </>
     )}
-    <BaseProgress.Track className={theme.ProgressTrack}>
-      <BaseProgress.Indicator className={theme.ProgressIndicator} />
+    <BaseProgress.Track data-part="track" className={theme.ProgressTrack}>
+      <BaseProgress.Indicator data-part="indicator" className={theme.ProgressIndicator} />
     </BaseProgress.Track>
   </BaseProgress.Root>
 )

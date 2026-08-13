@@ -1,12 +1,29 @@
 import type { ComponentProps } from 'react'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { AnatomyParameters } from '@component-anatomy/storybook'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import type { FooterCardProps } from './FooterCard'
 import { FooterCard } from './FooterCard'
 
-// Stands in for a router's own link component (e.g. react-router's `Link`) to
-// demonstrate the `render` escape hatch without adding a router dependency to
-// the design system's stories.
+/** Hides props that aren't a story's point, so its controls stay actionable. */
+const hide = (...props: Array<keyof FooterCardProps | 'children'>) =>
+  Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** Placeholder for an examples story whose content lands in a later session.
+ *  Paints its own background so it keeps contrast on any surface. */
+const TODO = (
+  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
+)
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
+
+// Stands in for a router's own link component (e.g. react-router's `Link`).
 const RouterLink = ({ to, children, ...rest }: { to: string } & ComponentProps<'a'>) => (
   <a href={to} data-router-link="" {...rest}>
     {children}
@@ -24,6 +41,22 @@ const meta = {
       { name: 'About', href: '/about' },
     ],
   },
+  argTypes: {
+    title: { control: 'text', description: 'Column heading, rendered as an `h2`.' },
+    links: {
+      control: 'object',
+      description:
+        'The link list, as `{ name, href?, external?, render? }`. Empty renders no list.',
+    },
+    children: {
+      control: false,
+      description: 'Arbitrary content below the list — app badges, a paragraph.',
+    },
+    className: {
+      control: 'text',
+      description: 'Merged onto the root alongside the component’s own `droppy-FooterCard` class.',
+    },
+  },
   decorators: [
     (Story) => (
       <div style={{ background: '#1a1a1a', padding: '1.5rem', borderRadius: '0.5rem' }}>
@@ -36,23 +69,164 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/**
+ * One column of a page footer. Title and links are both set below, so the
+ * controls start populated — edit the list to add or remove entries.
+ */
 export const Default: Story = {
-  play: async ({ canvas }) => {
-    const link = canvas.getByRole('link', { name: 'Categories' })
+  tags: ['showcase'],
+  args: {
+    title: 'Discover us',
+    links: [
+      { name: 'Home', href: '/' },
+      { name: 'Categories', href: '/categories' },
+      { name: 'About', href: '/about' },
+    ],
+  },
+  argTypes: hide('children', 'className'),
+}
 
-    await expect(link).toHaveAttribute('href', '/categories')
+/* ------------------------------------------------------------------ */
+/* api-ref — one story per prop                                        */
+/* ------------------------------------------------------------------ */
+
+/** `title` is the column heading, rendered as an `h2`. */
+export const Title: Story = {
+  tags: ['api-ref'],
+  argTypes: hide('links', 'children', 'className'),
+  args: { title: 'Our social media' },
+}
+
+/** `links` is the list. Omitted or empty, no `<ul>` is rendered at all. */
+export const Links: Story = {
+  tags: ['api-ref'],
+  argTypes: hide('children', 'className'),
+  args: {
+    links: [
+      { name: 'Home', href: '/' },
+      { name: 'Categories', href: '/categories' },
+    ],
   },
 }
 
-/** External links open in a new tab with `rel="noopener noreferrer"`. */
+/** Item `external` opens in a new tab with `rel="noopener noreferrer"`. */
 export const ExternalLinks: Story = {
+  tags: ['api-ref', 'highlight'],
+  argTypes: hide('children', 'className'),
   args: {
     title: 'Our social media',
     links: [
       { name: 'Facebook', href: 'https://facebook.com', external: true },
       { name: 'Instagram', href: 'https://instagram.com', external: true },
-      { name: 'Twitter', href: 'https://twitter.com', external: true },
     ],
+  },
+}
+
+/** Item `render` swaps the default `<a>` for a router-aware link, per item. */
+export const ItemRender: Story = {
+  tags: ['api-ref', 'highlight'],
+  argTypes: hide('children', 'className'),
+  args: {
+    links: [
+      { name: 'Home', render: <RouterLink to="/" /> },
+      { name: 'Categories', render: <RouterLink to="/categories" /> },
+    ],
+  },
+}
+
+/** `children` render below the list — app store badges, a short paragraph. */
+export const Children: Story = {
+  tags: ['api-ref'],
+  argTypes: hide('links', 'className'),
+  args: { title: 'Check our apps', links: [] },
+  render: (args) => (
+    <FooterCard {...args}>
+      <p style={{ margin: 0, color: '#fff' }}>Available on iOS and Android.</p>
+    </FooterCard>
+  ),
+}
+
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
+export const ClassName: Story = {
+  tags: ['api-ref'],
+  argTypes: hide('links', 'children'),
+  args: { className: 'footercard-demo-inset' },
+  decorators: [inBorderedBox],
+  render: (args) => (
+    <>
+      <style>{`.footercard-demo-inset { margin: 1rem; }`}</style>
+      <FooterCard {...args} />
+    </>
+  ),
+}
+
+/* ------------------------------------------------------------------ */
+/* anatomy — the rendered part tree                                    */
+/* ------------------------------------------------------------------ */
+
+/** The column, its heading, and the list of links inside it. */
+export const Anatomy: Story = {
+  tags: ['infra'],
+  argTypes: hide('title', 'links', 'children', 'className'),
+  parameters: {
+    anatomy: {
+      parts: [
+        { id: 'root', name: 'Root', description: 'The column: heading above, list below.' },
+        { id: 'title', name: 'Title', description: 'The `h2` column heading.' },
+        { id: 'list', name: 'List', description: 'The `<ul>`; absent when `links` is empty.' },
+        { id: 'item', name: 'Item', description: 'One `<li>` per entry.' },
+        {
+          id: 'link',
+          name: 'Link',
+          description: 'The `Link` inside it — an `<a>`, or whatever `render` supplies.',
+        },
+      ],
+    } satisfies AnatomyParameters,
+  },
+}
+
+/* ------------------------------------------------------------------ */
+/* examples — Mealdrop / DropBoard compositions                        */
+/* ------------------------------------------------------------------ */
+
+/**
+ * TODO — real content lands in the dedicated examples session.
+ *
+ * Mined from Mealdrop (`agentic-reference/droppy`): no direct import of this
+ * component — the app has its own `FooterCard` that composes `Body` and
+ * `Heading` by hand, which is what this replaces. The story to write: that
+ * footer row rebuilt — 'Discover us' (Home, Categories, About), 'Our social
+ * media' (Facebook, Instagram, Twitter, all `external`), and a 'Check our
+ * apps' column using `children` for the store badges rather than a link list —
+ * three columns on the dark footer surface, showing all three shapes the
+ * component has to cover.
+ */
+export const MealdropFooterRow: Story = {
+  tags: ['examples'],
+  render: () => TODO,
+}
+
+/* ------------------------------------------------------------------ */
+/* tests — assertions only, one behaviour each                         */
+/* ------------------------------------------------------------------ */
+
+export const TestLinksResolve: Story = {
+  tags: ['tests'],
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('link', { name: 'Categories' })).toHaveAttribute(
+      'href',
+      '/categories'
+    )
+  },
+}
+
+export const TestExternalLinksAreSafe: Story = {
+  tags: ['tests'],
+  args: {
+    links: [{ name: 'Facebook', href: 'https://facebook.com', external: true }],
   },
   play: async ({ canvas }) => {
     const link = canvas.getByRole('link', { name: 'Facebook' })
@@ -62,27 +236,21 @@ export const ExternalLinks: Story = {
   },
 }
 
-/** `render` swaps the default `<a>` for a router-aware link per item — a
- *  stand-in here for `react-router`'s `Link`. */
-export const WithRouterLinks: Story = {
-  args: {
-    links: [
-      { name: 'Home', render: <RouterLink to="/" /> },
-      { name: 'Categories', render: <RouterLink to="/categories" /> },
-    ],
-  },
-  play: async ({ canvasElement }) => {
-    await expect(canvasElement.querySelectorAll('[data-router-link]')).toHaveLength(2)
+export const TestEmptyLinksRendersNoList: Story = {
+  tags: ['tests'],
+  args: { links: [] },
+  play: async ({ canvas }) => {
+    await expect(canvas.queryByRole('list')).not.toBeInTheDocument()
+    await expect(canvas.getByRole('heading', { level: 2 })).toBeInTheDocument()
   },
 }
 
-/** Arbitrary content — app store badges, a short paragraph — instead of (or
- *  alongside) a link list. */
-export const WithChildren: Story = {
-  args: { title: 'Check our apps', links: [] },
-  render: (args) => (
-    <FooterCard {...args}>
-      <p style={{ margin: 0 }}>Available on iOS and Android.</p>
-    </FooterCard>
-  ),
+export const TestItemRenderKeepsItsDestination: Story = {
+  tags: ['tests'],
+  args: { links: [{ name: 'Categories', render: <RouterLink to="/categories" /> }] },
+  play: async ({ canvasElement }) => {
+    const link = canvasElement.querySelector('[data-router-link]')
+
+    await expect(link).toHaveAttribute('href', '/categories')
+  },
 }

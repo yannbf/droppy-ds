@@ -5,11 +5,14 @@ import * as TabsStories from './Tabs.stories'
 
 # Tabs
 
+{/* BEGIN: general */}
+
 A set of panels, one visible at a time, switched by a row of tab buttons — settings sections, a
 profile's sub-views, anything reviewed one part at a time rather than all at once.
 
-- **Import:** `import { Tabs } from '@droppy/design-system'`
-- **Built on:** Base UI [`Tabs`](https://base-ui.com/react/components/tabs).
+```tsx
+import { Tabs } from '@droppy/design-system'
+```
 
 <Canvas of={TabsStories.Default} />
 
@@ -23,6 +26,10 @@ profile's sub-views, anything reviewed one part at a time rather than all at onc
 - **Activates on click**, not on focus alone — arrow-keying through the tabs moves focus without
   changing which panel is shown, matching
   [WCAG 2.5.2 Pointer Cancellation](https://www.w3.org/WAI/WCAG21/Understanding/pointer-cancellation.html).
+
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
 
 ## When to use
 
@@ -38,41 +45,63 @@ profile's sub-views, anything reviewed one part at a time rather than all at onc
   hide it behind tabs — an [Accordion](?path=/docs/layout-structure-accordion--docs) at least keeps
   every section's title visible, and plain layout keeps everything visible outright.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Switching tabs
+### Focus does not activate
 
-Clicking a tab activates it and swaps the visible panel.
+Tabs activate on click, not on focus: arrowing along the row moves focus without swapping the
+panel, so a keyboard user can read the labels before committing. Only Enter, Space, or a click
+activates.
 
-<Canvas of={TabsStories.ClickToActivate} />
-
-### Keyboard focus doesn't activate
-
-Arrow-keying between tabs moves focus without changing the active panel — an explicit click,
-Enter, or Space is what activates the focused tab.
-
-<Canvas of={TabsStories.KeyboardFocusDoesNotActivate} />
-
-### Disabled tabs
-
-A disabled tab stays focusable, so arrow-key navigation can still land on it, but neither click
-nor keyboard ever activates it.
-
-<Canvas of={TabsStories.DisabledTab} />
+<Canvas of={TabsStories.FocusDoesNotActivate} />
 
 ### Controlled value
 
-Pass `value` and `onValueChange` to drive the active tab from state outside the component, instead
-of `defaultValue`.
+`value` with `onValueChange` hands the active tab to the caller's state. One without the other
+leaves the row stuck — the callback fires, the tab never moves.
 
 <Canvas of={TabsStories.ControlledValue} />
 
-### The animated indicator
+### The sliding indicator
 
-`Tabs.Indicator` measures the active tab's position and writes it as CSS custom properties; the
-theme layer transitions on top of them to produce the sliding underline.
+`Tabs.Indicator` writes the active tab's measured position and size to CSS custom properties,
+which the theme transitions on top of.
 
 <Canvas of={TabsStories.AnimatedIndicator} />
+{/* END: behavior */}
+
+{/* BEGIN: anatomy */}
+
+## Anatomy
+
+A tab row with its indicator, and one panel per tab. The list is flat — `tabs` renders the whole set, so there is no `Tabs.Tab`/`Tabs.Panel` to compose by hand.
+
+<Canvas of={TabsStories.Anatomy} />
+
+| Part      | `data-part` | Renders    | Purpose                                                                  |
+| :-------- | :---------- | :--------- | :----------------------------------------------------------------------- |
+| Root      | `root`      | `<div>`    | Owns the active value and links tabs to panels                           |
+| List      | `list`      | `<div>`    | The `role="tablist"` row                                                 |
+| Tab       | `tab`       | `<button>` | One per entry, carrying `aria-selected`                                  |
+| Indicator | `indicator` | `<span>`   | The sliding underline; writes the active tab's position as CSS variables |
+| Viewport  | `viewport`  | `<div>`    | Wraps the panels                                                         |
+| Panel     | `panel`     | `<div>`    | One per tab; only the active one shows                                   |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -92,6 +121,14 @@ theme layer transitions on top of them to produce the sliding underline.
 - **You must provide:** a meaningful `label` per tab — it becomes both the visible tab text and
   its accessible name.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 Droppy's own stylesheet carries no rules for `Tabs` — the theme layer's `TabsRoot`, `TabsList`,
@@ -100,11 +137,51 @@ state, and indicator animation in full.
 
 `className` merges onto the root, so it composes with the theme layer rather than replacing it.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={TabsStories} />
+
+### `tabs`
+
+The whole set, as `{ value, label, content, disabled? }`.
+
+<Canvas of={TabsStories.TabsProp} />
+
+### Item `disabled`
+
+Keeps a tab focusable but never lets it activate.
+
+<Canvas of={TabsStories.DisabledTab} />
+
+### `defaultValue`
+
+The tab active on first render, for an uncontrolled Tabs.
+
+<Canvas of={TabsStories.DefaultValue} />
+
+### `value` and `onValueChange`
+
+The controlled pairing.
+
+<Canvas of={TabsStories.ControlledValue} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Tabs` class.
+
+<Canvas of={TabsStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
 
 - **2026-07**: Droppy's Tabs took a data-driven `tabs: {value, label, content}[]` array instead of exposing the underlying compound-component composition, keeping call sites declarative ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868)).
+- **Built on Base UI [`Tabs`](https://base-ui.com/react/components/tabs).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -125,9 +202,7 @@ state, and indicator animation in full.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={TabsStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
@@ -135,3 +210,5 @@ state, and indicator animation in full.
   [Accordion](?path=/docs/layout-structure-accordion--docs) instead of hiding content behind tabs.
 - To group a tab panel's content into a raised surface, see
   [Card](?path=/docs/media-content-card--docs).
+
+{/* END: when-to-use */}

@@ -21,6 +21,7 @@ export const Card = ({
   ...rest
 }: PropsWithChildren<CardProps>) => (
   <div
+    data-part="root"
     className={cx(
       'droppy-Card',
       interactive && 'droppy-Card--interactive',

@@ -5,10 +5,13 @@ import * as InputStories from './Input.stories'
 
 # Input
 
+{/* BEGIN: general */}
+
 A labelled text field with a reserved slot for its validation message.
 
-- **Import:** `import { Input } from '@droppy/design-system'`
-- **Built on:** Base UI [`Field`](https://base-ui.com/react/components/field) and [`Input`](https://base-ui.com/react/components/input).
+```tsx
+import { Input } from '@droppy/design-system'
+```
 
 <Canvas of={InputStories.Default} />
 
@@ -20,6 +23,10 @@ A labelled text field with a reserved slot for its validation message.
 - **No `aria-label` layered on top of the visible label.** Field's association already gives the input its accessible name, so what a screen reader announces always matches what's on screen.
 - **`className` merges onto the underlying input**, so wrapping it in `styled()` or adding utility classes composes instead of replacing Droppy's own styling.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Any single-line text field in a form — name, email, phone, postcode.
@@ -30,31 +37,49 @@ A labelled text field with a reserved slot for its validation message.
 - To let someone pick from a short, known list rather than type a value, use [Select](?path=/docs/forms-input-select--docs) instead — a select can't return a value the list doesn't contain, which is often what you want.
 - For multi-line content, `Input` renders a single `<input>` and has no multi-line mode — reach for Base UI's `Field.Control render={<textarea />}` directly instead of stretching this component past a single line.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Label association
-
-The visible label is rendered by Base UI's `Field.Label`, which is auto-associated with the control's `id` — the label doubles as the input's accessible name, with no `aria-label` needed or wanted on top of it.
-
-<Canvas of={InputStories.LabelNamesTheControl} />
-
-### Error display
-
-Passing `error` renders a message in the reserved slot below the control.
-
-<Canvas of={InputStories.WithError} />
-
-### The error slot never shifts layout
-
-The slot is always mounted — with a message or with a single space — so its minimum height holds regardless of whether a field is currently invalid. That reserved height, plus a fixed bottom margin, is what keeps one field's error from nudging the next field down.
+The error slot keeps its height whether or not a message is showing, so validating one field never
+shifts the ones below it.
 
 <Canvas of={InputStories.ErrorDoesNotShiftLayout} />
 
-### Native input types
+Base UI's `Field` wires the label, the control and the error together — `for`/`id` and
+`aria-describedby` — so the caller never does it by hand. That is also why the component sets no
+`aria-label` of its own: an `aria-label` on top of a real `<label>` overrides the visible text,
+leaving what a screen reader announces disagreeing with what the page shows.
+{/* END: behavior */}
 
-Any native `type` works — `Input` only supplies its own default (`text`) and otherwise passes the prop straight to the underlying element.
+{/* BEGIN: anatomy */}
 
-<Canvas of={InputStories.Types} />
+## Anatomy
+
+A field root wrapping a label, the control, and an always-mounted error slot. The slot is the unusual part: it stays in the DOM holding a non-breaking space when there is no message, which is what reserves the height.
+
+<Canvas of={InputStories.Anatomy} />
+
+| Part    | `data-part` | Renders   | Purpose                                                          |
+| :------ | :---------- | :-------- | :--------------------------------------------------------------- |
+| Root    | `root`      | `<div>`   | Base UI's `Field.Root`, wiring label, control and error together |
+| Label   | `label`     | `<label>` | Absent when `label` is empty                                     |
+| Control | `control`   | `<input>` | The control itself; `className` lands here                       |
+| Error   | `error`     | `<div>`   | Always mounted, so showing a message never moves the layout      |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -67,6 +92,14 @@ Any native `type` works — `Input` only supplies its own default (`text`) and o
 - **Screen reader:** announces the label as the field's accessible name, then reads the error slot as part of the field's description. Because the slot is always rendered — even with no error — its id stays in `aria-describedby` at all times; with no error present, a screen reader simply reads a blank description.
 - **You must provide:** a `label`. Without one, no `Field.Label` renders at all and the input has no accessible name — the same obligation every native form control has.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token                      | Used for                                                          |
@@ -77,6 +110,52 @@ Any native `type` works — `Input` only supplies its own default (`text`) and o
 
 Everything else — colors, borders, radius, focus ring — comes from the theme layer's own `Field`/`Input` classes; `Input.css` only overrides the pieces specific to Droppy's variant (the placeholder border is removed, since validity is communicated by the error message rather than a border color). `className` is merged onto the rendered input, composing with rather than replacing that layer.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={InputStories} />
+
+### `label`
+
+Both the visible label and the control's accessible name.
+
+<Canvas of={InputStories.Label} />
+
+### `error`
+
+Fills the reserved slot beneath the control, and is wired to the input via `aria-describedby`.
+
+<Canvas of={InputStories.Error} />
+
+### `type`
+
+Native, and passed straight through — along with every other `<input>` attribute.
+
+<Canvas of={InputStories.Types} />
+
+### `disabled`
+
+Native too; `Field` dims the label alongside the control.
+
+<Canvas of={InputStories.Disabled} />
+
+### `placeholder`
+
+A hint, never a substitute for the label.
+
+<Canvas of={InputStories.Placeholder} />
+
+### `className`
+
+Merged onto the **control**, not the field root, alongside the component's own `droppy-Input`
+class.
+
+<Canvas of={InputStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
@@ -85,6 +164,7 @@ Everything else — colors, borders, radius, focus ring — comes from the theme
 - **2026-07**: Input was rebuilt on Base UI Field.Root + Field.Label with real data-focused label wiring and aria-describedby pointing at the fixed-height error slot ([forms commit](https://github.com/yannbf/mealdrop/commit/0b4027271b30a4e31360eadaf41f5e1ea46a5f55)).
 - **2026-07**: the redundant `aria-label` mirroring the visible label was dropped — Field associates the real `<label htmlFor>` with the control, and an aria-label on top makes screen readers announce something other than what the page shows; the error message size also snapped from 12px to the `--ds-type-size-2xs` token (11.52px), making the type scale the source of truth ([drop aria-label](https://github.com/yannbf/mealdrop/commit/cf8f08e765c4fd56216e97dde3f2d5c198162307), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 - **2026-07**: the theme's Hind body font was judged right for buttons but wrong for input text: Mealdrop scoped its inputs back to Montserrat as an explicitly documented app-level typographic choice (labels deliberately stay Hind, the override later simplified to styled(DsInput)), and the theme's transparent input border was dropped by the consumer because validation speaks through the error message, not a border ([input font commit](https://github.com/yannbf/mealdrop/commit/8ccfa4fe54c8b8841648eadc09e24e9e7f501f63), [label font follow-up](https://github.com/yannbf/mealdrop/commit/dc0cfc9e1040131de6ecf8f7913c3d787049469b)).
+- **Built on Base UI [`Field`](https://base-ui.com/react/components/field) and [`Input`](https://base-ui.com/react/components/input).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -105,11 +185,11 @@ Everything else — colors, borders, radius, focus ring — comes from the theme
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={InputStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To offer a fixed set of choices instead of free text, use [Select](?path=/docs/forms-input-select--docs).
 - For the page or section title above a form, use [Heading](?path=/docs/typography-heading--docs).
+
+{/* END: when-to-use */}

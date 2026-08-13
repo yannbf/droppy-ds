@@ -5,14 +5,17 @@ import * as SidebarStories from './Sidebar.stories'
 
 # Sidebar
 
+{/* BEGIN: general */}
+
 A panel that slides in from the trailing edge, for content reviewed alongside the page rather than instead of it.
 
-- **Import:** `import { Sidebar } from '@droppy/design-system'`
-- **Built on:** Base UI [`Drawer`](https://base-ui.com/react/components/drawer).
+```tsx
+import { Sidebar } from '@droppy/design-system'
+```
 
 {/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
 
-<Canvas of={SidebarStories.Open} story={{ inline: false, height: '480px' }} />
+<Canvas of={SidebarStories.Default} story={{ inline: false, height: '480px' }} />
 
 ## Features
 
@@ -23,6 +26,10 @@ A panel that slides in from the trailing edge, for content reviewed alongside th
 - **Pinned footer slot** — an optional `footer` sits fixed to the bottom of the panel while the content above it scrolls independently.
 - **Portal by default** — content renders at the end of `document.body`, so a parent's `overflow: hidden` or `z-index` stacking context can't clip or bury it.
 - **ARIA dialog wiring** — `role="dialog"` and the accessible name (from `title`) are set for you.
+
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
 
 ## When to use
 
@@ -35,43 +42,63 @@ A panel that slides in from the trailing edge, for content reviewed alongside th
 - To ask for a single decision that should block the rest of the page until it's made — a confirmation, an "are you sure" — use [Modal](?path=/docs/overlays-modal--docs). Sidebar shares the page; Modal takes it over.
 - To explain what a control does before it's activated, use [Tooltip](?path=/docs/overlays-tooltip--docs) — a hint doesn't need a panel or a focus trap.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Open and close
+### The pinned footer
 
-`Sidebar` is controlled: `isOpen` decides whether it's rendered, and `onClose` fires whenever Base UI's `Drawer` decides it should close.
+The footer stays put and the content scrolls above it, so a long order never pushes the checkout
+button out of reach.
 
-<Canvas of={SidebarStories.OpensAndCloses} />
+<Canvas of={SidebarStories.PinnedFooterWithScrollingContent} />
 
-### Dismissal
+### Responsive width
 
-Escape closes the panel from anywhere inside it, clicking the backdrop closes it without needing to find the close button, and on touch devices swiping the panel toward its trailing edge dismisses it as well — the direction Base UI's `Drawer` is configured with (`swipeDirection="right"`).
+Below the mobile breakpoint the panel takes the full width.
 
-### Focus behavior
+<Canvas of={SidebarStories.FullWidthOnMobile} />
 
-On open, focus moves into the panel rather than the close button, for the same reason as Modal: landing on "close" reads as an invitation to leave before the content's been seen. Tab still reaches the close button, and the title and content stay reachable by keyboard throughout.
+### Slide motion
 
-### Portaling
+The panel slides from the trailing edge off `[data-starting-style]` and `[data-ending-style]`, and
+stays mounted through the exit so the close animation runs before it leaves. Base UI drives
+swipe-to-dismiss from the same states.
 
-`container` decides where the panel is portaled: pass an element, a CSS selector string, or leave it unset to default to `document.body`. A selector is resolved after mount, so on first paint the panel portals nowhere — the correct order, since it starts closed anyway.
+<Canvas of={SidebarStories.SlideTransition} />
+{/* END: behavior */}
 
-### Responsive behavior
+{/* BEGIN: anatomy */}
 
-Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px it uses at 768px and above — there's no room on a small screen to leave part of the page visible beside it.
+## Anatomy
 
-<Canvas of={SidebarStories.FullWidthOnMobile} story={{ inline: false, height: '480px' }} />
+A backdrop and the sliding panel, split into a top bar, a scrolling content region, and an optional pinned footer. The anatomy story portals into a node inside the story canvas via `container`, so the **Anatomy** panel can reach the parts — it only scans the canvas, and the default portal target is the document body.
 
-### Footer slot
+<Canvas of={SidebarStories.Anatomy} />
 
-`footer` renders in a region pinned to the bottom of the panel, separated from the content above it by a border. The content area's scroll bound is calculated to leave room for both the top bar and the footer, so long lists scroll independently of the pinned total and action underneath.
+| Part     | `data-part` | Renders    | Purpose                                     |
+| :------- | :---------- | :--------- | :------------------------------------------ |
+| Backdrop | `backdrop`  | `<div>`    | The dimmed layer behind the panel           |
+| Popup    | `root`      | `<div>`    | The sliding panel: focus trap, swipe, shape |
+| Top bar  | `topbar`    | `<div>`    | Holds the title and the close button        |
+| Title    | `title`     | `<h4>`     | The heading; also names the dialog          |
+| Close    | `close`     | `<button>` | The round icon button that dismisses        |
+| Content  | `content`   | `<div>`    | The scrolling region between the two        |
+| Footer   | `footer`    | `<div>`    | Pinned to the bottom; absent without one    |
 
-<Canvas of={SidebarStories.WithFooter} story={{ inline: false, height: '480px' }} />
+{/* END: anatomy */}
 
-### Naming the dialog
+{/* BEGIN: examples */}
 
-`title` is required, not optional as it is on Modal — it renders in the top bar and also names the dialog for assistive technology, since Sidebar has no separate `aria-label` prop.
+{/* END: examples */}
 
-<Canvas of={SidebarStories.TitleNamesTheDialog} story={{ inline: false, height: '480px' }} />
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -85,6 +112,14 @@ Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px 
 - **Gesture honesty**: swipe-to-dismiss is pointer-only and has no keyboard equivalent — keyboard and screen reader users rely on Escape and the visible close button, both always present regardless of touch support.
 - **You must provide:** a `title` that actually describes the panel's contents ("Your order" rather than something generic) — it is the only accessible name the dialog gets.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 - `--droppy-sidebar-topbar-height` — the top bar's height (default `4.5rem`), subtracted from the viewport when the content area computes its own scroll bound.
@@ -92,6 +127,51 @@ Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px 
 - `className` — merged with the panel's own classes, so wrapping `Sidebar` in `styled()` or adding utility classes composes rather than replacing the built-in styling.
 
 The panel's desktop width (420px) is fixed by the design system and isn't exposed as a custom property; use `className` for one-off width changes.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={SidebarStories} />
+
+### `isOpen` and `onClose`
+
+Fully controlled. `onClose` fires for the button, Escape, a swipe, and an outside press alike.
+
+<Canvas of={SidebarStories.IsOpen} />
+
+### `title`
+
+The top-bar heading, and the dialog's accessible name.
+
+<Canvas of={SidebarStories.Title} />
+
+### `children`
+
+The scrolling panel content.
+
+<Canvas of={SidebarStories.Children} />
+
+### `footer`
+
+Pinned to the bottom — a plain flex container the caller fills.
+
+<Canvas of={SidebarStories.Footer} />
+
+### `container`
+
+Where to portal — an element or a selector.
+
+<Canvas of={SidebarStories.Container} />
+
+### `className`
+
+Merged onto the popup alongside the component's own `droppy-Sidebar` class.
+
+<Canvas of={SidebarStories.ClassName} />
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -102,6 +182,7 @@ The panel's desktop width (420px) is fixed by the design system and isn't expose
 - **2026-07**: Drawer.Portal's document.body default pushed the drawer outside the story canvas and forced tests to query the document body; rather than keep rewritten story queries (an earlier workaround, reversed), the drawer portals into the same in-app `#modal` container Modal uses, falling back to body, keeping interaction stories byte-identical to their pre-migration versions ([portal-target commit](https://github.com/yannbf/mealdrop/commit/798e2fad44b666c3f4165b3b447a2b636a0b8a07), [earlier query-scope commit](https://github.com/yannbf/mealdrop/commit/5b449fe827cfbf9238a59c0d6b5a0efc24604ce4)).
 - **2026-07**: Sidebar took a `container` prop accepting an element or CSS selector (default document.body) because Mealdrop portalled into a `#modal` node hard-coded in its own index.html and a package cannot assume that node exists; selector resolution happens in an effect, safe because an overlay is closed on first paint ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [useContainer.ts](https://github.com/yannbf/droppy-ds/blob/main/src/utils/useContainer.ts)).
 - **2026-07**: the pixel-parity pass separated theme opinion from behaviour: the Drawer backdrop was darkened from the theme's 20% black scrim to the original 40%, and the 300ms slide reverted to default ease over the theme's slower easing — establishing motion tokens as brand voice a consumer may legitimately retime ([scrim parity commit](https://github.com/yannbf/mealdrop/commit/e085f7d327906cc5568613e3fab91e343cd5ef6f), [animation timing commit](https://github.com/yannbf/mealdrop/commit/ac151a9710b9eb297274485d7bfa571f7acf19aa)).
+- **Built on Base UI [`Drawer`](https://base-ui.com/react/components/drawer).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -122,11 +203,11 @@ The panel's desktop width (420px) is fixed by the design system and isn't expose
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={SidebarStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To ask for a single decision that blocks the page, use [Modal](?path=/docs/overlays-modal--docs).
 - To explain a control before it's activated, use [Tooltip](?path=/docs/overlays-tooltip--docs).
+
+{/* END: when-to-use */}

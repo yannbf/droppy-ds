@@ -3,17 +3,26 @@ import remarkGfm from 'remark-gfm'
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.tsx'],
-  addons: [{
-    name: '@storybook/addon-docs',
-    // addon-docs compiles MDX without GitHub-flavored markdown, so the
-    // docs pages' tables need remark-gfm supplied here to render as tables.
-    options: {
-      mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } },
+  addons: [
+    {
+      name: '@storybook/addon-docs',
+      // addon-docs compiles MDX without GitHub-flavored markdown, so the
+      // docs pages' tables need remark-gfm supplied here to render as tables.
+      options: {
+        mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } },
+      },
     },
-  }, '@storybook/addon-a11y', '@storybook/addon-vitest', '@storybook/addon-mcp', {
-    name: '@unpunnyfuns/swatchbook-addon',
-    options: { configPath: '../swatchbook.config.ts' },
-  }, 'storybook-addon-tag-badges', '@github-ui/storybook-addon-performance-panel'],
+    '@storybook/addon-a11y',
+    '@storybook/addon-vitest',
+    '@storybook/addon-mcp',
+    '@component-anatomy/storybook',
+    {
+      name: '@unpunnyfuns/swatchbook-addon',
+      options: { configPath: '../swatchbook.config.ts' },
+    },
+    'storybook-addon-tag-badges',
+    '@github-ui/storybook-addon-performance-panel',
+  ],
   framework: '@storybook/react-vite',
   viteFinal: (config) => {
     // The inherited vite.config.ts runs vite-plugin-dts, whose api-extractor

@@ -5,12 +5,16 @@ import * as BodyStories from './Body.stories'
 
 # Body
 
+{/* BEGIN: general */}
+
 Plain-text typography for paragraph copy, captions, and labels — the body-copy counterpart to
 `Heading`.
 
-- **Import:** `import { Body } from '@droppy/design-system'`
-- **Built on:** a plain `<p>`, `<span>`, `<label>`, or `<figcaption>` element — no Base UI
-  primitive.
+```tsx
+import { Body } from '@droppy/design-system'
+```
+
+primitive.
 
 <Canvas of={BodyStories.Default} />
 
@@ -27,6 +31,10 @@ Plain-text typography for paragraph copy, captions, and labels — the body-copy
 - **`className` merges onto the rendered element** rather than replacing it, so wrapping a `Body`
   in `styled()` or adding utility classes composes instead of stripping Droppy's own type styles.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Paragraph copy, helper text, and captions that carry no heading semantics of their own.
@@ -38,6 +46,10 @@ Plain-text typography for paragraph copy, captions, and labels — the body-copy
   [Heading](?path=/docs/typography-heading--docs) instead, so it's announced as a heading and
   reachable via a screen reader's heading-navigation tools.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
 ### `type` picks the rendered element
@@ -46,25 +58,31 @@ Plain-text typography for paragraph copy, captions, and labels — the body-copy
 a label rather than merely look like one.
 
 <Canvas of={BodyStories.RendersMatchingTag} />
+{/* END: behavior */}
 
-<Canvas of={BodyStories.ElementChoice} />
+{/* BEGIN: anatomy */}
 
-### Size steps
+## Anatomy
 
-`size` is optional — unset renders the base body size (`--ds-type-size-md`). `S`, `XS`, and `XXS`
-step down from there.
+`Body` is a single-part component. The tag it renders follows `type`; `size` and `fontWeight` only add classes, so all four elements can land on the same scale.
 
-<Canvas of={BodyStories.Sizes} />
+<Canvas of={BodyStories.Anatomy} />
 
-### Font weight
+| Part | `data-part` | Renders                                       | Purpose                                                |
+| :--- | :---------- | :-------------------------------------------- | :----------------------------------------------------- |
+| Root | `root`      | `<p>` / `<span>` / `<label>` / `<figcaption>` | The text element, carrying the size and weight classes |
 
-<Canvas of={BodyStories.Weights} />
+{/* END: anatomy */}
 
-### Color override
+{/* BEGIN: examples */}
 
-`color` sets the text color inline, ahead of the theme's token.
+{/* END: examples */}
 
-<Canvas of={BodyStories.ColorOverride} />
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -76,6 +94,14 @@ step down from there.
   same as any bare `<label>`.
 - **You must provide:** the `htmlFor`/`id` pairing if you use `type="label"` to label a control —
   `Body` forwards the prop but doesn't generate or match an id for you.
+
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -92,12 +118,59 @@ step down from there.
 `className` is merged onto the rendered tag, so it composes with the tokens above rather than
 overriding them wholesale.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={BodyStories} />
+
+### `children`
+
+The text, or any nodes to render inside it.
+
+<Canvas of={BodyStories.Children} />
+
+### `size`
+
+Optional — unset renders the base body size (`--ds-type-size-md`). `S`, `XS`, and `XXS` step down
+from there.
+
+<Canvas of={BodyStories.Sizes} />
+
+### `fontWeight`
+
+Independent of both `size` and `type`.
+
+<Canvas of={BodyStories.Weights} />
+
+### `type`
+
+Picks the rendered element. All four share the same styling.
+
+<Canvas of={BodyStories.ElementChoice} />
+
+### `color`
+
+Sets the text color inline, ahead of the theme's token.
+
+<Canvas of={BodyStories.ColorOverride} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Body` class.
+
+<Canvas of={BodyStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
 
 - **2026-07**: the brand extraction fixed typography as two faces with clear jobs — Hind for body and UI text, Montserrat reserved for headings — which Body's styles encode and the [Typography tokens](?path=/docs/design-tokens-typography--docs) document as the system rule.
 - **2026-08**: Body carried Mealdrop's polymorphic text API into Droppy — a `type` prop selecting the rendered element ('p' | 'span' | 'label' | 'figcaption'), an S/XS/XXS size scale, and named font weights (regular/medium/bold/black) ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
+- **Built on a plain `<p>`, `<span>`, `<label>`, or `<figcaption>` element — no Base UI.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -118,11 +191,11 @@ overriding them wholesale.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={BodyStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - For a page or section title that belongs in the document outline, use
   [Heading](?path=/docs/typography-heading--docs).
+
+{/* END: when-to-use */}

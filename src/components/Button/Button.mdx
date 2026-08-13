@@ -5,11 +5,14 @@ import * as ButtonStories from './Button.stories'
 
 # Button
 
+{/* BEGIN: general */}
+
 The primary action control — chrome comes from the theme, variants and the icon slot come from
 Droppy.
 
-- **Import:** `import { Button } from '@droppy/design-system'`
-- **Built on:** Base UI [`Button`](https://base-ui.com/react/components/button)
+```tsx
+import { Button } from '@droppy/design-system'
+```
 
 <Canvas of={ButtonStories.Default} />
 
@@ -30,6 +33,10 @@ Droppy.
 - Padding scales up at the `768px` breakpoint so the control doesn't feel undersized on larger
   viewports.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Primary and secondary in-page actions — a page's one obvious primary action, plus its
@@ -47,46 +54,50 @@ Droppy.
   arrows, overlay dismissals), use [IconButton](?path=/docs/actions-iconbutton--docs) instead,
   because it is deliberately not theme-reactive and carries its own drop shadow for contrast.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Variants
+### Icon-only buttons need a label
 
-`clear`, `round`, and `large` are independent booleans and combine freely: `clear` strips the
-fill for secondary actions, `round` gives a pill radius for icon-only affordances, and `large`
-adds taller padding for primary calls to action.
+Drop `children` and the button has no text to read, so its accessible name has to come from
+`aria-label`. The glyph itself is `aria-hidden` and contributes nothing.
+
+<Canvas of={ButtonStories.IconOnlyNeedsALabel} />
+
+### The variant vocabulary
+
+The variants side by side — one obvious primary per screen, `clear` for the secondary beside it.
 
 <Canvas of={ButtonStories.Variants} />
+{/* END: behavior */}
 
-### Icon handling
+{/* BEGIN: anatomy */}
 
-`icon` takes an `IconName` and renders it before `children`, spaced with the theme's `xs` gap
-token rather than a spacer element. `iconSize` overrides the icon's default rendered size when
-the button's own padding calls for a different proportion.
+## Anatomy
 
-<Canvas of={ButtonStories.WithIcon} />
+The control and its optional leading glyph. There is no label part: `children` render directly inside the button, spaced from the icon with `gap` rather than a spacer node.
 
-### Icon-only buttons
+<Canvas of={ButtonStories.Anatomy} />
 
-Passing `icon` with no `children` — typically combined with `round` and `clear` — renders a
-button with no visible text. The icon itself is decorative (`aria-hidden`), so the button needs
-an explicit `aria-label` to carry an accessible name.
+| Part | `data-part` | Renders    | Purpose                                                      |
+| :--- | :---------- | :--------- | :----------------------------------------------------------- |
+| Root | `root`      | `<button>` | Fill, radius, focus ring, and the disabled state             |
+| Icon | `icon`      | `<svg>`    | The optional leading glyph, rendered only when `icon` is set |
 
-<Canvas of={ButtonStories.IconOnly} />
+{/* END: anatomy */}
 
-### Disabled state
+{/* BEGIN: examples */}
 
-`disabled` maps straight to the native `disabled` attribute, so the button is skipped by Tab and
-every interaction handler no-ops — verified even when a click is forced past `pointer-events`
-(see the `DisabledSwallowsClicks` story). Droppy's `Button` doesn't expose Base UI's
-`focusableWhenDisabled`, so there's no built-in way to keep a disabled button focusable — every
-disabled `Button` drops out of the tab order.
+{/* END: examples */}
 
-<Canvas of={ButtonStories.Disabled} />
+{/* BEGIN: do-dont */}
 
-### In a form
+{/* END: do-dont */}
 
-The rendered element always starts as `type="button"`, so it won't submit an enclosing form by
-default. Pass `type="submit"` explicitly to opt in.
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -105,6 +116,14 @@ default. Pass `type="submit"` explicitly to opt in.
   accessibility tree — there's no `focusableWhenDisabled`-style escape hatch for a loading state
   that should stay focusable.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 - `--ds-space-xs` — gap between the icon and the label.
@@ -116,6 +135,64 @@ default. Pass `type="submit"` explicitly to opt in.
 Everything else — the base fill, focus ring, and typeface — comes from the theme layer, which
 this component doesn't override.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ButtonStories} />
+
+### `children`
+
+The label. Omitted, the button is icon-only and needs an `aria-label`.
+
+<Canvas of={ButtonStories.Children} />
+
+### `clear`
+
+Strips the fill, for the secondary action beside a primary one.
+
+<Canvas of={ButtonStories.Clear} />
+
+### `large`
+
+Adds height, for the one action a screen is really about.
+
+<Canvas of={ButtonStories.Large} />
+
+### `round`
+
+Fully rounds the control — pair it with an icon and no label.
+
+<Canvas of={ButtonStories.Round} />
+
+### `icon`
+
+Renders a glyph before the label, spaced with `gap` rather than a spacer element — one fewer DOM
+node than Mealdrop's original, for the same 1rem.
+
+<Canvas of={ButtonStories.IconProp} />
+
+### `iconSize`
+
+Overrides the glyph size without touching the button's own padding.
+
+<Canvas of={ButtonStories.IconSize} />
+
+### `disabled`
+
+Dims the control and stops it firing `onClick`.
+
+<Canvas of={ButtonStories.Disabled} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Button` class.
+
+<Canvas of={ButtonStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
@@ -125,6 +202,7 @@ this component doesn't override.
 - **2026-07**: buttons follow the [brand guidelines](?path=/docs/brand-guidelines--docs) type roles — Hind is the "text and UI face for body copy, labels, and buttons", set at the small step and regular weight, never the display face or ALL CAPS — so a CTA earns attention through its fill rather than its typography; dark mode re-decides the primary action's role rather than inverting it (neutral in light, soft green becoming "the primary button" in dark).
 - **2026-07**: icon-to-label spacing moved to CSS `gap` instead of Mealdrop's dedicated spacer element — one fewer DOM node for the same 1rem — with the icon slot as a typed `icon?: IconName` prop rendering before the label ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [initial component set](https://github.com/yannbf/droppy-ds/commit/8790c8460335870f6ca26be9850710ff6023cc61)).
 - **2026-07**: the theme ships `line-height: 1` and `gap: 0.5rem` as brand defaults; Mealdrop had to restore `line-height: normal` and zero gap in overrides to keep its original 54px height, documenting Button's height and built-in icon gap as theme opinions that diverge from the pre-migration design ([button height commit](https://github.com/yannbf/mealdrop/commit/8de6ca1aecc1febd479ed80245430c1d810dcf66)).
+- **Built on Base UI [`Button`](https://base-ui.com/react/components/button).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -145,12 +223,12 @@ this component doesn't override.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ButtonStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - Icon-only, theme-independent affordance over imagery — see
   [IconButton](?path=/docs/actions-iconbutton--docs).
 - The icon set `Button` draws its `icon` prop from — see [Icon](?path=/docs/media-content-icon--docs).
+
+{/* END: when-to-use */}

@@ -48,18 +48,21 @@ export const Modal = ({
     >
       <Dialog.Portal container={resolvedContainer}>
         <Dialog.Backdrop
+          data-part="backdrop"
           className={cx(theme.DialogBackdrop, 'droppy-Modal-backdrop')}
           data-testid="modal-backdrop"
         />
         <Dialog.Popup
+          data-part="root"
           ref={popupRef}
           initialFocus={popupRef}
           className={cx(theme.DialogPopup, 'droppy-Modal', className)}
           data-testid="modal"
           aria-label={ariaLabel}
         >
-          <div className="droppy-Modal-topBar">
+          <div data-part="topbar" className="droppy-Modal-topBar">
             <Button
+              data-part="close"
               data-testid="modal-close-btn"
               onClick={onClose}
               clear

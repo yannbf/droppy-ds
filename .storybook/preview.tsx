@@ -1,8 +1,19 @@
-import type { Preview } from "@storybook/react-vite";
+import { definePreview } from '@storybook/react-vite'
+import addonDocs from '@storybook/addon-docs'
+import addonA11y from '@storybook/addon-a11y'
+import addonVitest from '@storybook/addon-vitest'
+import addonSwatchbook from '@unpunnyfuns/swatchbook-addon'
+import * as addonAnatomy from '@component-anatomy/storybook/preview'
 
 import '../src/styles/index.css'
 
-const preview: Preview = {
+const preview = definePreview({
+  // `definePreview` only applies the annotations listed here, so an addon
+  // registered in main.ts still needs its preview entry added — that is what
+  // mounts the anatomy controller over the canvas. Dropping `definePreview`
+  // for a plain object would load them automatically but breaks
+  // addon-vitest's setup file, so list it instead.
+  addons: [addonDocs(), addonA11y(), addonVitest(), addonSwatchbook(), addonAnatomy],
   parameters: {
     controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
     a11y: { test: 'error' },
@@ -29,6 +40,6 @@ const preview: Preview = {
       },
     },
   },
-}
+})
 
 export default preview

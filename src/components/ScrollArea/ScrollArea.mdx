@@ -5,10 +5,13 @@ import * as ScrollAreaStories from './ScrollArea.stories'
 
 # ScrollArea
 
+{/* BEGIN: general */}
+
 A scrollable panel with a themed scrollbar in place of the platform's own.
 
-- **Import:** `import { ScrollArea } from '@droppy/design-system'`
-- **Built on:** Base UI [`ScrollArea`](https://base-ui.com/react/components/scroll-area).
+```tsx
+import { ScrollArea } from '@droppy/design-system'
+```
 
 <Canvas of={ScrollAreaStories.Default} />
 
@@ -19,6 +22,10 @@ A scrollable panel with a themed scrollbar in place of the platform's own.
 - **Native scroll mechanics throughout** — wheel, touch, keyboard, and thumb drag all work as the platform expects; only the scrollbar's appearance changes.
 - **`orientation` picks which axes get a scrollbar** — `'vertical'` (default), `'horizontal'`, or `'both'`, which also renders the corner where the two tracks would otherwise intersect.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A fixed-size panel — a card, a comment list, a table of options — whose content can run longer than the space available, without wanting to grow the layout around it.
@@ -27,17 +34,47 @@ A scrollable panel with a themed scrollbar in place of the platform's own.
 
 - For the page itself, rely on native document scrolling — `ScrollArea` is for a panel embedded within the page, not the page's own scroll.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Sizing
-
-`ScrollArea`'s dimensions are fixed by the theme layer, matching how [Modal](?path=/docs/overlays-modal--docs)'s dimensions are fixed rather than left to props. Use `className` for one-off layout changes.
-
-### Choosing an axis
-
-<Canvas of={ScrollAreaStories.Horizontal} />
+Scrollbars are only mounted once the content actually overflows, and only on the axes
+`orientation` asks for. With `both`, a corner part fills the square where the two tracks would
+otherwise intersect.
 
 <Canvas of={ScrollAreaStories.BothAxes} />
+{/* END: behavior */}
+
+{/* BEGIN: anatomy */}
+
+## Anatomy
+
+A clipped root, the scrolling viewport and its content wrapper, then a scrollbar with a thumb per axis. Sizing is fixed by the theme layer — `className` is the escape hatch for one-off layout changes.
+
+<Canvas of={ScrollAreaStories.Anatomy} />
+
+| Part      | `data-part` | Renders | Purpose                                               |
+| :-------- | :---------- | :------ | :---------------------------------------------------- |
+| Root      | `root`      | `<div>` | The clipped box                                       |
+| Viewport  | `viewport`  | `<div>` | The scrolling window                                  |
+| Content   | `content`   | `<div>` | The wrapper the viewport scrolls                      |
+| Scrollbar | `scrollbar` | `<div>` | One per axis; mounted only once the content overflows |
+| Thumb     | `thumb`     | `<div>` | The draggable handle                                  |
+| Corner    | `corner`    | `<div>` | Only with `orientation="both"`                        |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -49,15 +86,51 @@ A scrollable panel with a themed scrollbar in place of the platform's own.
 - **ARIA:** none of the parts carry a role beyond the plain `<div>` Base UI renders — a scroll area is a layout affordance, not a distinct landmark.
 - **Screen reader:** reads the content inside as it would any other block; the scrollbar itself is not announced.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 Colors, track/thumb sizing, and the hover/scroll-gated opacity come entirely from the theme layer's `ScrollArea*` classes. `className` merges onto the root, so it composes with the theme rather than replacing it.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ScrollAreaStories} />
+
+### `children`
+
+Whatever overflows. Sizing comes from the theme layer, not from the content.
+
+<Canvas of={ScrollAreaStories.Children} />
+
+### `orientation`
+
+Picks which axes get a scrollbar.
+
+<Canvas of={ScrollAreaStories.Orientation} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-ScrollArea` class.
+
+<Canvas of={ScrollAreaStories.ClassName} />
+{/* END: props */}
 
 {/* BEGIN: history */}
 
 ## Decision log
 
 - **2020-10**: dark mode was added to the app and Storybook simultaneously, converting overlay styles to theme variables and adding a Storybook theme switcher; dual light/dark theming has been a requirement for every component since, culminating in Droppy's data-theme token switching ([mealdrop #1](https://github.com/yannbf/mealdrop/pull/1), [dark mode commit](https://github.com/yannbf/mealdrop/commit/ffb87893515e58096e4984e020befc0267b84496)).
+- **Built on Base UI [`ScrollArea`](https://base-ui.com/react/components/scroll-area).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -78,11 +151,11 @@ Colors, track/thumb sizing, and the hover/scroll-gated opacity come entirely fro
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ScrollAreaStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - For a panel of content the reader reviews alongside the page, in a full-width layout, see [Container](?path=/docs/layout-structure-container--docs).
 - For a panel that slides in from the trailing edge instead of sitting in the page flow, see [Sidebar](?path=/docs/overlays-sidebar--docs).
+
+{/* END: when-to-use */}

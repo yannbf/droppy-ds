@@ -5,11 +5,14 @@ import * as BreadcrumbStories from './Breadcrumb.stories'
 
 # Breadcrumb
 
+{/* BEGIN: general */}
+
 A trail of ancestor pages leading to the current one — categories, restaurants, anything with a
 browsable hierarchy above it.
 
-- **Import:** `import { Breadcrumb } from '@droppy/design-system'`
-- **Built on:** a plain `<nav>` and `<ol>`; each crumb is an `<a>` by default.
+```tsx
+import { Breadcrumb } from '@droppy/design-system'
+```
 
 <Canvas of={BreadcrumbStories.Default} />
 
@@ -25,6 +28,10 @@ browsable hierarchy above it.
   markup already conveys order.
 - Merges any incoming `className` with its own `droppy-Breadcrumb` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Above a page reached by drilling into a category, a restaurant, or any other browsable
@@ -35,27 +42,56 @@ browsable hierarchy above it.
 - On a page with no hierarchy above it — a plain link back to the parent page reads more
   honestly than a one-crumb trail implying a hierarchy that isn't there.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### A single crumb
-
-A one-item trail still renders — typically the current page, with no ancestor to link to.
-
-<Canvas of={BreadcrumbStories.SingleCrumb} />
-
 ### The current page
+
+The last crumb carries `aria-current="page"` whether it renders as a link or as plain text, and
+the whole trail sits inside a `<nav aria-label="breadcrumb">` landmark — the semantics Mealdrop's
+`div`/`p` version had none of.
 
 <Canvas of={BreadcrumbStories.CurrentPageIsMarked} />
 
 ### Router links via `render`
 
-Pass `render` with a router's own link element (`react-router`'s `Link`, Next's `Link`, etc.) and
-`Breadcrumb` clones it with the crumb's class and, on the last item, `aria-current` — the same
-composition pattern Base UI's own parts use for `render` props elsewhere in this library (see
-`Sidebar`'s `Drawer.Title`). `href` is ignored on that item; the router element owns its own
-destination.
+Item `render` swaps the default `<a>` for a router-aware link, so the design system carries no
+router dependency of its own.
 
-<Canvas of={BreadcrumbStories.WithRouterLink} />
+<Canvas of={BreadcrumbStories.ItemRender} />
+{/* END: behavior */}
+
+{/* BEGIN: anatomy */}
+
+## Anatomy
+
+A labelled landmark around an ordered list, one item per crumb. A crumb renders as a link when it has a destination and as text when it does not — usually the last one.
+
+<Canvas of={BreadcrumbStories.Anatomy} />
+
+| Part      | `data-part` | Renders  | Purpose                                    |
+| :-------- | :---------- | :------- | :----------------------------------------- |
+| Root      | `root`      | `<nav>`  | The `aria-label="breadcrumb"` landmark     |
+| List      | `list`      | `<ol>`   | Crumb order is document order              |
+| Item      | `item`      | `<li>`   | Holds one crumb and its trailing separator |
+| Link      | `link`      | `<a>`    | A crumb with a destination                 |
+| Text      | `text`      | `<span>` | A crumb without one                        |
+| Separator | `separator` | `<span>` | The `aria-hidden` slash; never announced   |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -69,6 +105,14 @@ keyboard behaviour applies, no custom handling.
 - **You must provide:** nothing further — the landmark, list semantics, and current-page marking
   are all built in.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token                       | Used for                                   |
@@ -81,6 +125,38 @@ keyboard behaviour applies, no custom handling.
 
 `className` merges with the component's own `droppy-Breadcrumb` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={BreadcrumbStories} />
+
+### `items`
+
+The trail, as `{ label, href?, render? }`. The last item is the current page.
+
+<Canvas of={BreadcrumbStories.Items} />
+
+A single crumb is the current page on its own, and no separator renders.
+
+<Canvas of={BreadcrumbStories.SingleCrumb} />
+
+### Item `render`
+
+Cloned with the crumb's link class and, on the last item, `aria-current`. The passed element owns
+its own destination, so `href` is dropped rather than spread on top of it.
+
+<Canvas of={BreadcrumbStories.ItemRender} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Breadcrumb` class.
+
+<Canvas of={BreadcrumbStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
@@ -88,6 +164,7 @@ keyboard behaviour applies, no custom handling.
 - **2025-03**: Breadcrumb was born in Mealdrop with an `items: {label, path?}[]` array API — items with a `path` render as underlined router links, the trailing item without one as plain text for the current page — introduced alongside its first stories ([Breadcrumb added](https://github.com/yannbf/mealdrop/commit/14cf17a324a99c4744eec1495810f96d4e17bc5d), [mealdrop #42](https://github.com/yannbf/mealdrop/pull/42)).
 - **2026-07**: Droppy's Breadcrumb dropped the react-router coupling: crumbs became `{label, href?}` items rendered as plain `<a>` inside `<nav aria-label="breadcrumb">` with `aria-current="page"` on the last, with a per-item `render` prop as the escape hatch for router-aware links; `font-weight: lighter` became `--ds-type-weight-regular` since the body face ships no lighter cut and the keyword resolved to regular anyway ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 - **2026-08**: a visual-parity audit found a crumb rendered through `Link` losing Breadcrumb's own styling on compiled-bundle order (two single-class rules tie), and proposed ancestor-qualified rules (`.droppy-Breadcrumb .droppy-Breadcrumb-link`) so specificity decides instead; fixing it by zeroing `Link`'s own specificity with `:where()` was explicitly rejected, since that would let any consumer `* { color }` reset override links everywhere. The PR was closed unmerged, so the defect is tracked as [#12](https://github.com/yannbf/droppy-ds/issues/12) ([droppy-ds #8](https://github.com/yannbf/droppy-ds/pull/8)).
+- **Built on a plain `<nav>` and `<ol>`; each crumb is an `<a>` by default.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -109,10 +186,10 @@ keyboard behaviour applies, no custom handling.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={BreadcrumbStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - Plain page links, for a page with no hierarchy above it.
+
+{/* END: when-to-use */}

@@ -34,14 +34,15 @@ export const Select = ({
   const selectId = id ?? generatedId
 
   return (
-    <div className={cx('droppy-Select', className)}>
+    <div data-part="root" className={cx('droppy-Select', className)}>
       {label && (
-        <label className="droppy-Select-label" htmlFor={selectId}>
+        <label data-part="label" className="droppy-Select-label" htmlFor={selectId}>
           {label}
         </label>
       )}
-      <div className="droppy-Select-controlWrapper">
+      <div data-part="wrapper" className="droppy-Select-controlWrapper">
         <select
+          data-part="control"
           id={selectId}
           className="droppy-Select-control"
           value={value}

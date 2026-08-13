@@ -62,6 +62,7 @@ export const Accordion = ({
   className,
 }: AccordionProps) => (
   <BaseAccordion.Root
+    data-part="root"
     className={cx(theme.AccordionRoot, 'droppy-Accordion', className)}
     multiple={openMultiple}
     defaultValue={defaultValue}
@@ -74,18 +75,21 @@ export const Accordion = ({
       return (
         <BaseAccordion.Item
           key={itemValue}
+          data-part="item"
           value={itemValue}
           disabled={item.disabled}
           className={theme.AccordionItem}
         >
-          <BaseAccordion.Header className={theme.AccordionHeader}>
-            <BaseAccordion.Trigger className={theme.AccordionTrigger}>
+          <BaseAccordion.Header data-part="header" className={theme.AccordionHeader}>
+            <BaseAccordion.Trigger data-part="trigger" className={theme.AccordionTrigger}>
               {item.title}
-              <PlusIcon className={theme.AccordionIcon} />
+              <PlusIcon data-part="icon" className={theme.AccordionIcon} />
             </BaseAccordion.Trigger>
           </BaseAccordion.Header>
-          <BaseAccordion.Panel className={theme.AccordionPanel}>
-            <div className={theme.AccordionContent}>{item.content}</div>
+          <BaseAccordion.Panel data-part="panel" className={theme.AccordionPanel}>
+            <div data-part="content" className={theme.AccordionContent}>
+              {item.content}
+            </div>
           </BaseAccordion.Panel>
         </BaseAccordion.Item>
       )

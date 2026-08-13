@@ -20,6 +20,7 @@ export const Container = ({
   ...rest
 }: PropsWithChildren<ContainerProps>) => (
   <div
+    data-part="root"
     className={cx('droppy-Container', desktopOnly && 'droppy-Container--desktopOnly', className)}
     {...rest}
   >

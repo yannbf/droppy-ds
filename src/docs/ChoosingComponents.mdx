@@ -4,7 +4,7 @@ import { Meta } from '@storybook/addon-docs/blocks'
 
 # Choosing components
 
-A handful of Droppy's components solve seemingly overlapping problems, and you may find it 
+A handful of Droppy's components solve seemingly overlapping problems, and you may find it
 hard to decide which component is the best fit for your use case. This page compares key
 characteristics of similar components to help you choose the right one.
 
@@ -13,12 +13,12 @@ characteristics of similar components to help you choose the right one.
 These controls render as clickable text or an icon. They differ in what happens on
 activation, and in whether they follow the page's theme.
 
-|                      | Button                      | IconButton                           | Link                       |
-| -------------------- | --------------------------- | ------------------------------------ | -------------------------- |
-| Element              | `<button>`                  | `<button>`                           | `<a>`                      |
-| Effect               | in-page action              | in-page action                       | navigates: changes the URL |
-| Label                | visible text, optional icon | icon only, `aria-label` required     | inline text                |
-| Follows `data-theme` | yes                         | **no**: fixed light pill, by design  | yes                        |
+|                      | Button                      | IconButton                          | Link                       |
+| -------------------- | --------------------------- | ----------------------------------- | -------------------------- |
+| Element              | `<button>`                  | `<button>`                          | `<a>`                      |
+| Effect               | in-page action              | in-page action                      | navigates: changes the URL |
+| Label                | visible text, optional icon | icon only, `aria-label` required    | inline text                |
+| Follows `data-theme` | yes                         | **no**: fixed light pill, by design | yes                        |
 
 [Button](?path=/docs/actions-button--docs) is the default: primary and secondary actions,
 with `clear`, `round`, and `large` variants plus an `icon` slot. It always renders a real
@@ -61,13 +61,13 @@ These controls collect a single value in a form. Work through them in order:
 
 These components hide content until something asks for it, but differ wildly in when they're appropriate to.
 
-|                            | Tooltip                                    | Accordion                         | Tabs                              |
-| -------------------------- | ------------------------------------------ | --------------------------------- | --------------------------------- |
-| Opens on                   | hover / focus                              | click                             | click                             |
-| Content                    | a hint, never essential and small in size  | a full section, can be essential  | a full panel, can be essential    |
-| Stays open                 | no                                         | yes                               | yes, until another tab is picked  |
-| Shown on touch             | no                                         | yes                               | yes                               |
-| Peer headings stay visible | n/a                                        | yes, every header stays on screen | no, only the active panel renders |
+|                            | Tooltip                                   | Accordion                         | Tabs                              |
+| -------------------------- | ----------------------------------------- | --------------------------------- | --------------------------------- |
+| Opens on                   | hover / focus                             | click                             | click                             |
+| Content                    | a hint, never essential and small in size | a full section, can be essential  | a full panel, can be essential    |
+| Stays open                 | no                                        | yes                               | yes, until another tab is picked  |
+| Shown on touch             | no                                        | yes                               | yes                               |
+| Peer headings stay visible | n/a                                       | yes, every header stays on screen | no, only the active panel renders |
 
 [Tooltip](?path=/docs/overlays-tooltip--docs) should only be used for very small pieces of
 content that are situationally useful but not essential. Its content is invisible to touch
@@ -86,11 +86,11 @@ than scanning. It also works better when the content of each panel has a similar
 These components tell the user something happened or ask them to act, differing on whether the
 page keeps running behind them and whether a response is required.
 
-|                         | Toast           | ErrorBlock    | Sidebar       | Modal       |
-| ----------------------- | --------------- | ------------- | ------------- | ----------- |
-| Blocks until a response | no              | no            | yes           | yes         |
-| Self dismisses          | yes, on a timer | no            | no            | no          |
-| Disruptiveness          | low             | high          | medium        | very high   |
+|                         | Toast           | ErrorBlock | Sidebar | Modal     |
+| ----------------------- | --------------- | ---------- | ------- | --------- |
+| Blocks until a response | no              | no         | yes     | yes       |
+| Self dismisses          | yes, on a timer | no         | no      | no        |
+| Disruptiveness          | low             | high       | medium  | very high |
 
 [Toast](?path=/docs/feedback-status-toast--docs) is for something that already happened and needs
 no response. It has no trigger part of its own: you call `useToast().add(...)` from anywhere
@@ -135,12 +135,12 @@ built-in label and value. It's easier to embed in dense UIs like on DropBoard.
 
 These components wrap page content, and together they compose a content hierarchy.
 
-|                | Container                  | PageSection                    | Card                           |
-| -------------- | -------------------------- | ------------------------------ | ------------------------------ |
-| Width          | capped at 1600px           | capped at 1600px               | intrinsic to its parent        |
-| Visual surface | none                       | none                           | background + radius + clipping |
-| Heading slot   | none                       | title + optional action button | none, caller composes          |
-| Typical unit   | the whole content column   | one row/section within it      | one tile within a section      |
+|                | Container                | PageSection                    | Card                           |
+| -------------- | ------------------------ | ------------------------------ | ------------------------------ |
+| Width          | capped at 1600px         | capped at 1600px               | intrinsic to its parent        |
+| Visual surface | none                     | none                           | background + radius + clipping |
+| Heading slot   | none                     | title + optional action button | none, caller composes          |
+| Typical unit   | the whole content column | one row/section within it      | one tile within a section      |
 
 [Container](?path=/docs/layout-structure-container--docs) is the plain bound: it has background or heading,
 and only implements max-width and responsive padding.

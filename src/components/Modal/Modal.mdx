@@ -5,14 +5,17 @@ import * as ModalStories from './Modal.stories'
 
 # Modal
 
+{/* BEGIN: general */}
+
 A centered overlay that asks for one decision before the page continues.
 
-- **Import:** `import { Modal } from '@droppy/design-system'`
-- **Built on:** Base UI [`Dialog`](https://base-ui.com/react/components/dialog).
+```tsx
+import { Modal } from '@droppy/design-system'
+```
 
 {/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
 
-<Canvas of={ModalStories.Open} story={{ inline: false, height: '480px' }} />
+<Canvas of={ModalStories.Default} story={{ inline: false, height: '480px' }} />
 
 ## Features
 
@@ -22,6 +25,10 @@ A centered overlay that asks for one decision before the page continues.
 - **Bottom sheet on mobile** — below 768px the popup docks to the bottom edge and slides up instead of appearing centered.
 - **Portal by default** — content renders at the end of `document.body`, so a parent's `overflow: hidden` or `z-index` stacking context can't clip or bury it.
 - **ARIA dialog wiring** — `role="dialog"` and the accessible name are set for you.
+
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
 
 ## When to use
 
@@ -33,33 +40,59 @@ A centered overlay that asks for one decision before the page continues.
 - To show content the person reviews _alongside_ the page rather than instead of it — a cart, a filter panel, anything they might dip in and out of — use [Sidebar](?path=/docs/overlays-sidebar--docs). Modal takes over the page; Sidebar shares it.
 - To explain what a control does before it's activated, use [Tooltip](?path=/docs/overlays-tooltip--docs) — a hint doesn't need a decision or a focus trap.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Open and close
+### Where focus lands
 
-`Modal` is controlled: `isOpen` decides whether it's rendered, and `onClose` fires whenever Base UI's `Dialog` decides it should close — clicking the close button, pressing Escape, or clicking the backdrop. There's no uncontrolled mode; the caller always owns `isOpen`.
+Focus goes to the popup itself, not the close button: the content is what the reader asked for,
+and landing on "close" reads as an invitation to leave. Tab still reaches the close button first.
 
-<Canvas of={ModalStories.OpensAndCloses} />
+<Canvas of={ModalStories.InitialFocusIsThePopup} />
 
-### Dismissal
+### Responsive shape
 
-Escape closes the modal from anywhere inside it, and clicking the backdrop closes it without needing to find the close button.
+Below 768px the card becomes a bottom sheet and slides up from the edge.
 
-<Canvas of={ModalStories.EscapeDismisses} />
+<Canvas of={ModalStories.Mobile} />
 
-### Focus behavior
+### Open and close motion
 
-On open, focus moves to the popup itself rather than the close button — landing on "close" the instant a modal opens reads as an invitation to leave before the content's been seen. Tab still reaches the close button first from there, and it stays reachable by keyboard throughout.
+Backdrop and popup both transition off `[data-starting-style]` and `[data-ending-style]`, and the
+popup stays mounted through the exit so the close animation runs before it disappears.
 
-### Portaling
+<Canvas of={ModalStories.OpenCloseTransition} />
+{/* END: behavior */}
 
-`container` decides where the modal is portaled: pass an element, a CSS selector string, or leave it unset to default to `document.body`. A selector is resolved after mount, so on first paint the modal portals nowhere — the correct order, since it starts closed anyway.
+{/* BEGIN: anatomy */}
 
-### Responsive behavior
+## Anatomy
 
-Below 768px, `Modal` renders as a bottom sheet: full width, docked to the bottom edge, rounded on its top corners only, sliding up from the bottom on open. At 768px and above it becomes a fixed-size card, centered on the screen, fading and scaling in instead of sliding — there's no screen edge for it to slide from.
+A backdrop and the dialog card, with a supplied top bar holding the close affordance. Base UI supplies the modal behaviour — focus trap, Escape, outside press, scroll lock, `aria-modal`. The anatomy story portals into a node inside the story canvas via `container`, so the **Anatomy** panel can reach the parts — it only scans the canvas, and the default portal target is the document body.
 
-<Canvas of={ModalStories.Mobile} story={{ inline: false, height: '480px' }} />
+<Canvas of={ModalStories.Anatomy} />
+
+| Part     | `data-part` | Renders    | Purpose                                               |
+| :------- | :---------- | :--------- | :---------------------------------------------------- |
+| Backdrop | `backdrop`  | `<div>`    | The dimmed layer behind the dialog                    |
+| Popup    | `root`      | `<div>`    | The card: `aria-modal`, the focus trap, and the shape |
+| Top bar  | `topbar`    | `<div>`    | Holds the close affordance                            |
+| Close    | `close`     | `<button>` | The round icon button that dismisses                  |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -72,11 +105,60 @@ Below 768px, `Modal` renders as a bottom sheet: full width, docked to the bottom
 - **Screen reader**: on open, the dialog is announced using its accessible name; on close, focus returns to wherever it was before the modal opened.
 - **You must provide:** a meaningful `aria-label` — the default value is a placeholder, not a real description of the decision being asked. Content inside the modal should also be reachable by Tab; nothing else is required to make it focusable, since the popup itself receives initial focus.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 - `className` — merged with the modal's own classes, so wrapping `Modal` in `styled()` or adding utility classes composes rather than replacing the built-in styling.
 
 Modal has no CSS custom properties of its own to override — its dimensions and breakpoint are fixed by the design system. Use `className` for one-off layout changes.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ModalStories} />
+
+### `isOpen` and `onClose`
+
+Fully controlled — the component holds no open state of its own. `onClose` fires for the button,
+Escape, and an outside press alike.
+
+<Canvas of={ModalStories.IsOpen} />
+
+### `children`
+
+The dialog body; the top bar and its close button are supplied.
+
+<Canvas of={ModalStories.Children} />
+
+### `aria-label`
+
+Names the dialog, since the body has no guaranteed heading.
+
+<Canvas of={ModalStories.AriaLabel} />
+
+### `container`
+
+Where to portal — an element or a selector. Mealdrop portals into its own `#modal` node; a package
+can't assume that exists, so it became a prop (docs/MEALDROP-PARITY.md).
+
+<Canvas of={ModalStories.Container} />
+
+### `className`
+
+Merged onto the popup alongside the component's own `droppy-Modal` class.
+
+<Canvas of={ModalStories.ClassName} />
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -87,6 +169,7 @@ Modal has no CSS custom properties of its own to override — its dimensions and
 - **2026-07**: Modal took a `container` prop accepting an element or CSS selector (default document.body) because Mealdrop portalled into a `#modal` node hard-coded in its own index.html and a package cannot assume that node exists; selector resolution happens in an effect, safe because an overlay is closed on first paint anyway ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [useContainer.ts](https://github.com/yannbf/droppy-ds/blob/main/src/utils/useContainer.ts)).
 - **2026-07**: the pixel-parity pass separated theme opinion from structural behaviour: the theme's DialogPopup defaults (padding, flex gap, negative margin, border) were reset for edge-to-edge modal content, the backdrop darkened from the theme's 20% scrim to the original 40%, and the 120ms fade+scale desktop open restored over the theme's 300ms — establishing motion tokens as brand voice a consumer may legitimately retime ([popup padding commit](https://github.com/yannbf/mealdrop/commit/eee6cb87fefbef385265776839ba512cb04f5807), [scrim/spacing parity](https://github.com/yannbf/mealdrop/commit/e085f7d327906cc5568613e3fab91e343cd5ef6f), [animation timing](https://github.com/yannbf/mealdrop/commit/ac151a9710b9eb297274485d7bfa571f7acf19aa)).
 - **2026-07**: on open, focus goes to the popup container (tabindex −1) via initialFocus instead of the close button, so the modal opens without a visible focus ring while keyboard users can still Tab to the close button; popup overflow was restored to visible so a fixed-height card doesn't grow a scrollbar for its last few pixels ([initialFocus commit](https://github.com/yannbf/mealdrop/commit/7fd8d393288a13daff0295aa392f02e3f2acf94f)).
+- **Built on Base UI [`Dialog`](https://base-ui.com/react/components/dialog).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -107,11 +190,11 @@ Modal has no CSS custom properties of its own to override — its dimensions and
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ModalStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To show content reviewed alongside the page instead of blocking it, use [Sidebar](?path=/docs/overlays-sidebar--docs).
 - To explain a control before it's activated, use [Tooltip](?path=/docs/overlays-tooltip--docs).
+
+{/* END: when-to-use */}

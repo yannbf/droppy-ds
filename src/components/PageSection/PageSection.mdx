@@ -5,12 +5,16 @@ import * as PageSectionStories from './PageSection.stories'
 
 # PageSection
 
+{/* BEGIN: general */}
+
 A titled content section — a heading with an optional "view all" action above whatever the
 caller composes below it, like a home page's Categories or Restaurants row.
 
-- **Import:** `import { PageSection } from '@droppy/design-system'`
-- **Built on:** [Heading](?path=/docs/typography-heading--docs) and
-  [Button](?path=/docs/actions-button--docs).
+```tsx
+import { PageSection } from '@droppy/design-system'
+```
+
+[Button](?path=/docs/actions-button--docs).
 
 <Canvas of={PageSectionStories.Default} />
 
@@ -25,6 +29,10 @@ caller composes below it, like a home page's Categories or Restaurants row.
   parent with its own side padding.
 - Merges any incoming `className` with its own `droppy-PageSection` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A titled row of content on a page that also wants a "view all" or "see more" link next to the
@@ -37,21 +45,44 @@ caller composes below it, like a home page's Categories or Restaurants row.
 - A raised, self-contained surface — use [Card](?path=/docs/media-content-card--docs) for a tile or
   panel instead of a full-width section.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Title only
+The action is optional and renders nothing at all when `topButtonLabel` is absent — the title row
+doesn't reserve space for a button that isn't there.
 
-Without `topButtonLabel`, only the heading renders — no empty space is reserved for a button that
-isn't there.
+<Canvas of={PageSectionStories.ActionIsOptional} />
+{/* END: behavior */}
 
-<Canvas of={PageSectionStories.Default} />
+{/* BEGIN: anatomy */}
 
-### With an action
+## Anatomy
 
-`topButtonLabel` renders a `clear` `Button` on the opposite side of the heading, wired to
-`onTopButtonClick`.
+A title row above caller-supplied content. The row holds the heading and, when a label is given, one `clear` Button.
 
-<Canvas of={PageSectionStories.WithAction} />
+<Canvas of={PageSectionStories.Anatomy} />
+
+| Part   | `data-part` | Renders    | Purpose                                                     |
+| :----- | :---------- | :--------- | :---------------------------------------------------------- |
+| Root   | `root`      | `<div>`    | The section: title row above, content below                 |
+| Top    | `top`       | `<div>`    | The title row — heading one side, optional action the other |
+| Title  | `title`     | `<h2>`     | The section heading                                         |
+| Action | `action`    | `<button>` | Rendered only when `topButtonLabel` is set                  |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -66,6 +97,14 @@ no keyboard behavior of their own.
 - **You must provide:** a `title` that makes sense read out of context — screen reader users often
   jump between headings rather than reading the page in order.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token           | Used for                                           |
@@ -78,11 +117,45 @@ exactly.
 
 `className` merges with the component's own `droppy-PageSection` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={PageSectionStories} />
+
+### `title`
+
+Rendered as an `h2`, so sections nest correctly under a page `h1`.
+
+<Canvas of={PageSectionStories.Title} />
+
+### `topButtonLabel` and `onTopButtonClick`
+
+Add a `clear` Button beside the title. Omit the label and no control renders.
+
+<Canvas of={PageSectionStories.TopButtonLabel} />
+
+### `children`
+
+The section body, laid out by the caller.
+
+<Canvas of={PageSectionStories.Children} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-PageSection` class.
+
+<Canvas of={PageSectionStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
 
 - **2026-07**: PageSection kept Mealdrop's API unchanged through the Droppy migration — a required `title` rendered as a level-2 heading plus an optional top-right action via `topButtonLabel`/`onTopButtonClick` that renders a clear Button — and was adopted as a drop-in with no parity deltas ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
+- **Built on [Heading](?path=/docs/typography-heading--docs) and.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -103,9 +176,7 @@ exactly.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={PageSectionStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
@@ -113,3 +184,5 @@ exactly.
   heading or action slot.
 - [Heading](?path=/docs/typography-heading--docs) — the title's underlying component.
 - [Button](?path=/docs/actions-button--docs) — the action slot's underlying component.
+
+{/* END: when-to-use */}

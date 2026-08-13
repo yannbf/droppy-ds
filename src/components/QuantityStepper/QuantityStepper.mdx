@@ -5,12 +5,16 @@ import * as QuantityStepperStories from './QuantityStepper.stories'
 
 # QuantityStepper
 
+{/* BEGIN: general */}
+
 A minus/plus pair flanking a quantity, for adjusting the count of a single item — a food order's
 line, a cart quantity.
 
-- **Import:** `import { QuantityStepper } from '@droppy/design-system'`
-- **Built on:** two [Button](?path=/docs/actions-button--docs)s (`round`, `clear`, icon-only)
-  and a [Body](?path=/docs/typography-body--docs) for the value.
+```tsx
+import { QuantityStepper } from '@droppy/design-system'
+```
+
+and a [Body](?path=/docs/typography-body--docs) for the value.
 
 <Canvas of={QuantityStepperStories.Default} />
 
@@ -26,6 +30,10 @@ line, a cart quantity.
   tech reads the two buttons and the value as one unit.
 - Merges any incoming `className` with its own `droppy-QuantityStepper` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Adjusting the count of a single, already-identified item by small increments — a cart line, a
@@ -37,19 +45,45 @@ line, a cart quantity.
   the range is large enough that clicking one at a time is impractical — use
   [Select](?path=/docs/forms-input-select--docs) for a bounded list of quantities instead.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Disabling at the bounds
+The buttons disable at the bounds rather than wrapping or clamping silently, so a click never
+looks like it did nothing. The value carries `aria-live="polite"`, because a disabled button and a
+changed number are the only signals the group gives — there is no input to announce itself.
 
-<Canvas of={QuantityStepperStories.AtMin} />
-<Canvas of={QuantityStepperStories.AtMax} />
+<Canvas of={QuantityStepperStories.BoundsDisableRatherThanClamp} />
+{/* END: behavior */}
 
-### Reporting changes
+{/* BEGIN: anatomy */}
 
-Each click reports the new value through `onChange` immediately — there's no confirm step, same
-as Mealdrop's original.
+## Anatomy
 
-<Canvas of={QuantityStepperStories.Increments} />
+A named group holding two round buttons around a live value. There is no text input — for a typeable amount reach for [NumberField](?path=/docs/forms-input-numberfield--docs) instead.
+
+<Canvas of={QuantityStepperStories.Anatomy} />
+
+| Part      | `data-part` | Renders    | Purpose                                                 |
+| :-------- | :---------- | :--------- | :------------------------------------------------------ |
+| Root      | `root`      | `<div>`    | The `role="group"` wrapper carrying the accessible name |
+| Decrement | `decrement` | `<button>` | The minus; disabled at `min`                            |
+| Value     | `value`     | `<span>`   | The quantity, `aria-live="polite"`                      |
+| Increment | `increment` | `<button>` | The plus; disabled at `max`                             |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -64,6 +98,14 @@ key handling.
 - **You must provide:** a more specific `aria-label` when the default `"quantity"` is ambiguous —
   for example when more than one stepper appears on the same screen.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token           | Used for                                  |
@@ -75,12 +117,53 @@ Button and value colours, radius, and focus ring come from `Button` and `Body`'s
 
 `className` merges with the component's own `droppy-QuantityStepper` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={QuantityStepperStories} />
+
+### `value` and `onChange`
+
+The component is fully controlled — it holds no state of its own.
+
+<Canvas of={QuantityStepperStories.Value} />
+
+### `min`
+
+The lower bound; the minus button disables on it. Defaults to 1.
+
+<Canvas of={QuantityStepperStories.Min} />
+
+### `max`
+
+The upper bound; the plus button disables on it. Defaults to 10.
+
+<Canvas of={QuantityStepperStories.Max} />
+
+### `aria-label`
+
+Names the group. Give it the item's name when a page has several steppers, or every one of them
+announces as "quantity".
+
+<Canvas of={QuantityStepperStories.AriaLabel} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-QuantityStepper` class.
+
+<Canvas of={QuantityStepperStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
 
 - **2026-07**: QuantityStepper was born by componentizing FoodItemModal's inline stepper markup — two round clear icon Buttons around a Body span — into a single controlled component with a `value`/`onChange`/`min`/`max` API, keeping the same labels and bounds behaviour (the food-item call site keeps `min={1} max={10}`, matching the old disabling logic) while adding `role="group"` and a politely announced aria-live value the inline version lacked ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 - **2026-07**: when NumberField was added, the two were positioned explicitly against each other: QuantityStepper stays the tap-tap bounded stepper while NumberField is the typeable numeric input with keyboard entry and label scrub ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [NumberField.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/NumberField/NumberField.tsx)).
+- **Built on two [Button](?path=/docs/actions-button--docs)s (`round`, `clear`, icon-only).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -101,12 +184,12 @@ Button and value colours, radius, and focus ring come from `Button` and `Body`'s
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={QuantityStepperStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Select](?path=/docs/forms-input-select--docs) — for a bounded list of named quantities instead
   of small increments.
 - [Button](?path=/docs/actions-button--docs) — the icon-only round buttons this composes.
+
+{/* END: when-to-use */}

@@ -5,11 +5,14 @@ import * as IconStories from './Icon.stories'
 
 # Icon
 
+{/* BEGIN: general */}
+
 The icon set, inlined as SVG so it renders wherever the component tree renders, with no static
 asset to serve.
 
-- **Import:** `import { Icon } from '@droppy/design-system'`
-- **Built on:** a plain `<svg>` element.
+```tsx
+import { Icon } from '@droppy/design-system'
+```
 
 <Canvas of={IconStories.Default} />
 
@@ -26,6 +29,10 @@ asset to serve.
   theme's icon token and flips with the theme automatically.
 - Merges any incoming `className` with its own `droppy-Icon` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Inside a control that already carries (or will carry) an accessible name — `Button`'s `icon`
@@ -40,26 +47,49 @@ asset to serve.
   [IconButton](?path=/docs/actions-iconbutton--docs) rather than attaching a click handler
   directly to a bare `Icon`.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### The icon set
+### Decorative by default
 
-Every icon in the set, decorative by default — the control it sits in carries the accessible
-name.
+Every icon renders `aria-hidden="true"` and `focusable="false"`, so it never reaches the
+accessibility tree. The control an icon sits inside is what carries the accessible name — reach
+for `Icon` directly and that naming becomes your job.
 
-<Canvas of={IconStories.Gallery} />
-
-### Sizing
-
-`size` takes any CSS length or a number of pixels and drives width, height, and `minWidth`
-together, so the icon holds its size even inside a shrinking flex row.
-
-<Canvas of={IconStories.Sizes} />
+<Canvas of={IconStories.DecorativeByDefault} />
 
 ### Colour
 
 Unset, the stroke follows `--ds-color-icon-default` and changes with the theme. Passing `color`
 sets the stroke inline instead, which wins over the class rule.
+{/* END: behavior */}
+
+{/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Icon` is a single-part component: one `<svg>`, whose paths come from the bundled set that `name` indexes into. Nothing inside it is addressable.
+
+<Canvas of={IconStories.Anatomy} />
+
+| Part | `data-part` | Renders | Purpose                                                               |
+| :--- | :---------- | :------ | :-------------------------------------------------------------------- |
+| Root | `root`      | `<svg>` | The glyph: viewBox, stroke colour, and the width/height/minWidth trio |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -70,17 +100,60 @@ Icon renders a non-interactive `<svg>` — there is no keyboard interaction to d
 - **You must provide:** the accessible name on whatever control renders the icon (`aria-label` or
   visible text) — `Icon` itself carries none.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 - `--ds-color-icon-default` — stroke colour, applied only when no `color` prop is given.
 - `color` prop — sets the stroke inline, overriding the token.
 - `className` merges with the component's own `droppy-Icon` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={IconStories} />
+
+### `name`
+
+Indexes into the bundled set — every icon in it, below.
+
+<Canvas of={IconStories.Name} />
+
+### `size`
+
+Takes any CSS length or a number of pixels, and drives width, height, and `minWidth` together, so
+the icon holds its size even inside a shrinking flex row.
+
+<Canvas of={IconStories.Size} />
+
+### `color`
+
+Sets the stroke inline, ahead of the theme's icon token.
+
+<Canvas of={IconStories.Color} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Icon` class.
+
+<Canvas of={IconStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
 
 - **2025-03**: the `name` prop was retyped from plain `string` to an `IconName` string-literal union (arrow-right, arrow-left, cross, cart, minus, plus, moon, sun, star), making invalid icon names a compile-time error; Droppy inherits this closed, typed icon set ([IconName union](https://github.com/yannbf/mealdrop/commit/14cf17a324a99c4744eec1495810f96d4e17bc5d), [mealdrop #42](https://github.com/yannbf/mealdrop/pull/42)).
+- **Built on a plain `<svg>` element.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -101,12 +174,12 @@ Icon renders a non-interactive `<svg>` — there is no keyboard interaction to d
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={IconStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - The icon-before-label slot on actions — see [Button](?path=/docs/actions-button--docs).
 - The icon-only floating control that renders an `Icon` internally — see
   [IconButton](?path=/docs/actions-iconbutton--docs).
+
+{/* END: when-to-use */}

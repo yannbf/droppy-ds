@@ -23,9 +23,11 @@ export const PageTemplate = ({
   children,
   className,
 }: PropsWithChildren<PageTemplateProps>) => (
-  <div className={cx('droppy-PageTemplate', className)}>
+  <div data-part="root" className={cx('droppy-PageTemplate', className)}>
     {header}
-    <main className="droppy-PageTemplate-content">{children}</main>
+    <main data-part="content" className="droppy-PageTemplate-content">
+      {children}
+    </main>
     {footer}
   </div>
 )

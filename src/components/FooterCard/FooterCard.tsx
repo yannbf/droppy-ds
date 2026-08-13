@@ -24,8 +24,9 @@ export type FooterCardProps = {
 }
 
 const FooterCardLinkItem = ({ name, href, external, render }: FooterCardLink) => (
-  <li className="droppy-FooterCard-item">
+  <li data-part="item" className="droppy-FooterCard-item">
     <Link
+      data-part="link"
       href={href}
       render={render}
       className="droppy-FooterCard-link"
@@ -50,12 +51,12 @@ export const FooterCard = ({
   children,
   className,
 }: PropsWithChildren<FooterCardProps>) => (
-  <div className={cx('droppy-FooterCard', className)}>
-    <Heading level={2} className="droppy-FooterCard-title">
+  <div data-part="root" className={cx('droppy-FooterCard', className)}>
+    <Heading data-part="title" level={2} className="droppy-FooterCard-title">
       {title}
     </Heading>
     {links.length > 0 && (
-      <ul className="droppy-FooterCard-list">
+      <ul data-part="list" className="droppy-FooterCard-list">
         {links.map((link) => (
           <FooterCardLinkItem key={link.name} {...link} />
         ))}

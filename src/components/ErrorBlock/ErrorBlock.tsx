@@ -28,10 +28,18 @@ export const ErrorBlock = ({
   onButtonClick,
   className,
 }: ErrorBlockProps) => (
-  <div className={cx('droppy-ErrorBlock', className)}>
-    <Heading level={2}>{title}</Heading>
-    {illustration && <div className="droppy-ErrorBlock-illustration">{illustration}</div>}
-    <Body>{body}</Body>
-    <Button onClick={onButtonClick}>{buttonText}</Button>
+  <div data-part="root" className={cx('droppy-ErrorBlock', className)}>
+    <Heading data-part="title" level={2}>
+      {title}
+    </Heading>
+    {illustration && (
+      <div data-part="illustration" className="droppy-ErrorBlock-illustration">
+        {illustration}
+      </div>
+    )}
+    <Body data-part="body">{body}</Body>
+    <Button data-part="action" onClick={onButtonClick}>
+      {buttonText}
+    </Button>
   </div>
 )

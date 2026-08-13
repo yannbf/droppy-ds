@@ -19,11 +19,13 @@ export const PageSection = ({
   className,
   children,
 }: PageSectionProps) => (
-  <div className={cx('droppy-PageSection', className)}>
-    <div className="droppy-PageSection__top">
-      <Heading level={2}>{title}</Heading>
+  <div data-part="root" className={cx('droppy-PageSection', className)}>
+    <div data-part="top" className="droppy-PageSection__top">
+      <Heading data-part="title" level={2}>
+        {title}
+      </Heading>
       {topButtonLabel && (
-        <Button clear onClick={onTopButtonClick}>
+        <Button data-part="action" clear onClick={onTopButtonClick}>
           {topButtonLabel}
         </Button>
       )}
