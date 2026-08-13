@@ -5,11 +5,14 @@ import * as TopBannerStories from './TopBanner.stories'
 
 # TopBanner
 
+{/* BEGIN: general */}
+
 A full-width band at the top of a page, with a centered title over either a theme color or a
 background photo — a category page's header, a restaurant's hero image.
 
-- **Import:** `import { TopBanner } from '@droppy/design-system'`
-- **Built on:** [Heading](?path=/docs/typography-heading--docs).
+```tsx
+import { TopBanner } from '@droppy/design-system'
+```
 
 <Canvas of={TopBannerStories.Default} />
 
@@ -27,6 +30,10 @@ background photo — a category page's header, a restaurant's hero image.
 - Accepts an `onBackClick` prop for call-site parity with the Mealdrop component this replaces,
   but renders no back control of its own — see [Related](#related) for composing one.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - The header band of a page that wants a large title over either a flat brand color or a hero
@@ -38,21 +45,42 @@ background photo — a category page's header, a restaurant's hero image.
   [PageSection](?path=/docs/layout-structure-pagesection--docs) instead; `TopBanner` is a full-width
   band meant to sit above the page's content column, not inside it.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Theme color background
+With a photo behind it the heading takes its on-photo treatment, so the text holds contrast
+against arbitrary imagery rather than trusting the surface token underneath.
 
-Without `photoUrl`, the band fills with the theme's accent surface color and the title uses the
-regular primary text color.
+<Canvas of={TopBannerStories.HeadingOverPhoto} />
+{/* END: behavior */}
 
-<Canvas of={TopBannerStories.Default} />
+{/* BEGIN: anatomy */}
 
-### Photo background
+## Anatomy
 
-`photoUrl` replaces the color with the given image, covering the band; the title switches to the
-on-inverse text color so it stays legible over a photo.
+A band with an optional heading. Both are optional: with neither `title` nor `photoUrl` the band renders empty.
 
-<Canvas of={TopBannerStories.WithImage} />
+<Canvas of={TopBannerStories.Anatomy} />
+
+| Part  | `data-part` | Renders | Purpose                                                        |
+| :---- | :---------- | :------ | :------------------------------------------------------------- |
+| Root  | `root`      | `<div>` | The band, carrying the background image when `photoUrl` is set |
+| Title | `title`     | `<h2>`  | Switched to its on-photo treatment when there is a photo       |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -66,6 +94,14 @@ on-inverse text color so it stays legible over a photo.
 - **You must provide:** a `title` whose meaning doesn't depend on the background photo — the
   photo is decorative as far as a screen reader is concerned.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token                          | Used for                               |
@@ -78,6 +114,40 @@ The 240px band height is a literal value — no token in the current scale match
 
 `className` merges with the component's own `droppy-TopBanner` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={TopBannerStories} />
+
+### `title`
+
+Rendered as an `h2` inside the band. Omitted, the band is bare.
+
+<Canvas of={TopBannerStories.Title} />
+
+### `photoUrl`
+
+Sets the background and switches the heading to its on-photo treatment.
+
+<Canvas of={TopBannerStories.PhotoUrl} />
+
+### `onBackClick`
+
+Accepted for call-site parity with Mealdrop's own `TopBanner`, whose back button is commented out
+in its source. Nothing here renders a control, so the callback never fires.
+
+<Canvas of={TopBannerStories.OnBackClick} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-TopBanner` class.
+
+<Canvas of={TopBannerStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
@@ -85,6 +155,7 @@ The 240px band height is a literal value — no token in the current scale match
 - **2025-03**: an accessibility pass made the heading conditional — it renders only when a `title` is passed, instead of always emitting a possibly empty heading element — while keeping the optional `photoUrl` background with inverted (white) title text over photos; Droppy inherits this optional-title contract ([a11y fix](https://github.com/yannbf/mealdrop/commit/1c89bf7541a7b2b028338294fefe183dc70ac8e9), [adopted in migration](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
 - **2026-07**: the colour system placed top/promo banners among soft green's few "good news" moments — the [brand guidelines](?path=/docs/brand-guidelines--docs) name promo/top banners as canonical sites, warn that "if a screen has more than one green moment, one of them is probably wrong", and make accents "surfaces, not ink" — so the banner is a soft green surface carrying dark text.
 - **2026-07**: `onBackClick` is accepted but deliberately unwired: Mealdrop's own back button is commented out in the source app, so the prop stays purely for call-site parity until either side puts the button back; otherwise the component was ported with props unchanged ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+- **Built on [Heading](?path=/docs/typography-heading--docs).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -103,12 +174,12 @@ The 240px band height is a literal value — no token in the current scale match
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={TopBannerStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [PageSection](?path=/docs/layout-structure-pagesection--docs) — a titled content section for inside
   the page, instead of a full-width header band.
 - [Heading](?path=/docs/typography-heading--docs) — the title's underlying component.
+
+{/* END: when-to-use */}

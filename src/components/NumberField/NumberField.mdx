@@ -5,13 +5,17 @@ import * as NumberFieldStories from './NumberField.stories'
 
 # NumberField
 
+{/* BEGIN: general */}
+
 A typeable numeric input with increment/decrement buttons and pointer scrub, for a quantity or
 amount that also needs a keyboard or direct-entry path.
 
-- **Import:** `import { NumberField } from '@droppy/design-system'`
-- **Built on:** Base UI [`NumberField`](https://base-ui.com/react/components/number-field),
-  labelled via [`Field`](https://base-ui.com/react/components/field) the same way
-  [Input](?path=/docs/forms-input-input--docs) is.
+```tsx
+import { NumberField } from '@droppy/design-system'
+```
+
+labelled via [`Field`](https://base-ui.com/react/components/field) the same way
+[Input](?path=/docs/forms-input-input--docs) is.
 
 <Canvas of={NumberFieldStories.Default} />
 
@@ -27,6 +31,10 @@ amount that also needs a keyboard or direct-entry path.
   omit `value` for an uncontrolled field, or pass both `value` and `onValueChange` to control it.
 - Merges any incoming `className` onto the root, alongside the theme layer's own class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A quantity or amount where the caller can't predict every value in advance, or where keyboard
@@ -39,24 +47,50 @@ amount that also needs a keyboard or direct-entry path.
   expected — reach for [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) instead;
   it is the simpler, button-only sibling of this component.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Increment, decrement, and clamping
+Three ways in, not one: type a value, press the buttons, or drag the label itself — the scrub area
+sits behind the label text. That third route is what separates this from
+[QuantityStepper](?path=/docs/forms-input-quantitystepper--docs), which only does tap-tap
+increments.
 
-<Canvas of={NumberFieldStories.IncrementAndDecrement} />
-<Canvas of={NumberFieldStories.MinMaxClamping} />
+<Canvas of={NumberFieldStories.ThreeWaysToChangeTheValue} />
+{/* END: behavior */}
 
-### Typing a value directly
+{/* BEGIN: anatomy */}
 
-<Canvas of={NumberFieldStories.Typing} />
+## Anatomy
 
-### Scrubbing the label
+A `Field` wrapper for the label association, a scrub area holding the label, and a group of decrement, input, and increment. The label being inside the scrub area is what makes dragging it change the value.
 
-<Canvas of={NumberFieldStories.Scrub} />
+<Canvas of={NumberFieldStories.Anatomy} />
 
-### Disabled
+| Part       | `data-part` | Renders    | Purpose                                             |
+| :--------- | :---------- | :--------- | :-------------------------------------------------- |
+| Field      | `field`     | `<div>`    | Base UI's `Field.Root`, associating label and input |
+| Root       | `root`      | `<div>`    | Owns the value, the bounds, and the formatting      |
+| Scrub area | `scrub`     | `<span>`   | Wraps the label; dragging it steps the value        |
+| Label      | `label`     | `<label>`  | The visible label and accessible name               |
+| Group      | `group`     | `<div>`    | Holds the buttons and the input                     |
+| Decrement  | `decrement` | `<button>` | Disabled at `min`                                   |
+| Input      | `input`     | `<input>`  | The typeable control                                |
+| Increment  | `increment` | `<button>` | Disabled at `max`                                   |
 
-<Canvas of={NumberFieldStories.Disabled} />
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -74,16 +108,76 @@ amount that also needs a keyboard or direct-entry path.
   announce as disabled once a bound is reached.
 - **You must provide:** `label` — without it the field has no accessible name.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 Colors, spacing, and the scrub cursor come entirely from the theme layer's `NumberField*`
 classes — this component adds no styling of its own beyond forwarding `className` to the root.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={NumberFieldStories} />
+
+### `label`
+
+Names the field, and doubles as the scrub handle.
+
+<Canvas of={NumberFieldStories.Label} />
+
+### `defaultValue`
+
+Seeds the field without making it controlled.
+
+<Canvas of={NumberFieldStories.DefaultValue} />
+
+### `min` and `max`
+
+Bound the range; the buttons disable at each end.
+
+<Canvas of={NumberFieldStories.MinAndMax} />
+
+### `step`
+
+How far each increment moves the value.
+
+<Canvas of={NumberFieldStories.Step} />
+
+### `format`
+
+`Intl.NumberFormat` options — currency, percent, decimal places.
+
+<Canvas of={NumberFieldStories.Format} />
+
+### `disabled`
+
+Dims the input and both buttons together.
+
+<Canvas of={NumberFieldStories.Disabled} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-NumberField` class.
+
+<Canvas of={NumberFieldStories.ClassName} />
+{/* END: props */}
 
 {/* BEGIN: history */}
 
 ## Decision log
 
 - **2026-07**: NumberField was added as the typeable numeric input, wrapped in Field so the label associates with the control the same way Input does it — positioned explicitly against QuantityStepper, which stays a tap-tap bounded stepper; the label sits inside the ScrubArea so dragging it changes the value ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [NumberField.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/NumberField/NumberField.tsx)).
+- **Built on Base UI [`NumberField`](https://base-ui.com/react/components/number-field),.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -104,9 +198,7 @@ classes — this component adds no styling of its own beyond forwarding `classNa
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={NumberFieldStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
@@ -114,3 +206,5 @@ classes — this component adds no styling of its own beyond forwarding `classNa
   stepper for small bounded counts where typing isn't needed.
 - [Input](?path=/docs/forms-input-input--docs) — the plain text field this shares its labelling
   approach with.
+
+{/* END: when-to-use */}

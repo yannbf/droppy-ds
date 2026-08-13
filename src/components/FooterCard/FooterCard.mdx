@@ -5,11 +5,14 @@ import * as FooterCardStories from './FooterCard.stories'
 
 # FooterCard
 
+{/* BEGIN: general */}
+
 A titled column of links for a page footer — "Discover us", "Our social media", or any other
 grouped set of footer navigation.
 
-- **Import:** `import { FooterCard } from '@droppy/design-system'`
-- **Built on:** `Heading` (level 2) and `Link` for each item.
+```tsx
+import { FooterCard } from '@droppy/design-system'
+```
 
 <Canvas of={FooterCardStories.Default} />
 
@@ -26,6 +29,10 @@ grouped set of footer navigation.
   correctly on the dark surface a footer typically sits on, without hardcoding white.
 - Merges any incoming `className` with its own `droppy-FooterCard` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Inside a page footer, grouping a titled set of links — site navigation, social links, legal
@@ -36,24 +43,54 @@ grouped set of footer navigation.
 - A single standalone link — use [Link](?path=/docs/actions-link--docs) directly.
 - A trail of ancestor pages — use [Breadcrumb](?path=/docs/navigation-breadcrumb--docs).
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
 ### External links
 
+An item marked `external` opens in a new tab with `rel="noopener noreferrer"` — the escaping
+hatch and the security attribute travel together, so a caller can't get one without the other.
+
 <Canvas of={FooterCardStories.ExternalLinks} />
 
-### Router links via `render`
+### Router links per item
 
-Pass `render` on a link item with a router's own link element, the same pattern `Breadcrumb` and
-`Link` use elsewhere in this library.
+`render` swaps the default `<a>` for a router-aware link on a single item, the same way
+`Breadcrumb` composes its crumbs.
 
-<Canvas of={FooterCardStories.WithRouterLinks} />
+<Canvas of={FooterCardStories.ItemRender} />
+{/* END: behavior */}
 
-### Non-link content
+{/* BEGIN: anatomy */}
 
-`children` renders alongside (or instead of) the link list.
+## Anatomy
 
-<Canvas of={FooterCardStories.WithChildren} />
+A heading above a list of links. The list disappears entirely when `links` is empty, so a column of `children` alone renders no stray `<ul>`.
+
+<Canvas of={FooterCardStories.Anatomy} />
+
+| Part  | `data-part` | Renders                         | Purpose                                            |
+| :---- | :---------- | :------------------------------ | :------------------------------------------------- |
+| Root  | `root`      | `<div>`                         | The column: heading above, list and children below |
+| Title | `title`     | `<h2>`                          | The column heading                                 |
+| List  | `list`      | `<ul>`                          | Absent when `links` is empty                       |
+| Item  | `item`      | `<li>`                          | One per entry                                      |
+| Link  | `link`      | `<a>` (or the `render` element) | Rendered through `Link`                            |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -65,6 +102,14 @@ behaviour applies, no custom handling.
 - **Screen reader:** announced as a heading followed by a list of links.
 - **You must provide:** nothing further — heading level and list semantics are built in. Make sure
   each footer only has one `FooterCard` per topic so the headings stay meaningful.
+
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -78,6 +123,51 @@ Links inherit their color from the card via `currentColor`, so overriding `--ds-
 (or setting `color` on a wrapping element) re-colors both the title and the links together.
 `className` merges with the component's own `droppy-FooterCard` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={FooterCardStories} />
+
+### `title`
+
+The column heading, rendered as an `h2`.
+
+<Canvas of={FooterCardStories.Title} />
+
+### `links`
+
+The list, as `{ name, href?, external?, render? }`. Omitted or empty, no list renders.
+
+<Canvas of={FooterCardStories.Links} />
+
+### Item `external`
+
+Opens in a new tab with `rel="noopener noreferrer"`.
+
+<Canvas of={FooterCardStories.ExternalLinks} />
+
+### Item `render`
+
+Swaps the default `<a>` for a router-aware link, per item.
+
+<Canvas of={FooterCardStories.ItemRender} />
+
+### `children`
+
+Rendered below the list — app store badges, a short paragraph, anything a link list can't carry.
+
+<Canvas of={FooterCardStories.Children} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-FooterCard` class.
+
+<Canvas of={FooterCardStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
@@ -85,6 +175,7 @@ Links inherit their color from the card via `currentColor`, so overriding `--ds-
 - **2020-09**: Mealdrop's footer and its FooterCard columns were created with styled-components ([base work](https://github.com/yannbf/mealdrop/commit/78dc77923c528c1006e3501d2ee11447cba1143a)).
 - **2021-05**: the footer title became an `<h2>` for document structure while keeping heading-4-sized type via a CSS override — semantic level deliberately decoupled from visual scale, a pairing Droppy still honours ([footer card fix](https://github.com/yannbf/mealdrop/commit/2d2303d1758c7d703fb20f5077ad212499fe980d)).
 - **2026-08**: ported onto the Heading and Link primitives with links as a `{name, href?, external?, render?}` array; the port initially dropped the title-size override and relied on implicit colour inheritance — the title rendered at heading-2 scale ([#14](https://github.com/yannbf/droppy-ds/issues/14)) and links went invisible under a consumer `* { color }` reset ([#13](https://github.com/yannbf/droppy-ds/issues/13)) — both fixed by pinning the title to `--ds-type-size-lg` and restating `color: inherit` down the list chain with ancestor-qualified selectors ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267), [hardening commit](https://github.com/yannbf/droppy-ds/commit/21cbe802a1e3c6262b4e3fd56baf883f61038bb7)).
+- **Built on `Heading` (level 2) and `Link` for each item.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -101,11 +192,11 @@ Links inherit their color from the card via `currentColor`, so overriding `--ds-
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={FooterCardStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Link](?path=/docs/actions-link--docs) — the link primitive `FooterCard` builds on.
 - [Heading](?path=/docs/typography-heading--docs) — the heading primitive `FooterCard` builds on.
+
+{/* END: when-to-use */}

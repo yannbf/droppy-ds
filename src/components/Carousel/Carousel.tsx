@@ -113,6 +113,7 @@ export const Carousel = ({ children, itemsPerView, slidesToScroll, className }: 
 
   return (
     <div
+      data-part="root"
       className={cx('droppy-Carousel', className)}
       style={
         {
@@ -124,17 +125,19 @@ export const Carousel = ({ children, itemsPerView, slidesToScroll, className }: 
     >
       {canScrollPrev && (
         <IconButton
+          data-part="nav"
           name="arrow-left"
           aria-label="Previous"
           onClick={scrollPrev}
           className="droppy-Carousel-nav droppy-Carousel-nav--prev"
         />
       )}
-      <div className="droppy-Carousel-viewport" ref={emblaRef}>
-        <div className="droppy-Carousel-container">
+      <div data-part="viewport" className="droppy-Carousel-viewport" ref={emblaRef}>
+        <div data-part="container" className="droppy-Carousel-container">
           {Children.map(children, (child, index) => (
             <div
               key={index}
+              data-part="slide"
               className={cx(
                 'droppy-Carousel-slide',
                 slidesInView.length > 0 &&
@@ -149,6 +152,7 @@ export const Carousel = ({ children, itemsPerView, slidesToScroll, className }: 
       </div>
       {canScrollNext && (
         <IconButton
+          data-part="nav"
           name="arrow-right"
           aria-label="Next"
           onClick={scrollNext}

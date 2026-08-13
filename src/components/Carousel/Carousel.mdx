@@ -5,12 +5,16 @@ import * as CarouselStories from './Carousel.stories'
 
 # Carousel
 
+{/* BEGIN: general */}
+
 A horizontally scrolling row of items — restaurant cards, category tiles — showing a fixed number
 per breakpoint, with drag, wheel-gesture, and arrow navigation.
 
-- **Import:** `import { Carousel } from '@droppy/design-system'`
-- **Built on:** [Embla Carousel](https://www.embla-carousel.com/) with the wheel-gestures plugin,
-  and the design system's own `IconButton` for the arrows.
+```tsx
+import { Carousel } from '@droppy/design-system'
+```
+
+and the design system's own `IconButton` for the arrows.
 
 <Canvas of={CarouselStories.Default} />
 
@@ -28,6 +32,10 @@ per breakpoint, with drag, wheel-gesture, and arrow navigation.
   breakpoint — smaller screens scroll by dragging instead.
 - Merges any incoming `className` with its own `droppy-Carousel` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - A horizontally browsable row of same-shaped items where showing a fixed count per breakpoint
@@ -38,19 +46,54 @@ per breakpoint, with drag, wheel-gesture, and arrow navigation.
 - A small, fixed set of items that all fit comfortably in the available width — a plain flex or
   grid row needs no carousel machinery.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Fewer items than fit in view
+### Arrows appear only where there is somewhere to go
 
-When every child already fits in the viewport, neither arrow renders — there's nowhere to scroll.
+Neither arrow renders when that direction can't scroll, and both are desktop-only besides —
+smaller screens scroll by dragging or by horizontal wheel gesture.
 
-<Canvas of={CarouselStories.FewerItemsThanFitInView} />
+<Canvas of={CarouselStories.ArrowsOnlyWhenThereIsSomewhereToGo} />
 
-### Paging by more than one slide
+### Dimmed slides
 
-`slidesToScroll` decouples how many items are visible from how far an arrow click moves.
+Slides that aren't almost fully visible drop to 0.5 opacity, so a partially scrolled row signals
+there is more to reach rather than looking clipped.
 
-<Canvas of={CarouselStories.AdvanceByPage} />
+<Canvas of={CarouselStories.OffscreenSlidesDim} />
+{/* END: behavior */}
+
+{/* BEGIN: anatomy */}
+
+## Anatomy
+
+A rail wrapping a clipped viewport and the track inside it, one wrapper per child, with the arrows as siblings of the viewport. The per-breakpoint counts reach the CSS as custom properties rather than inline widths, so the stylesheet owns the breakpoints.
+
+<Canvas of={CarouselStories.Anatomy} />
+
+| Part      | `data-part` | Renders    | Purpose                                                    |
+| :-------- | :---------- | :--------- | :--------------------------------------------------------- |
+| Root      | `root`      | `<div>`    | Carries the item counts as CSS custom properties           |
+| Viewport  | `viewport`  | `<div>`    | The clipped window Embla drives                            |
+| Container | `container` | `<div>`    | The track that slides horizontally                         |
+| Slide     | `slide`     | `<div>`    | One wrapper per child; dims when not almost fully in view  |
+| Nav       | `nav`       | `<button>` | Previous/next; mounted only when that direction can scroll |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -66,6 +109,14 @@ own content remains independently focusable and readable in document order.
 - **You must provide:** an accessible label for the carousel region as a whole, if the surrounding
   page needs one (e.g. wrap it with `aria-label` or a preceding heading).
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 | Token              | Used for                                 |
@@ -77,6 +128,40 @@ Arrow buttons use `IconButton`'s own styling (see [IconButton](?path=/docs/actio
 deliberately not theme-reactive, so they stay legible over arbitrary imagery. `className` merges
 with the component's own `droppy-Carousel` class.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={CarouselStories} />
+
+### `children`
+
+Become the slides — one wrapper is added per child.
+
+<Canvas of={CarouselStories.Children} />
+
+### `itemsPerView`
+
+How many items fit per breakpoint, mobile-first. Fractions are deliberate: `1.2` shows a sliver of
+the next tile so the row reads as scrollable.
+
+<Canvas of={CarouselStories.ItemsPerView} />
+
+### `slidesToScroll`
+
+How many items each arrow click advances, per breakpoint. Defaults to 1.
+
+<Canvas of={CarouselStories.SlidesToScroll} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Carousel` class.
+
+<Canvas of={CarouselStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
@@ -84,6 +169,7 @@ with the component's own `droppy-Carousel` class.
 - **2020**: Mealdrop's carousel churned through libraries early — a faulty react-carousel release, then a wholesale switch — and picked up its one durable behaviour: vertical touch panning passes through the track, the ancestor of Droppy's `touch-action: pan-y pinch-zoom` ([faulty version](https://github.com/yannbf/mealdrop/commit/7c955a6a25477039341c287e2a77f71bb456c58b), [library switch](https://github.com/yannbf/mealdrop/commit/47705de1f77c6a379276d3dffa985d552d33ce66), [vertical pan fix](https://github.com/yannbf/mealdrop/commit/6290a9585f5b102a2ff0cd6adebc94ce8ef061ac)).
 - **2025-04**: an accessibility pass gave the arrows their "Previous"/"Next" labels, asserted in Storybook play tests — Droppy inherits the labelled-arrows contract ([a11y pass](https://github.com/yannbf/mealdrop/commit/51b060508116f56e9c3e48301adb0b0562305b12)).
 - **2026-08**: ported from Mealdrop's Embla-based carousel onto token-driven CSS, adding `embla-carousel-react` and `embla-carousel-wheel-gestures` as dependencies; the old per-breakpoint prop bag (responsive objects, custom arrow slots, `removeArrowOnDeviceType`) collapsed to `itemsPerView: {mobile, tablet, desktop}` plus optional `slidesToScroll`, with fixed IconButton arrows that render only at desktop and only when there is somewhere to scroll, and a new dimming affordance that fades partially-visible slides to half opacity ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267)).
+- **Built on [Embla Carousel](https://www.embla-carousel.com/) with the wheel-gestures plugin,.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -101,11 +187,11 @@ with the component's own `droppy-Carousel` class.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={CarouselStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [IconButton](?path=/docs/actions-iconbutton--docs) — the arrow control `Carousel` builds on.
 - [Card](?path=/docs/media-content-card--docs) — a common shape for carousel items.
+
+{/* END: when-to-use */}

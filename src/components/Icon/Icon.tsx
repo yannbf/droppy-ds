@@ -18,6 +18,7 @@ export const Icon = ({ name, color, size = '1.5rem', className, style, ...rest }
 
   return (
     <svg
+      data-part="root"
       className={cx('droppy-Icon', className)}
       viewBox={icon.viewBox}
       fill="none"

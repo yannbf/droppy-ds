@@ -5,10 +5,13 @@ import * as ToastStories from './Toast.stories'
 
 # Toast
 
+{/* BEGIN: general */}
+
 A stack of transient, self-dismissing notifications for things the reader doesn't need to act on right away.
 
-- **Import:** `import { ToastProvider, useToast } from '@droppy/design-system'`
-- **Built on:** Base UI [`Toast`](https://base-ui.com/react/components/toast).
+```tsx
+import { ToastProvider, useToast } from '@droppy/design-system'
+```
 
 <Canvas of={ToastStories.Default} />
 
@@ -18,6 +21,10 @@ A stack of transient, self-dismissing notifications for things the reader doesn'
 - **Auto-dismisses on a timer**, and stacks newest-first when more than one is visible at once.
 - **Announced to screen readers** through the viewport's live region, without stealing focus on open.
 - **Portals to `document.body`** by default, so a parent's `overflow: hidden` or stacking context can't clip it. `container` retargets the portal, matching [Modal](?path=/docs/overlays-modal--docs)'s prop of the same name.
+
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
 
 ## When to use
 
@@ -29,23 +36,56 @@ A stack of transient, self-dismissing notifications for things the reader doesn'
 - A decision the reader must make before continuing — use [Modal](?path=/docs/overlays-modal--docs) instead, which blocks the page and traps focus until it's answered.
 - Content the reader must be able to reach at their own pace rather than within a timeout — put it on the page instead.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Raising a toast
+### The close affordance
 
-`useToast()` returns the same manager everywhere it's called beneath `ToastProvider`. `add({ title, description })` queues a toast and returns its id, which can be passed to `close(id)` or `update(id, ...)` later.
+The close button is `aria-hidden` until the stack is hovered or focused, so a single passing
+notification doesn't compete with the page for keyboard attention.
 
-<Canvas of={ToastStories.AppearsOnDemand} />
+<Canvas of={ToastStories.CloseAppearsOnHover} />
 
-### Dismissing a toast
+### Enter and exit motion
 
-Every toast renders a `Dismiss` button that closes it immediately, without waiting out its timeout.
+Each toast enters and leaves off `[data-starting-style]` and `[data-ending-style]`, and the exit
+additionally reads `[data-swipe-direction]` so a swiped toast leaves the way it was pushed rather
+than fading in place.
 
-<Canvas of={ToastStories.DismissesOnClose} />
+<Canvas of={ToastStories.EnterExitTransition} />
+{/* END: behavior */}
 
-### Auto-dismiss timing
+{/* BEGIN: anatomy */}
 
-`timeout` on `ToastProvider` sets the default time (in ms) before a toast dismisses itself; `0` disables auto-dismiss for every toast raised through that provider. `limit` caps how many toasts show at once — older ones beyond the limit stay mounted but hidden until newer ones close.
+## Anatomy
+
+A portalled viewport holding one node per queued toast. There is no trigger part — a toast is raised imperatively through `useToast().add(...)`, so nothing here is composed by hand. The anatomy story portals into a node inside the story canvas via `container`, so the **Anatomy** panel can reach the parts — it only scans the canvas, and the default portal target is the document body.
+
+<Canvas of={ToastStories.Anatomy} />
+
+| Part        | `data-part`   | Renders    | Purpose                                             |
+| :---------- | :------------ | :--------- | :-------------------------------------------------- |
+| Viewport    | `root`        | `<div>`    | The stack region the toasts portal into             |
+| Toast       | `toast`       | `<div>`    | One notification; owns the enter/exit states        |
+| Content     | `content`     | `<div>`    | Lays the text out against the close button          |
+| Title       | `title`       | `<div>`    | The headline                                        |
+| Description | `description` | `<div>`    | The supporting line                                 |
+| Close       | `close`       | `<button>` | `aria-hidden` until the stack is hovered or focused |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -60,9 +100,56 @@ Every toast renders a `Dismiss` button that closes it immediately, without waiti
 - **Screen reader:** hears the toast's title and description as it appears, and can reach its `Dismiss` button by tabbing into the stack.
 - **You must provide:** a `title` or `description` on every toast that carries the information the reader needs — the toast itself supplies no default text.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 Colors, spacing, and the stacking/swipe transforms come entirely from the theme layer's `Toast*` classes. `className` on `ToastProvider` merges onto the viewport, so it composes with the theme rather than replacing it.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ToastStories} />
+
+### `children`
+
+The tree that raises toasts; the provider renders it as-is.
+
+<Canvas of={ToastStories.Children} />
+
+### `timeout`
+
+Milliseconds before a toast auto-dismisses. `0` keeps it until dismissed.
+
+<Canvas of={ToastStories.Timeout} />
+
+### `limit`
+
+How many show at once. Older toasts are marked limited rather than dropped.
+
+<Canvas of={ToastStories.Limit} />
+
+### `container`
+
+Where to portal the stack — an element or a selector.
+
+<Canvas of={ToastStories.Container} />
+
+### `className`
+
+Merged onto the viewport alongside the component's own `droppy-Toast` class.
+
+<Canvas of={ToastStories.ClassName} />
+{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -70,6 +157,7 @@ Colors, spacing, and the stacking/swipe transforms come entirely from the theme 
 
 - **2026-07**: Toast shipped provider-only: it has no trigger and no `open` prop — an app wraps its tree once in ToastProvider and raises toasts imperatively through `useToast().add()`, with the provider owning the only rendering of the toast list; it reuses the same element-or-selector `container` prop as Modal and Sidebar, with `timeout` and `limit` as the tuning knobs ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [Toast.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/Toast/Toast.tsx)).
 - **2026-07**: because Mealdrop has no status system beyond `text.error`, toast success/info/warning inks were collapsed to `text.primary` as a neutral-first gap fill; proper status surface/ink tokens (success/danger/warning/info surface + on-surface pairs) were identified as the missing piece but deliberately left for the system owner to decide rather than invented during extraction.
+- **Built on Base UI [`Toast`](https://base-ui.com/react/components/toast).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -90,11 +178,11 @@ Colors, spacing, and the stacking/swipe transforms come entirely from the theme 
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ToastStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - For a decision that must block the page until it's answered, use [Modal](?path=/docs/overlays-modal--docs).
 - For a hint about a control before it's activated — never for a confirmation message — use [Tooltip](?path=/docs/overlays-tooltip--docs).
+
+{/* END: when-to-use */}

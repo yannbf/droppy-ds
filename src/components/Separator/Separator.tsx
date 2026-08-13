@@ -16,6 +16,7 @@ export type SeparatorProps = Omit<ComponentProps<typeof BaseSeparator>, 'render'
  */
 export const Separator = ({ orientation = 'horizontal', className, ...rest }: SeparatorProps) => (
   <BaseSeparator
+    data-part="root"
     orientation={orientation}
     className={cx(theme.SeparatorRoot, 'droppy-Separator', className)}
     {...rest}

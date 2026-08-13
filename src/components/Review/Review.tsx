@@ -34,8 +34,8 @@ const getReviewLabel = (rating?: number) => {
  * restaurant tile, an item card, or an order summary.
  */
 export const Review = ({ rating, color, className }: ReviewProps) => (
-  <div className={cx('droppy-Review', className)}>
-    <Body size="S" type="span" color={color} className="droppy-Review-text">
+  <div data-part="root" className={cx('droppy-Review', className)}>
+    <Body data-part="text" size="S" type="span" color={color} className="droppy-Review-text">
       {getReviewLabel(rating)}
     </Body>
   </div>

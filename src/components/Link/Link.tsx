@@ -33,6 +33,7 @@ export const Link = ({
     defaultTagName: 'a',
     render,
     props: {
+      'data-part': 'root',
       className: cx('droppy-Link', className),
       // `href` is only included when there's no `render` override — a
       // present-but-`undefined` key would still spread onto the cloned

@@ -25,10 +25,13 @@ export const Tooltip = ({ label, children, sideOffset = 8, className }: TooltipP
   <BaseTooltip.Root>
     {/* `render` makes the child the trigger rather than wrapping it, so the
         layout stays flat and the trigger keeps its own styling. */}
-    <BaseTooltip.Trigger render={children} />
+    <BaseTooltip.Trigger data-part="trigger" render={children} />
     <BaseTooltip.Portal>
       <BaseTooltip.Positioner sideOffset={sideOffset}>
-        <BaseTooltip.Popup className={cx(theme.TooltipPopup, 'droppy-Tooltip', className)}>
+        <BaseTooltip.Popup
+          data-part="popup"
+          className={cx(theme.TooltipPopup, 'droppy-Tooltip', className)}
+        >
           {label}
         </BaseTooltip.Popup>
       </BaseTooltip.Positioner>

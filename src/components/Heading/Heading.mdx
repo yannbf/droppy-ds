@@ -5,10 +5,13 @@ import * as HeadingStories from './Heading.stories'
 
 # Heading
 
+{/* BEGIN: general */}
+
 Display type for page and section titles, rendered as a real semantic heading.
 
-- **Import:** `import { Heading } from '@droppy/design-system'`
-- **Built on:** a plain `<h1>`–`<h5>` element — no Base UI primitive.
+```tsx
+import { Heading } from '@droppy/design-system'
+```
 
 <Canvas of={HeadingStories.Levels} />
 
@@ -18,6 +21,10 @@ Display type for page and section titles, rendered as a real semantic heading.
 - **Forwards its ref and the rest of its props**, so composition wrappers — Base UI's `Drawer.Title`, `Dialog.Title` — can wire `aria-labelledby` to the real heading element instead of a wrapper `<div>`.
 - **Levels 1–2 use tighter "display" tracking**; levels 3–5 stay at the default tracking, matching the difference between a page-level display size and an ordinary section heading.
 - **`className` merges onto the element** rather than replacing it, so wrapping a `Heading` in `styled()` or adding utility classes composes instead of stripping Droppy's own type styles.
+
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
 
 ## When to use
 
@@ -29,25 +36,51 @@ Display type for page and section titles, rendered as a real semantic heading.
 - To style text for size alone — a stat number in a dashboard tile, for instance — without giving it heading semantics, use plain text with the theme's type tokens instead. `Heading` always renders a real `<h1>`–`<h5>`, so using it purely for its size adds a heading to the outline that isn't one.
 - To make a heading "look right" against its neighbors, don't skip `level`s (jumping from 1 to 4, say). Keep levels sequential and adjust spacing or layout instead — screen reader users navigate by level, and a skipped level reads as a missing section.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
-
-### `level` renders the matching tag
-
-The same prop that picks the rendered element also picks the size step by default — `level={3}` is an `<h3>` at the level-3 size, not a styled `<div>`.
-
-<Canvas of={HeadingStories.RendersMatchingTag} />
 
 ### `size` decouples the visual size from the tag
 
-`size` defaults to `level`, so most call sites never set it. Pass it explicitly to pick a different visual size while `level` keeps choosing the rendered tag — a card title that needs to stay an `<h2>` in the outline but look like a level-4 heading, for instance. Dense layouts (card titles, compact sections) are the usual reason to reach for it; the outline still reads `level`.
+`size` defaults to `level`, so most call sites never set it. Pass it explicitly to pick a
+different visual size while `level` keeps choosing the rendered tag — a card title that needs to
+stay an `<h2>` in the outline but look like a level-4 heading, for instance. Dense layouts (card
+titles, compact sections) are the usual reason to reach for it; the outline still reads `level`.
 
 <Canvas of={HeadingStories.SizeDecoupledFromLevel} />
 
 ### Type scale across levels
 
-Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and below are section headings and use the default tracking. Level 5 has its own size step, so it never falls back to whatever type size happens to surround it.
+Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and below are section
+headings and use the default tracking. Level 5 has its own size step, so it never falls back to
+whatever type size happens to surround it.
+{/* END: behavior */}
 
-<Canvas of={HeadingStories.Levels} />
+{/* BEGIN: anatomy */}
+
+## Anatomy
+
+`Heading` is a single-part component. It forwards its ref and remaining props, so composition wrappers — Base UI's `Dialog.Title`, `Drawer.Title` — can point `aria-labelledby` at the real heading element.
+
+<Canvas of={HeadingStories.Anatomy} />
+
+| Part | `data-part` | Renders       | Purpose                                            |
+| :--- | :---------- | :------------ | :------------------------------------------------- |
+| Root | `root`      | `<h1>`–`<h5>` | The heading, tagged by `level` and sized by `size` |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -56,6 +89,14 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 - **ARIA:** none needed. The native tag (`<h1>`–`<h5>`) already carries the `heading` role and its level; there is no extra wiring to get wrong.
 - **Screen reader:** announced as "heading level N, `<text>`," and listed in heading-navigation tools such as NVDA's Elements List or VoiceOver's rotor.
 - **You must provide:** a sequential `level` order (don't skip levels) and exactly one `h1` per page, so the outline a screen reader user navigates by stays meaningful — `size` only changes the visual step, so this holds whether or not you set it.
+
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -71,6 +112,40 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 
 `className` is merged onto the rendered tag, so it composes with the tokens above rather than overriding them wholesale.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={HeadingStories} />
+
+### `children`
+
+The heading text; nodes work as well as strings.
+
+<Canvas of={HeadingStories.Children} />
+
+### `level`
+
+Picks the rendered tag and, on its own, the matching size step — `level={3}` is an `<h3>` at the
+level-3 size, not a styled `<div>`.
+
+<Canvas of={HeadingStories.Levels} />
+
+### `size`
+
+Picks the visual step on its own; the tag still follows `level`.
+
+<Canvas of={HeadingStories.Sizes} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Heading` class.
+
+<Canvas of={HeadingStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
@@ -79,6 +154,7 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 - **2026-07**: brand typography gave headings Montserrat with hierarchy through size and weight, never colour — the [brand guidelines](?path=/docs/brand-guidelines--docs) reserve text-colour changes for state (error, disabled) — with h1/h2 adding the tight −2px `--ds-type-tracking-display` from the guidelines' type scale.
 - **2026-07**: Sidebar's Drawer.Title renders Heading so the drawer has a real accessible name, which forced Heading to forward ref and rest props (id, `aria-*`) so the aria-labelledby id actually reaches the DOM ([heading commit](https://github.com/yannbf/mealdrop/commit/40f20f7aba828e146634d88e58cbb324541645c4), [sidebar commit](https://github.com/yannbf/mealdrop/commit/6d946fcf90684f3d87b79d6d081fbf29d41f26ce)).
 - **2026-07**: a `size` prop decoupled visual scale from semantic `level` — level picks the tag, size (defaulting to level) picks the scale, e.g. `<Heading level={2} size={4}>` — replacing the four styled(Heading) wrappers Mealdrop used to shrink correctly-levelled headings; level 5 also got a real size rule, where Mealdrop's scale had stopped at 4 ([size prop replaces wrappers](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+- **Built on a plain `<h1>`–`<h5>` element — no Base UI primitive.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -100,11 +176,11 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={HeadingStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To title a [Modal](?path=/docs/overlays-modal--docs) or [Sidebar](?path=/docs/overlays-sidebar--docs), forward this component's ref via `render` so the dialog or drawer's `aria-labelledby` points at a real heading tag.
 - To label a form field, use [Input](?path=/docs/forms-input-input--docs), which handles its own label association without a separate `Heading`.
+
+{/* END: when-to-use */}

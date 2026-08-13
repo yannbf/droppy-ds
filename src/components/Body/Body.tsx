@@ -64,6 +64,7 @@ export const Body = ({
 
   return (
     <Tag
+      data-part="root"
       className={cx(
         'droppy-Body',
         size && sizeClassName[size],

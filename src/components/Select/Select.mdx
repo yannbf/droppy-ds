@@ -5,10 +5,13 @@ import * as SelectStories from './Select.stories'
 
 # Select
 
+{/* BEGIN: general */}
+
 A single-choice control over a short, known list.
 
-- **Import:** `import { Select } from '@droppy/design-system'`
-- **Built on:** the native `<select>` element — not a Base UI primitive. On touch devices a native select opens the platform's own picker, which no scripted listbox matches for accessibility or muscle memory; Droppy restyles the control and supplies its own chevron on top.
+```tsx
+import { Select } from '@droppy/design-system'
+```
 
 <Canvas of={SelectStories.Default} />
 
@@ -20,6 +23,10 @@ A single-choice control over a short, known list.
 - **Label sits before the control in the DOM**, matching reading order, while the focus highlight still reaches it via a `:has()` selector rather than a sibling combinator that would require the opposite order.
 - **The chevron is a token-colored CSS mask**, not an SVG with a baked-in fill color, so it follows the theme into dark mode without any JavaScript theme lookup.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Choosing one value from a short, known list — quantities, delivery windows, and similar bounded option sets.
@@ -30,24 +37,55 @@ A single-choice control over a short, known list.
 - To let someone type a value rather than pick from a fixed list, use [Input](?path=/docs/forms-input-input--docs) instead — a select can only ever return one of its declared options.
 - For a list too long to scan by eye or by native typeahead alone, this component isn't it — Droppy has no searchable variant here. Reach for Base UI's `Combobox` directly rather than stretching `Select` past what a native picker is good at.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Numeric and text options
+### Value coercion
 
-Options can be numbers or strings; `Select` renders both the value and the visible text identically, so quantities ("2", "3") and free-form labels ("ASAP", "Tonight") work with the same `options` prop.
+Numeric options come back as numbers and text options as strings, so a caller never parses the
+value first — and a non-numeric option is never turned into `NaN`, which is what Mealdrop's
+blanket `Number()` did (docs/MEALDROP-PARITY.md).
 
-<Canvas of={SelectStories.TextOptions} />
+<Canvas of={SelectStories.ValueCoercion} />
 
-### Value coercion in `onChange`
+### A native control
 
-Numeric options come back as numbers, not strings, so a caller can use the value directly. The coercion checks for an empty string before calling `Number()` on it, so a genuinely non-numeric option is never turned into `NaN` — the failure mode of running every value through `Number()` unconditionally.
+The control is the native `<select>`. On touch devices that opens the platform picker, which no
+scripted listbox matches for accessibility or muscle memory — Droppy only restyles it and supplies
+its own chevron.
 
-<Canvas of={SelectStories.ReportsNumericValues} />
-<Canvas of={SelectStories.ReportsTextValues} />
+<Canvas of={SelectStories.NativeControl} />
+{/* END: behavior */}
 
-### Disabled state
+{/* BEGIN: anatomy */}
 
-<Canvas of={SelectStories.Disabled} />
+## Anatomy
+
+A label above a wrapper that positions the chevron over the native control. There is no listbox part: the options are real `<option>` elements the platform renders.
+
+<Canvas of={SelectStories.Anatomy} />
+
+| Part    | `data-part` | Renders    | Purpose                                |
+| :------ | :---------- | :--------- | :------------------------------------- |
+| Root    | `root`      | `<div>`    | The field: label above, control below  |
+| Label   | `label`     | `<label>`  | Tied to the control by `for`/`id`      |
+| Wrapper | `wrapper`   | `<div>`    | Positions the chevron over the control |
+| Control | `control`   | `<select>` | The native control                     |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -61,6 +99,14 @@ Numeric options come back as numbers, not strings, so a caller can use the value
 - **ARIA:** none added beyond what a native `<select>` and a `<label htmlFor>` already provide — the browser reports the control's role, expanded state, and current selection to assistive technology on its own.
 - **Screen reader:** announces the label as the field's name, then the currently selected option; opening the picker reads out the option list through whichever native mechanism the OS supplies.
 - **You must provide:** a `label`. Without one the rendered `<select>` has no accessible name, the same obligation as any other native form control.
+
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -78,6 +124,45 @@ Numeric options come back as numbers, not strings, so a caller can use the value
 
 The chevron itself is a `mask` over a token-colored layer rather than a data-URL SVG, specifically so `--ds-color-icon-default` can resolve inside it — colors embedded in SVG XML can't read CSS custom properties, so a baked-in-color chevron would need a JavaScript theme lookup to flip in dark mode; this one doesn't. `className` merges onto the outer wrapper.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={SelectStories} />
+
+### `label`
+
+The visible label, wired to the control with `for`/`id`.
+
+<Canvas of={SelectStories.Label} />
+
+### `options`
+
+Rendered as both the value and the visible text.
+
+<Canvas of={SelectStories.Options} />
+
+### `value` and `onChange`
+
+The control is fully controlled; `onChange` receives the coerced value.
+
+<Canvas of={SelectStories.Value} />
+
+### `disabled`
+
+Native, and passed straight through — as is every other `<select>` attribute.
+
+<Canvas of={SelectStories.Disabled} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Select` class.
+
+<Canvas of={SelectStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
@@ -86,6 +171,7 @@ The chevron itself is a `mask` over a token-colored layer rather than a data-URL
 - **2026-07**: onChange now coerces numeric options to numbers but returns strings for non-numeric ones — fixing Mealdrop's behaviour of running every value through `Number()`, which turned text options into NaN ([Select.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/Select/Select.tsx), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
 - **2026-07**: the chevron changed from a data-URL SVG with a baked-in colour (string-replaced per theme via a JavaScript lookup) to a CSS mask over a token-coloured layer that flips themes in pure CSS, and the label moved before the control in the DOM so reading order matches visual order — Mealdrop had it after only so a sibling selector could drive the focus highlight, which `:has()` handles now ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 - **2026-07**: because Droppy's spacing scale is offset one step from Mealdrop's original tokens (`--ds-space-xs` is 1rem, not 0.5rem), spacing must be migrated by value rather than by token name: Select's field padding was remapped to the nearest DS step (`--ds-space-sm` for a 1.25rem original with no exact match) and its label gap to the exact `--ds-space-2xs` ([select spacing commit](https://github.com/yannbf/mealdrop/commit/05231ffb1b8a1a7475f148dbfdbba448daef701d)).
+- **Built on the native `<select>` element — not a Base UI primitive. On touch devices a native select opens the platform's own picker, which no scripted listbox matches for accessibility or muscle memory; Droppy restyles the control and supplies its own chevron on top.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -106,10 +192,10 @@ The chevron itself is a `mask` over a token-colored layer rather than a data-URL
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={SelectStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - To collect free-form text instead of a fixed choice, use [Input](?path=/docs/forms-input-input--docs).
+
+{/* END: when-to-use */}

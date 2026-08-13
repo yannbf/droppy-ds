@@ -28,6 +28,7 @@ export const ProgressBar = ({ value, max = 100, label, className, ...rest }: Pro
 
   return (
     <div
+      data-part="root"
       role="progressbar"
       aria-valuenow={clampedValue}
       aria-valuemin={0}
@@ -36,7 +37,7 @@ export const ProgressBar = ({ value, max = 100, label, className, ...rest }: Pro
       className={cx('droppy-ProgressBar', className)}
       {...rest}
     >
-      <div className="droppy-ProgressBar-fill" style={{ width: `${percent}%` }} />
+      <div data-part="fill" className="droppy-ProgressBar-fill" style={{ width: `${percent}%` }} />
     </div>
   )
 }

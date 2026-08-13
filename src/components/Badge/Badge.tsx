@@ -15,6 +15,7 @@ export type BadgeProps = DefaultProps &
 
 export const Badge = ({ text, variant = 'neutral', className, ...rest }: BadgeProps) => (
   <span
+    data-part="root"
     className={cx('droppy-Badge', variant === 'positive' && 'droppy-Badge--positive', className)}
     {...rest}
   >

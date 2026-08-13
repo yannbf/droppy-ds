@@ -5,11 +5,14 @@ import * as ReviewStories from './Review.stories'
 
 # Review
 
+{/* BEGIN: general */}
+
 A star-rating and text line — "★ 4.5 Very good" or "No reviews yet" — for a restaurant tile, an
 item card, or an order summary.
 
-- **Import:** `import { Review } from '@droppy/design-system'`
-- **Built on:** `Body`, sized `S` and rendered as a `span`.
+```tsx
+import { Review } from '@droppy/design-system'
+```
 
 <Canvas of={ReviewStories.Default} />
 
@@ -23,6 +26,10 @@ item card, or an order summary.
   treatment so the rating reads as secondary to the content around it. Pass `color` to override it.
 - Merges any incoming `className` with its own `droppy-Review` class.
 
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
 ## When to use
 
 - Alongside a restaurant or item's name, to show its aggregate rating at a glance.
@@ -32,25 +39,51 @@ item card, or an order summary.
 - A star-input control for a visitor to leave their own rating — `Review` is a read-only display,
   not a form control.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
 ### Rating bands
 
-<Canvas of={ReviewStories.VeryPoor} />
-<Canvas of={ReviewStories.Adequate} />
-<Canvas of={ReviewStories.Excellent} />
+The bands are fixed: under 2 is "Very poor", 2–4 "Adequate", 4–5 "Very good", and exactly 5
+"Excellent". The number always shows one decimal, so `4` and `4.0` read identically.
 
-### No reviews yet
+<Canvas of={ReviewStories.RatingBands} />
+
+### No rating
+
+A missing or falsy `rating` renders a plain fallback line rather than a zero-star score, so a
+newly-listed restaurant doesn't look badly reviewed.
 
 <Canvas of={ReviewStories.NoReviews} />
+{/* END: behavior */}
 
-### Overriding the color
+{/* BEGIN: anatomy */}
 
-The default text color is intentionally low-contrast. A caller that wants a different look — a
-higher-contrast rating in a dense list, say — overrides it with `color` rather than fighting the
-token with an external stylesheet.
+## Anatomy
 
-<Canvas of={ReviewStories.CustomColor} />
+A wrapper and the text line inside it. The star, the number, and the band label are one string rather than separate parts — there is no per-star markup to target.
+
+<Canvas of={ReviewStories.Anatomy} />
+
+| Part | `data-part` | Renders  | Purpose                                        |
+| :--- | :---------- | :------- | :--------------------------------------------- |
+| Root | `root`      | `<div>`  | The wrapper the caller positions               |
+| Text | `text`      | `<span>` | The score line, in the quiet review text token |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -60,6 +93,14 @@ token with an external stylesheet.
 - **Screen reader:** announced as the rendered string (e.g. "★ 4.5 Very good" or "No reviews yet").
 - **You must provide:** nothing further, unless the surrounding context needs an accessible name
   for the region the review sits in.
+
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
 
 ## Styling
 
@@ -71,6 +112,34 @@ token with an external stylesheet.
 `className` merges with the component's own `droppy-Review` class. `color` overrides the token
 inline.
 
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ReviewStories} />
+
+### `rating`
+
+Drives both the number and the word beside it.
+
+<Canvas of={ReviewStories.Rating} />
+
+### `color`
+
+Overrides the deliberately quiet default (`--ds-color-text-review`) — for a caller like Mealdrop's
+restaurant tiles that wants its own treatment.
+
+<Canvas of={ReviewStories.Color} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Review` class.
+
+<Canvas of={ReviewStories.ClassName} />
+{/* END: props */}
+
 {/* BEGIN: history */}
 
 ## Decision log
@@ -79,6 +148,7 @@ inline.
 - **2021-12**: the rating-to-label banding settled on exclusive ranges — below 2 "Very poor", 2–4 "Adequate", 4–5 "Very good", 5 "Excellent" — after two buggy iterations whose overlapping comparisons made 2 and 4 ambiguous; Droppy ports this final logic verbatim ([banding fix](https://github.com/yannbf/mealdrop/commit/1f5e590b8c73f2bd996b36e69e1a893d9dc13e35)).
 - **2026-08**: ported to Droppy on token-driven CSS with a new `color` escape hatch for opting out of the deliberately quiet default ink ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267)).
 - **2026-08**: the review ink implements the brand's pale-blue exception asymmetrically per theme: light theme darkens the accent (`blue-700`) so it works as ink, dark theme uses the brand's pale blue verbatim — per the [brand guidelines](?path=/docs/brand-guidelines--docs), review-star text is one of the two deliberate exceptions to "accents are surfaces, not ink".
+- **Built on `Body`, sized `S` and rendered as a `span`.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -93,10 +163,10 @@ inline.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={ReviewStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Body](?path=/docs/typography-body--docs) — the typography primitive `Review` builds on.
+
+{/* END: when-to-use */}

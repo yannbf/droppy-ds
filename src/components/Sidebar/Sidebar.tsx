@@ -48,20 +48,24 @@ export const Sidebar = ({
     >
       <Drawer.Portal container={resolvedContainer}>
         <Drawer.Backdrop
+          data-part="backdrop"
           className={cx(theme.DrawerBackdrop, 'droppy-Sidebar-backdrop')}
           data-testid="sidebar-backdrop"
         />
         <Drawer.Viewport className="droppy-Sidebar-viewport">
           <Drawer.Popup
+            data-part="root"
             className={cx(theme.DrawerPopup, 'droppy-Sidebar', className)}
             data-testid="sidebar"
           >
-            <div className="droppy-Sidebar-topBar">
+            <div data-part="topbar" className="droppy-Sidebar-topBar">
               <Drawer.Title
+                data-part="title"
                 className={theme.DrawerTitle}
                 render={<Heading level={4}>{title}</Heading>}
               />
               <Button
+                data-part="close"
                 aria-label="close sidebar"
                 data-testid="sidebar-close-btn"
                 onClick={onClose}
@@ -71,11 +75,19 @@ export const Sidebar = ({
                 iconSize={16}
               />
             </div>
-            <div className="droppy-Sidebar-content" data-testid="sidebar-content">
+            <div
+              data-part="content"
+              className="droppy-Sidebar-content"
+              data-testid="sidebar-content"
+            >
               {children}
             </div>
             {footer && (
-              <div className="droppy-Sidebar-footer" data-testid="sidebar-footer">
+              <div
+                data-part="footer"
+                className="droppy-Sidebar-footer"
+                data-testid="sidebar-footer"
+              >
                 {footer}
               </div>
             )}

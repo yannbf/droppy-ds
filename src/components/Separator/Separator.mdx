@@ -5,12 +5,15 @@ import * as SeparatorStories from './Separator.stories'
 
 # Separator
 
+{/* BEGIN: general */}
+
 A visual and semantic divider between two blocks of content.
 
-- **Import:** `import { Separator } from '@droppy/design-system'`
-- **Built on:** Base UI [`Separator`](https://base-ui.com/react/components/separator).
+```tsx
+import { Separator } from '@droppy/design-system'
+```
 
-<Canvas of={SeparatorStories.Horizontal} />
+<Canvas of={SeparatorStories.Default} />
 
 ## Features
 
@@ -20,6 +23,10 @@ A visual and semantic divider between two blocks of content.
 - Renders `role="separator"`, so assistive technology recognizes it as a division between
   content rather than decoration.
 - Merges any incoming `className` onto the root, alongside the theme layer's own class.
+
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
 
 ## When to use
 
@@ -32,15 +39,40 @@ A visual and semantic divider between two blocks of content.
   spacing instead; a separator is for dividing content within one region, not for structuring the
   page itself.
 
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
 ## How it works
 
-### Horizontal (default)
+`Separator` renders `role="separator"` unconditionally, so it is a semantic divider rather than a
+decorative line. For a purely ornamental rule with no grouping meaning, a styled border is the
+lighter choice — there is no presentational escape hatch here.
+{/* END: behavior */}
 
-<Canvas of={SeparatorStories.Horizontal} />
+{/* BEGIN: anatomy */}
 
-### Vertical
+## Anatomy
 
-<Canvas of={SeparatorStories.Vertical} />
+`Separator` is a single-part component: one `<div>` with `role="separator"` and no children. The caller sizes it — width or height in CSS — to read visually as a line.
+
+<Canvas of={SeparatorStories.Anatomy} />
+
+| Part | `data-part` | Renders | Purpose                                                                              |
+| :--- | :---------- | :------ | :----------------------------------------------------------------------------------- |
+| Root | `root`      | `<div>` | The divider, carrying `role="separator"`, `aria-orientation`, and `data-orientation` |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
 
@@ -49,16 +81,47 @@ A visual and semantic divider between two blocks of content.
 - **ARIA:** `role="separator"` with `aria-orientation` matching the `orientation` prop.
 - **Screen reader:** announced as a separator; carries no accessible name of its own.
 
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
 ## Styling
 
 Thickness, color, and margin come from the theme layer's `SeparatorRoot` class — this component
 adds no styling of its own beyond forwarding `className` to the root.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={SeparatorStories} />
+
+### `orientation`
+
+Drives `aria-orientation` and `data-orientation` together, so styling by `[data-orientation]` never
+needs the prop value duplicated in your own class logic.
+
+<Canvas of={SeparatorStories.Orientation} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Separator` class.
+
+<Canvas of={SeparatorStories.ClassName} />
+{/* END: props */}
 
 {/* BEGIN: history */}
 
 ## Decision log
 
 - **2020-10**: dark mode was added to the app and Storybook simultaneously, converting overlay styles to theme variables and adding a Storybook theme switcher; dual light/dark theming has been a requirement for every component since, culminating in Droppy's data-theme token switching ([mealdrop #1](https://github.com/yannbf/mealdrop/pull/1), [dark mode commit](https://github.com/yannbf/mealdrop/commit/ffb87893515e58096e4984e020befc0267b84496)).
+- **Built on Base UI [`Separator`](https://base-ui.com/react/components/separator).** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
 
@@ -79,11 +142,11 @@ adds no styling of its own beyond forwarding `className` to the root.
 
 {/* END: known-issues */}
 
-## API reference
-
-<ArgTypes of={SeparatorStories} />
+{/* BEGIN: when-to-use */}
 
 ## Related
 
 - [Card](?path=/docs/media-content-card--docs) — for dividing distinct regions of a page rather
   than content within one region.
+
+{/* END: when-to-use */}
