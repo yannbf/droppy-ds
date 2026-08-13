@@ -897,6 +897,13 @@ export const Badge = ({ text, className, ...rest }: BadgeProps) => (…)
 
 So prop docs live on the members of a **local, non-exported** `type DefaultProps = { … }`, and the component doc is a block comment on an exported `const`.
 
+> **Amended after review.** Two changes from what Steps 1 and 3 below originally said:
+>
+> 1. **No `Props` name filter.** The props rule strips member JSDoc from _every_ top-level type alias and interface, whatever its name. The suffix filter missed Droppy's companion-item idiom, where prop docs sit on the item type rather than on `*Props` — `FooterCardLink` (4 comments), `TabItem` (3), `BreadcrumbItem` (3), `AccordionItem` (3). Thirteen comments across four components survived a branch claiming the facet was stripped. Dropping the filter also strips member docs from demo/mock-data types (`Order`, `MenuRow`, `Faq`, `OrderStatus`) — the accepted trade, since a name allowlist would silently miss the next companion type the parallel classification sessions add.
+> 2. **Both rules require the comment to open with `/**`.** `leadingBlockComment` matches any `/* … */`, so the original rule would delete a `/* eslint-disable … */` directive sitting above an exported component — a behaviour change, not a documentation change. The predicate lives in `source-transform.ts`, deliberately **not** in `oxc-utils.ts`: `deadcode.ts` (Task 9) removes dead declarations and should take any leading comment with them, whatever kind it is.
+>
+> Step 1's `'leaves non-props types documented'` case is inverted accordingly, and four cases are added: the non-exported-const guard, the no-parse early return, a non-JSDoc block comment surviving, and a `/**` banner above a non-declaration statement surviving.
+
 - [ ] **Step 1: Write the failing test**
 
 `tools/storybook-freeze/src/source-transform.test.ts`:

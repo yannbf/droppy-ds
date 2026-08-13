@@ -217,16 +217,27 @@ export const Badge = ({ text, className, ...rest }: BadgeProps) => (…)
 
 New rules:
 
-- `source-jsdoc.component` — strip the leading block comment of every top-level
+- `source-jsdoc.component` — strip the leading JSDoc block of every top-level
   `ExportNamedDeclaration` whose declaration is a `VariableDeclaration` or `FunctionDeclaration`.
-- `source-jsdoc.props` — for every top-level `TSTypeAliasDeclaration` or `TSInterfaceDeclaration`
-  whose name ends in `Props`, strip the leading block comment of each member. Type aliases need
-  recursion into `TSTypeLiteral`s nested inside `TSIntersectionType`, since the documented members
-  can sit in either operand.
+- `source-jsdoc.props` — for every top-level `TSTypeAliasDeclaration` or `TSInterfaceDeclaration`,
+  strip the leading JSDoc block of each member. Type aliases need recursion into `TSTypeLiteral`s
+  nested inside `TSIntersectionType`, since the documented members can sit in either operand.
 
-The `Props` name filter is upstream's heuristic and it fits: it catches `DefaultProps` (14 files),
-`ElementProps` and every `export type XProps`, while leaving mock-data types like `Order`,
-`MenuRow` and `BodySize` documented.
+Both rules require the comment to open with `/**`. `leadingBlockComment` matches any `/* … */`, so
+without that predicate the component rule would delete a `/* eslint-disable … */` directive sitting
+above an exported component — a behaviour change rather than a documentation one. The predicate
+lives in `source-transform.ts`, deliberately not in `oxc-utils.ts`, because `deadcode.ts` removes
+dead declarations and should take any leading comment with them whatever kind it is.
+
+The props rule initially filtered on a `Props` name suffix, mirroring upstream's heuristic, on the
+reasoning that it caught `DefaultProps`, `ElementProps` and every `export type XProps` while
+leaving mock-data types documented. Review found that wrong: it misses Droppy's companion-item
+idiom, where the prop docs sit on the item type rather than on `*Props` — `FooterCardLink` (4
+comments), `TabItem` (3), `BreadcrumbItem` (3), `AccordionItem` (3). Thirteen comments across four
+components survived a branch whose `experiment.json` claimed the facet had been stripped. The
+filter is gone; every documented type in a component file is now in scope. That also strips member
+docs from `Order`, `MenuRow`, `Faq` and `OrderStatus`, which is the accepted cost of a rule that
+cannot silently miss a companion type added later by the parallel classification sessions.
 
 The early return when both facets are kept is preserved, so a branch keeping all JSDoc does not
 reparse the source tree.
