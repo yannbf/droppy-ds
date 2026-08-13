@@ -14,7 +14,8 @@ npm install "@droppy/design-system@https://pkg.pr.new/yannbf/droppy-ds/@droppy/d
 ```
 
 Every commit publishes a build through [pkg.pr.new](https://pkg.pr.new); take the SHA from the
-commit you want. `@base-ui/react` and `react` are peer dependencies — install them alongside.
+commit you want. `react` and `react-dom` are peer dependencies — install them alongside. Base UI
+is bundled inside the package, so it never needs to be installed separately.
 
 ## Use
 
