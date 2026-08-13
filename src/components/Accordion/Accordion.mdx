@@ -120,13 +120,27 @@ full.
 
 ## Examples
 
-### DropBoard store settings
+### DropBoard menu editor
 
-The back office groups a partner's store admin into one column — shop front, menu pricing,
-availability, recent orders, and payouts. Partners work through several of these at once rather
-than browsing, so this panel opts into `openMultiple` and opens the two sections they check most.
+One collapsible row per dish, each opening onto the three fields a partner actually changes:
+price, a running promotion, and whether the kitchen is still serving it. A promo badge surfaces in
+the header so the list can be scanned without opening anything, and rows start closed because a
+partner arrives looking for one dish, not all of them.
 
-<Canvas of={AccordionStories.DropBoardStoreSettings} />
+The badges read from the same state as the fields, so changing a row's promotion or availability
+updates its header immediately — and the open row stays open, since items are keyed by a stable
+`value` rather than by position.
+
+<Canvas of={AccordionStories.DropBoardMenuEditor} />
+
+### DropBoard order feed
+
+Today's orders in one column, newest first, so the ones still in play sit at the top. Orders that
+haven't been handed over yet — still in the kitchen, or out with a courier — carry a status badge
+and start open, because they're the partner's actual work. Delivered orders collapse into plain
+rows kept for reference.
+
+<Canvas of={AccordionStories.DropBoardOrders} />
 
 {/* END: examples */}
 
