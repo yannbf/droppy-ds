@@ -22,6 +22,16 @@
 - **Facet vocabulary** (`category.leaf`), fixed by Task 2: `source-jsdoc.{component,props}`; `csf-jsdoc.{meta,story}`; `mdx.{a11y,anatomy,behavior,brand,do-dont,examples,general,history,known-issues,props,styling,when-to-use}`; `general.{general-a11y,general-brand,general-do-dont,general-setup,general-tokens,general-when-to-use}`; `story.{animation,api-ref,examples,highlight,infra,showcase,tests}`. Always-deleted: `story.infra`. There is no `story.base` and no `mdx.testing`.
 - **Every task ends with a commit.** Conventional-commit subjects, imperative mood. Add `Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>` as the last line of every commit message.
 - **Run tests with** `pnpm experiment:test` (available from Task 1). A single file: `pnpm experiment:test src/labels.test.ts`.
+- **Before committing any task, run all four checks on the files you touched** — not just the tests:
+
+  ```bash
+  pnpm experiment:test
+  pnpm experiment:check
+  pnpm exec eslint <the files you changed>
+  pnpm exec prettier --check <the files you changed>
+  ```
+
+  ESLint must report **zero problems, warnings included**. This repo has `reportUnusedDisableDirectives` on by default, so a stale `eslint-disable` comment carried over from upstream is itself a warning. Two tasks shipped avoidable findings — one unformatted file, one dead lint directive — because a checkable claim was asserted rather than run. Where a constraint has a command, run the command.
 
 ---
 
@@ -1538,7 +1548,7 @@ Expected: FAIL — cannot resolve `./mdx-transform`.
 
 Read upstream: `git -C /home/steve/Development/base-ui show origin/research:packages/storybook-freeze/src/mdx-transform.ts`
 
-Copy verbatim, restyled. Keep the `// eslint-disable-next-line no-cond-assign` comment above the `while ((match = beginRe.exec(out)) !== null)` loop — unlike the `no-await-in-loop` pragmas, that rule ships in `js.configs.recommended`, which this repo extends. No behavioural change.
+Copy verbatim, restyled. **Drop upstream's `// eslint-disable-next-line no-cond-assign` pragma** along with the `no-await-in-loop` ones. An earlier draft of this plan said to keep it, on the reasoning that `no-cond-assign` ships in `js.configs.recommended` which this repo extends. That reasoning is wrong: the rule's default `except-parens` option only flags an assignment used directly as a test, or an unparenthesized assignment nested in one, and `while ((match = beginRe.exec(out)) !== null)` has a `BinaryExpression` test — so the rule never fires here and the directive lints as `Unused eslint-disable directive`. Upstream needs it because base-ui configures the rule more strictly. No behavioural change.
 
 - [ ] **Step 4: Run the tests to verify they pass**
 
