@@ -93,6 +93,35 @@ Below 768px, `Sidebar` takes the full viewport width instead of the fixed 420px 
 
 The panel's desktop width (420px) is fixed by the design system and isn't exposed as a custom property; use `className` for one-off width changes.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2020-10**: overlays must lock body scroll while open — established as an early Mealdrop fix long before the design system existed, later delegated to Base UI's built-in scroll lock when Sidebar moved to Drawer ([mealdrop #2](https://github.com/yannbf/mealdrop/pull/2), [scroll-lock commit](https://github.com/yannbf/mealdrop/commit/c4aef0406a2e1cfddb072c9718d9f64f3c1fefdf)).
+- **2026-07**: Sidebar was reimplemented on Base UI Drawer (swipeDirection right), replacing the CSSTransition slide, Escape hook, and scroll lock while preserving test ids verbatim; Drawer.Title renders the existing Heading so the drawer has a real accessible name, which forced Heading to forward ref and rest props ([sidebar commit](https://github.com/yannbf/mealdrop/commit/6d946fcf90684f3d87b79d6d081fbf29d41f26ce), [heading commit](https://github.com/yannbf/mealdrop/commit/40f20f7aba828e146634d88e58cbb324541645c4), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
+- **2026-07**: Drawer.Portal's document.body default pushed the drawer outside the story canvas and forced tests to query the document body; rather than keep rewritten story queries (an earlier workaround, reversed), the drawer portals into the same in-app `#modal` container Modal uses, falling back to body, keeping interaction stories byte-identical to their pre-migration versions ([portal-target commit](https://github.com/yannbf/mealdrop/commit/798e2fad44b666c3f4165b3b447a2b636a0b8a07), [earlier query-scope commit](https://github.com/yannbf/mealdrop/commit/5b449fe827cfbf9238a59c0d6b5a0efc24604ce4)).
+- **2026-07**: Sidebar took a `container` prop accepting an element or CSS selector (default document.body) because Mealdrop portalled into a `#modal` node hard-coded in its own index.html and a package cannot assume that node exists; selector resolution happens in an effect, safe because an overlay is closed on first paint ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [useContainer.ts](https://github.com/yannbf/droppy-ds/blob/main/src/utils/useContainer.ts)).
+- **2026-07**: the pixel-parity pass separated theme opinion from behaviour: the Drawer backdrop was darkened from the theme's 20% black scrim to the original 40%, and the 300ms slide reverted to default ease over the theme's slower easing — establishing motion tokens as brand voice a consumer may legitimately retime ([scrim parity commit](https://github.com/yannbf/mealdrop/commit/e085f7d327906cc5568613e3fab91e343cd5ef6f), [animation timing commit](https://github.com/yannbf/mealdrop/commit/ac151a9710b9eb297274485d7bfa571f7acf19aa)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#137](https://github.com/yannbf/droppy-ds/issues/137): tooltips (and other popups) opened inside the panel are painted behind it. **Workaround:** raise the tooltip layer or lower the sidebar's z-index from app CSS (e.g. `.droppy-Sidebar-viewport { z-index: 30 } .droppy-Sidebar-backdrop { z-index: 29 }`).
+- [#140](https://github.com/yannbf/droppy-ds/issues/140): content area always reserves 165px for the footer, even when no `footer` is passed. **Workaround:** pass a `className` that sets `--droppy-sidebar-footer-height: 0px` when rendering without a footer.
+- [#144](https://github.com/yannbf/droppy-ds/issues/144): A `container` selector is resolved once and silently falls back to `document.body` when it does not match. **Workaround:** pass a resolved `HTMLElement` (held in state) instead of a selector string.
+- [#148](https://github.com/yannbf/droppy-ds/issues/148): an empty or malformed `container` selector throws a DOMException from an effect. **Workaround:** resolve the selector yourself inside try/catch and pass the resulting element (or `null`) instead of the string.
+- [#151](https://github.com/yannbf/droppy-ds/issues/151): slide-in/out and backdrop fade are not reduced under `prefers-reduced-motion: reduce`. **Workaround:** add `@media (prefers-reduced-motion: reduce) { .droppy-Sidebar, .droppy-Sidebar-backdrop { transition: none } }` in app CSS.
+- [#155](https://github.com/yannbf/droppy-ds/issues/155): close button's accessible name is hardcoded to the English string "close sidebar". **Workaround:** hide the built-in button via its internal test id and supply your own close control.
+- [#157](https://github.com/yannbf/droppy-ds/issues/157): the scrollable content region is not keyboard focusable, so overflowing non-interactive content cannot be scrolled by keyboard in Safari. **Workaround:** wrap children in your own element with `tabIndex={0}`, `role="region"` and an `aria-label`.
+- [#160](https://github.com/yannbf/droppy-ds/issues/160): backdrop dim is 60% in dark mode instead of the declared 40%, and single-class overrides of the backdrop fail there. **Workaround:** match the theme's specificity in the override (`html[data-theme='dark'] .droppy-Sidebar-backdrop { … }`) or import the DS stylesheet into a cascade layer.
+- [#164](https://github.com/yannbf/droppy-ds/issues/164): mouse and pen drags inside the panel dismiss it, although the docs describe swipe-to-dismiss as touch-only. **Workaround:** mark drag-sensitive content with Base UI's `data-base-ui-swipe-ignore` attribute; the gesture cannot be disabled through a Sidebar prop.
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={SidebarStories} />

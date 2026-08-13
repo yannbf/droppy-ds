@@ -75,6 +75,32 @@ Button and value colours, radius, and focus ring come from `Button` and `Body`'s
 
 `className` merges with the component's own `droppy-QuantityStepper` class.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: QuantityStepper was born by componentizing FoodItemModal's inline stepper markup — two round clear icon Buttons around a Body span — into a single controlled component with a `value`/`onChange`/`min`/`max` API, keeping the same labels and bounds behaviour (the food-item call site keeps `min={1} max={10}`, matching the old disabling logic) while adding `role="group"` and a politely announced aria-live value the inline version lacked ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+- **2026-07**: when NumberField was added, the two were positioned explicitly against each other: QuantityStepper stays the tap-tap bounded stepper while NumberField is the typeable numeric input with keyboard entry and label scrub ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [NumberField.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/NumberField/NumberField.tsx)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#108](https://github.com/yannbf/droppy-ds/issues/108): keyboard focus drops to &lt;body&gt; when a button disables at min/max while focused. **Workaround:** after the value reaches a bound, restore focus from a useEffect via a wrapper ref and a button:not(:disabled) DOM query.
+- [#109](https://github.com/yannbf/droppy-ds/issues/109): button aria-labels are hard-coded English and cannot be localized. No workaround — no prop reaches the inner buttons; the only alternative is rebuilding the ~20-line composition from the exported Button and Body components.
+- [#112](https://github.com/yannbf/droppy-ds/issues/112): no way to disable the whole control (e.g. while a cart update is in flight). **Workaround:** pass min=&#123;value&#125; max=&#123;value&#125; while pending — both buttons disable with correct [data-disabled] styling.
+- [#114](https://github.com/yannbf/droppy-ds/issues/114): onChange computes value±1 from the last-rendered prop — rapid clicks are lost when the parent commits asynchronously. **Workaround:** commit onChange to local state synchronously (optimistic update) and reconcile with the server out of band.
+- [#116](https://github.com/yannbf/droppy-ds/issues/116): min/max only gate at the bound: one click can emit an out-of-range value; min &gt; max silently disables both buttons. **Workaround:** integer-align value/min/max, ensure min &lt;= max, and clamp in your onChange before storing.
+- [#117](https://github.com/yannbf/droppy-ds/issues/117): no runtime validation: NaN bounds never disable, NaN value freezes the control, string value concatenates on '+'. **Workaround:** coerce with Number() and guard computed bounds with Number.isFinite before passing props.
+- [#119](https://github.com/yannbf/droppy-ds/issues/119): docs recommend it as a form field, but nothing is submitted with a native form. **Workaround:** render a hidden input beside it, submit from state, or use NumberField when a real form field is needed.
+- [#121](https://github.com/yannbf/droppy-ds/issues/121): click events are not exposed and bubble to ancestor onClick handlers. **Workaround:** wrap in an element calling e.stopPropagation() for click (and any pointer/key events the ancestor listens to).
+- [#124](https://github.com/yannbf/droppy-ds/issues/124): Storybook 'value' control is dead — the demo wrapper captures it once in useState. **Workaround:** none needed in app code — the shipped prop is fully controlled; verify in your own code rather than via the story's value control.
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={QuantityStepperStories} />

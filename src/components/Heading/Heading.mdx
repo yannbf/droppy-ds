@@ -71,6 +71,35 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 
 `className` is merged onto the rendered tag, so it composes with the tokens above rather than overriding them wholesale.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2025-03**: an accessibility fix corrected StepIndicator's heading order to level 3 while a styled wrapper kept the heading4 font size — the precedent proving semantic level and visual size had to be independent ([a11y fix](https://github.com/yannbf/mealdrop/commit/1c89bf7541a7b2b028338294fefe183dc70ac8e9)).
+- **2026-07**: brand typography gave headings Montserrat with hierarchy through size and weight, never colour — the [brand guidelines](?path=/docs/brand-guidelines--docs) reserve text-colour changes for state (error, disabled) — with h1/h2 adding the tight −2px `--ds-type-tracking-display` from the guidelines' type scale.
+- **2026-07**: Sidebar's Drawer.Title renders Heading so the drawer has a real accessible name, which forced Heading to forward ref and rest props (id, `aria-*`) so the aria-labelledby id actually reaches the DOM ([heading commit](https://github.com/yannbf/mealdrop/commit/40f20f7aba828e146634d88e58cbb324541645c4), [sidebar commit](https://github.com/yannbf/mealdrop/commit/6d946fcf90684f3d87b79d6d081fbf29d41f26ce)).
+- **2026-07**: a `size` prop decoupled visual scale from semantic `level` — level picks the tag, size (defaulting to level) picks the scale, e.g. `<Heading level={2} size={4}>` — replacing the four styled(Heading) wrappers Mealdrop used to shrink correctly-levelled headings; level 5 also got a real size rule, where Mealdrop's scale had stopped at 4 ([size prop replaces wrappers](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#61](https://github.com/yannbf/droppy-ds/issues/61): setting `id` on a Heading used as a Dialog/Drawer Title render element silently breaks `aria-labelledby`. **Workaround:** put the `id` on `Dialog.Title`/`Drawer.Title` itself, never on the Heading render element.
+- [#63](https://github.com/yannbf/droppy-ds/issues/63): no font-weight declaration — weight tokens never reach it, and CSS resets (Tailwind preflight) silently render headings at weight 400. **Workaround:** app CSS rule `.droppy-Heading { font-weight: var(--ds-type-weight-bold, 700) }` after the DS stylesheet.
+- [#65](https://github.com/yannbf/droppy-ds/issues/65): no line-height declaration — theme containers with fixed rem line-heights (.DialogTitle 1.5rem, .AccordionPanel 1.25rem) render overlapping heading text. **Workaround:** set an explicit line-height on the Heading (inline style, utility class, or app-level `.droppy-Heading` rule).
+- [#67](https://github.com/yannbf/droppy-ds/issues/67): theme fonts are subset to Latin-1 only — latin-ext characters (Polish, Czech, Romanian, Hungarian, Turkish, Vietnamese) render in the fallback typeface mid-word. **Workaround:** add app-level @font-face rules for the missing subsets under the same family names, or override the family tokens.
+- [#68](https://github.com/yannbf/droppy-ds/issues/68): styles.css hard-codes fonts.gstatic.com URLs — heading typeface depends on a third-party Google fetch (strict CSP/offline breakage, GDPR exposure). **Workaround:** allowlist fonts.gstatic.com in CSP, or shadow the @font-face rules with self-hosted ones / override the family tokens.
+- [#70](https://github.com/yannbf/droppy-ds/issues/70): default `level={1}` turns Base UI's `<h2>` title slot into a page-level `<h1>`. **Workaround:** always pass an explicit `level` (e.g. `level={2}`) when using Heading in a title render slot.
+- [#72](https://github.com/yannbf/droppy-ds/issues/72): docs tell consumers to title Modal/Sidebar with a ref-forwarded Heading, but neither component exposes any such slot. **Workaround:** use Modal's aria-label / Sidebar's string title as documented on those components; compose Base UI Dialog directly if a real labelledby link is needed.
+- [#74](https://github.com/yannbf/droppy-ds/issues/74): docs attribute the tighter display tracking to `level` 1-2, but the code ties it to the visual size step (`size ?? level`). **Workaround:** none needed once understood — tracking follows `size ?? level`; set letter-spacing explicitly to force a different pairing.
+- [#75](https://github.com/yannbf/droppy-ds/issues/75): h6 is inexpressible, and out-of-union `level`/`size` values (6, 0) silently render with no size-step styling. **Workaround:** stay within levels 1-5, or hand-roll an h6 with the base class plus an explicit size token.
+- [#77](https://github.com/yannbf/droppy-ds/issues/77): display tracking is a literal -2px, so it does not scale with the rem-based sizes (cramped under html font-size 62.5% or text-only zoom). **Workaround:** override `--ds-type-tracking-display` to an em-based value (e.g. -0.045em) in app CSS.
+- Untracked: the component exposes `level`/`size` 5 with its own size rule, but the [brand guidelines](?path=/docs/brand-guidelines--docs) type scale stops at h4 — "there is no fifth heading step: a title that needs to sit below h4 takes the heading face at a body-scale size rather than inventing one" — so size 5 is a step the brand explicitly rules out.
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={HeadingStories} />

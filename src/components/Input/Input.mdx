@@ -77,6 +77,34 @@ Any native `type` works — `Input` only supplies its own default (`text`) and o
 
 Everything else — colors, borders, radius, focus ring — comes from the theme layer's own `Field`/`Input` classes; `Input.css` only overrides the pieces specific to Droppy's variant (the placeholder border is removed, since validity is communicated by the error message rather than a border color). `className` is merged onto the rendered input, composing with rather than replacing that layer.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2025-03**: Input gained an `error` prop rendering a reserved-height error message (min-height keeps the layout from jumping when an error appears), the label moved above the field, and autoComplete was turned off — the label + input + always-present error-slot shape Droppy later formalized, backed by a new red palette ([error prop and layout](https://github.com/yannbf/mealdrop/commit/14cf17a324a99c4744eec1495810f96d4e17bc5d), [mealdrop #42](https://github.com/yannbf/mealdrop/pull/42)).
+- **2026-07**: Input was rebuilt on Base UI Field.Root + Field.Label with real data-focused label wiring and aria-describedby pointing at the fixed-height error slot ([forms commit](https://github.com/yannbf/mealdrop/commit/0b4027271b30a4e31360eadaf41f5e1ea46a5f55)).
+- **2026-07**: the redundant `aria-label` mirroring the visible label was dropped — Field associates the real `<label htmlFor>` with the control, and an aria-label on top makes screen readers announce something other than what the page shows; the error message size also snapped from 12px to the `--ds-type-size-2xs` token (11.52px), making the type scale the source of truth ([drop aria-label](https://github.com/yannbf/mealdrop/commit/cf8f08e765c4fd56216e97dde3f2d5c198162307), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+- **2026-07**: the theme's Hind body font was judged right for buttons but wrong for input text: Mealdrop scoped its inputs back to Montserrat as an explicitly documented app-level typographic choice (labels deliberately stay Hind, the override later simplified to styled(DsInput)), and the theme's transparent input border was dropped by the consumer because validation speaks through the error message, not a border ([input font commit](https://github.com/yannbf/mealdrop/commit/8ccfa4fe54c8b8841648eadc09e24e9e7f501f63), [label font follow-up](https://github.com/yannbf/mealdrop/commit/dc0cfc9e1040131de6ecf8f7913c3d787049469b)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#80](https://github.com/yannbf/droppy-ds/issues/80): field-computed validation messages are permanently suppressed; inside a Base UI Form, submit is blocked with no visible feedback. **Workaround:** validate in app state and pass messages via the `error` prop (mirroring `e.target.validationMessage` if constraints stay); restore a visible invalid border with app CSS using a full `border` shorthand.
+- [#81](https://github.com/yannbf/droppy-ds/issues/81): ref never reaches the &lt;input&gt; on React 18 — silently breaks react-hook-form register() and imperative focus. **Workaround:** on React 18 wrap in your own element and query the inner input (or use react-hook-form's Controller instead of register()); React 19 works as-is.
+- [#83](https://github.com/yannbf/droppy-ds/issues/83): undocumented autoComplete="off" default suppresses browser autofill on exactly the fields the docs recommend it for. **Workaround:** pass an explicit autoComplete token on every field (consumer props win over the hardcoded default).
+- [#85](https://github.com/yannbf/droppy-ds/issues/85): the error prop displays a message without marking the field invalid — no aria-invalid, no data-invalid, and no announcement to screen readers. **Workaround:** pass aria-invalid alongside error (it forwards through rest), and add your own role="alert" live region or focus management for announcements.
+- [#87](https://github.com/yannbf/droppy-ds/issues/87): every prop targets the inner &lt;input&gt;; the Field.Root wrapper is unreachable, so layout props silently do nothing and Base UI's field-level API is inaccessible. **Workaround** (partial): wrap in your own element for layout or target the global .droppy-Field class; for field-level Base UI APIs, compose Base UI Field parts directly instead of this component.
+- [#89](https://github.com/yannbf/droppy-ds/issues/89): disabled renders with zero visual difference — enabled colors everywhere and the hover focus-glow still lights up. **Workaround:** app CSS on .droppy-Input:disabled (opacity, hover box-shadow: none) plus a :has(input:disabled) rule for the label; avoid combining error with disabled.
+- [#91](https://github.com/yannbf/droppy-ds/issues/91): the "error slot never shifts layout" guarantee only holds for one short line — wrapping messages push fields down, unbroken tokens overflow horizontally. **Workaround:** keep messages to one short line, or app CSS raising min-height and adding overflow-wrap: anywhere on .droppy-Field-error.
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
+- [#133](https://github.com/yannbf/droppy-ds/issues/133): the shared `--ds-shadow-focus` ring is below the 3:1 non-text contrast minimum in light theme.
+- [#138](https://github.com/yannbf/droppy-ds/issues/138): theme chrome is bound to unnamespaced global classes (`.Button`, `.Input`, `.FieldRoot`, …) with no cascade layer, so host-app CSS collides in both directions.
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={InputStories} />

@@ -21,7 +21,8 @@ profile's sub-views, anything reviewed one part at a time rather than all at onc
 - **`value`/`defaultValue`/`onValueChange` passthrough**, for a controlled set of tabs driven by
   state outside the component.
 - **Activates on click**, not on focus alone — arrow-keying through the tabs moves focus without
-  changing which panel is shown, matching current WCAG guidance on pointer cancellation.
+  changing which panel is shown, matching
+  [WCAG 2.5.2 Pointer Cancellation](https://www.w3.org/WAI/WCAG21/Understanding/pointer-cancellation.html).
 
 ## When to use
 
@@ -98,6 +99,31 @@ Droppy's own stylesheet carries no rules for `Tabs` — the theme layer's `TabsR
 state, and indicator animation in full.
 
 `className` merges onto the root, so it composes with the theme layer rather than replacing it.
+
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: Droppy's Tabs took a data-driven `tabs: {value, label, content}[]` array instead of exposing the underlying compound-component composition, keeping call sites declarative ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#245](https://github.com/yannbf/droppy-ds/issues/245): inactive panels unmount on every switch, destroying all state in tab content; keepMounted is not exposed. **Workaround:** lift state out of tab content into the parent or a store — keepMounted itself is unreachable through this wrapper.
+- [#246](https://github.com/yannbf/droppy-ds/issues/246): theme caps the root at max-width: 20rem and the tab row can neither wrap nor scroll — realistic labels overflow past the panel border. **Workaround:** override max-width and add overflow handling from app CSS via className plus the global part classes.
+- [#247](https://github.com/yannbf/droppy-ds/issues/247): omitting defaultValue renders no selected tab on the server/first render, then onValueChange fires by itself on mount. **Workaround:** always pass defaultValue (or fully control value) so a tab is selected from the first render and no mount callback fires.
+- [#248](https://github.com/yannbf/droppy-ds/issues/248): onValueChange is typed (value: string) =&gt; void but is invoked with null, with values the user never picked, and with a hidden second argument. **Workaround:** wrap the callback with explicit arity and treat the value as string | null; keep the active tab from being removed/disabled.
+- [#249](https://github.com/yannbf/droppy-ds/issues/249): controlled value that matches no tab renders a fully blank component with no warning. **Workaround:** validate the controlled value against the tabs array before passing it, falling back to a known tab.
+- [#250](https://github.com/yannbf/droppy-ds/issues/250): the tablist can never be given an accessible name — no prop reaches the role="tablist" element. **Workaround:** set aria-label on the rendered tablist from a wrapper ref in an effect (unmanaged DOM patch).
+- [#251](https://github.com/yannbf/droppy-ds/issues/251): docs and theme advertise vertical orientation, but there is no orientation prop — vertical mode is unreachable. **Workaround:** compose Base UI Tabs.Root orientation="vertical" directly, reusing the shipped global theme class names.
+- [#252](https://github.com/yannbf/droppy-ds/issues/252): docs claim every tab carries aria-controls pointing at its panel, but only the active tab does. **Workaround:** test against actual behavior — assert aria-controls on the active tab only and inactive panels as absent.
+- [#253](https://github.com/yannbf/droppy-ds/issues/253): docs claim Droppy's stylesheet carries no Tabs rules, but .droppy-Tabs pins font-family — an app's own font never reaches tab text. **Workaround:** restore the app font with a higher-specificity rule such as .my-tabs.droppy-Tabs &#123; font-family: inherit &#125;.
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
+
+{/* END: known-issues */}
 
 ## API reference
 

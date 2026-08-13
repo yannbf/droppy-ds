@@ -65,6 +65,31 @@ renders, so a Lottie animation, a static image, or an inline SVG all work the sa
 `Heading`, `Body`, and `Button` read their own tokens independently — see each component's docs
 for those.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-07**: the `image` prop was renamed `illustration` and made optional: the Lottie player and its animation JSON are application assets, so the slot takes any node or nothing rather than baking a player dependency into the package; the rest of the API (title, body, buttonText, onButtonClick) carried over unchanged from Mealdrop, and the inner gap moved from 20px to `--ds-space-sm` (24px) because spacing.m has no exact token and the scale is the source of truth ([migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#58](https://github.com/yannbf/droppy-ds/issues/58): appears silently to assistive tech: no status semantics, and the closed prop surface (no ref, rest props, or aria passthrough) blocks both standard remedies. **Workaround:** wrap in your own div with role="status"/tabIndex=&#123;-1&#125;/ref and manage announcement and focus at the wrapper.
+- [#60](https://github.com/yannbf/droppy-ds/issues/60): vertical spacing between title, body, and button comes from UA paragraph margins — collapses to zero under common CSS resets. **Workaround:** add `.droppy-ErrorBlock { gap: var(--ds-space-sm) }` in app CSS (optionally zero the illustration's margin-top).
+- [#62](https://github.com/yannbf/droppy-ds/issues/62): heading level is hard-coded to h2 with no override, so the block cannot fit the host page's heading outline. **Workaround:** hand-compose Heading (with the right level) + Body + Button instead of ErrorBlock where h2 breaks the outline.
+- [#64](https://github.com/yannbf/droppy-ds/issues/64): no way to disable the action or represent a retry in flight — repeated clicks fire onButtonClick each time. **Workaround:** guard re-entrancy in the onButtonClick handler, or swap in Spinner/hand-composed parts while the retry is pending.
+- [#66](https://github.com/yannbf/droppy-ds/issues/66): wrapped title or body text renders start-aligned inside the otherwise centered composition. **Workaround:** add `text-align: center` on the root via className or `.droppy-ErrorBlock` in app CSS.
+- [#69](https://github.com/yannbf/droppy-ds/issues/69): the recovery action can only be a &lt;button&gt; — navigation recoveries ("go home", "see all") cannot render as links. **Workaround:** router.push in the handler (loses link affordances), or hand-compose with an &lt;a className="Button droppy-Button"&gt;.
+- [#71](https://github.com/yannbf/droppy-ds/issues/71): prop types are narrower than what the parts render: string-only title/body/buttonText, and onButtonClick hides the MouseEvent it is actually called with. **Workaround:** cast ReactNode/event-taking handlers at the call site (runtime supports both), or hand-compose the exported parts.
+- [#73](https://github.com/yannbf/droppy-ds/issues/73): an illustration node that renders nothing still mounts the spacer wrapper, adding a phantom 24px gap. **Workaround:** pass undefined until the illustration will actually paint, or `.droppy-ErrorBlock-illustration:empty { margin-top: 0 }`.
+- [#76](https://github.com/yannbf/droppy-ds/issues/76): docs never say the illustration must carry its own alt/aria-hidden — the slot exposes whatever is passed to screen readers. **Workaround:** put aria-hidden="true" / alt="" (or a meaningful alt) on the illustration node you pass in.
+- [#78](https://github.com/yannbf/droppy-ds/issues/78): documented example sets SVG fills with var() in presentation attributes, which browsers reject — the circles paint black. **Workaround:** use style=&#123;&#123; fill: 'var(…)' &#125;&#125; or CSS classes for SVG fills in your own illustrations instead of copying the example.
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={ErrorBlockStories} />
