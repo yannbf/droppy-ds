@@ -83,7 +83,7 @@ The 240px band height is a literal value — no token in the current scale match
 ## Decision log
 
 - **2025-03**: an accessibility pass made the heading conditional — it renders only when a `title` is passed, instead of always emitting a possibly empty heading element — while keeping the optional `photoUrl` background with inverted (white) title text over photos; Droppy inherits this optional-title contract ([a11y fix](https://github.com/yannbf/mealdrop/commit/1c89bf7541a7b2b028338294fefe183dc70ac8e9), [adopted in migration](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
-- **2026-07**: the colour system placed top/promo banners among the handful of sites that use the green accent; per the [Color tokens](?path=/docs/design-tokens-colors--docs), green is a "surface accent — never ink", so the banner is a soft green surface carrying dark text while the neutral ramp does the rest of the UI.
+- **2026-07**: the colour system placed top/promo banners among soft green's few "good news" moments — the [brand guidelines](?path=/docs/brand-guidelines--docs) name promo/top banners as canonical sites, warn that "if a screen has more than one green moment, one of them is probably wrong", and make accents "surfaces, not ink" — so the banner is a soft green surface carrying dark text.
 - **2026-07**: `onBackClick` is accepted but deliberately unwired: Mealdrop's own back button is commented out in the source app, so the prop stays purely for call-site parity until either side puts the button back; otherwise the component was ported with props unchanged ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
 
 {/* END: history */}

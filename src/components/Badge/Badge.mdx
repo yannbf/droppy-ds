@@ -79,7 +79,7 @@ The pill grows with its content — there's no truncation or fixed width.
 ## Decision log
 
 - **2026-07**: Badge absorbed RestaurantCard's hand-rolled NewTag styled-span as `<Badge text="new" variant="positive" />`, collapsing Mealdrop's two implementations of one visual role and establishing the `variant` API for semantic colour roles while keeping the original text-as-prop API; absolute positioning over the card photo was judged a call-site concern and stays in the app ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
-- **2026-07**: casing moved into CSS: badge labels are written lowercase in source and `text-transform: capitalize` handles presentation, so labels are never uppercased by hand.
+- **2026-07**: casing moved into CSS per the [brand guidelines](?path=/docs/brand-guidelines--docs) rule "sentence case everywhere — never Title Case, never ALL CAPS": badge labels are written lowercase in source and `text-transform: capitalize` handles presentation, so labels are never uppercased by hand.
 
 {/* END: history */}
 
@@ -87,16 +87,16 @@ The pill grows with its content — there's no truncation or fixed width.
 
 ## Known issues & open questions
 
-- [#28](https://github.com/yannbf/droppy-ds/issues/28): variant="positive" is illegible in dark theme: white text on pastel green (~1.1:1 contrast). The cause is a brand-rule violation — `--ds-color-badge-positive-text` follows the theme-flipping `text-primary` role, while the [Color tokens](?path=/docs/design-tokens-colors--docs) define green as a "surface accent — never ink" whose surfaces carry dark text in both themes. **Workaround:** pin the text colour via .droppy-Badge--positive or the --ds-color-badge-positive-text token.
-- [#29](https://github.com/yannbf/droppy-ds/issues/29): docs promise casing-normalized rendering, but CSS `capitalize` never lowercases — "VEGAN" renders as-is. **Workaround:** lowercase the label at the call site (`text={label.toLowerCase()}`), and query the raw string in tests.
+- [#28](https://github.com/yannbf/droppy-ds/issues/28): variant="positive" is illegible in dark theme: white text on pastel green (~1.1:1 contrast). The cause is a brand-rule violation — `--ds-color-badge-positive-text` follows the theme-flipping `text-primary` role, while the [brand guidelines](?path=/docs/brand-guidelines--docs) state "accents are surfaces, not ink" — backgrounds that carry dark text — with both themes "designed to meet contrast on their own terms". **Workaround:** pin the text colour via .droppy-Badge--positive or the --ds-color-badge-positive-text token.
+- [#29](https://github.com/yannbf/droppy-ds/issues/29): docs promise casing-normalized rendering, but CSS `capitalize` never lowercases — "VEGAN" renders as-is, against the brand's "never ALL CAPS" sentence-case rule. **Workaround:** lowercase the label at the call site (`text={label.toLowerCase()}`), and query the raw string in tests.
 - [#31](https://github.com/yannbf/droppy-ds/issues/31): JSX children are silently discarded at runtime; empty or missing `text` renders a visible empty pill. **Workaround:** always use the `text` prop and guard falsy labels at the call site (`{tag ? <Badge text={tag}/> : null}`); typecheck JSX in JS projects.
 - [#34](https://github.com/yannbf/droppy-ds/issues/34): no wrap/overflow strategy — multi-word labels wrap into cramped line-height:1 lines; unbroken strings overflow the container. **Workaround:** add `white-space: nowrap` via className/app CSS and handle oversized labels at the call site.
 - [#37](https://github.com/yannbf/droppy-ds/issues/37): `dangerouslySetInnerHTML` is accepted by the types but always crashes on render. **Workaround:** never pass `dangerouslySetInnerHTML`; render markup around the badge instead.
-- [#41](https://github.com/yannbf/droppy-ds/issues/41): positive variant's bold is synthesized — the theme ships no Hind 700 face, and it disappears under `font-synthesis: none`. **Workaround:** declare a real Hind 700 @font-face in app CSS (merges into the family), or avoid `font-synthesis: none` on badge text.
+- [#41](https://github.com/yannbf/droppy-ds/issues/41): positive variant's bold is synthesized — the [brand guidelines](?path=/docs/brand-guidelines--docs) ship Hind at weights 400/500 only, so there is no real 700 face and the bold disappears under `font-synthesis: none`. **Workaround:** declare a real Hind 700 @font-face in app CSS (merges into the family), or avoid `font-synthesis: none` on badge text.
 - [#43](https://github.com/yannbf/droppy-ds/issues/43): excluded from the theme cross-fade — colors snap on theme toggle while theme-layer parts fade over 250ms. **Workaround:** add a matching background-color/color transition on `.droppy-Badge` in app CSS.
 - [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only).
 - [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
-- Untracked: the docs describe Badge as "a small pill", but it renders with `--ds-radius-control` (4px) — on the radius ladder documented in the [Spacing & layout tokens](?path=/docs/design-tokens-spacing-layout--docs), pills sit on the 32px `--ds-radius-pill` rung, so the copy and the radius disagree about which shape Badge is.
+- Untracked: the docs describe Badge as "a small pill", but it renders with `--ds-radius-control` (4px) — on the radius scale documented in the [Spacing and layout tokens](?path=/docs/design-tokens-spacing-and-layout--docs), pills sit on the 32px `--ds-radius-pill` rung, so the copy and the radius disagree about which shape Badge is.
 
 {/* END: known-issues */}
 
