@@ -4,3 +4,4 @@ storybook-static
 pnpm-lock.yaml
 CHANGELOG.md
 src/theme/tokens.css
+.superpowers

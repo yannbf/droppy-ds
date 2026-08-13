@@ -70,6 +70,28 @@ styling.
 The cascade is ordered: theme rules first, component rules second, and anything the app writes
 last. App CSS wins at equal specificity without `!important`.
 
+## Experiment branches
+
+`experiment/*` branches each hold one subset of the Storybook corpus, for measuring what a given
+kind of documentation is worth to an agent.
+
+```bash
+pnpm experiment:freeze             # regenerate every branch in experiments.config.ts
+pnpm experiment:publish-branches   # force-push them to origin
+```
+
+Facets are the qualified `category.leaf` labels in `classification-labels.jsonc`; each branch's
+selection lives in `experiments.config.ts` and is recorded in the `experiment.json` the freeze
+commits. Freezing reads the classification on the branch you run it from — story `tags`, MDX
+`{/* BEGIN: facet */}` markers, and the `<Meta tags>` on the repo-wide docs.
+
+Each pushed branch triggers the Experiment preview workflow, which publishes its build to
+pkg.pr.new:
+
+```
+https://pkg.pr.new/yannbf/droppy-ds/@droppy/design-system@experiment/<name>
+```
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).
