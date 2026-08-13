@@ -12,7 +12,7 @@ This page covers the rules every component shares, in more detail: styling, them
 
 Droppy components are styled by default. Every component appends an incoming `className` to its own,
 so you can still wrap it in `styled()` or add a utility class. Droppy does not use CSS `@layer`, so
-you can override a theme rule at equal specificity. 
+you can override a theme rule at equal specificity.
 
 Use external style to handle layout concerns, such as adding margins to components, or for edge cases
 like making a component screenreader-only.
@@ -48,7 +48,7 @@ do not expose the prop as public API. This decision is intentional, to ensure Dr
 are used consistently across products and pages. If you need new use cases to be supported,
 open a feature request issue on GitHub.
 
-`render` is only exposed to support router-aware link composition. 
+`render` is only exposed to support router-aware link composition.
 [Link](?path=/docs/actions-link--docs), [Breadcrumb](?path=/docs/navigation-breadcrumb--docs) and
 [FooterCard](?path=/docs/navigation-footercard--docs)'s links all expose `render`, so that you may
 pass a router-aware link (`react-router`'s `Link`, Next's `Link`) instead of the default `<a>`.
@@ -62,7 +62,6 @@ content, and all three take the same
 `container?: HTMLElement | string | null` prop: pass an element, a CSS selector, or leave it
 unset to default to `document.body`. If using a selector, it's resolved in an effect, one frame
 after mount, for SSR compatibility.
-
 
 Each overlay's popup and backdrop carry their own fixed `z-index` in the theme stylesheet.
 There's no use of `isolation: isolate`. Each backdrop sits just below its own popup.
@@ -91,12 +90,11 @@ stylesheet ([Modal](?path=/docs/overlays-modal--docs), [Sidebar](?path=/docs/ove
 Motion timing comes from tokens defined once, in `:root`: `--ds-motion-fast` (150ms),
 `--ds-motion-base` (250ms), `--ds-motion-slow` (300ms), and `--ds-motion-ease` (`ease-in`).
 
-
 ## Form participation
 
 | Component                                                        | Built on                        | Native constraint props                                                                                                                                       |
 | ---------------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Input](?path=/docs/forms-input-input--docs)                     | Base UI `Field` + `Input`       | every native attribute passes through (`required`, `pattern`, `minLength`, `type`, …)|
+| [Input](?path=/docs/forms-input-input--docs)                     | Base UI `Field` + `Input`       | every native attribute passes through (`required`, `pattern`, `minLength`, `type`, …)                                                                         |
 | [Select](?path=/docs/forms-input-select--docs)                   | a plain native `<select>`       | every native attribute passes through (`required`, `multiple`, `name`, …)                                                                                     |
 | [NumberField](?path=/docs/forms-input-numberfield--docs)         | Base UI `Field` + `NumberField` | its prop type is `NumberField.Root`'s own props (minus `render`), so whatever Root accepts (`min`, `max`, `step`, `name`, `required`) passes straight through |
 | [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) | two `Button`s and a `Body`      | none — a controlled `value`/`onChange` pair with no `name` and no rendered `<input>`                                                                          |
@@ -122,7 +120,7 @@ Building a new component on top of Droppy follows the same recipe every existing
    A literal value is correct only where a component opts out of theming on purpose,
    like `IconButton`; document it when you do.
 5. **Decide the composition surface deliberately.** Default to no `render` prop. Only add one,
-     in the narrow `render?: ReactElement` shape, when the component needs to consume router-aware links.
+   in the narrow `render?: ReactElement` shape, when the component needs to consume router-aware links.
 6. **Document the component** in Storybook, with stories highlight all important aspects of the
    component behaviour.
 
@@ -131,4 +129,3 @@ Building a new component on top of Droppy follows the same recipe every existing
 - For brand usage, tone of voice and color meaning, see [Brand guidelines](?path=/docs/brand-guidelines--docs).
 - For which component to use when, see [Choosing components](?path=/docs/choosing-components--docs).
 - For the full token list, see [Design tokens](?path=/docs/design-tokens--docs).
-
