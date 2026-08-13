@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent, waitFor } from 'storybook/test'
 
 import { Badge } from '../Badge'
@@ -22,6 +22,13 @@ type Faq = AccordionItem & { value: string; title: string; content: string }
  */
 const hide = (...props: Array<keyof AccordionProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 /** Everything but `items`, for stories where only the content matters. */
 const ALL_BUT_ITEMS: Array<keyof AccordionProps> = [
@@ -243,16 +250,20 @@ export const ControlledValue: Story = {
   render: (args) => <ControlledAccordion {...args} />,
 }
 
-/** `className` merges onto the root, composing with the theme rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'defaultValue', 'openMultiple', 'onValueChange'),
-  args: { className: 'accordion-demo-wide' },
+  args: {
+    className: 'accordion-demo-inset',
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      {/* The theme caps `.AccordionRoot` at 20rem; this widens it to show the
-          custom class landing alongside the theme's own, not instead of it. */}
-      <style>{`.accordion-demo-wide { max-width: 32rem; }`}</style>
+      <style>{`.accordion-demo-inset { margin: 1rem; }`}</style>
       <Accordion {...args} />
     </>
   ),

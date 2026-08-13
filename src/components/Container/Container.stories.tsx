@@ -1,5 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
 import type { ContainerProps } from './Container'
@@ -8,6 +8,13 @@ import { Container } from './Container'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ContainerProps | 'children'>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 const tinted = { background: 'var(--ds-color-surface-highlight)' }
 
@@ -72,14 +79,20 @@ export const DesktopOnly: Story = {
   render: (args) => <Container {...args} style={tinted} />,
 }
 
-/** `className` merges with the component's own class rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('desktopOnly', 'children'),
-  args: { className: 'container-demo-tall' },
+  args: {
+    className: 'container-demo-inset',
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      <style>{`.container-demo-tall { min-height: 8rem; }`}</style>
+      <style>{`.container-demo-inset { margin: 1rem; }`}</style>
       <Container {...args} style={tinted} />
     </>
   ),

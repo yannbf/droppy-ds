@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
 import type { BreadcrumbProps } from './Breadcrumb'
@@ -9,6 +9,13 @@ import { Breadcrumb } from './Breadcrumb'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof BreadcrumbProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 // Stands in for a router's own link component (e.g. react-router's `Link`) to
 // demonstrate the `render` escape hatch without adding a router dependency to
@@ -89,13 +96,19 @@ export const ItemRender: Story = {
   },
 }
 
-/** `className` merges with the component's own class rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
-  args: { className: 'breadcrumb-demo-spaced' },
+  args: {
+    className: 'breadcrumb-demo-inset',
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      <style>{`.breadcrumb-demo-spaced { letter-spacing: 0.06em; }`}</style>
+      <style>{`.breadcrumb-demo-inset { margin: 1rem; }`}</style>
       <Breadcrumb {...args} />
     </>
   ),

@@ -1,5 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
 import type { CardProps } from './Card'
@@ -8,6 +8,13 @@ import { Card } from './Card'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof CardProps | 'children'>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 const meta = {
   title: 'Media & content/Card',
@@ -76,14 +83,22 @@ export const Interactive: Story = {
   args: { interactive: true, padded: true, children: 'Hover me' },
 }
 
-/** `className` merges with the component's own class rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('interactive', 'padded'),
-  args: { className: 'card-demo-lifted', children: 'Lifted card' },
+  args: {
+    className: 'card-demo-inset',
+    children: 'Card content',
+    padded: true,
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      <style>{`.card-demo-lifted { box-shadow: var(--ds-shadow-lift); padding: 1rem; }`}</style>
+      <style>{`.card-demo-inset { margin: 1rem; }`}</style>
       <Card {...args} />
     </>
   ),

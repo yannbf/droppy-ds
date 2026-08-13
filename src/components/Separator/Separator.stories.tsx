@@ -1,5 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
 import type { SeparatorProps } from './Separator'
@@ -8,6 +8,13 @@ import { Separator } from './Separator'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof SeparatorProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 const meta = {
   title: 'Layout & structure/Separator',
@@ -78,19 +85,21 @@ export const Orientation: Story = {
   ),
 }
 
-/** `className` merges with the component's own class rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('orientation'),
-  args: { className: 'separator-demo-thick' },
+  args: {
+    className: 'separator-demo-inset',
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      <style>{`.separator-demo-thick { background: var(--ds-color-border-strong); height: 2px; }`}</style>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <span>Above</span>
-        <Separator {...args} />
-        <span>Below</span>
-      </div>
+      <style>{`.separator-demo-inset { margin: 1rem; }`}</style>
+      <Separator {...args} />
     </>
   ),
 }

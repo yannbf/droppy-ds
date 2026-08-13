@@ -1,5 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
 import type { SpinnerProps } from './Spinner'
@@ -8,6 +8,13 @@ import { Spinner } from './Spinner'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof SpinnerProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 const meta = {
   title: 'Feedback & status/Spinner',
@@ -49,14 +56,20 @@ export const Label: Story = {
   args: { label: 'Loading your order' },
 }
 
-/** `className` merges with the component's own class rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('label'),
-  args: { className: 'spinner-demo-large' },
+  args: {
+    className: 'spinner-demo-inset',
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      <style>{`.spinner-demo-large { width: 5rem; }`}</style>
+      <style>{`.spinner-demo-inset { margin: 1rem; }`}</style>
       <Spinner {...args} />
     </>
   ),

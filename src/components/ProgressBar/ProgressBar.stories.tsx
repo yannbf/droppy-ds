@@ -1,5 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
 import type { ProgressBarProps } from './ProgressBar'
@@ -8,6 +8,13 @@ import { ProgressBar } from './ProgressBar'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ProgressBarProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 const meta = {
   title: 'Feedback & status/ProgressBar',
@@ -79,13 +86,19 @@ export const Label: Story = {
   args: { label: 'Order preparation' },
 }
 
-/** `className` merges with the component's own class rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
-  args: { className: 'progressbar-demo-tall' },
+  args: {
+    className: 'progressbar-demo-inset',
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      <style>{`.progressbar-demo-tall { height: 1rem; }`}</style>
+      <style>{`.progressbar-demo-inset { margin: 1rem; }`}</style>
       <div style={{ width: '16rem' }}>
         <ProgressBar {...args} />
       </div>

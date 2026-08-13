@@ -1,5 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
 import type { BodyProps } from './Body'
@@ -8,6 +8,13 @@ import { Body } from './Body'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof BodyProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 const meta = {
   title: 'Typography/Body',
@@ -148,14 +155,20 @@ export const ColorOverride: Story = {
   args: { color: 'var(--ds-color-text-error)', children: 'Delivery unavailable at this address.' },
 }
 
-/** `className` merges with the component's own class rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('size', 'fontWeight', 'color'),
-  args: { className: 'body-demo-wide' },
+  args: {
+    className: 'body-demo-inset',
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      <style>{`.body-demo-wide { max-width: 18rem; }`}</style>
+      <style>{`.body-demo-inset { margin: 1rem; }`}</style>
       <Body {...args} />
     </>
   ),

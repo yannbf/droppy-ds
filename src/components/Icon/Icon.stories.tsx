@@ -1,5 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
 import type { IconProps } from './Icon'
@@ -9,6 +9,13 @@ import { iconNames } from './icons'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof IconProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 const meta = {
   title: 'Media & content/Icon',
@@ -81,14 +88,21 @@ export const Color: Story = {
   args: { color: 'var(--ds-color-text-error)', size: '2rem' },
 }
 
-/** `className` merges with the component's own class rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('color'),
-  args: { className: 'icon-demo-rotated', size: '2rem' },
+  args: {
+    className: 'icon-demo-inset',
+    size: '2rem',
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      <style>{`.icon-demo-rotated { transform: rotate(45deg); }`}</style>
+      <style>{`.icon-demo-inset { margin: 1rem; }`}</style>
       <Icon {...args} />
     </>
   ),

@@ -1,5 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent } from 'storybook/test'
 
 import type { PageSectionProps } from './PageSection'
@@ -8,6 +8,13 @@ import { PageSection } from './PageSection'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof PageSectionProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
+
+/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
+const inBorderedBox: Decorator = (Story) => (
+  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
+    <Story />
+  </div>
+)
 
 const meta = {
   title: 'Layout & structure/PageSection',
@@ -76,14 +83,20 @@ export const Children: Story = {
   },
 }
 
-/** `className` merges with the component's own class rather than replacing it. */
+/**
+ * `className` merges with the component's own class rather than replacing it.
+ * The demo class adds a margin, visible as the gap inside the bordered parent.
+ */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('topButtonLabel'),
-  args: { className: 'pagesection-demo-tinted' },
+  args: {
+    className: 'pagesection-demo-inset',
+  },
+  decorators: [inBorderedBox],
   render: (args) => (
     <>
-      <style>{`.pagesection-demo-tinted { background: var(--ds-color-surface-sunken); }`}</style>
+      <style>{`.pagesection-demo-inset { margin: 1rem; }`}</style>
       <PageSection {...args} />
     </>
   ),
