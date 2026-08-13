@@ -17,7 +17,8 @@ export const Default: Story = {
     const card = canvas.getByText('Card content')
 
     await expect(getComputedStyle(card).borderRadius).toBe('8px')
-    await expect(getComputedStyle(card).boxShadow).not.toBe('none')
+    // Flat at rest by design — elevation is the consumer's choice to add.
+    await expect(getComputedStyle(card).boxShadow).toBe('none')
   },
 }
 
