@@ -29,8 +29,14 @@ export const QuantityStepper = ({
   'aria-label': ariaLabel = 'quantity',
   className,
 }: QuantityStepperProps) => (
-  <div role="group" aria-label={ariaLabel} className={cx('droppy-QuantityStepper', className)}>
+  <div
+    data-part="root"
+    role="group"
+    aria-label={ariaLabel}
+    className={cx('droppy-QuantityStepper', className)}
+  >
     <Button
+      data-part="decrement"
       aria-label="decrease quantity by one"
       round
       clear
@@ -38,10 +44,11 @@ export const QuantityStepper = ({
       onClick={() => onChange(value - 1)}
       disabled={value <= min}
     />
-    <Body type="span" aria-live="polite" className="droppy-QuantityStepper-value">
+    <Body data-part="value" type="span" aria-live="polite" className="droppy-QuantityStepper-value">
       {value}
     </Body>
     <Button
+      data-part="increment"
       aria-label="increase quantity by one"
       round
       clear

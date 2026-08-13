@@ -51,21 +51,27 @@ and a [Body](?path=/docs/typography-body--docs) for the value.
 
 ## How it works
 
-### Disabling at the bounds
+The buttons disable at the bounds rather than wrapping or clamping silently, so a click never
+looks like it did nothing. The value carries `aria-live="polite"`, because a disabled button and a
+changed number are the only signals the group gives — there is no input to announce itself.
 
-<Canvas of={QuantityStepperStories.AtMin} />
-<Canvas of={QuantityStepperStories.AtMax} />
-
-### Reporting changes
-
-Each click reports the new value through `onChange` immediately — there's no confirm step, same
-as Mealdrop's original.
-
-<Canvas of={QuantityStepperStories.Increments} />
-
+<Canvas of={QuantityStepperStories.BoundsDisableRatherThanClamp} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A named group holding two round buttons around a live value. There is no text input — for a typeable amount reach for [NumberField](?path=/docs/forms-input-numberfield--docs) instead.
+
+<Canvas of={QuantityStepperStories.Anatomy} />
+
+| Part      | `data-part` | Renders    | Purpose                                                 |
+| :-------- | :---------- | :--------- | :------------------------------------------------------ |
+| Root      | `root`      | `<div>`    | The `role="group"` wrapper carrying the accessible name |
+| Decrement | `decrement` | `<button>` | The minus; disabled at `min`                            |
+| Value     | `value`     | `<span>`   | The quantity, `aria-live="polite"`                      |
+| Increment | `increment` | `<button>` | The plus; disabled at `max`                             |
 
 {/* END: anatomy */}
 
@@ -119,6 +125,36 @@ Button and value colours, radius, and focus ring come from `Button` and `Body`'s
 
 <ArgTypes of={QuantityStepperStories} />
 
+### `value` and `onChange`
+
+The component is fully controlled — it holds no state of its own.
+
+<Canvas of={QuantityStepperStories.Value} />
+
+### `min`
+
+The lower bound; the minus button disables on it. Defaults to 1.
+
+<Canvas of={QuantityStepperStories.Min} />
+
+### `max`
+
+The upper bound; the plus button disables on it. Defaults to 10.
+
+<Canvas of={QuantityStepperStories.Max} />
+
+### `aria-label`
+
+Names the group. Give it the item's name when a page has several steppers, or every one of them
+announces as "quantity".
+
+<Canvas of={QuantityStepperStories.AriaLabel} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-QuantityStepper` class.
+
+<Canvas of={QuantityStepperStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

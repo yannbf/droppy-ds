@@ -10,6 +10,12 @@ import { Breadcrumb } from './Breadcrumb'
 const hide = (...props: Array<keyof BreadcrumbProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
 
+/** Placeholder for an examples story whose content lands in a later session.
+ *  Paints its own background so it keeps contrast on any surface. */
+const TODO = (
+  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
+)
+
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
@@ -185,7 +191,7 @@ export const Anatomy: Story = {
  */
 export const MealdropCategoryTrail: Story = {
   tags: ['examples'],
-  render: () => <>TODO</>,
+  render: () => TODO,
 }
 
 /* ------------------------------------------------------------------ */

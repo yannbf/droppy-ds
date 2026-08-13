@@ -54,23 +54,37 @@ import { Progress } from '@droppy/design-system'
 
 ## How it works
 
-### Determinate, complete, and custom ranges
-
-<Canvas of={ProgressStories.Determinate} />
-<Canvas of={ProgressStories.Complete} />
-<Canvas of={ProgressStories.CustomRange} />
-
 ### Indeterminate
+
+`value={null}` — or omitting it — drops `aria-valuenow` entirely rather than reporting zero, and
+sets `[data-indeterminate]` for the animation to hang off. This is the case
+[ProgressBar](?path=/docs/feedback-status-progressbar--docs) has no way to express.
 
 <Canvas of={ProgressStories.Indeterminate} />
 
-### Without a formatted value
+### Complete
 
-<Canvas of={ProgressStories.WithoutValueText} />
+At the top of the range the root gains `[data-complete]`, so a finished state can be styled
+without the caller tracking it separately.
 
+<Canvas of={ProgressStories.Complete} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+Root, an optional label and formatted value, and the track holding the indicator. The label and value parts are what this adds over `ProgressBar`, which renders a bare track and fill.
+
+<Canvas of={ProgressStories.Anatomy} />
+
+| Part      | `data-part` | Renders  | Purpose                                                                |
+| :-------- | :---------- | :------- | :--------------------------------------------------------------------- |
+| Root      | `root`      | `<div>`  | Owns the range and the `[data-indeterminate]`/`[data-complete]` states |
+| Label     | `label`     | `<span>` | The caption; also the accessible name                                  |
+| Value     | `value`     | `<span>` | The formatted value, when `showValue` is set                           |
+| Track     | `track`     | `<div>`  | The groove the indicator moves inside                                  |
+| Indicator | `indicator` | `<div>`  | The fill, sized from the value                                         |
 
 {/* END: anatomy */}
 
@@ -117,6 +131,35 @@ the root.
 
 <ArgTypes of={ProgressStories} />
 
+### `value`
+
+Positions the indicator. `null` or omitted switches to indeterminate.
+
+<Canvas of={ProgressStories.Value} />
+
+### `max`
+
+Rescales the range — the reported percentage follows it.
+
+<Canvas of={ProgressStories.Max} />
+
+### `label`
+
+The accessible name, and the visible caption above the track.
+
+<Canvas of={ProgressStories.Label} />
+
+### `showValue`
+
+Renders the formatted value beside the label.
+
+<Canvas of={ProgressStories.ShowValue} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-Progress` class.
+
+<Canvas of={ProgressStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

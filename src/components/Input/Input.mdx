@@ -43,33 +43,31 @@ import { Input } from '@droppy/design-system'
 
 ## How it works
 
-### Label association
-
-The visible label is rendered by Base UI's `Field.Label`, which is auto-associated with the control's `id` — the label doubles as the input's accessible name, with no `aria-label` needed or wanted on top of it.
-
-<Canvas of={InputStories.LabelNamesTheControl} />
-
-### Error display
-
-Passing `error` renders a message in the reserved slot below the control.
-
-<Canvas of={InputStories.WithError} />
-
-### The error slot never shifts layout
-
-The slot is always mounted — with a message or with a single space — so its minimum height holds regardless of whether a field is currently invalid. That reserved height, plus a fixed bottom margin, is what keeps one field's error from nudging the next field down.
+The error slot keeps its height whether or not a message is showing, so validating one field never
+shifts the ones below it.
 
 <Canvas of={InputStories.ErrorDoesNotShiftLayout} />
 
-### Native input types
-
-Any native `type` works — `Input` only supplies its own default (`text`) and otherwise passes the prop straight to the underlying element.
-
-<Canvas of={InputStories.Types} />
-
+Base UI's `Field` wires the label, the control and the error together — `for`/`id` and
+`aria-describedby` — so the caller never does it by hand. That is also why the component sets no
+`aria-label` of its own: an `aria-label` on top of a real `<label>` overrides the visible text,
+leaving what a screen reader announces disagreeing with what the page shows.
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A field root wrapping a label, the control, and an always-mounted error slot. The slot is the unusual part: it stays in the DOM holding a non-breaking space when there is no message, which is what reserves the height.
+
+<Canvas of={InputStories.Anatomy} />
+
+| Part    | `data-part` | Renders   | Purpose                                                          |
+| :------ | :---------- | :-------- | :--------------------------------------------------------------- |
+| Root    | `root`      | `<div>`   | Base UI's `Field.Root`, wiring label, control and error together |
+| Label   | `label`     | `<label>` | Absent when `label` is empty                                     |
+| Control | `control`   | `<input>` | The control itself; `className` lands here                       |
+| Error   | `error`     | `<div>`   | Always mounted, so showing a message never moves the layout      |
 
 {/* END: anatomy */}
 
@@ -120,6 +118,42 @@ Everything else — colors, borders, radius, focus ring — comes from the theme
 
 <ArgTypes of={InputStories} />
 
+### `label`
+
+Both the visible label and the control's accessible name.
+
+<Canvas of={InputStories.Label} />
+
+### `error`
+
+Fills the reserved slot beneath the control, and is wired to the input via `aria-describedby`.
+
+<Canvas of={InputStories.Error} />
+
+### `type`
+
+Native, and passed straight through — along with every other `<input>` attribute.
+
+<Canvas of={InputStories.Types} />
+
+### `disabled`
+
+Native too; `Field` dims the label alongside the control.
+
+<Canvas of={InputStories.Disabled} />
+
+### `placeholder`
+
+A hint, never a substitute for the label.
+
+<Canvas of={InputStories.Placeholder} />
+
+### `className`
+
+Merged onto the **control**, not the field root, alongside the component's own `droppy-Input`
+class.
+
+<Canvas of={InputStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

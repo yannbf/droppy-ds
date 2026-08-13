@@ -51,24 +51,34 @@ import { FooterCard } from '@droppy/design-system'
 
 ### External links
 
+An item marked `external` opens in a new tab with `rel="noopener noreferrer"` — the escaping
+hatch and the security attribute travel together, so a caller can't get one without the other.
+
 <Canvas of={FooterCardStories.ExternalLinks} />
 
-### Router links via `render`
+### Router links per item
 
-Pass `render` on a link item with a router's own link element, the same pattern `Breadcrumb` and
-`Link` use elsewhere in this library.
+`render` swaps the default `<a>` for a router-aware link on a single item, the same way
+`Breadcrumb` composes its crumbs.
 
-<Canvas of={FooterCardStories.WithRouterLinks} />
-
-### Non-link content
-
-`children` renders alongside (or instead of) the link list.
-
-<Canvas of={FooterCardStories.WithChildren} />
-
+<Canvas of={FooterCardStories.ItemRender} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
+
+## Anatomy
+
+A heading above a list of links. The list disappears entirely when `links` is empty, so a column of `children` alone renders no stray `<ul>`.
+
+<Canvas of={FooterCardStories.Anatomy} />
+
+| Part  | `data-part` | Renders                         | Purpose                                            |
+| :---- | :---------- | :------------------------------ | :------------------------------------------------- |
+| Root  | `root`      | `<div>`                         | The column: heading above, list and children below |
+| Title | `title`     | `<h2>`                          | The column heading                                 |
+| List  | `list`      | `<ul>`                          | Absent when `links` is empty                       |
+| Item  | `item`      | `<li>`                          | One per entry                                      |
+| Link  | `link`      | `<a>` (or the `render` element) | Rendered through `Link`                            |
 
 {/* END: anatomy */}
 
@@ -121,6 +131,41 @@ Links inherit their color from the card via `currentColor`, so overriding `--ds-
 
 <ArgTypes of={FooterCardStories} />
 
+### `title`
+
+The column heading, rendered as an `h2`.
+
+<Canvas of={FooterCardStories.Title} />
+
+### `links`
+
+The list, as `{ name, href?, external?, render? }`. Omitted or empty, no list renders.
+
+<Canvas of={FooterCardStories.Links} />
+
+### Item `external`
+
+Opens in a new tab with `rel="noopener noreferrer"`.
+
+<Canvas of={FooterCardStories.ExternalLinks} />
+
+### Item `render`
+
+Swaps the default `<a>` for a router-aware link, per item.
+
+<Canvas of={FooterCardStories.ItemRender} />
+
+### `children`
+
+Rendered below the list — app store badges, a short paragraph, anything a link list can't carry.
+
+<Canvas of={FooterCardStories.Children} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-FooterCard` class.
+
+<Canvas of={FooterCardStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}
