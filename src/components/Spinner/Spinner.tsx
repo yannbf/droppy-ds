@@ -65,8 +65,7 @@ export const Spinner = ({ label = 'Loading', className, ...rest }: SpinnerProps)
         <path
           data-part="arc"
           d="M50 50L20 50A30 30 0 0 0 80 50Z"
-          className="droppy-Spinner-arc"
-          transform="rotate(90 50 50)"
+          className="droppy-Spinner-arc droppy-Spinner-arc--base"
         />
         <path
           data-part="arc"

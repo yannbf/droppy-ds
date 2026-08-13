@@ -25,8 +25,15 @@
   box-sizing: border-box;
   flex: 1;
   margin: 0;
-  /* Right padding clears the chevron so long option text never runs under it. */
-  padding: 13px 2.5rem 13px 16px;
+  /* The UA stylesheet gives <select> its own form-control font-size,
+     breaking the normal cascade from the wrapper — restore it so the
+     control's em-based padding and the wrapper's em-based chevron stay
+     on the same scale. */
+  font-size: inherit;
+  /* Right padding clears the chevron so long option text never runs under it.
+     In em so it tracks the control's own font-size instead of staying pinned
+     to the root size when a consumer shrinks the control. */
+  padding: 13px 2.5em 13px 16px;
   appearance: none;
   border: none;
   border-radius: var(--ds-radius-control);
@@ -44,8 +51,8 @@
   position: absolute;
   top: 50%;
   right: 0.5rem;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.5em;
+  height: 1.5em;
   transform: translateY(-50%);
   pointer-events: none;
   background-color: var(--ds-color-icon-default);

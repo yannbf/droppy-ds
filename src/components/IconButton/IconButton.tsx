@@ -28,6 +28,6 @@ export const IconButton = ({ small = false, name, className, ...rest }: IconButt
     className={cx('droppy-IconButton', small && 'droppy-IconButton--small', className)}
     {...rest}
   >
-    <Icon data-part="icon" name={name} size={small ? 15 : 24} color="#202020" />
+    <Icon data-part="icon" name={name} size={small ? 15 : 24} />
   </BaseButton>
 )

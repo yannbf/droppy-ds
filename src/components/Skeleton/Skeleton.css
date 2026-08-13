@@ -4,12 +4,14 @@
   width: 100%;
   height: 1em;
   border-radius: var(--ds-radius-control);
+  background-color: var(--ds-color-skeleton-base);
   background-image: linear-gradient(
     90deg,
     var(--ds-color-skeleton-base) 25%,
     var(--ds-color-skeleton-highlight) 50%,
     var(--ds-color-skeleton-base) 75%
   );
+  background-repeat: repeat;
   background-size: 200% 100%;
   /* The brand's 150-300ms interaction motion is tuned for state changes, not
      a large-surface sweep — a shimmer at that speed reads as flickering. */
