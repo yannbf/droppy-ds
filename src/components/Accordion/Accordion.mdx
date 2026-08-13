@@ -96,7 +96,6 @@ full.
 
 ## Decision log
 
-- **2026-06**: Base UI Accordion — the primitive underneath Droppy's Accordion — removed APG-style arrow-key roving navigation and the redundant `role="region"` on Root in a same-day pair citing the upstream w3c/aria-practices debate (deprecating orientation/loopFocus), after earlier renaming `openMultiple` to `multiple` with the default flipped to `false` and moving item identity to a `useId` fallback so values survive reordering ([Accordion research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/accordion/brief.md)).
 - **2026-07**: Droppy's Accordion took a data-driven `items: {value, title, content}[]` array instead of exposing Base UI's compound-component composition, keeping call sites declarative while Base UI still supplies roving focus, activation timing, and panel wiring; item values fall back to the item's index ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868)).
 
 {/* END: history */}

@@ -103,7 +103,6 @@ state, and indicator animation in full.
 
 ## Decision log
 
-- **2025-11**: Base UI Tabs — underneath Droppy's Tabs — flipped its default so tabs activate on click, not on focus: the WCAG 2.5.2 pointer-cancellation argument beat the "feels more responsive" defense, with `activateOnFocus={true}` as the opt-in; Tab/Panel `value` also became required (rather than index-inferred) to fix keepMounted behaviour ([Tabs research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/tabs/brief.md)).
 - **2026-07**: Droppy's Tabs took a data-driven `tabs: {value, label, content}[]` array instead of exposing Base UI's compound-component composition, keeping call sites declarative while Base UI still supplies roving focus, activation timing, and panel wiring ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868)).
 
 {/* END: history */}

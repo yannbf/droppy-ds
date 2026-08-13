@@ -58,7 +58,6 @@ adds no styling of its own beyond forwarding `className` to the root.
 
 ## Decision log
 
-- **2025-01**: Base UI Separator — underneath Droppy's Separator — was flattened from SeparatorRoot to a plain single-part export in the library-wide single-part convention sweep, and gained vertical orientation for competitive parity; it is re-exported unchanged by Menu/Select/Combobox and friends, making it the canonical example of one component serving many hosts ([Separator research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/separator/brief.md)).
 - **2020-10**: dark mode was added to the app and Storybook simultaneously, converting overlay styles to theme variables and adding a Storybook theme switcher; dual light/dark theming has been a requirement for every component since, culminating in Droppy's data-theme token switching ([mealdrop #1](https://github.com/yannbf/mealdrop/pull/1), [dark mode commit](https://github.com/yannbf/mealdrop/commit/ffb87893515e58096e4984e020befc0267b84496)).
 
 {/* END: history */}

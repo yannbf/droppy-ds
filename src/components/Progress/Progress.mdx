@@ -78,7 +78,6 @@ the root.
 
 ## Decision log
 
-- **2025-04**: Base UI Progress — underneath Droppy's Progress — grew its accessible-text surface by decision: a Value part with a `format` prop, then a Label part with locale support replacing the removed getAriaLabel prop, plus an explicit zero-width fix so the indicator honestly renders 0%; it has no CSS-variable contract — indicator fill is a plain inline width percentage, a documented exception to the library's measurements-as-CSS-vars principle ([Progress research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/progress/brief.md)).
 - **2026-07**: Progress and ProgressBar deliberately coexist: the Base UI-backed Progress adds Label and formatted Value parts plus an indeterminate mode (`value={null}`) that the plain ProgressBar has no way to express ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [Progress.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/Progress/Progress.tsx), [wave 2 commit](https://github.com/yannbf/droppy-ds/commit/4b20c0eca2ee66fb2a7f05aef13522621430fe67)).
 
 {/* END: history */}

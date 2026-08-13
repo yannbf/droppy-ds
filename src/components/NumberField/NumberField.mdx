@@ -83,7 +83,6 @@ classes — this component adds no styling of its own beyond forwarding `classNa
 
 ## Decision log
 
-- **2024-04**: Base UI NumberField — underneath Droppy's NumberField — was one of the library's founding trio of components, and its spinbutton ARIA research resolved by deliberately never adding `role=spinbutton`; formatting and clamping were decoupled into independent props over time (`locale`, `snapOnStep`, `allowOutOfRange` letting typed values trigger native range validation instead of silent clamping), with Unicode/locale/rounding correctness treated as continually-invested core surface ([NumberField research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/number-field/brief.md)).
 - **2026-07**: NumberField was added as the typeable numeric input — Base UI's NumberField wrapped in Field so the label associates with the control the same way Input does it, with keyboard entry, arrow keys, increment/decrement buttons, and label scrub — positioned explicitly against QuantityStepper, which stays a tap-tap bounded stepper; the label sits inside the ScrubArea so dragging it changes the value ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [NumberField.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/NumberField/NumberField.tsx)).
 
 {/* END: history */}

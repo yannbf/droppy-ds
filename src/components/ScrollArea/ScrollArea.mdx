@@ -57,7 +57,6 @@ Colors, track/thumb sizing, and the hover/scroll-gated opacity come entirely fro
 
 ## Decision log
 
-- **2024-11**: Base UI ScrollArea — underneath Droppy's ScrollArea — was built as `role="presentation"` decoration over a real native scrollable Viewport so scrolling semantics stay native; a Content part was added later as the explicit measured wrapper, CSS-variable inheritance was disabled for performance, and data-scrolling semantics were refined repeatedly (per-axis, excluded during programmatic scroll) ([ScrollArea research brief](https://github.com/storybook-tmp/base-ui/blob/research/research/c-components/scroll-area/brief.md)).
 - **2020-10**: dark mode was added to the app and Storybook simultaneously, converting overlay styles to theme variables and adding a Storybook theme switcher; dual light/dark theming has been a requirement for every component since, culminating in Droppy's data-theme token switching ([mealdrop #1](https://github.com/yannbf/mealdrop/pull/1), [dark mode commit](https://github.com/yannbf/mealdrop/commit/ffb87893515e58096e4984e020befc0267b84496)).
 
 {/* END: history */}
