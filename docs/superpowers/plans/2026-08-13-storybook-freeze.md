@@ -850,7 +850,7 @@ Copy verbatim, restyled. ~35 lines, no changes beyond style.
 - [ ] **Step 4: Run the tests to verify they pass**
 
 Run: `pnpm experiment:test`
-Expected: PASS, 28 tests.
+Expected: PASS, 27 tests (5 oxc-utils + 8 labels + 10 config + 4 manifest).
 
 - [ ] **Step 5: Commit**
 
