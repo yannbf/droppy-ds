@@ -77,6 +77,30 @@ Arrow buttons use `IconButton`'s own styling (see [IconButton](?path=/docs/actio
 deliberately not theme-reactive, so they stay legible over arbitrary imagery. `className` merges
 with the component's own `droppy-Carousel` class.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2020**: Mealdrop's carousel churned through libraries early — a faulty react-carousel release, then a wholesale switch — and picked up its one durable behaviour: vertical touch panning passes through the track, the ancestor of Droppy's `touch-action: pan-y pinch-zoom` ([faulty version](https://github.com/yannbf/mealdrop/commit/7c955a6a25477039341c287e2a77f71bb456c58b), [library switch](https://github.com/yannbf/mealdrop/commit/47705de1f77c6a379276d3dffa985d552d33ce66), [vertical pan fix](https://github.com/yannbf/mealdrop/commit/6290a9585f5b102a2ff0cd6adebc94ce8ef061ac)).
+- **2025-04**: an accessibility pass gave the arrows their "Previous"/"Next" labels, asserted in Storybook play tests — Droppy inherits the labelled-arrows contract ([a11y pass](https://github.com/yannbf/mealdrop/commit/51b060508116f56e9c3e48301adb0b0562305b12)).
+- **2026-08**: ported from Mealdrop's Embla-based carousel onto token-driven CSS, adding `embla-carousel-react` and `embla-carousel-wheel-gestures` as dependencies; the old per-breakpoint prop bag (responsive objects, custom arrow slots, `removeArrowOnDeviceType`) collapsed to `itemsPerView: {mobile, tablet, desktop}` plus optional `slidesToScroll`, with fixed IconButton arrows that render only at desktop and only when there is somewhere to scroll, and a new dimming affordance that fades partially-visible slides to half opacity ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#271](https://github.com/yannbf/droppy-ds/issues/271): below the 1024px breakpoint the arrows are `display: none` and the track is pointer-only, so keyboard users have no supported way to bring off-screen slides into view. **Workaround:** none within the component; provide app-level controls or keep essential content out of the overflow.
+- [#272](https://github.com/yannbf/droppy-ds/issues/272): dimmed slides sit at 50% opacity, which can push AA-passing text below contrast — and the stories disable the a11y addon's color-contrast rule, so CI never flags it. **Workaround:** verify dimmed-state contrast for your slide content manually.
+- [#273](https://github.com/yannbf/droppy-ds/issues/273): the arrow labels are hardcoded English "Previous"/"Next" with no localization path. No workaround — the labels are not props and the arrows cannot be replaced.
+- [#274](https://github.com/yannbf/droppy-ds/issues/274): no RTL support — Embla is never passed `direction: 'rtl'` and the arrow positions are physical `left`/`right`, so in an RTL locale the arrows sit and scroll against reading order. **Workaround:** none exposed; requires wrapping or forking.
+- [#275](https://github.com/yannbf/droppy-ds/issues/275): `itemsPerView` values are not validated — `0` produces `calc(100% / 0)` and a degenerate layout. **Workaround:** pass integers of at least 1.
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={CarouselStories} />

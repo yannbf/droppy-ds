@@ -76,6 +76,28 @@ applies, no custom handling.
 `className` merges with the component's own `droppy-Link` class. Color is a plain CSS rule, so a
 caller can override it with an inline `style`, a `className`, or `currentColor` inheritance.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2025-03**: Mealdrop never shipped a standalone link component — router `Link`s were baked into styled `<p>` wrappers across the app; the first Breadcrumb formalized one such site while still importing react-router directly ([breadcrumb component](https://github.com/yannbf/mealdrop/commit/71ea43d7d7387b5a79a7e495cf08e0dffcf6eab0)).
+- **2026-08**: Link shipped as an inline `<a>` with the same `render` swap-in pattern as Breadcrumb, for router-aware links without a router dependency; `href` is spread only when `render` is absent, so a present-but-undefined key can never clobber the render element's own destination — the exact hazard tracked against Breadcrumb as [#126](https://github.com/yannbf/droppy-ds/issues/126). At rest it stays body-ink with a hover-only underline so prose doesn't read as noisy ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267)).
+- **2026-08**: when a routed crumb carrying both `droppy-Breadcrumb-link` and `droppy-Link` classes lost styling on bundle order, the fix ancestor-qualified Breadcrumb's rules rather than zeroing Link's specificity with `:where()` — which would have let any consumer `* { color }` reset override links everywhere ([droppy-ds #18](https://github.com/yannbf/droppy-ds/pull/18), closing [#12](https://github.com/yannbf/droppy-ds/issues/12)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#279](https://github.com/yannbf/droppy-ds/issues/279): `target="_blank"` passes through with no default `rel` — the opened tab keeps `window.opener` access to the page (reverse tabnabbing). **Workaround:** always pair `target="_blank"` with an explicit `rel="noopener noreferrer"`.
+- [#280](https://github.com/yannbf/droppy-ds/issues/280): at rest a Link is visually identical to surrounding body text — primary ink, no underline until hover, and the underline is gated behind `@media (hover: hover)` — so touch and keyboard users get no rest affordance beyond wording. **Workaround:** restore `text-decoration: underline` on `.droppy-Link` from app CSS where discoverability matters.
+- [#281](https://github.com/yannbf/droppy-ds/issues/281): omitting both `href` and `render` renders an anchor with no destination — not focusable, no link role, and no warning. **Workaround:** treat `href` as required unless `render` is provided.
+- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only).
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={LinkStories} />

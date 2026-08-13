@@ -96,7 +96,7 @@ Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and
 - [#74](https://github.com/yannbf/droppy-ds/issues/74): docs attribute the tighter display tracking to `level` 1-2, but the code ties it to the visual size step (`size ?? level`). **Workaround:** none needed once understood — tracking follows `size ?? level`; set letter-spacing explicitly to force a different pairing.
 - [#75](https://github.com/yannbf/droppy-ds/issues/75): h6 is inexpressible, and out-of-union `level`/`size` values (6, 0) silently render with no size-step styling. **Workaround:** stay within levels 1-5, or hand-roll an h6 with the base class plus an explicit size token.
 - [#77](https://github.com/yannbf/droppy-ds/issues/77): display tracking is a literal -2px, so it does not scale with the rem-based sizes (cramped under html font-size 62.5% or text-only zoom). **Workaround:** override `--ds-type-tracking-display` to an em-based value (e.g. -0.045em) in app CSS.
-- Untracked: the component exposes `level`/`size` 5 with its own size rule, but the [brand guidelines](?path=/docs/brand-guidelines--docs) type scale stops at h4 — "there is no fifth heading step: a title that needs to sit below h4 takes the heading face at a body-scale size rather than inventing one" — so size 5 is a step the brand explicitly rules out.
+- [#268](https://github.com/yannbf/droppy-ds/issues/268): the component exposes `level`/`size` 5 with its own size rule, but the [brand guidelines](?path=/docs/brand-guidelines--docs) type scale stops at h4 — "there is no fifth heading step: a title that needs to sit below h4 takes the heading face at a body-scale size rather than inventing one" — so size 5 is a step the brand explicitly rules out.
 
 {/* END: known-issues */}
 

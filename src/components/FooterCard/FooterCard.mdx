@@ -78,6 +78,29 @@ Links inherit their color from the card via `currentColor`, so overriding `--ds-
 (or setting `color` on a wrapping element) re-colors both the title and the links together.
 `className` merges with the component's own `droppy-FooterCard` class.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2020-09**: Mealdrop's footer and its FooterCard columns were created with styled-components ([base work](https://github.com/yannbf/mealdrop/commit/78dc77923c528c1006e3501d2ee11447cba1143a)).
+- **2021-05**: the footer title became an `<h2>` for document structure while keeping heading-4-sized type via a CSS override — semantic level deliberately decoupled from visual scale, a pairing Droppy still honours ([footer card fix](https://github.com/yannbf/mealdrop/commit/2d2303d1758c7d703fb20f5077ad212499fe980d)).
+- **2026-08**: ported onto the Heading and Link primitives with links as a `{name, href?, external?, render?}` array; the port initially dropped the title-size override and relied on implicit colour inheritance — the title rendered at heading-2 scale ([#14](https://github.com/yannbf/droppy-ds/issues/14)) and links went invisible under a consumer `* { color }` reset ([#13](https://github.com/yannbf/droppy-ds/issues/13)) — both fixed by pinning the title to `--ds-type-size-lg` and restating `color: inherit` down the list chain with ancestor-qualified selectors ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267), [hardening commit](https://github.com/yannbf/droppy-ds/commit/21cbe802a1e3c6262b4e3fd56baf883f61038bb7)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#282](https://github.com/yannbf/droppy-ds/issues/282): `external` links set `target`/`rel` but give assistive tech no cue that a new tab opens. **Workaround:** use `render` to supply an anchor with visually-hidden "(opens in new tab)" text.
+- [#283](https://github.com/yannbf/droppy-ds/issues/283): list items are keyed by the visible `name` — two links sharing a label trigger React key collisions and can misreconcile on updates. **Workaround:** keep `name` values unique within a `links` array.
+- [#284](https://github.com/yannbf/droppy-ds/issues/284): the card is unconditionally `--ds-color-text-on-inverse` ink with no background of its own — on a light surface everything renders invisible, and the story demonstrates the dark surface with a hardcoded `#1a1a1a` rather than a token. **Workaround:** place it on a dark surface token (e.g. `--ds-color-surface-inverse`) at the call site.
+- [#285](https://github.com/yannbf/droppy-ds/issues/285): the title is `<Heading level={2}>` down-sized by an ancestor-qualified CSS override instead of Heading's own `size` prop — `size={4}` exists for exactly this, so the CSS specificity fight looks unnecessary; open question whether the override is deliberate.
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={FooterCardStories} />

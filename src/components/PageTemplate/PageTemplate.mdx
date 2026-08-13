@@ -62,6 +62,26 @@ No color or spacing tokens apply directly — `PageTemplate` is a layout shell; 
 content styling come from whatever is passed into its slots. `className` merges with the
 component's own `droppy-PageTemplate` class.
 
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2020-09**: Mealdrop's page template shipped as a Header+Container+Footer wrapper and split within days into three variant exports — default, sticky header, and logo-only — establishing that page chrome varies per page; the content area's `min-height: calc(100vh - 200px)` literal dates from the same weeks and survives in Droppy unchanged ([template created](https://github.com/yannbf/mealdrop/commit/1e1550f8974e6381520d56380159b6edca8205cc), [three templates](https://github.com/yannbf/mealdrop/commit/9de500f658f392616db4b1dc513b988163a88a3e), [min-height](https://github.com/yannbf/mealdrop/commit/372790b024ed199af508ec435fbdd838fdcd251c)).
+- **2021**: the logo-only template dropped its footer — not every page wants one — and the three exports later merged back into a single `PageTemplate` switched by a `type` prop, the direct ancestor of Droppy's one-component API ([footer removed](https://github.com/yannbf/mealdrop/commit/db8312485efa8f7d79131aa835377a40d2a1dbe1), [templates merged](https://github.com/yannbf/mealdrop/commit/d73285877d84155f506da777aa7cb9e11c5ef969)).
+- **2026-08**: Droppy rebuilt the template as a pure slot shell: the closed `type` enum and the baked-in app Header/Footer went away in favour of opaque `header`/`footer` ReactNode slots — the parity doc excludes Header as "routing, cart state and a logo — an application component" — and a real `<main>` landmark replaced Mealdrop's plain div; the 2020 min-height literal was kept, documented in the stylesheet as an offset no token models ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#269](https://github.com/yannbf/droppy-ds/issues/269): nesting one `PageTemplate` inside another renders two `<main>` landmarks in one document — nothing guards against it. **Workaround:** render a single `PageTemplate` per page, at the app-layout level; inner sections should be plain elements.
+- [#270](https://github.com/yannbf/droppy-ds/issues/270): the content area's `min-height: calc(100vh - 200px)` assumes ~200px of combined header/footer chrome — taller slots break the footer-at-the-bottom promise, shorter ones force empty scroll space. **Workaround:** override `min-height` on `.droppy-PageTemplate-content` in app CSS when your chrome differs substantially.
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
+
+{/* END: known-issues */}
+
 ## API reference
 
 <ArgTypes of={PageTemplateStories} />
