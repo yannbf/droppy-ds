@@ -17,7 +17,7 @@
     "dev": "tsx watch src/cli.ts --manifests ../../build/storybook/manifests",
     "build": "vite build",
     "serve": "node dist/cli.js --manifests ../../build/storybook/manifests",
-    "prepare-publish": "node scripts/prepare-publish.mjs",
+    "prepare-publish": "tsx scripts/prepare-publish.ts",
     "check": "tsc --noEmit",
     "test": "vitest run",
     "test:ci": "vitest run"

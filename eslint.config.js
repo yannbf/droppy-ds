@@ -24,12 +24,6 @@ export default tseslint.config(
     },
   },
   {
-    files: ['**/*.mjs'],
-    languageOptions: {
-      globals: { ...globals.node },
-    },
-  },
-  {
     // The AST walkers work against oxc-parser's untyped ESTree output, so `any`
     // is the honest type here rather than a shortcut.
     files: ['tools/**/*.ts'],

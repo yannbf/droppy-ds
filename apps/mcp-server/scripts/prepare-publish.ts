@@ -8,19 +8,34 @@
  * Never commit its output.
  *
  * Reads GITHUB_REPOSITORY / GITHUB_REF_NAME / GITHUB_SHA for provenance and version
- * metadata. Falls back to the local git checkout.
+ * metadata. Falls back to the working copy's git state.
  */
 import { cpSync, existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { simpleGit } from 'simple-git'
 
+interface Provenance {
+  repo: string | null
+  branch: string | null
+  sha: string | null
+  builtAt: string
+}
+
+/** Only the fields this script reads or rewrites; the rest pass through untouched. */
+interface PackageJson {
+  name: string
+  version: string
+  private?: boolean
+  [key: string]: unknown
+}
+
 const packageRoot = fileURLToPath(new URL('..', import.meta.url))
 const staticDir = path.join(packageRoot, '..', '..', 'build', 'storybook')
 
 const git = simpleGit({ baseDir: packageRoot })
 
-async function revParse(...args) {
+async function revParse(...args: string[]): Promise<string | null> {
   try {
     return (await git.revparse(args)).trim()
   } catch {
@@ -52,10 +67,10 @@ for (const dir of ['manifests', 'services']) {
   }
 }
 
-const provenance = {
+const provenance: Provenance = {
   repo: process.env.GITHUB_REPOSITORY ?? null,
-  branch: branch ?? null,
-  sha: sha ?? null,
+  branch,
+  sha,
   builtAt: new Date().toISOString(),
 }
 writeFileSync(path.join(packageRoot, 'provenance.json'), `${JSON.stringify(provenance, null, 2)}\n`)
@@ -70,7 +85,7 @@ const slug =
 const version = `0.0.0-${slug}.${sha?.slice(0, 7) ?? 'unknown'}`
 
 const packageJsonPath = path.join(packageRoot, 'package.json')
-const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
+const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8')) as PackageJson
 packageJson.version = version
 // `private` only guards against accidental npm publishes from the repo; the
 // pkg.pr.new pack refuses private packages, so publishes lift it explicitly.
