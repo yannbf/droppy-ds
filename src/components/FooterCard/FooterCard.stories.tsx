@@ -58,8 +58,17 @@ const meta = {
     },
   },
   decorators: [
+    // FooterCard's text color assumes a dark footer surface — this decorator
+    // renders every story against the canonical token for that surface
+    // rather than a guessed color, so the contrast claim is demonstrable.
     (Story) => (
-      <div style={{ background: '#1a1a1a', padding: '1.5rem', borderRadius: '0.5rem' }}>
+      <div
+        style={{
+          background: 'var(--ds-color-surface-inverse)',
+          padding: '1.5rem',
+          borderRadius: '0.5rem',
+        }}
+      >
         <Story />
       </div>
     ),
@@ -141,7 +150,8 @@ export const Children: Story = {
   args: { title: 'Check our apps', links: [] },
   render: (args) => (
     <FooterCard {...args}>
-      <p style={{ margin: 0, color: '#fff' }}>Available on iOS and Android.</p>
+      {/* No color set here — it inherits FooterCard's own on-dark text color. */}
+      <p style={{ margin: 0 }}>Available on iOS and Android.</p>
     </FooterCard>
   ),
 }
