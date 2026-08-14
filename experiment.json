@@ -1,0 +1,16 @@
+{
+  "branchName": "experiment/base",
+  "baseCommit": "b85bc4e8d0254b1912fad01df9168fd031591365",
+  "keptFacets": [
+    "csf-jsdoc.meta",
+    "csf-jsdoc.story",
+    "general.general-brand",
+    "general.general-setup",
+    "mdx.anatomy",
+    "source-jsdoc.component",
+    "source-jsdoc.props",
+    "story.anatomy"
+  ],
+  "createdAt": "2026-08-14T09:27:55.299Z",
+  "version": 1
+}

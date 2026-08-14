@@ -1,6 +1,6 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn, userEvent } from 'storybook/test'
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 
 import type { ErrorBlockProps } from './ErrorBlock'
 import { ErrorBlock } from './ErrorBlock'
@@ -8,19 +8,6 @@ import { ErrorBlock } from './ErrorBlock'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ErrorBlockProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
-
-/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
-const inBorderedBox: Decorator = (Story) => (
-  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
-    <Story />
-  </div>
-)
 
 const sushiIllustration = (
   <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
@@ -59,80 +46,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * An empty category with a way out. Title, body, and action are all set below,
- * so the controls start populated.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { illustration: sushiIllustration },
-  argTypes: hide('className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `title` is the `h2` — say what happened, not just that something did. */
-export const Title: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('illustration', 'className'),
-  args: { title: 'We couldn’t reach the kitchen.' },
-}
-
-/** `body` carries the explanation and, ideally, what to try next. */
-export const Body: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('illustration', 'className'),
-  args: { body: 'The restaurant stopped taking orders while you were browsing.' },
-}
-
-/** `buttonText` and `onButtonClick` are the single recovery action. */
-export const ButtonText: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('illustration', 'className'),
-  args: { buttonText: 'Back to restaurants', onButtonClick: fn() },
-}
-
-/** `illustration` takes any node — the Lottie player and its JSON stay app assets. */
-export const Illustration: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('className'),
-  args: { illustration: sushiIllustration },
-}
-
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
-export const ClassName: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('illustration'),
-  args: {
-    className: 'errorblock-demo-inset',
-  },
-  decorators: [inBorderedBox],
-  render: (args) => (
-    <>
-      <style>{`.errorblock-demo-inset { margin: 1rem; }`}</style>
-      <ErrorBlock {...args} />
-    </>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
-
-/**
- * The illustration slot is optional, and the block reads fine without it — the
- * title, body, and action carry the whole message on their own.
- */
-export const WithoutIllustration: Story = {
-  tags: ['highlight'],
-  argTypes: hide('className'),
-  args: { illustration: undefined },
-}
 
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
@@ -164,51 +84,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): two importers —
- * `CategoryDetailPage` (empty category) and `RestaurantDetailPage` (restaurant
- * not found), which drive the Lottie animations in `src/assets/animations`.
- * The story to write: those two side by side with the real copy — 'This is not
- * the food you're looking for.' over an empty category, and the not-found
- * case — showing the same block doing an empty state and an error. The
- * illustration slot should hold a plain inline SVG, since the Lottie player
- * and its JSON are application assets rather than design-system ones
- * (docs/MEALDROP-PARITY.md).
- */
-export const MealdropEmptyAndNotFound: Story = {
-  tags: ['examples'],
-  render: () => TODO,
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestTitleIsALevelTwoHeading: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(
-      canvas.getByRole('heading', { level: 2, name: 'This is not the food you’re looking for.' })
-    ).toBeInTheDocument()
-  },
-}
-
-export const TestActionFiresItsCallback: Story = {
-  tags: ['tests'],
-  play: async ({ args, canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'See all restaurants' }))
-
-    await expect(args.onButtonClick).toHaveBeenCalledOnce()
-  },
-}
-
-export const TestIllustrationIsOptional: Story = {
-  tags: ['tests'],
-  args: { illustration: undefined },
-  play: async ({ canvas, canvasElement }) => {
-    await expect(canvasElement.querySelector('.droppy-ErrorBlock-illustration')).toBeNull()
-    await expect(canvas.getByRole('button', { name: 'See all restaurants' })).toBeVisible()
-  },
-}

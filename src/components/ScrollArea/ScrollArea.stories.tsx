@@ -1,6 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, waitFor } from 'storybook/test'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import type { ScrollAreaProps } from './ScrollArea'
 import { ScrollArea } from './ScrollArea'
@@ -8,19 +7,6 @@ import { ScrollArea } from './ScrollArea'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ScrollAreaProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
-const inBorderedBox: Decorator = (Story) => (
-  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
-    <Story />
-  </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 const paragraphs = [
   `Vernacular architecture is building done outside any academic tradition, and without
@@ -68,93 +54,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A fixed-height panel of long text, with a themed scrollbar revealed on hover
- * or while scrolling. `orientation` is set below, so the controls start
- * populated.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { orientation: 'vertical' },
-  argTypes: hide('className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` are whatever overflows; sizing comes from the theme layer. */
-export const Children: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('orientation', 'className'),
-  args: { children: paragraphs.map((text, index) => <p key={index}>{text}</p>) },
-}
-
-/** `orientation` picks which axes get a scrollbar. */
-export const Orientation: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('orientation', 'className'),
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '1rem' }}>
-      <ScrollArea {...args} orientation="vertical" />
-      <ScrollArea {...args} orientation="horizontal">
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          {Array.from({ length: 12 }, (_, index) => (
-            <div
-              key={index}
-              style={{
-                flex: '0 0 auto',
-                width: '8rem',
-                height: '4rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '1px solid var(--ds-color-border-subtle)',
-              }}
-            >
-              Card {index + 1}
-            </div>
-          ))}
-        </div>
-      </ScrollArea>
-      <ScrollArea {...args} orientation="both">
-        {wideGrid}
-      </ScrollArea>
-    </div>
-  ),
-}
-
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
-export const ClassName: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('orientation'),
-  args: { className: 'scrollarea-demo-inset' },
-  decorators: [inBorderedBox],
-  render: (args) => (
-    <>
-      <style>{`.scrollarea-demo-inset { margin: 1rem; }`}</style>
-      <ScrollArea {...args} />
-    </>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
-
-/**
- * Content overflowing both axes renders a scrollbar on each, plus the corner
- * where the two tracks would otherwise intersect — the part that stops them
- * overlapping at the meeting point.
- */
-export const BothAxes: Story = {
-  tags: ['highlight'],
-  argTypes: hide('className'),
-  args: { orientation: 'both', children: wideGrid },
-}
 
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
@@ -191,67 +97,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the
- * cart panel scrolls with the platform's own scrollbar. The story to write:
- * that cart's item list inside a `ScrollArea`, sitting in a `Sidebar` above a
- * pinned footer, since a long order is exactly where the panel needs its own
- * scroll region rather than the page's — and it is the composition where the
- * hover-revealed scrollbar avoids competing with the drawer chrome.
- */
-export const MealdropCartScroll: Story = {
-  tags: ['examples'],
-  render: () => TODO,
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestVerticalScrollbarAppears: Story = {
-  tags: ['tests'],
-  play: async ({ canvasElement }) => {
-    // The scrollbar mounts after Base UI's overflow measurement effect runs,
-    // so it isn't there on first paint — re-query inside waitFor.
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="vertical"]')).not.toBeNull()
-    })
-  },
-}
-
-export const TestBothAxesRenderTwoScrollbars: Story = {
-  tags: ['tests'],
-  args: { orientation: 'both', children: wideGrid },
-  play: async ({ canvasElement }) => {
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="vertical"]')).not.toBeNull()
-    })
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="horizontal"]')).not.toBeNull()
-    })
-  },
-}
-
-export const TestHorizontalOnlyOmitsVertical: Story = {
-  tags: ['tests'],
-  args: {
-    orientation: 'horizontal',
-    children: (
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        {Array.from({ length: 12 }, (_, index) => (
-          <div key={index} style={{ flex: '0 0 auto', width: '8rem' }}>
-            Card {index + 1}
-          </div>
-        ))}
-      </div>
-    ),
-  },
-  play: async ({ canvasElement }) => {
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="horizontal"]')).not.toBeNull()
-    })
-    await expect(canvasElement.querySelector('[data-orientation="vertical"]')).toBeNull()
-  },
-}

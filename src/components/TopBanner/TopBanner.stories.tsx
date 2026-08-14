@@ -1,6 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import type { TopBannerProps } from './TopBanner'
 import { TopBanner } from './TopBanner'
@@ -8,19 +7,6 @@ import { TopBanner } from './TopBanner'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof TopBannerProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
-
-/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
-const inBorderedBox: Decorator = (Story) => (
-  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
-    <Story />
-  </div>
-)
 
 // A tiny inline gradient standing in for a restaurant photo, so the story has
 // no network dependency.
@@ -58,83 +44,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * The page header band. Title and photo are both set below, so the controls
- * start populated — clear the photo to see the plain treatment.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { title: 'Categories', photoUrl: photoDataUri },
-  argTypes: hide('onBackClick', 'className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `title` renders as an `h2` inside the band. */
-export const Title: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('photoUrl', 'onBackClick', 'className'),
-  args: { title: 'Sushi places near you', photoUrl: undefined },
-}
-
-/** `photoUrl` sets the background and switches the heading to its on-photo treatment. */
-export const PhotoUrl: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('onBackClick', 'className'),
-  args: { photoUrl: photoDataUri },
-}
-
-/**
- * `onBackClick` is accepted for call-site parity with Mealdrop's own
- * `TopBanner`, whose back button is commented out in its source. Nothing here
- * renders a control, so the callback never fires.
- */
-export const OnBackClick: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('photoUrl', 'className'),
-  args: { onBackClick: () => {}, photoUrl: undefined },
-}
-
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
-export const ClassName: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('onBackClick'),
-  args: {
-    className: 'topbanner-demo-inset',
-  },
-  decorators: [inBorderedBox],
-  render: (args) => (
-    <>
-      <style>{`.topbanner-demo-inset { margin: 1rem; }`}</style>
-      <TopBanner {...args} />
-    </>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
-
-/**
- * With a photo behind it the heading takes its on-photo treatment, so the text
- * holds contrast against arbitrary imagery rather than trusting the surface
- * token underneath.
- */
-export const HeadingOverPhoto: Story = {
-  tags: ['highlight'],
-  argTypes: hide('onBackClick', 'className'),
-  render: (args) => (
-    <>
-      <TopBanner {...args} title="Without a photo" photoUrl={undefined} />
-      <TopBanner {...args} title="Over a photo" photoUrl={photoDataUri} />
-    </>
-  ),
-}
 
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
@@ -167,46 +83,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): four importers, the
- * category and restaurant detail pages among them. The story to write: the
- * restaurant detail header — the banner carrying `restaurant.photoUrl` with
- * 'Burger Kingdom' over it, then `Review` and the category `Badge`s below the
- * band — which is the composition that shows why the heading needs its
- * on-photo treatment, since the photo behind it is uncontrolled.
- */
-export const MealdropRestaurantHeader: Story = {
-  tags: ['examples'],
-  render: () => TODO,
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestRendersTitleAsHeading: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { level: 2, name: 'Categories' })).toBeInTheDocument()
-  },
-}
-
-export const TestPhotoBecomesBackground: Story = {
-  tags: ['tests'],
-  args: { photoUrl: photoDataUri },
-  play: async ({ canvas }) => {
-    const banner = canvas.getByRole('heading', { level: 2 }).parentElement as HTMLElement
-
-    await expect(getComputedStyle(banner).backgroundImage).toContain('url(')
-  },
-}
-
-export const TestTitleIsOptional: Story = {
-  tags: ['tests'],
-  args: { title: undefined },
-  play: async ({ canvas }) => {
-    await expect(canvas.queryByRole('heading')).not.toBeInTheDocument()
-  },
-}

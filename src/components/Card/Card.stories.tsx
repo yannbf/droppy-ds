@@ -1,6 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import type { CardProps } from './Card'
 import { Card } from './Card'
@@ -8,19 +7,6 @@ import { Card } from './Card'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof CardProps | 'children'>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
-
-/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
-const inBorderedBox: Decorator = (Story) => (
-  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
-    <Story />
-  </div>
-)
 
 const meta = {
   title: 'Media & content/Card',
@@ -46,89 +32,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A rounded, clipped surface for grouping content. Both variant props are set
- * below, so the controls start populated — flip `padded` or `interactive`.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { children: 'Card content', padded: true, interactive: false },
-  argTypes: hide('className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` compose freely — `Card` provides the surface and nothing else. */
-export const Children: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('interactive', 'padded', 'className'),
-  args: {
-    padded: true,
-    children: (
-      <>
-        <strong>Burger Kingdom</strong>
-        <p style={{ margin: '0.25rem 0 0' }}>Nicest place for burgers</p>
-      </>
-    ),
-  },
-}
-
-/** `padded` adds uniform padding, for children that don't own their own. */
-export const Padded: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('interactive', 'className'),
-  args: { padded: true },
-}
-
-/** `interactive` is appearance only: hover dim and a pointer cursor. */
-export const Interactive: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('padded', 'className'),
-  args: { interactive: true, padded: true, children: 'Hover me' },
-}
-
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
-export const ClassName: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('interactive', 'padded'),
-  args: {
-    className: 'card-demo-inset',
-    children: 'Card content',
-    padded: true,
-  },
-  decorators: [inBorderedBox],
-  render: (args) => (
-    <>
-      <style>{`.card-demo-inset { margin: 1rem; }`}</style>
-      <Card {...args} />
-    </>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
-
-/** An edge-to-edge image clips to the card's own corner radius instead of squaring off past it. */
-export const WithImage: Story = {
-  tags: ['highlight'],
-  argTypes: hide('children', 'interactive', 'padded', 'className'),
-  render: (args) => (
-    <Card {...args} style={{ width: '16rem' }}>
-      <img
-        src="https://placehold.co/320x180"
-        alt=""
-        style={{ display: 'block', width: '100%', height: '10rem', objectFit: 'cover' }}
-      />
-      <div style={{ padding: '1rem' }}>Restaurant name</div>
-    </Card>
-  ),
-}
 
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
@@ -156,62 +66,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): four importers —
- * `Category`, `RestaurantCard`, `OrderSummary.styles`, and `FoodItem`. The
- * story to write is the restaurant tile those share: an `interactive` `Card`
- * holding an edge-to-edge photo, then a padded block of `Heading`, `Review`,
- * `Body`, and `Badge`, with the click handling wired at
- * the call site. Worth showing the category tile beside it, since the same
- * shell carries a very different composition. Mealdrop reimplemented this
- * background/radius/shadow/hover-dim shell in each of those four components
- * before it became one (docs/MEALDROP-PARITY.md).
- */
-export const MealdropRestaurantTile: Story = {
-  tags: ['examples'],
-  render: () => TODO,
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestRoundedAndRaised: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    const card = canvas.getByText('Card content')
-
-    await expect(getComputedStyle(card).borderRadius).toBe('8px')
-    // Flat at rest by design — elevation is the consumer's choice to add.
-    await expect(getComputedStyle(card).boxShadow).toBe('none')
-  },
-}
-
-export const TestClipsOverflow: Story = {
-  tags: ['tests'],
-  render: () => (
-    <Card style={{ width: '16rem' }}>
-      <img src="https://placehold.co/320x180" alt="" style={{ display: 'block', width: '100%' }} />
-    </Card>
-  ),
-  play: async ({ canvasElement }) => {
-    const card = canvasElement.querySelector('.droppy-Card') as HTMLElement
-
-    await expect(getComputedStyle(card).overflow).toBe('hidden')
-  },
-}
-
-export const TestInteractiveIsAppearanceOnly: Story = {
-  tags: ['tests'],
-  args: { interactive: true },
-  play: async ({ canvas, canvasElement }) => {
-    const card = canvasElement.querySelector('.droppy-Card') as HTMLElement
-
-    await expect(card).toHaveClass('droppy-Card--interactive')
-    // No role, no tabIndex — the caller owns the interactive semantics.
-    await expect(card).not.toHaveAttribute('tabindex')
-    await expect(canvas.queryByRole('button')).not.toBeInTheDocument()
-  },
-}
