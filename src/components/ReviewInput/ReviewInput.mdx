@@ -1,0 +1,258 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ReviewInputStories from './ReviewInput.stories'
+
+<Meta of={ReviewInputStories} />
+
+# ReviewInput
+
+{/* BEGIN: general */}
+
+An editable star rating and a review-text field, for rating something already received — a past
+order, a delivered item — as opposed to [Review](?path=/docs/feedback-status-review--docs), which
+only displays an aggregate score.
+
+```tsx
+import { ReviewInput } from '@droppy/design-system'
+```
+
+<Canvas of={ReviewInputStories.Default} />
+
+## Features
+
+- **A real radiogroup, not a click handler.** Five radio inputs, one per star value, each with
+  its own "N of 5 stars" accessible name — arrow keys move the selection and a screen reader
+  announces it like any other radio group.
+- **Every star up to the chosen rating renders filled**, in the same ink `Review` uses for its own
+  star glyph — a 3-star rating shows three filled stars, not just the third one lit.
+- **`value`/`defaultValue`/`onValueChange` follow the same controlled/uncontrolled shape**
+  `NumberField` uses — omit `value` for an uncontrolled field, or pass both `value` and
+  `onValueChange` to control it. The value is always the pair `{ rating, body }`.
+- The review-text field reuses `Field`, the label/error wiring `Input` and `NumberField` are built
+  on, rendering a `<textarea>` in place of the default `<input>`.
+- Merges any incoming `className` onto the root, alongside the theme layer's own class.
+
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
+## When to use
+
+- Letting someone rate and comment on something they already received — a delivered order, a
+  completed booking — the interaction [Steve's issue](https://github.com/yannbf/droppy-ds/issues/298)
+  observed agents on Mealdrop hand-rolling for themselves.
+
+## When not to use
+
+- Only displaying an aggregate score, with no input — reach for
+  [Review](?path=/docs/feedback-status-review--docs) instead; it is the read-only sibling this
+  component was deliberately kept separate from.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
+## How it works
+
+### Star selection
+
+Clicking a star, or arrowing to it with the keyboard, selects that value directly — the WAI-ARIA
+radio pattern, where moving focus and selecting happen in the same action. Every star at or below
+the selection renders filled.
+
+<Canvas of={ReviewInputStories.FilledStarsTrackRating} />
+
+### Controlled vs uncontrolled
+
+Leave `value` unset and the field manages its own state, seeded by `defaultValue`. Pass `value`
+together with `onValueChange` and the field renders exactly what the caller gives it — it never
+updates itself, even after a star is clicked or text is typed.
+
+<Canvas of={ReviewInputStories.ControlledValue} />
+{/* END: behavior */}
+
+{/* BEGIN: anatomy */}
+
+## Anatomy
+
+A rating fieldset — legend plus five star radios — followed by a labelled text field.
+
+<Canvas of={ReviewInputStories.Anatomy} />
+
+| Part         | `data-part`    | Renders      | Purpose                                                      |
+| :----------- | :------------- | :----------- | :----------------------------------------------------------- |
+| Root         | `root`         | `<div>`      | The wrapper the caller positions                             |
+| Rating field | `rating-field` | `<fieldset>` | Base UI's `Fieldset.Root`, grouping the five stars           |
+| Rating label | `rating-label` | `<div>`      | The fieldset's legend — the group's accessible name          |
+| Rating       | `rating`       | `<div>`      | The radiogroup; owns which star is selected                  |
+| Star         | `star`         | `<span>`     | One radio per rating value, labelled "N of 5 stars"          |
+| Body field   | `body-field`   | `<div>`      | Base UI's `Field.Root`, associating the label with the field |
+| Body label   | `body-label`   | `<label>`    | The visible and accessible name for the text field           |
+| Body         | `body`         | `<textarea>` | Where the review text is typed                               |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
+
+## Keyboard & screen reader
+
+| Key / interaction         | Context | Action                                                      |
+| ------------------------- | ------- | ----------------------------------------------------------- |
+| Tab                       | any     | Enters the radiogroup at the checked star, or the first one |
+| Right/Down Arrow          | any     | Moves to and selects the next star                          |
+| Left/Up Arrow             | any     | Moves to and selects the previous star                      |
+| Space / click             | any     | Selects the focused star                                    |
+| Tab (past the radiogroup) | any     | Reaches the review-text field, a normal Tab stop            |
+
+- **ARIA:** the rating renders as a native `role="radiogroup"` containing five `role="radio"`
+  elements, each carrying its own `aria-label` ("1 of 5 stars" … "5 of 5 stars") and a hidden
+  native `<input type="radio">` for real form participation. The fieldset's legend supplies the
+  group's own accessible name via `aria-labelledby`.
+- **Screen reader:** entering the group announces its legend ("Your rating", by default), then
+  each radio announces its own "N of 5 stars" label and checked state as focus moves. The
+  review-text field announces as a normal multiline textbox, associated with its label through
+  `Field`.
+- **You must provide:** nothing further for a single instance — `ratingLabel` and `bodyLabel` ship
+  sensible defaults, but override them when the surrounding page needs a more specific name (e.g.
+  "Rate your order" rather than the generic "Your rating").
+
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
+## Styling
+
+| Token                             | Used for                                                             |
+| --------------------------------- | -------------------------------------------------------------------- |
+| `--ds-color-text-review`          | Filled star fill/stroke — the same ink `Review` uses for its glyph   |
+| `--ds-color-icon-default`         | Unfilled star stroke                                                 |
+| `--ds-color-text-label`           | The rating legend and the body field's label                         |
+| `--ds-shadow-focus`               | The focus ring on a focused star                                     |
+| `--ds-radius-round`               | Each star's hit-target shape                                         |
+| `--ds-space-md`, `--ds-space-2xs` | Vertical rhythm between the rating and the text field, and inside it |
+
+Each star's hit target is 48×48 CSS pixels (`--ds-radius-round`, sized in `rem`), meeting the
+touch-target minimum in
+[Accessibility guidelines](?path=/docs/accessibility-guidelines--docs) even though the visible
+glyph is smaller — the same tradeoff `IconButton`'s `small` size makes. `className` merges with
+the component's own `droppy-ReviewInput` class; the review-text field reuses the theme layer's
+`Input`/`FieldRoot`/`FieldLabel` classes the way `Input` itself does.
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ReviewInputStories} />
+
+### `ratingLabel`
+
+Accessible name and visible legend for the rating radiogroup.
+
+<Canvas of={ReviewInputStories.RatingLabel} />
+
+### `bodyLabel`
+
+Visible label for the review-text field. Also its accessible name.
+
+<Canvas of={ReviewInputStories.BodyLabel} />
+
+### `bodyPlaceholder`
+
+Native placeholder for the review-text field.
+
+<Canvas of={ReviewInputStories.BodyPlaceholder} />
+
+### `defaultValue`
+
+Seeds the field without making it controlled.
+
+<Canvas of={ReviewInputStories.DefaultValue} />
+
+### `disabled`
+
+Dims the stars and the text field together.
+
+<Canvas of={ReviewInputStories.Disabled} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-ReviewInput` class.
+
+<Canvas of={ReviewInputStories.ClassName} />
+{/* END: props */}
+
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-08**: added as a sibling component rather than an `editable` prop on `Review`, per
+  [issue #298](https://github.com/yannbf/droppy-ds/issues/298) — Steve observed agents building
+  on Mealdrop hand-rolling their own editable review widget to let a shopper rate a past order,
+  because the design system only shipped the read-only `Review`. `Review`'s prop type is a closed
+  set with no room for a conditional editable mode ([#125](https://github.com/yannbf/droppy-ds/issues/125)),
+  and it already ships with a "when not to use: a star-input control" line in its own docs — adding
+  editability onto that component would mean either breaking its narrow, closed contract or bolting
+  on a second, input-shaped meaning next to a display one. A sibling keeps `Review`'s public API
+  completely untouched and gives the editable piece its own honest surface (a radiogroup plus a
+  text field) instead of overloading one component with two unrelated jobs.
+- **Built on Base UI's [`Fieldset`](https://base-ui.com/react/components/fieldset),
+  [`RadioGroup`/`Radio`](https://base-ui.com/react/components/radio), and
+  [`Field`](https://base-ui.com/react/components/field).** The star row skips the theme layer's
+  generic `RadioGroupRoot`/`RadioRoot`/`RadioIndicator` classes — those render a circular dot
+  indicator meant for a checklist of text options, not a star glyph — and styles `Radio.Root`
+  directly instead, while still relying on Base UI for the real ARIA radiogroup semantics and
+  keyboard handling. The review-text field reuses `Field.Control`'s `render` prop to swap its
+  default `<input>` for a `<textarea>`, keeping the same label/id/`aria-describedby` wiring
+  `Input` gets for free.
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#302](https://github.com/yannbf/droppy-ds/issues/302): the star radiogroup's arrow-key
+  direction doesn't flip in RTL layouts, because Droppy never wraps its tree in Base UI's
+  `DirectionProvider` — the same gap tracked for `ScrollArea` in
+  [#242](https://github.com/yannbf/droppy-ds/issues/242). **Workaround:** wrap the app (or the
+  `ReviewInput` subtree) in Base UI's `DirectionProvider` with `direction="rtl"`.
+- [#303](https://github.com/yannbf/droppy-ds/issues/303): the rating is whole-star only — there is
+  no way to select or represent a half star, even though `Review` can display one. No
+  workaround — a caller needing half-star precision has to build its own control.
+- [#304](https://github.com/yannbf/droppy-ds/issues/304): filled vs unfilled stars are
+  distinguished by color alone (`fill`/`stroke`), with no `forced-colors` fallback, so the
+  distinction is untested and may collapse under Windows High Contrast Mode. **Workaround**
+  (partial): add an app-level `@media (forced-colors: active)` override targeting
+  `.droppy-ReviewInput-star[data-filled]`.
+- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so
+  `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
+- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only
+  with `outline: none`, so the focused star's ring vanishes entirely in Windows High Contrast mode.
+- [#138](https://github.com/yannbf/droppy-ds/issues/138): the review-text field's theme chrome is
+  bound to unnamespaced global classes (`.Input`, `.FieldRoot`, `.FieldLabel`) with no cascade
+  layer, so host-app CSS collides in both directions.
+
+{/* END: known-issues */}
+
+{/* BEGIN: when-to-use */}
+
+## Related
+
+- [Review](?path=/docs/feedback-status-review--docs) — the read-only display this pairs with.
+- [Input](?path=/docs/forms-input-input--docs) — the plain text field the review-text field shares
+  its `Field` labelling approach with.
+
+{/* END: when-to-use */}
