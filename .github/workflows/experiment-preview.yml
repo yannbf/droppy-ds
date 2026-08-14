@@ -34,7 +34,9 @@ jobs:
       - run: pnpm build
 
       # --comment=off because an experiment branch push has no pull request to comment on.
-      - run: pnpx pkg-pr-new publish --compact --pnpm --comment=off
+      # The root package is named explicitly: apps/* are workspace packages with their
+      # own publish workflows, and an unqualified publish would pack them here too.
+      - run: pnpx pkg-pr-new publish . --compact --pnpm --comment=off
 
       - name: Record the install URLs
         run: |
