@@ -25,8 +25,9 @@ import { FooterCard } from '@droppy/design-system'
 - `external` links get `target="_blank"` and `rel="noopener noreferrer"` automatically.
 - `children` renders after the link list (or on its own, when `links` is omitted) — for content
   that isn't a link, like app store badges or a short paragraph.
-- Text and link color default to `--ds-color-text-on-inverse` and `currentColor`, so the card reads
-  correctly on the dark surface a footer typically sits on, without hardcoding white.
+- FooterCard is designed to live on a dark footer surface, so it owns its own text color —
+  `--ds-color-text-on-inverse` on the root, `currentColor` on links — rather than leaving each
+  consumer to restate it.
 - Merges any incoming `className` with its own `droppy-FooterCard` class.
 
 {/* END: general */}
@@ -37,6 +38,9 @@ import { FooterCard } from '@droppy/design-system'
 
 - Inside a page footer, grouping a titled set of links — site navigation, social links, legal
   links.
+- Only on a dark footer surface (e.g. `--ds-color-surface-inverse`). FooterCard's text color
+  assumes that context and doesn't paint a background of its own — it's a text-on-dark component,
+  not a self-contained dark panel.
 
 ## When not to use
 
@@ -48,6 +52,16 @@ import { FooterCard } from '@droppy/design-system'
 {/* BEGIN: behavior */}
 
 ## How it works
+
+### Text color on dark footers
+
+FooterCard assumes it sits on a dark footer surface and sets its own text color to
+`--ds-color-text-on-inverse` accordingly — a consumer doesn't need to override `color` to make it
+readable. Links inherit the same color via `currentColor` down an ancestor-qualified chain
+(`.droppy-FooterCard .droppy-FooterCard-link`), so a consumer's own CSS reset can't strip it. The
+story below renders against `--ds-color-surface-inverse`, the token a footer would actually use.
+
+<Canvas of={FooterCardStories.Default} />
 
 ### External links
 
@@ -119,9 +133,11 @@ behaviour applies, no custom handling.
 | `--ds-space-xs`              | Space below the title    |
 | `--ds-space-2xs`             | Space between list items |
 
-Links inherit their color from the card via `currentColor`, so overriding `--ds-color-text-on-inverse`
-(or setting `color` on a wrapping element) re-colors both the title and the links together.
-`className` merges with the component's own `droppy-FooterCard` class.
+FooterCard is built for the dark footer surface (`--ds-color-surface-inverse`) and sets its own
+text color rather than leaving contrast to each consumer — no wrapper override is needed to make
+its text readable. Links inherit their color from the card via `currentColor`, so overriding
+`--ds-color-text-on-inverse` (or setting `color` on a wrapping element) re-colors both the title
+and the links together. `className` merges with the component's own `droppy-FooterCard` class.
 
 {/* END: styling */}
 
@@ -175,6 +191,7 @@ Merged onto the root alongside the component's own `droppy-FooterCard` class.
 - **2020-09**: Mealdrop's footer and its FooterCard columns were created with styled-components ([base work](https://github.com/yannbf/mealdrop/commit/78dc77923c528c1006e3501d2ee11447cba1143a)).
 - **2021-05**: the footer title became an `<h2>` for document structure while keeping heading-4-sized type via a CSS override — semantic level deliberately decoupled from visual scale, a pairing Droppy still honours ([footer card fix](https://github.com/yannbf/mealdrop/commit/2d2303d1758c7d703fb20f5077ad212499fe980d)).
 - **2026-08**: ported onto the Heading and Link primitives with links as a `{name, href?, external?, render?}` array; the port initially dropped the title-size override and relied on implicit colour inheritance — the title rendered at heading-2 scale ([#14](https://github.com/yannbf/droppy-ds/issues/14)) and links went invisible under a consumer `* { color }` reset ([#13](https://github.com/yannbf/droppy-ds/issues/13)) — both fixed by pinning the title to `--ds-type-size-lg` and restating `color: inherit` down the list chain with ancestor-qualified selectors ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267), [hardening commit](https://github.com/yannbf/droppy-ds/commit/21cbe802a1e3c6262b4e3fd56baf883f61038bb7)).
+- **2026-08**: the on-dark text color was formalized as an intentional usage principle instead of an implicit default. MealDrop's adoption still had to wrap the component (`styled(DsFooterCard) { color: var(--ds-color-text-on-inverse) }`) to get readable text, even though the component already carried that color — Steve's review of the port called it out: "If a FooterCard only goes in Footer and Footer is always dark, then it's safe to do that directly in Droppy and document it as a brand principle" ([mealdrop#65 review](https://github.com/yannbf/mealdrop/pull/65), [#297](https://github.com/yannbf/droppy-ds/issues/297)). Docs now state the dark-footer assumption directly, and the stories decorator renders against the canonical `--ds-color-surface-inverse` token instead of a hardcoded color, closing [#284](https://github.com/yannbf/droppy-ds/issues/284).
 - **Built on `Heading` (level 2) and `Link` for each item.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
@@ -185,7 +202,6 @@ Merged onto the root alongside the component's own `droppy-FooterCard` class.
 
 - [#282](https://github.com/yannbf/droppy-ds/issues/282): `external` links set `target`/`rel` but give assistive tech no cue that a new tab opens. **Workaround:** use `render` to supply an anchor with visually-hidden "(opens in new tab)" text.
 - [#283](https://github.com/yannbf/droppy-ds/issues/283): list items are keyed by the visible `name` — two links sharing a label trigger React key collisions and can misreconcile on updates. **Workaround:** keep `name` values unique within a `links` array.
-- [#284](https://github.com/yannbf/droppy-ds/issues/284): the card is unconditionally `--ds-color-text-on-inverse` ink with no background of its own — on a light surface everything renders invisible, and the story demonstrates the dark surface with a hardcoded `#1a1a1a` rather than a token. **Workaround:** place it on a dark surface token (e.g. `--ds-color-surface-inverse`) at the call site.
 - [#285](https://github.com/yannbf/droppy-ds/issues/285): the title is `<Heading level={2}>` down-sized by an ancestor-qualified CSS override instead of Heading's own `size` prop — `size={4}` exists for exactly this, so the CSS specificity fight looks unnecessary; open question whether the override is deliberate.
 - [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
 - [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
