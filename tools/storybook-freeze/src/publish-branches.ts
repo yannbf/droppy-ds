@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 /**
  * Force-push the locally regenerated `experiment/*` branches to origin
- * (`pnpm experiment:publish-branches`). Each push triggers the Experiment preview workflow,
- * which builds that branch and publishes its @droppy/design-system package to pkg.pr.new.
+ * (`pnpm experiment:publish-branches`). Each push triggers the Storybook MCP preview workflow,
+ * which builds that branch's Storybook and publishes its manifests as a @droppy/mcp package
+ * to pkg.pr.new.
  *
  * Branches whose remote ref already points at the local commit are skipped, so re-running
  * after a partial failure only pushes what is actually missing.
@@ -226,8 +227,8 @@ async function main(): Promise<void> {
   }
 
   p.outro(
-    `Pushed ${pushed.length} branch(es). Each push triggers the "Experiment preview" workflow, ` +
-      "which publishes that branch's @droppy/design-system build to pkg.pr.new."
+    `Pushed ${pushed.length} branch(es). Each push triggers the "Storybook MCP preview" ` +
+      "workflow, which publishes that branch's manifests as a @droppy/mcp package to pkg.pr.new."
   )
 }
 
