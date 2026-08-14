@@ -1,3 +1,6 @@
+packages:
+  - 'apps/*'
+
 patchedDependencies:
   '@terrazzo/plugin-css': patches/@terrazzo__plugin-css.patch
   '@unpunnyfuns/swatchbook-addon': patches/@unpunnyfuns__swatchbook-addon.patch

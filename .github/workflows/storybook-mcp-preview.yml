@@ -1,0 +1,49 @@
+name: Storybook MCP preview
+
+# Publishes the @droppy/mcp server with freshly built manifests to pkg.pr.new, so
+# agentic reference experiments can install and serve the Droppy MCP locally — one
+# private server per run, instead of a shared hosted endpoint. Each experiment/*
+# branch carries its own facet selection, so its published package serves exactly the
+# documentation that branch keeps.
+#
+# Install URLs:
+#   https://pkg.pr.new/yannbf/droppy-ds/@droppy/mcp@<sha|branch>
+
+on:
+  push:
+    branches:
+      - 'experiment/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build the Storybook (generates the MCP manifests)
+        run: pnpm build-storybook
+      - name: Assemble the MCP package (manifests, provenance, version)
+        run: pnpm --filter @droppy/mcp prepare-publish
+      - name: Build the MCP server bundle
+        run: pnpm --filter @droppy/mcp build
+      - name: Publish to pkg.pr.new
+        run: pnpx pkg-pr-new publish ./apps/mcp-server --pnpm --packageManager=pnpm --comment=off --compact false
+      - name: Record install URLs
+        run: |
+          {
+            echo "### MCP preview package install URLs"
+            echo ""
+            echo '```'
+            echo "https://pkg.pr.new/${GITHUB_REPOSITORY}/@droppy/mcp@${GITHUB_SHA}"
+            echo "https://pkg.pr.new/${GITHUB_REPOSITORY}/@droppy/mcp@${GITHUB_REF_NAME}"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

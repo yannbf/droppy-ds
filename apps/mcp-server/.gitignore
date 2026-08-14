@@ -1,0 +1,4 @@
+# Written by scripts/prepare-publish.ts at publish time, never committed.
+manifests/
+services/
+provenance.json

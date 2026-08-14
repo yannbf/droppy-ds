@@ -11,8 +11,8 @@
  * stories, and `experiment/empty` is an empty Storybook by design.
  *
  * After regenerating, `pnpm experiment:publish-branches` force-pushes the branches to origin;
- * each push triggers the "Experiment preview" workflow, which publishes that branch's
- * @droppy/design-system build to pkg.pr.new.
+ * each push triggers the "Storybook MCP preview" workflow, which publishes that branch's
+ * Storybook manifests as a @droppy/mcp server on pkg.pr.new.
  */
 interface Experiment {
   branchName: string

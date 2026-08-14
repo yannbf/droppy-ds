@@ -1,0 +1,34 @@
+{
+  "name": "@droppy/mcp",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Droppy Storybook MCP server with the Storybook build's manifests baked in",
+  "type": "module",
+  "bin": {
+    "droppy-mcp": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "manifests",
+    "services",
+    "provenance.json"
+  ],
+  "scripts": {
+    "dev": "tsx watch src/cli.ts --manifests ../../build/storybook/manifests",
+    "build": "vite build",
+    "serve": "node dist/cli.js --manifests ../../build/storybook/manifests",
+    "prepare-publish": "tsx scripts/prepare-publish.ts",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:ci": "vitest run"
+  },
+  "devDependencies": {
+    "@storybook/mcp": "=0.8.0",
+    "simple-git": "^3.36.0",
+    "srvx": "^0.11.22",
+    "tsx": "^4.23.12",
+    "typescript": "^5.9.3",
+    "vite": "^8.2.1",
+    "vitest": "^4.1.10"
+  }
+}
