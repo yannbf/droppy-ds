@@ -16,12 +16,6 @@ const inBorderedBox: Decorator = (Story) => (
   </div>
 )
 
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
-
 const photo = 'https://placehold.co/320x180'
 const avatar = 'https://placehold.co/200x200'
 
@@ -57,8 +51,10 @@ const meta = {
     },
   },
   decorators: [
-    (Story) => (
-      <div style={{ width: '16rem' }}>
+    // Single-tile stories read best at a tile-ish width; compositions widen
+    // the frame per story through the `frameWidth` parameter.
+    (Story, { parameters }) => (
+      <div style={{ width: parameters.frameWidth ?? '16rem' }}>
         <Story />
       </div>
     ),
@@ -192,15 +188,41 @@ export const Anatomy: Story = {
 /* ------------------------------------------------------------------ */
 
 /**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop's `Category` component (`agentic-reference/droppy`): the
- * squared variant (`Image` + `FloatingTitle`) and the round variant (`RoundCard`
- * + `RoundImage` + `Title`) both collapse onto this one component.
+ * Mealdrop's restaurant-category row, rebuilt on ImageCard: the squared photo
+ * tiles carry their name as a floating chip over the image, and the round
+ * cuisine avatar is a circular image on a Card with the caption beneath. Both
+ * were hand-rolled `figure` compositions in the app; each is one prop
+ * combination here.
  */
 export const MealdropCategoryTile: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  parameters: { frameWidth: 'max-content' },
+  render: () => (
+    <div style={{ display: 'flex', gap: 'var(--ds-space-md)', alignItems: 'flex-start' }}>
+      <ImageCard
+        src="https://placehold.co/320x180"
+        alt=""
+        caption="Burgers"
+        captionOverlay
+        style={{ width: '20rem' }}
+      />
+      <ImageCard
+        src="https://placehold.co/320x180"
+        alt=""
+        caption="Pizza"
+        captionOverlay
+        style={{ width: '20rem' }}
+      />
+      <ImageCard
+        src="https://placehold.co/200x200"
+        alt=""
+        caption="Asian"
+        round
+        shell
+        style={{ width: '13rem' }}
+      />
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */
