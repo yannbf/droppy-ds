@@ -71,10 +71,6 @@ const experiments: Experiment[] = [
     facets: [],
   },
   {
-    branchName: 'experiment/base',
-    facets: BASE_FACETS,
-  },
-  {
     branchName: 'experiment/full',
     facets: [...new Set([...BASE_FACETS, ...ALL_MDX, ...ALL_GENERAL, ...ALL_STORIES])],
   },
@@ -108,20 +104,7 @@ const experiments: Experiment[] = [
   },
   {
     branchName: 'experiment/docs-full',
-    facets: [
-      ...BASE_FACETS,
-      'mdx.general',
-      'mdx.behavior',
-      'mdx.do-dont',
-      'mdx.when-to-use',
-      'mdx.history',
-      'mdx.known-issues',
-      'mdx.a11y',
-      'general.general-a11y',
-      'general.general-tokens',
-      'general.general-do-dont',
-      'general.general-when-to-use',
-    ],
+    facets: [...ALL_MDX, ...ALL_GENERAL],
   },
   {
     branchName: 'experiment/stories-api-ref',
@@ -141,7 +124,7 @@ const experiments: Experiment[] = [
   },
   {
     branchName: 'experiment/stories-full',
-    facets: [...BASE_FACETS, ...ALL_STORIES],
+    facets: [...ALL_STORIES],
   },
   {
     // Everything except the JSDoc in the component sources, to isolate what that JSDoc is worth.
