@@ -77,7 +77,7 @@ describe('the repo experiments.config.ts', () => {
     const root = path.resolve(fileURLToPath(import.meta.url), '../../../..')
     const labelsFromDisk = loadLabels(path.join(root, 'classification-labels.jsonc'))
     const validated = validateExperiments(await loadExperiments(root), labelsFromDisk)
-    expect(validated).toHaveLength(17)
+    expect(validated).toHaveLength(16)
     expect(validated.map((entry) => entry.branchName)).toContain('experiment/full')
   })
 })

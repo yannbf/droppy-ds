@@ -195,8 +195,11 @@ export const MealdropHeaderTips: Story = {
       </div>
     </TooltipProvider>
   ),
-  play: async ({ canvas, canvasElement }) => {
-    await userEvent.hover(canvas.getByRole('button', { name: 'Your order' }))
+  play: async ({ canvasElement }) => {
+    // Focus rather than hover: a hovered tip waits out the provider's opening
+    // delay, which a synthetic pointer event does not reliably clear on CI,
+    // while focus opens it immediately. Tab lands on the first trigger.
+    await userEvent.tab()
 
     // Matched by class rather than by text and tag: the trigger's accessible
     // name repeats the tip's text, and the popup's markup is Base UI's to
