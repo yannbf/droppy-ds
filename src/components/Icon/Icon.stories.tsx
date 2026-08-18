@@ -3,6 +3,7 @@ import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
 import { Body } from '../Body'
+import { Button } from '../Button'
 import { Heading } from '../Heading'
 
 import type { IconProps } from './Icon'
@@ -157,52 +158,67 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** Mealdrop's header bar, where the icons sit inside the app's own controls. */
+const toCurrency = (amount: number) =>
+  amount.toLocaleString(undefined, { style: 'currency', currency: 'EUR' })
+
+/** Mealdrop's header, where every icon reaches the page through a control's
+ *  `icon` prop rather than a bare `Icon`. */
 export const MealdropHeader: Story = {
   tags: ['examples'],
   argTypes: hide('name', 'color', 'size'),
-  render: () => {
-    const control: React.CSSProperties = {
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '0.5rem',
-      padding: '0.5rem 0.75rem',
-      background: 'transparent',
-      border: '1px solid var(--ds-color-border-subtle)',
-      borderRadius: '8px',
-      cursor: 'pointer',
-      color: 'inherit',
-    }
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <>
+      {/* Mealdrop's Header is styled-components with a `breakpoints.M` query;
+          the same rules are inlined so the story is a port, not a lookalike. */}
+      <style>{`
+        .mealdrop-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          height: 56px;
+          padding: 0 1.5rem;
+          border-bottom: 1px solid var(--ds-color-border-subtle);
+          background: var(--ds-color-surface-page);
+        }
+        .mealdrop-header-options {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 0.5rem;
+        }
+        .mealdrop-header-nav { display: none; }
+        @media (min-width: 768px) {
+          .mealdrop-header { height: 72px; }
+          .mealdrop-header-nav { display: contents; }
+        }
+      `}</style>
 
-    return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1.5rem',
-          padding: '1rem 1.5rem',
-          borderBottom: '1px solid var(--ds-color-border-subtle)',
-        }}
-      >
+      <header className="mealdrop-header">
         <Heading level={2} size={4}>
           Mealdrop
         </Heading>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <button type="button" style={control} aria-label="Turn on dark mode">
-            <Icon name="moon" />
-          </button>
-          <button type="button" style={control} aria-label="Your order, 2 items">
-            <Icon name="cart" />
-            <Body size="S" fontWeight="bold">
-              2
+        <div className="mealdrop-header-options">
+          <span className="mealdrop-header-nav">
+            <Button round clear icon="sun" aria-label="turn on dark mode" />
+            <Button clear>Home</Button>
+            <Button clear>All restaurants</Button>
+          </span>
+          <Button icon="cart" aria-label="food cart">
+            {/* Mealdrop colours these spans from the button's own text token;
+                `inherit` is the same thing without naming a second token. */}
+            <Body type="span" color="inherit">
+              Order
             </Body>
-          </button>
+            <Body type="span" color="inherit" fontWeight="bold">
+              {toCurrency(24.75)}
+            </Body>
+          </Button>
         </div>
-      </div>
-    )
-  },
+      </header>
+    </>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

@@ -198,8 +198,15 @@ export const MealdropHeaderTips: Story = {
   play: async ({ canvas, canvasElement }) => {
     await userEvent.hover(canvas.getByRole('button', { name: 'Your order' }))
 
-    const doc = within(canvasElement.ownerDocument.body)
-    await waitFor(() => expect(doc.getByText('Your order', { selector: 'div' })).toBeVisible())
+    // Matched by class rather than by text and tag: the trigger's accessible
+    // name repeats the tip's text, and the popup's markup is Base UI's to
+    // change.
+    await waitFor(() => {
+      const popup = canvasElement.ownerDocument.querySelector('.droppy-Tooltip')
+
+      expect(popup).not.toBeNull()
+      expect(popup).toHaveTextContent('Your order')
+    })
   },
 }
 
