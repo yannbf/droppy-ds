@@ -2,18 +2,17 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Badge } from '../Badge'
+import { Body } from '../Body'
+import { Card } from '../Card'
+import { Heading } from '../Heading'
+
 import type { ReviewProps } from './Review'
 import { Review } from './Review'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ReviewProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -153,20 +152,37 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): `Review.tsx` wraps it for
- * the restaurant tiles, passing its own colour. The story to write: the
- * restaurant card row it lives in — 'Burger Kingdom' with `rating={4.2}`
- * beside its categories — next to a newly-listed restaurant with no rating at
- * all, since the empty state is the case the tile has to survive. The colour
- * override belongs in that story too: Mealdrop's tiles set their own, which is
- * exactly what `color` exists for.
- */
+/** Rated and unrated restaurant tiles. */
 export const MealdropRestaurantScores: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('rating', 'color', 'className'),
+  render: () => (
+    <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+      <Card padded style={{ width: '16rem' }}>
+        <Heading level={2} size={4}>
+          Burger Kingdom
+        </Heading>
+        <Review rating={4.2} />
+        <Body size="S">Nicest place for burgers</Body>
+        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
+          <Badge text="burgers" />
+          <Badge text="comfort food" />
+        </div>
+      </Card>
+
+      <Card padded style={{ width: '16rem' }}>
+        <Heading level={2} size={4}>
+          &apos;t Kuyltje
+        </Heading>
+        <Review color="var(--ds-color-text-primary)" />
+        <Body size="S">Pastrami sandwiches</Body>
+        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
+          <Badge text="new" variant="positive" />
+          <Badge text="comfort food" />
+        </div>
+      </Card>
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

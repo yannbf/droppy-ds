@@ -2,7 +2,12 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, waitFor } from 'storybook/test'
 
+import { Badge } from '../Badge'
+import { Body } from '../Body'
 import { Card } from '../Card'
+import { Heading } from '../Heading'
+import { PageSection } from '../PageSection'
+import { Review } from '../Review'
 
 import type { CarouselProps } from './Carousel'
 import { Carousel } from './Carousel'
@@ -16,12 +21,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const Tile = ({ label }: { label: string }) => (
@@ -180,20 +179,78 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): the app has its own
- * `Carousel.tsx` that imports Droppy's `IconButton` for the arrows — this
- * component is what that becomes. The story to write: the home page's
- * 'Restaurants near you' rail — `RestaurantCard`s inside a `PageSection` with
- * a 'View all' action — since that is the composition the fractional
- * `itemsPerView` exists for, showing a sliver of the next card so the row
- * reads as scrollable on a phone.
- */
+const nearbyRestaurants = [
+  {
+    name: 'Burger Kingdom',
+    specialty: 'Nicest place for burgers',
+    rating: 4.2 as number | undefined,
+    categories: ['burgers'],
+    photoUrl:
+      'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1003&q=20',
+  },
+  {
+    name: 'Kara Fin',
+    specialty: 'Sarma (wine leafs with rice)',
+    rating: undefined as number | undefined,
+    categories: ['pizza'],
+    photoUrl:
+      'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+  },
+  {
+    name: 'Ciao Bella',
+    specialty: 'Takeaway lasagna',
+    rating: 4.7 as number | undefined,
+    categories: ['pizza'],
+    photoUrl:
+      'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+  },
+  {
+    name: 'Warung Atika',
+    specialty: '€6 meals',
+    rating: 4.4 as number | undefined,
+    categories: ['asian'],
+    photoUrl: 'https://duyt4h9nfnj50.cloudfront.net/search_home/FastFood.jpg',
+  },
+  {
+    name: "Yuan's Hot Pot",
+    specialty: 'Cheap and fun evening meals',
+    rating: 3.9 as number | undefined,
+    categories: ['thai'],
+    photoUrl: 'https://duyt4h9nfnj50.cloudfront.net/search_home/FastFood.jpg',
+  },
+]
+
+/** The 'Restaurants near you' rail. */
 export const MealdropRestaurantRail: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('children', 'itemsPerView', 'slidesToScroll', 'className'),
+  render: () => (
+    <PageSection title="Restaurants near you" topButtonLabel="View all" onTopButtonClick={() => {}}>
+      <Carousel itemsPerView={{ mobile: 1.2, tablet: 2, desktop: 3 }}>
+        {nearbyRestaurants.map((restaurant) => (
+          <Card key={restaurant.name} interactive>
+            <img
+              src={restaurant.photoUrl}
+              alt=""
+              style={{ display: 'block', height: 140, width: '100%', objectFit: 'cover' }}
+            />
+            <div style={{ display: 'grid', gap: '0.5rem', padding: '1rem' }}>
+              <Heading level={3} size={4}>
+                {restaurant.name}
+              </Heading>
+              <Review rating={restaurant.rating} />
+              <Body size="S">{restaurant.specialty}</Body>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                {restaurant.categories.map((category) => (
+                  <Badge key={category} text={category} />
+                ))}
+              </div>
+            </div>
+          </Card>
+        ))}
+      </Carousel>
+    </PageSection>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

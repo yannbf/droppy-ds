@@ -3,18 +3,16 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Card } from '../Card'
+import { Heading } from '../Heading'
+
 import type { LinkProps } from './Link'
 import { Link } from './Link'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof LinkProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -171,19 +169,31 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the app
- * routes with `react-router`'s `Link` directly, and `FooterCard` owns its own
- * link list. That absence is the story: an order-confirmation paragraph with
- * an inline `Link` for 'Track it', shown twice — once as a plain `href`, once
- * with `render={<RouterLink to="…" />}` — so the escape hatch that keeps the
- * design system router-free is the thing on display.
- */
+/** An order-confirmation paragraph with an inline link. */
 export const MealdropOrderConfirmationLink: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('href', 'render', 'children', 'className'),
+  render: () => (
+    <Card padded style={{ maxWidth: '28rem' }}>
+      <Heading level={3} size={4}>
+        Thanks, your order is on its way
+      </Heading>
+
+      <div style={{ display: 'grid', gap: '1rem', marginTop: '1rem' }}>
+        <Body size="S">
+          Burger Kingdom is preparing order DB-2291.{' '}
+          <Link href="https://example.com/orders/DB-2291">Track it</Link> on the courier&apos;s
+          site.
+        </Body>
+
+        <Body size="S">
+          Or follow it in the app —{' '}
+          <Link render={<RouterLink to="/orders/DB-2291" />}>track it here</Link> without leaving
+          Mealdrop.
+        </Body>
+      </div>
+    </Card>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

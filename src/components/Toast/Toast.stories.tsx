@@ -1,8 +1,11 @@
+import { useEffect, useRef } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import { Button } from '../Button'
+
+import { inPortalHost } from '../../../.storybook/preview'
 
 import type { ToastProviderProps } from './Toast'
 import { ToastProvider, useToast } from './Toast'
@@ -18,11 +21,25 @@ const inBorderedBox: Decorator = (Story) => (
   </div>
 )
 
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
+/** Raises one toast as soon as it mounts, for stories that should show the
+ *  notification rather than the control that produces it. */
+
+const RaiseOnMount = () => {
+  const toast = useToast()
+  // `useToast()` returns a fresh object each render, so the raise is guarded
+  // rather than keyed on it — otherwise the effect re-fires forever.
+  const raised = useRef(false)
+
+  useEffect(() => {
+    if (raised.current) {
+      return
+    }
+    raised.current = true
+    toast.add({ title: 'Draft saved', description: 'Your changes are stored automatically.' })
+  }, [toast])
+
+  return null
+}
 
 const CreateToastButton = ({ label = 'Save draft' }: { label?: string }) => {
   const toast = useToast()
@@ -61,13 +78,7 @@ const meta = {
       description: 'Merged onto the viewport alongside the component’s own `droppy-Toast` class.',
     },
   },
-  decorators: [
-    (Story) => (
-      <div style={{ padding: '2rem' }}>
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [inPortalHost],
 } satisfies Meta<typeof ToastProvider>
 
 export default meta
@@ -197,16 +208,14 @@ export const EnterExitTransition: Story = {
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('children', 'timeout', 'limit', 'container', 'className'),
-  args: { container: '#toast-anatomy-host', timeout: 0 },
+  args: { timeout: 0 },
   render: (args) => (
-    <>
-      <div id="toast-anatomy-host" />
-      <ToastProvider {...args} />
-    </>
+    // Raised on mount rather than by a click, so the canvas holds the toast
+    // itself and the panel has no trigger button to scan.
+    <ToastProvider {...args}>
+      <RaiseOnMount />
+    </ToastProvider>
   ),
-  play: async ({ canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Save draft' }))
-  },
   parameters: {
     anatomy: {
       parts: [
@@ -237,19 +246,57 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the app
- * gives no feedback when an item is added to the cart, which is the gap this
- * fills. The story to write: 'Added to your order — Cheeseburger ×2' raised
- * from an 'Add to cart' click, alongside a DropBoard case using
- * `useToast().promise` so a menu save reports loading, then success or
- * failure, from one call.
- */
+const AddToCartButton = () => {
+  const toast = useToast()
+
+  return (
+    <Button
+      icon="cart"
+      onClick={() =>
+        toast.add({ title: 'Added to your order', description: 'Cheeseburger ×2 — €17.00' })
+      }
+    >
+      Add to cart
+    </Button>
+  )
+}
+
+const SaveMenuButton = () => {
+  const toast = useToast()
+
+  return (
+    <Button
+      clear
+      onClick={() =>
+        toast.promise(new Promise((resolve) => setTimeout(resolve, 1500)), {
+          loading: { title: 'Saving menu…' },
+          success: { title: 'Menu saved', description: 'Diners see the new prices now.' },
+          error: { title: "Couldn't save the menu", description: 'Check your connection.' },
+        })
+      }
+    >
+      Save menu
+    </Button>
+  )
+}
+
+/** Adding to a cart, and saving a menu. */
 export const MealdropAddedToCart: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('children', 'container', 'timeout', 'limit', 'className'),
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole('button', { name: 'Add to cart' }))
+
+    await waitFor(() => expect(canvas.getByText('Added to your order')).toBeVisible())
+  },
+  render: (args) => (
+    <ToastProvider container={args.container}>
+      <div style={{ display: 'flex', gap: '1rem', padding: '1rem' }}>
+        <AddToCartButton />
+        <SaveMenuButton />
+      </div>
+    </ToastProvider>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

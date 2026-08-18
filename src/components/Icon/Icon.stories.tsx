@@ -2,6 +2,9 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Heading } from '../Heading'
+
 import type { IconProps } from './Icon'
 import { Icon } from './Icon'
 import { iconNames } from './icons'
@@ -9,12 +12,6 @@ import { iconNames } from './icons'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof IconProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -160,20 +157,52 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the app
- * reaches for `Button`'s and `IconButton`'s `icon` props rather than rendering
- * `Icon` itself, which is the honest recommendation. The story to write should
- * make that point rather than hide it: the header's cart affordance built
- * three ways — `Button icon="cart"`, `IconButton name="cart"`, and a bare
- * `Icon` inside a caller-owned control — showing that reaching for `Icon`
- * directly means owning the accessible name yourself.
- */
-export const MealdropCartAffordances: Story = {
+/** Mealdrop's header bar, where the icons sit inside the app's own controls. */
+export const MealdropHeader: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('name', 'color', 'size'),
+  render: () => {
+    const control: React.CSSProperties = {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      padding: '0.5rem 0.75rem',
+      background: 'transparent',
+      border: '1px solid var(--ds-color-border-subtle)',
+      borderRadius: '8px',
+      cursor: 'pointer',
+      color: 'inherit',
+    }
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '1.5rem',
+          padding: '1rem 1.5rem',
+          borderBottom: '1px solid var(--ds-color-border-subtle)',
+        }}
+      >
+        <Heading level={2} size={4}>
+          Mealdrop
+        </Heading>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <button type="button" style={control} aria-label="Turn on dark mode">
+            <Icon name="moon" />
+          </button>
+          <button type="button" style={control} aria-label="Your order, 2 items">
+            <Icon name="cart" />
+            <Body size="S" fontWeight="bold">
+              2
+            </Body>
+          </button>
+        </div>
+      </div>
+    )
+  },
 }
 
 /* ------------------------------------------------------------------ */

@@ -2,18 +2,17 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Card } from '../Card'
+import { Heading } from '../Heading'
+import { Review } from '../Review'
+
 import type { BadgeProps } from './Badge'
 import { Badge } from './Badge'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof BadgeProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -134,21 +133,63 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): `Badge` appears in
- * `RestaurantCard.tsx`, its unstyled twin, and `RestaurantDetailPage.tsx`.
- * The story to write: a restaurant tile's category row — one neutral badge per
- * `restaurant.categories` entry ('burgers', 'comfort food') sitting under the
- * name, plus the `positive` variant standing in for the old hand-rolled
- * `NewTag` when `restaurant.isNew` is set. Mealdrop absolutely-positioned that
- * tag over the card photo; the variant carries only the colours and weight, so
- * placement stays a call-site concern.
- */
+// Mealdrop's own listings (`src/stub/restaurants.ts`) — one rated, one newly listed.
+const listings = [
+  {
+    name: 'Burger Kingdom',
+    specialty: 'Nicest place for burgers',
+    rating: 4.2 as number | undefined,
+    categories: ['burgers', 'comfort food'],
+    isNew: false,
+    photoUrl:
+      'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1003&q=20',
+  },
+  {
+    name: "'t Kuyltje",
+    specialty: 'Pastrami sandwiches',
+    rating: undefined as number | undefined,
+    categories: ['comfort food'],
+    isNew: true,
+    photoUrl: 'https://duyt4h9nfnj50.cloudfront.net/search_home/FastFood.jpg',
+  },
+]
+
+/** Category tags and a new flag on a restaurant tile. */
 export const MealdropRestaurantTags: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('text', 'variant', 'className'),
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem' }}>
+      {listings.map((listing) => (
+        <Card key={listing.name} interactive style={{ width: '18rem' }}>
+          <div style={{ position: 'relative', display: 'flex' }}>
+            {listing.isNew && (
+              <span style={{ position: 'absolute', top: '0.5rem', left: '0.5rem', zIndex: 1 }}>
+                <Badge text="new" variant="positive" />
+              </span>
+            )}
+            <img
+              src={listing.photoUrl}
+              alt=""
+              style={{ height: 160, width: '100%', objectFit: 'cover' }}
+            />
+          </div>
+          <div style={{ display: 'grid', gap: '0.5rem', padding: '1.5rem' }}>
+            <Heading level={2} size={4}>
+              {listing.name}
+            </Heading>
+            <Review rating={listing.rating} />
+            <Body size="S">{listing.specialty}</Body>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+              {listing.categories.map((category) => (
+                <Badge key={category} text={category} />
+              ))}
+            </div>
+          </div>
+        </Card>
+      ))}
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

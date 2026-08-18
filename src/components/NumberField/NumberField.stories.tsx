@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
+
+import { Heading } from '../Heading'
 
 import type { NumberFieldProps } from './NumberField'
 import { NumberField } from './NumberField'
@@ -14,12 +17,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const meta = {
@@ -191,20 +188,39 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the app
- * only ever needs bounded tap-tap quantities, which is `QuantityStepper`'s
- * job. The story to write is a DropBoard one: the menu item's price editor —
- * a `format`-ed euro field with `step={0.25}` beside a prep-time field in
- * minutes — since a partner types an exact price rather than clicking up to
- * it, and the scrub handle makes small adjustments quick. Worth showing beside
- * a `QuantityStepper` to make the choice between them concrete.
- */
+function PriceEditor() {
+  const [price, setPrice] = useState(8.5)
+  const [prepTime, setPrepTime] = useState(12)
+
+  return (
+    <div style={{ display: 'grid', gap: '1rem', maxWidth: '24rem' }}>
+      <Heading level={3} size={4}>
+        Cheeseburger
+      </Heading>
+      <NumberField
+        label="Price"
+        value={price}
+        onValueChange={(next) => setPrice(next ?? 0)}
+        min={0}
+        step={0.25}
+        format={{ style: 'currency', currency: 'EUR' }}
+      />
+      <NumberField
+        label="Prep time (minutes)"
+        value={prepTime}
+        onValueChange={(next) => setPrepTime(next ?? 0)}
+        min={1}
+        max={90}
+        step={1}
+      />
+    </div>
+  )
+}
+
+/** DropBoard's menu-item price and prep-time fields. */
 export const DropBoardPriceEditor: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  render: () => <PriceEditor />,
 }
 
 /* ------------------------------------------------------------------ */

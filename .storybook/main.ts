@@ -36,6 +36,7 @@ const config: StorybookConfig = {
   features: {
     experimentalReview: true,
     experimentalReactComponentMeta: true,
+    changeDetection: true,
   },
   tags: {
     anatomy: { excludeFromSidebar: true },

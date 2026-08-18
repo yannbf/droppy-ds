@@ -2,6 +2,8 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, userEvent } from 'storybook/test'
 
+import { Heading } from '../Heading'
+
 import type { InputProps } from './Input'
 import { Input } from './Input'
 
@@ -14,12 +16,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const meta = {
@@ -180,22 +176,31 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): `src/components/forms/Input.tsx`
- * wraps it for the checkout's `ContactDetails` and `DeliveryDetails` forms.
- * The story to write: that checkout form — name, email, phone, then address,
- * postcode and city — with two fields showing errors and the rest clean, since
- * the reserved slot only proves itself when some fields are invalid and their
- * neighbours don't move. Mealdrop set an `aria-label` on top of the visible
- * label, which made the announced name disagree with the visible one; the
- * component drops it and lets `Field` do the association
- * (docs/MEALDROP-PARITY.md).
- */
+/** Mealdrop's checkout form, with two fields in error. */
 export const MealdropCheckoutForm: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('label', 'error'),
+  render: () => (
+    <form style={{ display: 'grid', gap: '1.5rem', maxWidth: '30rem' }}>
+      <section style={{ display: 'grid', gap: '0.5rem' }}>
+        <Heading level={3} size={4}>
+          Contact details
+        </Heading>
+        <Input label="Name" defaultValue="Ada Lovelace" />
+        <Input label="Email" defaultValue="ada@example" error="Enter a valid email address." />
+        <Input label="Phone" defaultValue="06 12345678" />
+      </section>
+
+      <section style={{ display: 'grid', gap: '0.5rem' }}>
+        <Heading level={3} size={4}>
+          Delivery details
+        </Heading>
+        <Input label="Address" defaultValue="Staalstraat 12" />
+        <Input label="Postcode" defaultValue="1011" error="A Dutch postcode looks like 1011 JL." />
+        <Input label="City" defaultValue="Amsterdam" />
+      </section>
+    </form>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

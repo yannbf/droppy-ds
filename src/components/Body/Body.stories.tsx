@@ -2,18 +2,15 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Badge } from '../Badge'
+import { Heading } from '../Heading'
+
 import type { BodyProps } from './Body'
 import { Body } from './Body'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof BodyProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -220,20 +217,26 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): `Body` is the most-used
- * Droppy component there, imported by 16 files — `Category`, `FooterCard`,
- * `Header`, `RestaurantCard`, `Review`, `OrderSummary`, the checkout forms.
- * The story to write: a restaurant tile's text column, which is where the
- * sizes actually earn their keep — `size="S"` for the specialty line
- * ('Nicest place for burgers'), `XS` for the category list, and `XXS` for the
- * delivery-time footnote, showing the scale doing hierarchy without headings.
- */
+/** The text column of a restaurant tile. */
 export const MealdropRestaurantCardText: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('children', 'size', 'fontWeight', 'type', 'color', 'className'),
+  render: () => (
+    <div style={{ display: 'grid', gap: '0.5rem', maxWidth: '18rem' }}>
+      <Heading level={2} size={4}>
+        Burger Kingdom
+      </Heading>
+      <Body size="S">Nicest place for burgers</Body>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        <Body size="XS" fontWeight="medium">
+          Serves
+        </Body>
+        <Badge text="burgers" />
+        <Badge text="comfort food" />
+      </div>
+      <Body size="XXS">Delivers in 25–35 min · €2.50 delivery · Staalstraat 12, Amsterdam</Body>
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

@@ -2,18 +2,15 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Card } from '../Card'
+
 import type { HeadingProps } from './Heading'
 import { Heading } from './Heading'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof HeadingProps | 'children'>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -164,21 +161,33 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): 15 files import `Heading`
- * — `Logo`, `RestaurantCard`, `OrderSummary`, `CategoryListPage`,
- * `FooterCard`. The story to write: the restaurant detail page's heading
- * ladder — the `h1` restaurant name, `h2` menu-section titles ('Food',
- * 'Dessert', 'Drinks'), and `h3` dish names inside the cards. That is exactly
- * the case `size` was added for: Mealdrop wrapped `Heading` in `styled()` at
- * four call sites to shrink a correctly-levelled heading (docs/MEALDROP-PARITY.md),
- * so the example should show the card title as `level={3} size={4}` instead.
- */
+/** The heading ladder on a restaurant detail page. */
 export const MealdropHeadingLadder: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('children', 'level', 'size', 'className'),
+  render: () => (
+    <div style={{ display: 'grid', gap: '2rem', maxWidth: '36rem' }}>
+      <Heading level={1}>Burger Kingdom</Heading>
+
+      {[
+        { section: 'Food', dishes: ['Cheeseburger', 'Fries'] },
+        { section: 'Dessert', dishes: ['Vanilla ice cream'] },
+        { section: 'Drinks', dishes: ['Coca-Cola', 'Sprite'] },
+      ].map(({ section, dishes }) => (
+        <section key={section} style={{ display: 'grid', gap: '0.75rem' }}>
+          <Heading level={2}>{section}</Heading>
+          {dishes.map((dish) => (
+            <Card key={dish} padded>
+              <Heading level={3} size={4}>
+                {dish}
+              </Heading>
+              <Body size="S">Nice grilled burger with cheese</Body>
+            </Card>
+          ))}
+        </section>
+      ))}
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

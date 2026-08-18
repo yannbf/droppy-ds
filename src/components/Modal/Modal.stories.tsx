@@ -6,6 +6,11 @@ import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
 import { Button } from '../Button'
 import { Heading } from '../Heading'
 
+import { Body } from '../Body'
+import { QuantityStepper } from '../QuantityStepper'
+
+import { inPortalHost } from '../../../.storybook/preview'
+
 import type { ModalProps } from './Modal'
 import { Modal } from './Modal'
 
@@ -18,12 +23,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const ModalDemo = ({
@@ -77,6 +76,7 @@ const meta = {
     },
   },
   render: (args) => <ModalDemo {...args} />,
+  decorators: [inPortalHost],
   parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof Modal>
 
@@ -222,12 +222,13 @@ export const OpenCloseTransition: Story = {
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('isOpen', 'children', 'container', 'className'),
-  args: { isOpen: true, container: '#modal-anatomy-host' },
+  args: { isOpen: true, 'aria-label': 'Remove from cart' },
   render: (args) => (
-    <>
-      <div id="modal-anatomy-host" />
-      <ModalDemo {...args} />
-    </>
+    // Rendered open and with no trigger, so the panel scans the dialog's own
+    // parts rather than the button that would have opened it.
+    <Modal {...args} onClose={() => {}}>
+      {body}
+    </Modal>
   ),
   parameters: {
     anatomy: {
@@ -249,21 +250,95 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): one import, in
- * `FoodItemModal.tsx` on the restaurant detail page. The story to write: that
- * modal — a dish photo, 'Cheeseburger €8.50' and its description, a servings
- * `Select`, and an 'Add to cart' Button whose label carries the running total
- * — since it is a real blocking decision rather than a confirm prompt.
- * Mealdrop portalled into a `#modal` node in its own `index.html`; the
- * `container` prop is what replaced that assumption
- * (docs/MEALDROP-PARITY.md), so the story should pass it explicitly.
- */
+/** Mealdrop formats with the runtime locale rather than a fixed one. */
+const toCurrency = (amount: number) =>
+  amount.toLocaleString(undefined, { style: 'currency', currency: 'EUR' })
+
+const dish = { name: 'Cheeseburger', description: 'Nice grilled burger with cheese', price: 8.5 }
+
+function FoodItemModal({ container }: Pick<ModalProps, 'container'>) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [quantity, setQuantity] = useState(1)
+
+  return (
+    <div>
+      {/* Mealdrop lays the modal out with styled-components and a `breakpoints.M`
+          media query; the same rules are inlined here so the story is a port
+          rather than an approximation. */}
+      <style>{`
+        .mealdrop-modal-top {
+          padding: 2.5rem 1.5rem;
+          background: var(--ds-color-surface-sunken);
+          border-radius: 16px 16px 0px 0px;
+        }
+        .mealdrop-modal-body { margin: 0; margin-top: 8px; }
+        .mealdrop-modal-bottom {
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+        }
+        .mealdrop-modal-steppers {
+          display: flex;
+          align-items: center;
+          justify-content: space-around;
+          flex: 0.45;
+          margin-bottom: 1.5rem;
+          margin-right: 0;
+        }
+        .mealdrop-modal-confirm { flex: 1; }
+        @media (min-width: 768px) {
+          .mealdrop-modal-bottom { flex-direction: row; }
+          .mealdrop-modal-steppers {
+            margin-bottom: 0;
+            margin-right: 1.5rem;
+            justify-content: space-between;
+          }
+        }
+      `}</style>
+
+      <div style={{ padding: '1rem' }}>
+        <Button onClick={() => setIsOpen(true)}>{dish.name}</Button>
+      </div>
+
+      <Modal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        container={container}
+        aria-label={dish.name}
+      >
+        <div>
+          <div className="mealdrop-modal-top">
+            <Heading>{dish.name}</Heading>
+            <Body className="mealdrop-modal-body">{dish.description}</Body>
+          </div>
+          <div className="mealdrop-modal-bottom">
+            <div className="mealdrop-modal-steppers">
+              <QuantityStepper value={quantity} onChange={setQuantity} min={1} max={10} />
+            </div>
+            <Button
+              className="mealdrop-modal-confirm"
+              aria-label="confirm"
+              onClick={() => setIsOpen(false)}
+            >
+              add for {toCurrency(dish.price * quantity)}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  )
+}
+
+/** Mealdrop's food-item modal, opened from a dish on the menu. */
 export const MealdropFoodItemModal: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('isOpen', 'onClose', 'container', 'aria-label', 'children', 'className'),
+  render: (args) => <FoodItemModal container={args.container} />,
+  play: async ({ canvas }) => {
+    await userEvent.click(canvas.getByRole('button', { name: dish.name }))
+
+    await waitFor(() => expect(canvas.getByRole('dialog')).toBeVisible())
+  },
 }
 
 /* ------------------------------------------------------------------ */

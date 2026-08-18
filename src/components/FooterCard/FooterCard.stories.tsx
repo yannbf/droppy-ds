@@ -10,12 +10,6 @@ import { FooterCard } from './FooterCard'
 const hide = (...props: Array<keyof FooterCardProps | 'children'>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
 
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
-
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
@@ -202,21 +196,38 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import of this
- * component — the app has its own `FooterCard` that composes `Body` and
- * `Heading` by hand, which is what this replaces. The story to write: that
- * footer row rebuilt — 'Discover us' (Home, Categories, About), 'Our social
- * media' (Facebook, Instagram, Twitter, all `external`), and a 'Check our
- * apps' column using `children` for the store badges rather than a link list —
- * three columns on the dark footer surface, showing all three shapes the
- * component has to cover.
- */
+/** Mealdrop's footer link columns. */
 export const MealdropFooterRow: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('title', 'links', 'children', 'className'),
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
+      <FooterCard
+        title="Discover us"
+        links={[
+          { name: 'Home', href: '/' },
+          { name: 'Categories', href: '/categories' },
+          { name: 'About', href: '/about' },
+        ]}
+      />
+
+      <FooterCard
+        title="Our social media"
+        links={[
+          { name: 'Facebook', href: 'https://facebook.com', external: true },
+          { name: 'Instagram', href: 'https://instagram.com', external: true },
+          { name: 'Twitter', href: 'https://twitter.com', external: true },
+        ]}
+      />
+
+      <FooterCard title="Check our apps">
+        <div style={{ display: 'grid', gap: '0.5rem' }}>
+          <img src="https://placehold.co/120x40?text=App+Store" alt="Download on the App Store" />
+          <img src="https://placehold.co/120x40?text=Google+Play" alt="Get it on Google Play" />
+        </div>
+      </FooterCard>
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

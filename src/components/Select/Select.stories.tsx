@@ -1,6 +1,11 @@
+import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent } from 'storybook/test'
+
+import { Body } from '../Body'
+import { Button } from '../Button'
+import { Heading } from '../Heading'
 
 import type { SelectProps } from './Select'
 import { Select } from './Select'
@@ -14,12 +19,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const meta = {
@@ -174,21 +173,65 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): one import, in the food
- * item modal, where it picks how many servings to add to the cart. The story
- * to write: that modal row — 'Cheeseburger €8.50' with a servings `Select`
- * and an 'Add to cart' Button, the line total following the selection —
- * because it needs the numeric coercion to work without a parse at the call
- * site. Worth pairing with a text-valued 'delivery window' select, since
- * Mealdrop ran every value through `Number()` and turned those into `NaN`
- * (docs/MEALDROP-PARITY.md).
- */
-export const MealdropServingsPicker: Story = {
+const euros = (amount: number) =>
+  amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
+
+const BASE_PRICE = 8.5
+
+/** Mealdrop lets a diner add at most two extras to a customisable dish. */
+const EXTRAS: Record<string, number> = {
+  'No extra': 0,
+  'Onions +€0.50': 0.5,
+  'Jalapeños +€0.75': 0.75,
+  'Extra cheese +€1.00': 1,
+  'Mature cheddar +€1.25': 1.25,
+  'Bacon +€1.50': 1.5,
+  'Beef patty +€3.00': 3,
+}
+
+const EXTRA_OPTIONS = Object.keys(EXTRAS)
+
+function BurgerCustomiser() {
+  const [first, setFirst] = useState('Bacon +€1.50')
+  const [second, setSecond] = useState('Extra cheese +€1.00')
+
+  const total = BASE_PRICE + (EXTRAS[first] ?? 0) + (EXTRAS[second] ?? 0)
+
+  return (
+    <div style={{ display: 'grid', gap: '1.25rem', maxWidth: '22rem' }}>
+      <div style={{ display: 'grid', gap: '0.25rem' }}>
+        <Heading level={3} size={4}>
+          Cheeseburger
+        </Heading>
+        <Body size="S">Nice grilled burger with cheese · {euros(BASE_PRICE)}</Body>
+      </div>
+
+      <Select
+        label="first extra"
+        options={EXTRA_OPTIONS}
+        value={first}
+        onChange={(next) => setFirst(next as string)}
+      />
+
+      <Select
+        label="second extra"
+        options={EXTRA_OPTIONS}
+        value={second}
+        onChange={(next) => setSecond(next as string)}
+      />
+
+      <Button large icon="cart">
+        Add to cart · {euros(total)}
+      </Button>
+    </div>
+  )
+}
+
+/** Choosing up to two extras for a customisable burger. */
+export const MealdropBurgerExtras: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('label', 'options', 'value', 'onChange', 'disabled', 'className'),
+  render: () => <BurgerCustomiser />,
 }
 
 /* ------------------------------------------------------------------ */

@@ -9,12 +9,6 @@ import { Container } from './Container'
 const hide = (...props: Array<keyof ContainerProps | 'children'>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
 
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
-
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
@@ -124,27 +118,6 @@ export const Anatomy: Story = {
       ],
     } satisfies AnatomyParameters,
   },
-}
-
-/* ------------------------------------------------------------------ */
-/* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the app
- * still styles page width with its global `.container` / `.container-desktop`
- * classes, which this component was built to replace (see
- * docs/MEALDROP-PARITY.md). The story to write is therefore a DropBoard one:
- * a back-office page shell — wordmark header, a bounded content column of
- * order rows, and a full-bleed tinted band breaking out of the bound — showing
- * what the two `.container` classes were doing, with `desktopOnly` covering
- * the second.
- */
-export const DropBoardPageWidth: Story = {
-  tags: ['examples'],
-  render: () => TODO,
 }
 
 /* ------------------------------------------------------------------ */

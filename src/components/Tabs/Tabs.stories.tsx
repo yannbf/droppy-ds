@@ -2,6 +2,9 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent, waitFor } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Separator } from '../Separator'
+
 import type { TabItem, TabsProps } from './Tabs'
 import { Tabs } from './Tabs'
 
@@ -14,12 +17,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 type Tab = TabItem & { label: string; content: string }
@@ -215,19 +212,77 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the
- * restaurant detail page stacks its menu sections vertically rather than
- * tabbing between them, which is the right call there and worth saying in the
- * story. The story to write is a DropBoard one: a partner's store view split
- * into 'Overview', 'Menu', and 'Settings' — the case where only one section is
- * relevant at a time, unlike a diner scrolling a whole menu.
- */
-export const DropBoardStoreTabs: Story = {
+const euros = (amount: number) =>
+  amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
+
+type Order = { id: string; placedAt: string; customer: string; items: string; total: number }
+
+const ordersByStatus: Record<string, Order[]> = {
+  kitchen: [
+    { id: 'DB-2291', placedAt: '13:02', customer: 'Ada Lovelace', items: '2× Cheeseburger, 1× Fries', total: 19.5 },
+    { id: 'DB-2292', placedAt: '13:08', customer: 'Katherine Johnson', items: '1× Cheeseburger, 2× Sprite', total: 11.5 },
+  ],
+  courier: [
+    { id: 'DB-2290', placedAt: '12:47', customer: 'Grace Hopper', items: '1× Cheeseburger, 2× Coca-Cola', total: 12 },
+  ],
+  delivered: [
+    { id: 'DB-2289', placedAt: '12:31', customer: 'Alan Turing', items: '2× Fries, 1× Vanilla ice cream', total: 7 },
+    { id: 'DB-2288', placedAt: '12:04', customer: 'Barbara Liskov', items: '3× Cheeseburger', total: 25.5 },
+  ],
+}
+
+const OrderList = ({ orders }: { orders: Order[] }) => (
+  <div style={{ display: 'grid', gap: '0.75rem', paddingTop: '1rem' }}>
+    {orders.map((order, index) => (
+      <div key={order.id} style={{ display: 'grid', gap: '0.75rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+          <div style={{ display: 'grid', gap: '0.125rem' }}>
+            <Body size="S" fontWeight="bold">
+              {order.id} · {order.customer}
+            </Body>
+            <Body size="XS">{order.items}</Body>
+          </div>
+          <div style={{ display: 'grid', gap: '0.125rem', textAlign: 'right' }}>
+            <Body size="S" fontWeight="bold">
+              {euros(order.total)}
+            </Body>
+            <Body size="XS">{order.placedAt}</Body>
+          </div>
+        </div>
+        {index < orders.length - 1 && <Separator />}
+      </div>
+    ))}
+  </div>
+)
+
+/** DropBoard's order queue, split by where each order has got to. */
+export const DropBoardOrderQueue: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('tabs', 'value', 'defaultValue', 'onValueChange', 'className'),
+  render: () => (
+    <div style={{ maxWidth: '32rem' }}>
+      <Tabs
+        defaultValue="kitchen"
+        tabs={[
+          {
+            value: 'kitchen',
+            label: 'In the kitchen',
+            content: <OrderList orders={ordersByStatus.kitchen ?? []} />,
+          },
+          {
+            value: 'courier',
+            label: 'Out for delivery',
+            content: <OrderList orders={ordersByStatus.courier ?? []} />,
+          },
+          {
+            value: 'delivered',
+            label: 'Delivered',
+            content: <OrderList orders={ordersByStatus.delivered ?? []} />,
+          },
+        ]}
+      />
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

@@ -2,18 +2,15 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Card } from '../Card'
+import { Heading } from '../Heading'
+
 import type { SpinnerProps } from './Spinner'
 import { Spinner } from './Spinner'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof SpinnerProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -155,20 +152,20 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import; the app
- * shows loading with `Skeleton` placeholders instead. Per the brand guidelines
- * the spinner is one of only two places teal appears in DropBoard (the other
- * being the wordmark), so the story to write is a DropBoard one: the payouts
- * panel mid-fetch — a centred spinner labelled 'Loading payouts' — paired with
- * the same panel resolved, to make the point that a spinner is for waits whose
- * shape you can't predict, where `Skeleton` is for waits whose layout you can.
- */
+/** DropBoard's payouts panel while the figures load. */
 export const DropBoardPayoutsLoading: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('label', 'className'),
+  render: () => (
+    <Card padded style={{ width: '20rem' }}>
+      <Heading level={3} size={4}>
+        Payouts
+      </Heading>
+      <div style={{ display: 'grid', placeItems: 'center', minHeight: '10rem' }}>
+        <Spinner label="Loading payouts" />
+      </div>
+    </Card>
+  ),
 }
 
 /* ------------------------------------------------------------------ */
