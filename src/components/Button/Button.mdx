@@ -105,19 +105,20 @@ The control and its optional leading glyph. There is no label part: `children` r
 
 ### Do
 
-- Use `Button` for things that happen on the page: submitting a form, opening a panel, adding to
-  a cart.
-- Give icon-only buttons (`icon` with no `children`) an `aria-label` — the icon alone gives the
-  button no name.
+- Give icon-only buttons (`icon` with no `children`) an `aria-label`: the icon is `aria-hidden`,
+  so nothing else names the button
+- Write the label as the action users are taking, in sentence case, e.g. "Add to cart" rather than
+  "ADD TO CART" or "Submit"
+- Keep one `large` primary action per view, so the page offers a single obvious next step
 
 ### Don't
 
-- Don't use `Button` to go to another page — use [Link](?path=/docs/actions-link--docs). A real
-  link is announced as one and supports right-click and opening in a new tab.
-- Don't put a `Button` inside a `Link` (or any control inside another control) — two controls in
-  one spot confuse keyboard focus and screen readers. If it navigates, it's a link.
-- Avoid `Button` for a floating icon-only control on top of a photo — that's
-  [IconButton](?path=/docs/actions-iconbutton--docs)'s job.
+- Never recolour a primary button: the [brand guidelines](?path=/docs/brand-guidelines--docs) put
+  "the primary button" on the grey ramp, and teal is "not for buttons, links, or interface chrome"
+- Don't nest a `Button` inside another control: two controls in one spot confuse keyboard focus
+  and screen readers
+- Avoid `disabled` for an action that is merely in flight: a disabled button leaves the tab order
+  and the accessibility tree, dropping focus mid-task
 
 {/* END: do-dont */}
 

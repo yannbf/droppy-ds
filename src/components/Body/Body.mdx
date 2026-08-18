@@ -90,18 +90,17 @@ a label rather than merely look like one.
 
 ### Do
 
-- Use `Body` for paragraph copy, helper text, labels, and captions — text that supports the
-  content around it without heading semantics of its own.
-- Pair `type="label"` with your own `htmlFor`/`id` — `Body` renders the `<label>` element; the
-  association with the control is yours to wire.
+- Pick `type` for what the content actually is (`p` for paragraphs, `label` for field labels,
+  `figcaption` for captions); `size` and `fontWeight` can be used for customization independently, so the element
+  must be chosen for its semantics
+- Pair `type="label"` with your own `htmlFor` and the control's `id` when labelling a control
 
 ### Don't
 
-- Don't use `Body` for a page or section title — a title belongs in the document outline, which is
-  [Heading](?path=/docs/typography-heading--docs)'s job.
-- Don't use `color` to make text stand out — the
-  [brand guidelines](?path=/docs/brand-guidelines--docs) reserve text color for state: "Text color
-  communicates state, not hierarchy." Use `size` and `fontWeight` instead.
+- Don't set `color` to make text stand out: the
+  [brand guidelines](?path=/docs/brand-guidelines--docs) hold that "Text color communicates state,
+  not hierarchy", so reach for `size` and `fontWeight`
+- Avoid small sizes for anything users have to read carefully, e.g. prices or allergen notes
 
 {/* END: do-dont */}
 

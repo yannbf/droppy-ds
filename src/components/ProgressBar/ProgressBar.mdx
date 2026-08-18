@@ -85,13 +85,18 @@ Two parts: the track carries the `progressbar` role and the whole ARIA range, an
 
 ### Do
 
-- Use `ProgressBar` for a compact, determinate bar in dense UI — checkout steps, upload rows.
+- Always pass `label`: it is the only accessible name the bar gets, and any title rendered beside
+  it isn't associated with the control
+- Set `max` to the real total, e.g. the step count or the byte count, rather than converting to a
+  percentage first
 
 ### Don't
 
-- Don't show a determinate bar for a wait you aren't measuring — it claims progress that isn't
-  happening. Use [Progress](?path=/docs/feedback-status-progress--docs), which can show
-  "unknown", or [Spinner](?path=/docs/feedback-status-spinner--docs).
+- Never restyle the fill colour: the [brand guidelines](?path=/docs/brand-guidelines--docs)
+  re-decide colour roles per theme, and the fill deliberately follows the theme's primary action
+  in both
+- Don't feed a `value` that can exceed `max` and rely on the clamp to hide it; the bar sits full
+  while the task is still running
 
 {/* END: do-dont */}
 

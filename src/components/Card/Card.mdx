@@ -92,17 +92,19 @@ of squaring off past it.
 
 ### Do
 
-- Use `Card` to group related content on one raised surface.
-- Wrap the whole `Card` in a [Link](?path=/docs/actions-link--docs) when clicking it opens
-  another page — the way the category tiles do.
+- Wrap the whole card in a real link or button when activating it goes somewhere; `interactive`
+  changes only how the card looks
+- Reach for `padded` when the card's children don't already own their internal spacing, rather
+  than adding padding by hand
 
 ### Don't
 
-- Don't navigate by putting a click handler on a `Card` — it's invisible to keyboard and screen
-  reader users, and can't be opened in a new tab. Wrap it in a `Link` instead.
-- Avoid `Card` for content that floats above the page —
-  [Modal](?path=/docs/overlays-modal--docs) blocks it,
-  [Sidebar](?path=/docs/overlays-sidebar--docs) shares it; `Card` has no backdrop or dismissal.
+- Don't put a click handler on a `Card` and leave it at that: without a real control it is
+  invisible to keyboard and screen reader users, and can't be opened in a new tab
+- Never give a resting card a shadow: [brand guidelines](?path=/docs/brand-guidelines--docs)
+  reserve elevation to indicate ongoing interactions
+- Avoid long unbroken strings inside a card, e.g. raw URLs or order ids, as the surface clips its
+  own overflow
 
 {/* END: do-dont */}
 

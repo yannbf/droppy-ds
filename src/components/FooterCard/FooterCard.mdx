@@ -112,15 +112,17 @@ A heading above a list of links. The list disappears entirely when `links` is em
 
 ### Do
 
-- Use `FooterCard` only on a dark footer surface — it's a text-on-dark component, not a
-  self-contained dark panel.
-- Keep one `FooterCard` per topic so the footer's headings stay meaningful.
+- Give each `FooterCard` a single topic and a `title` that names it, so the footer's headings stay
+  meaningful in a screen reader's heading list
+- Set `external` on links that leave the site, and say so in the link's `name`, e.g. "Instagram
+  (opens in a new tab)"
 
 ### Don't
 
-- Don't place `FooterCard` on a light surface — its text color assumes a dark background.
-- Avoid `FooterCard` for a single standalone link — use
-  [Link](?path=/docs/actions-link--docs).
+- Never place a `FooterCard` on a light surface: it carries readable-on-dark text and paints no
+  background of its own
+- Don't repeat a link `name` within one card; users scanning a list of links can't tell two
+  identical labels apart
 
 {/* END: do-dont */}
 

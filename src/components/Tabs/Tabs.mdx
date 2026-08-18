@@ -109,15 +109,19 @@ A tab row with its indicator, and one panel per tab. The list is flat — `tabs`
 
 ### Do
 
-- Use `Tabs` for peer views of one subject the reader can jump between freely.
+- Label each tab with the noun its panel holds, e.g. "Reviews" rather than "More": `label` is both
+  the visible text and the accessible name
+- Give every tab a stable `value` that doesn't move with list order, since it is what links a tab
+  to its panel
+- Keep the tab row short enough to fit one line at mobile width, so no choice is hidden off the
+  edge
 
 ### Don't
 
-- Avoid `Tabs` for a sequence meant to be completed in order — a checkout, a wizard. Tabs invite
-  jumping; use explicit next/back navigation instead.
-- Avoid hiding content behind `Tabs` that's better scanned all at once —
-  [Accordion](?path=/docs/layout-structure-accordion--docs) keeps every title visible, and plain
-  layout shows everything.
+- Don't put a view's primary action in a tab that isn't open by default; it stays invisible until
+  someone switches
+- Avoid `disabled` tabs where the reason isn't visible: a tab users can see but never reach needs
+  an explanation beside it
 
 {/* END: do-dont */}
 

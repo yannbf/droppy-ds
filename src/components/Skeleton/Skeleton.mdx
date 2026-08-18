@@ -103,16 +103,19 @@ holds still.
 
 ### Do
 
-- Use `Skeleton` while loading content whose shape you already know, so the layout doesn't jump
-  when the real content arrives.
-- Add loading semantics on the surrounding container (`role="status"` with a label) — `Skeleton`
-  itself is silent to assistive tech.
+- Announce the wait once, on the container holding the skeletons, e.g. `role="status"` with a
+  label naming what is loading
+- Size each `Skeleton` to the content it stands in for, through `width` and `height` rather than
+  custom styles
+- Let a `Skeleton` inside a line of text take its surroundings: it renders inline and defaults to
+  `1em` tall
 
 ### Don't
 
-- Avoid `Skeleton` when the final content's size is unknown — a wrong guess causes the exact
-  layout jump it exists to prevent; use
-  [Spinner](?path=/docs/feedback-status-spinner--docs) instead.
+- Don't mirror the layout with more skeletons than the content has rows; a rough shape reads as
+  loading, a precise one reads as content
+- Avoid leaving skeletons up for a wait with no bound, as a placeholder that never resolves looks
+  like a broken page
 
 {/* END: do-dont */}
 
@@ -139,11 +142,11 @@ holds still.
 
 ## Styling
 
-| Token                           | Used for                                                     |
-| ------------------------------- | ------------------------------------------------------------ |
+| Token                           | Used for                                                                                        |
+| ------------------------------- | ----------------------------------------------------------------------------------------------- |
 | `--ds-color-skeleton-base`      | The persistent base fill under the gradient, its resting color, and the reduced-motion fallback |
-| `--ds-color-skeleton-highlight` | The gradient's sweep color                                   |
-| `--ds-radius-control`           | The default border radius                                    |
+| `--ds-color-skeleton-highlight` | The gradient's sweep color                                                                      |
+| `--ds-radius-control`           | The default border radius                                                                       |
 
 {/* END: styling */}
 

@@ -98,13 +98,19 @@ A `Field` wrapper for the label association, a scrub area holding the label, and
 
 ### Do
 
-- Use `NumberField` for amounts the reader may want to type: prices, weights, large numbers.
+- Always pass `label`: it is the field's accessible name as well as its visible one, and it
+  doubles as the scrub handle
+- Set `min` and `max` to the real bounds of what users may enter, so the stepper buttons disable
+  at the edges instead of accepting an impossible value
+- Set `step` to the increment the quantity actually moves in, e.g. 0.5 for kilograms rather than
+  the default 1
 
 ### Don't
 
-- Avoid `NumberField` for a small count close to 1 —
-  [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) is the simpler, button-only
-  sibling.
+- Don't treat drag-to-scrub as the way users reach a value: it is pointer-only, so typing and the
+  arrow keys have to get there too
+- Don't leave `max` unset on a field bounded by stock or capacity; without it the buttons never
+  disable and an over-limit value reaches the handler
 
 {/* END: do-dont */}
 

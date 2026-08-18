@@ -87,14 +87,19 @@ A field root wrapping a label, the control, and an always-mounted error slot. Th
 
 ### Do
 
-- Use `Input` for free text the reader types: names, addresses, search terms.
+- Always pass `label`: with none, no label element renders at all and the field has no accessible
+  name
+- Write `error` as what to do about it, e.g. "Enter a postcode like SW1A 1AA" rather than
+  "Invalid"
+- Set `autoComplete` explicitly on fields a browser should fill, e.g. name, email or address; the
+  component defaults it to "off"
 
 ### Don't
 
-- Avoid `Input` when the answer comes from a fixed list — use
-  [Select](?path=/docs/forms-input-select--docs); a select can't return a value the list doesn't
-  contain, which is often what you want.
-- Don't use `Input` for multi-line text — it's single-line only.
+- Don't use `placeholder` in place of `label`: it disappears the moment someone types, taking the
+  field's meaning with it
+- Avoid stacking more than one message into `error`; the reserved slot holds one short line, and
+  longer text pushes the fields below it down
 
 {/* END: do-dont */}
 

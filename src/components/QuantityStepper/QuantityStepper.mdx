@@ -91,15 +91,17 @@ A named group holding two round buttons around a live value. There is no text in
 
 ### Do
 
-- Use `QuantityStepper` for a small, bounded count that's usually close to 1 — cart quantities,
-  number of guests.
-- Give each stepper its own `aria-label` when several share a screen — the default name is just
-  "quantity", and identical names don't tell a screen reader user which item they're changing.
+- Give each stepper its own `aria-label` when several share a screen: the group's default name is
+  just "quantity", and identical names don't tell a screen reader user which item they are
+  changing
+- Set `min` to 0 only where zero is a real quantity; where it means "remove", give users a
+  separate way to say so
+- Show the consequence of a change next to the stepper, e.g. a line total, so the number has a
+  visible effect
 
 ### Don't
 
-- Avoid `QuantityStepper` when the range is large or typing would be faster — use
-  [NumberField](?path=/docs/forms-input-numberfield--docs).
+- Don't leave `max` at the default value where real stock or capacity is lower
 
 {/* END: do-dont */}
 

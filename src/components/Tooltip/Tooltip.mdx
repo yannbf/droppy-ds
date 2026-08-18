@@ -91,15 +91,20 @@ Two parts, and only the trigger is reachable by the **Anatomy** panel: the popup
 
 ### Do
 
-- Put the trigger's accessible name on the trigger itself, closely matching the tip — the
-  tooltip is never announced and never opens on touch.
+- Give the trigger its own accessible name, closely matching the tip: the popup carries no ARIA
+  link to it and is never announced
+- Keep `label` to a short phrase; the popup declares no max width, so a sentence stretches into a
+  strip across the viewport
+- Pass a single element as `children`, as it becomes the trigger itself rather than being wrapped
 
 ### Don't
 
-- Don't put information the reader needs in a `Tooltip` — touch users never see it; use visible
-  text instead.
-- Avoid `Tooltip` for a transient confirmation like "Copied" — the tip's content isn't announced;
-  use a [Toast](?path=/docs/feedback-status-toast--docs).
+- Don't put anything users need inside a `Tooltip`: it never opens on touch, and screen readers
+  never read it
+- Don't attach a `Tooltip` to a disabled control; a disabled button takes neither focus nor hover,
+  so the tip never appears
+- Avoid a `label` that restates the trigger's visible text, as a tip repeating the button teaches
+  nothing
 
 {/* END: do-dont */}
 

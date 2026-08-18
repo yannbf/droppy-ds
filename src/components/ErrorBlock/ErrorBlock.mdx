@@ -94,15 +94,16 @@ Title, optional illustration, body, and one action — in that DOM order. The he
 
 ### Do
 
-- Use `ErrorBlock` for a state that has already resolved to "nothing here" — an empty search, a
-  404, a failed request.
-- Write `buttonText` that describes the action on its own — "Try again", not "Click here".
+- Write `buttonText` that names the recovery, e.g. "Try again" or "See all restaurants"
+- Say what users can do next in `body`, not only what went wrong
+- Hide decorative `illustration`s from assistive tech
 
 ### Don't
 
-- Avoid `ErrorBlock` while content is still loading — use
-  [Skeleton](?path=/docs/feedback-status-skeleton--docs); `ErrorBlock` is for after the wait is
-  over.
+- Don't reuse one generic `title` for every failure: an empty search and a failed request need
+  different wording to be actionable
+- Avoid an `ErrorBlock` with nowhere to go; the recovery action is the whole point of the block
+- When an error results from user action, avoid `illustration` or `body` content that can be perceived as accusatory or mocking; sound supportive instead
 
 {/* END: do-dont */}
 

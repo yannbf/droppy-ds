@@ -106,13 +106,18 @@ A backdrop and the sliding panel, split into a top bar, a scrolling content regi
 
 ### Do
 
-- Use `Sidebar` for content the reader works with while the page stays visible — a cart,
-  filters.
+- Write a `title` that describes the panel's contents, e.g. "Your order" rather than "Details": it
+  is the only accessible name the panel gets
+- Put totals and the primary action in `footer`, so they stay pinned while the contents scroll
+- Keep the page behind the panel meaningful; users open a sidebar to work with the page, not to
+  leave it
 
 ### Don't
 
-- Avoid `Sidebar` for a single decision that should block the page — use
-  [Modal](?path=/docs/overlays-modal--docs); `Sidebar` shares the page, `Modal` takes it over.
+- Don't make swipe-to-dismiss the only way out of a flow: it is pointer-only, and keyboard users
+  have Escape and the close button
+- Avoid a panel whose contents change what the page underneath means; users expect the page they
+  left to be the page they come back to
 
 {/* END: do-dont */}
 

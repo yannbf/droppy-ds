@@ -93,14 +93,16 @@ A portalled viewport holding one node per queued toast. There is no trigger part
 
 ### Do
 
-- Use `Toast` for a brief confirmation that doesn't need an answer — "added to cart".
+- Wrap the app once in `ToastProvider` at the root, and raise toasts through `useToast().add(...)`
+  from anywhere beneath it
+- Reach for `promise` to chain an async task's loading state through to success or failure, so one
+  toast tells the whole story
 
 ### Don't
 
-- Don't use `Toast` for a decision the reader must make — it times out, taking the choice with
-  it; use [Modal](?path=/docs/overlays-modal--docs).
-- Don't put must-read content in a `Toast` — put it on the page, where the reader reaches it at
-  their own pace.
+- Don't leave the only record of something in a toast: it dismisses itself, and cannot be reopened after the fact
+- Avoid raising several toasts for one action; `limit` marks older ones as limited rather than
+  dropping them, so the stack still fills
 
 {/* END: do-dont */}
 

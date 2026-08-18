@@ -95,16 +95,18 @@ The circular control and the glyph it centres. There is no label part — the bu
 
 ### Do
 
-- Reserve `IconButton` for icon-only controls that sit on top of photos or other imagery — it
-  keeps its light look in dark mode on purpose, so it stays visible on any picture.
-- Always pass `aria-label` — `name` only picks the icon and gives the button no name of its own.
+- Always pass `aria-label`: `name` selects the icon only and contributes nothing to the button's
+  accessible name
+- Name the action rather than the glyph, e.g. "Next restaurants" rather than "chevron right"
+- Use `small` inside dense chrome, and the default size where the control floats over imagery and
+  needs a comfortable touch target
 
 ### Don't
 
-- Avoid `IconButton` on a themed surface — use [Button](?path=/docs/actions-button--docs)
-  with `round clear icon` instead, which follows the theme.
-- Don't use `IconButton` when the action has visible text — it has no room for text; use
-  `Button`.
+- Don't pass children to an `IconButton`: they are silently discarded, and the control has no room
+  for text
+- Avoid `disabled` on a floating control users may hunt for: disabling removes it from the tab
+  order and the accessibility tree
 
 {/* END: do-dont */}
 

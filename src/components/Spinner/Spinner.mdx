@@ -102,13 +102,17 @@ The announcing wrapper, a decorative graphic, and the shapes the keyframes drive
 
 ### Do
 
-- Use `Spinner` for a wait where the coming content has no known shape.
+- Name what we're waiting for in `label`, e.g. "Loading your order" rather than a generic "Loading". The
+  graphic is `aria-hidden`, so `label` is the only thing a screen reader gets.
+- Show one spinner per wait, at the root level of all UI elements that are blocked; using multiple spinners
+  would cause spam in screen readers
 
 ### Don't
 
-- Avoid `Spinner` when the content's shape is already known — use
-  [Skeleton](?path=/docs/feedback-status-skeleton--docs), so the layout doesn't jump when the
-  content arrives.
+- Never repaint `Spinner`: [brand guidelines](?path=/docs/brand-guidelines--docs) mandate
+  that the spinner must use the brand color
+- Don't wrap `Spinner` in your own `role="status"` region: the root already is one, so a wait
+  would get announced twice if you wrapped it.
 
 {/* END: do-dont */}
 

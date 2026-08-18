@@ -99,12 +99,15 @@ A labelled landmark around an ordered list, one item per crumb. A crumb renders 
 
 ### Do
 
-- Use `Breadcrumb` for the trail of ancestor pages above the current one.
+- List `items` from the site root down, with the current page last: the final crumb is
+  automatically marked `aria-current="page"`
+- Label each crumb with the destination's own page title, so the trail matches what users see when
+  they arrive
 
 ### Don't
 
-- Avoid `Breadcrumb` on a page with no hierarchy above it — a plain
-  [Link](?path=/docs/actions-link--docs) back reads more honestly than a one-crumb trail.
+- Don't point the last crumb's `href` somewhere else: it is announced as the current page
+- Don't skip crumbs when a page has the same base `href` but loads specific child content based on a query param
 
 {/* END: do-dont */}
 

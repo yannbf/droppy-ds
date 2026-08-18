@@ -35,7 +35,7 @@ import { Select } from '@droppy/design-system'
 ## When not to use
 
 - To let someone type a value rather than pick from a fixed list, use [Input](?path=/docs/forms-input-input--docs) instead — a select can only ever return one of its declared options.
-- For a list too long to scan by eye or by native typeahead alone, this component isn't it — Droppy has no searchable variant here. Reach for Base UI's `Combobox` directly rather than stretching `Select` past what a native picker is good at.
+- For a list too long to scan by eye or by native typeahead alone, this component isn't it — Droppy has no searchable variant. Build a Search-first experience rather than stretching `Select`'s capabilities.
 
 {/* END: when-to-use */}
 
@@ -93,14 +93,15 @@ A label above a wrapper that positions the chevron over the native control. Ther
 
 ### Do
 
-- Use `Select` for a single choice from a short, known list.
-- Drive it from state — pass `value` and `onChange` together.
+- Write a `label` that directly names what's being chosen using the app vocabulary, like "Servings", rather than an action verb like "Select servings" or a generic naming like "Quantity"
+- Order `options` the way the reader thinks about them (quantities ascending, delivery windows
+  chronological, rest alphabetical) to complement native typeahead (which requires users to know options' names)
+- Add an explicit "No choice yet" option when users can leave the field blank
 
 ### Don't
 
-- Don't use `Select` to let someone type an answer — use
-  [Input](?path=/docs/forms-input-input--docs).
-- Avoid `Select` for a list too long to scan — it has no search.
+- Avoid mixing units inside one list ("2", "half a dozen") as the picker offers no way to group or
+  explain them
 
 {/* END: do-dont */}
 

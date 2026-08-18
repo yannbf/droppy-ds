@@ -88,17 +88,18 @@ whatever type size happens to surround it.
 
 ### Do
 
-- Keep heading levels sequential — each heading sits exactly one level below the heading it belongs under.
-- Use `size` when a correctly-levelled heading needs a different visual scale.
-- Pass an explicit `level` wherever the heading isn't the page title — the default is `level={1}`, and a page has exactly one `<h1>`.
-- Pair `level={5}` with `size={4}` or smaller — the type scale stops at h4, so a fifth outline level borrows a smaller step rather than presenting one of its own.
+- Keep levels sequential: each heading sits exactly one step below the heading it belongs under
+- Pass an explicit `level` wherever the heading isn't the page title; the default is `level={1}`,
+  and a page has exactly one `<h1>`
+- Reach for `size` when a correctly-levelled heading needs a different visual step
+- Customize font weights if you need emphasis on a particular part of a heading
 
 ### Don't
 
-- Don't skip a heading level to change how a heading looks — change `size`, not `level`.
-- Avoid overriding the rendered size with custom styles — `size` exists for exactly that.
-- Don't use `Heading` for text that is only visually large, like a stat number — every `Heading` enters the document outline; use plain text with the theme's type tokens instead.
-- Don't render a fifth visual step (`size={5}`).
+- Don't skip a heading level to change how a heading looks: change `size`, not `level`
+- Never render `size={5}`: the [brand guidelines](?path=/docs/brand-guidelines--docs)' scale
+  stops at h4, so a title sitting below h4 takes `level={5}` with `size={4}`
+- Avoid overriding the rendered size with custom styles, as `size` exists for exactly that
 
 {/* END: do-dont */}
 

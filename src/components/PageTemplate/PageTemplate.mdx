@@ -78,14 +78,16 @@ A column of header, content, and footer. Only the content area is a part the tem
 
 ### Do
 
-- Render one `PageTemplate` per page, at the app-layout level — it carries the page's `<main>`
-  landmark.
+- Render one `PageTemplate` per page, at the app-layout level: it carries the page's `<main>`
+  landmark
+- Pass the site-wide header and footer through `header` and `footer`, so they stay outside `<main>`
+  and out of the main-content landmark
+- Put the app's own skip link ahead of the template; `PageTemplate` adds none of its own
 
 ### Don't
 
-- Don't use `PageTemplate` for a section within a page — a nested one adds a second `<main>` to
-  the page. Use [Container](?path=/docs/layout-structure-container--docs) or
-  [PageSection](?path=/docs/layout-structure-pagesection--docs).
+- Avoid header or footer content much taller than the usual chrome: the content area reserves a
+  fixed allowance for it, and a taller slot pushes the footer below the fold on short pages
 
 {/* END: do-dont */}
 

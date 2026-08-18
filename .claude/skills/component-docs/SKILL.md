@@ -19,7 +19,7 @@ Every page is divided into fenced facets, in this exact order, each wrapped in
 | Facet | Content |
 | --- | --- |
 | `general` | One-sentence intro, `import` snippet in a `tsx` fence, `<Canvas of={Stories.Default} />`, `## Features` bullets |
-| `when-to-use` | `## When to use` and `## When not to use`, with links to the alternatives |
+| `when-to-use` | `## When to use` and `## When not to use`, with links to the alternatives. A second `when-to-use` fence at the end of the page carries `## Related`, a bare index of neighbouring components |
 | `behavior` | `## How it works` — one `###` per behavior, each with a Canvas |
 | `anatomy` | `## Anatomy` — Canvas plus a table: Part, `data-part`, Renders, Purpose |
 | `examples` | Composed examples — required, see below |
@@ -63,16 +63,23 @@ The writing conventions follow the practice the major systems share
 
 - **Imperative voice, verb first; one rule per bullet.** If a bullet needs "and", split it. Keep
   parallel structure within a list.
-- **Never a bare prohibition** — every don't names what to do instead.
-- **Concrete over abstract** — name the prop, the component, the situation, so a reviewer (or
-  checker) could spot the violation in consumer code.
-- **Rationale only when the reason isn't self-evident**, as a short clause after a dash.
-- **Graded strength** — "Don't"/"never" is reserved for hard constraints (accessibility, brand
+- **Never a bare prohibition**: every don't names what to do instead.
+- **Concrete over abstract**: name the prop, the situation, the copy, so a reviewer (or checker)
+  could spot the violation in consumer code.
+- **Rationale only when the reason isn't self-evident**, as a short clause after a colon or
+  semicolon.
+- **Graded strength**: "Don't"/"never" is reserved for hard constraints (accessibility, brand
   law, broken HTML); "Avoid"/"prefer" marks a judgment call.
 - **Rules are about the component's job, not its API.** An obligation like "always pass X"
   belongs in the type system; a known-issue workaround stays in known-issues.
-- **Overlap with when-to-use is deliberate** — do-dont restates the sharpest rules in short,
-  checkable form; when-to-use keeps the nuance.
+- **No overlap with when-to-use, and no cross-component links.** do-dont answers "I have chosen
+  this component, now how do I not botch it": naming and labelling, content and copy, brand law,
+  state wiring, composition, density. when-to-use answers "is this the right component", and owns
+  every product use case and every comparison against an alternative. A bullet must pass two
+  tests: it links to no other component, and it is not inferable from the when-to-use bullets.
+  Ground each rule in the component's own `.tsx`, a11y facet, or brand facet.
+- **No em dashes, and no trailing full stop on a bullet.** Use ":" where a clause explains the one
+  before it, ";" where two independent clauses join, and "e.g." for illustration.
 - **Plain words, no technology-specific phrasing.** Consumers style with different tools; say
   "custom styles", not one library's idiom.
 - **Brand-flavoured rules live here too** and quote the Brand guidelines' actual wording, same as

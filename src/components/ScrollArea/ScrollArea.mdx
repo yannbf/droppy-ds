@@ -82,12 +82,17 @@ A clipped root, the scrolling viewport and its content wrapper, then a scrollbar
 
 ### Do
 
-- Use `ScrollArea` for an embedded panel with its own scrolling — a cart list inside a sidebar.
+- Give the `ScrollArea` a bounded height through `className`, so it has something to scroll
+- Match `orientation` to the axis the content actually overflows on; `both` renders two scrollbars
+  and the corner between them
+- Keep focusable content inside the region, e.g. links or controls, so keyboard users can reach
+  what sits below the fold
 
 ### Don't
 
-- Don't use `ScrollArea` for the page itself — rely on the document's own scrolling, which
-  keyboard and assistive-tech users already know how to drive.
+- Don't rely on the scrollbar to signal there is more: it is revealed on hover and scroll, so the
+  content itself has to hint at the overflow
+- Avoid nesting one `ScrollArea` inside another; this complicates user interaction
 
 {/* END: do-dont */}
 

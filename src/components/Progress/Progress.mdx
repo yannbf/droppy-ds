@@ -104,13 +104,18 @@ Root, an optional label and formatted value, and the track holding the indicator
 
 ### Do
 
-- Use `Progress` when the wait needs a visible label and value, or an indeterminate mode for a
-  wait you aren't measuring.
+- Always pass `label`: without it the indicator has no accessible name
+- Pass `value={null}` while the length of the wait is genuinely unknown, and a real number as soon
+  as one exists
+- Turn on `showValue` where the number itself helps, e.g. a large upload, and leave it off when
+  only the direction of travel matters
 
 ### Don't
 
-- Avoid `Progress` when a bare determinate bar is enough —
-  [ProgressBar](?path=/docs/feedback-status-progressbar--docs) is the simpler sibling.
+- Don't let `value` travel backwards: progress that retreats reads as failure even when the task
+  is fine
+- Avoid holding a determinate bar at one value for long stretches; if the number can't move, the
+  wait is indeterminate
 
 {/* END: do-dont */}
 

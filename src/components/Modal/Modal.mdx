@@ -100,15 +100,17 @@ A backdrop and the dialog card, with a supplied top bar holding the close afford
 
 ### Do
 
-- Use `Modal` for a decision that must block the page — the reader answers before continuing.
+- Write `aria-label` to name the decision the user must make in the Modal, matching the visible title word for word
+- Label the buttons with their outcomes, e.g. "Remove" and "Keep" rather than "OK" and "Cancel",
+  so the choice reads from the buttons alone
+- Place the most important action on the bottom right in Desktop and bottom in Mobile variants, for predictability
+- Keep a modal to one decision and the copy it needs, short enough to read without scrolling
 
 ### Don't
 
-- Avoid `Modal` for content reviewed alongside the page — use
-  [Sidebar](?path=/docs/overlays-sidebar--docs); `Modal` takes the page over, `Sidebar` shares
-  it.
-- Avoid `Modal` to explain what a control does — use
-  [Tooltip](?path=/docs/overlays-tooltip--docs); a hint needs no decision or focus trap.
+- Don't treat `Modal` dismissal (Escape, click on the backdrop, etc) as a destructive action; always use an explicit Button for that
+- Don't open a `Modal` on top of a `Modal` as it will cause focus traps to fail
+- Don't abuse `Modal`: only use it when users must be interrupted or when it flows naturally from user action
 
 {/* END: do-dont */}
 

@@ -101,12 +101,19 @@ A rail wrapping a clipped viewport and the track inside it, one wrapper per chil
 
 ### Do
 
-- Use `Carousel` for a long row of items browsed a few at a time.
+- Set `itemsPerView` so part of the next item shows at the trailing edge on each breakpoint: the
+  cut-off item is what tells users there is more to scroll
+- Match `slidesToScroll` to `itemsPerView` when users are meant to page through the row rather
+  than nudge it one item at a time
+- Give the surrounding region an accessible name, e.g. a heading directly above it; the carousel
+  labels only its own arrows
 
 ### Don't
 
-- Avoid `Carousel` for a small fixed set that fits comfortably — a plain row needs no carousel
-  machinery.
+- Don't put anything users must see in a slide that starts off-screen: arrows render on desktop
+  only, so smaller screens rely on dragging
+- Don't lean on the dimming of partly-scrolled slides to carry meaning; it signals scrollability,
+  not state
 
 {/* END: do-dont */}
 

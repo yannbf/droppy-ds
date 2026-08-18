@@ -125,16 +125,14 @@ compose. Item order is the array's order.
 
 ### Do
 
-- Use `Accordion` to manage several collapsible sections together.
-- Drive a controlled `Accordion` from state — pass `value` and `onValueChange` together; one
-  without the other leaves it stuck.
+- Use `Accordion` to manage several collapsible sections together
+- Drive a controlled `Accordion` from state: pass `value` and `onValueChange` together; one
+  without the other leaves it stuck
 
 ### Don't
 
-- Avoid collapsing content that should be visible together — an accordion trades scanning for
-  compactness.
-- Avoid `Accordion` for a single show/hide section — one section doesn't need section
-  management; use Base UI's `Collapsible` directly.
+- Avoid forcing a single content section to be visible when sections reference each other, so that users can compare them (e.g. if using Accordion to disclose ingredient lists among similar products)
+- Avoid `Accordion` if you want interactive elements on each section header, as those headers must be entirely presentational for WCAG compliance
 
 {/* END: do-dont */}
 

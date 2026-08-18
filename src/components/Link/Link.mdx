@@ -90,18 +90,19 @@ with a hard-coded light-mode token.
 
 ### Do
 
-- Use `Link` whenever activating it goes somewhere — another page, or another spot on this one.
-- Write link text that makes sense on its own — "View the menu", not "click here". Screen reader
-  users often browse a list of links out of context.
+- Write link text that names the destination, e.g. "View the menu" rather than "click here":
+  screen reader users often browse a list of links out of context
+- Pass the app's router element through `render` rather than rebuilding navigation on a plain
+  `href`
+- Set `rel="noopener noreferrer"` alongside any `target="_blank"`, and say in the link text that a
+  new tab opens
 
 ### Don't
 
-- Don't use `Link` for something that happens on the page without navigating — use
-  [Button](?path=/docs/actions-button--docs).
-- Don't put a `Button` inside a `Link` to build a call to action — two controls in one spot
-  confuse keyboard focus and screen readers. If it navigates, it's a link.
-- Avoid building a trail of ancestor pages out of `Link`s — use
-  [Breadcrumb](?path=/docs/navigation-breadcrumb--docs).
+- Don't nest a control inside a `Link`, or a `Link` inside a control: two controls in one spot
+  confuse keyboard focus and screen readers
+- Don't rely on colour alone to mark a link inside a paragraph; at rest it matches the surrounding
+  body text, so the wording has to make it findable
 
 {/* END: do-dont */}
 

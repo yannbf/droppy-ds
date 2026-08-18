@@ -91,12 +91,16 @@ A wrapper and the text line inside it. The star, the number, and the band label 
 
 ### Do
 
-- Use `Review` to display an existing rating.
+- Hand `rating` over unrounded and let `Review` format it: it renders one decimal place and picks
+  the wording ("Very good", "Excellent") from the value
+- Leave `rating` unset where nothing has been rated yet; the component says "No reviews yet"
+  rather than showing a misleading zero
 
 ### Don't
 
-- Don't use `Review` as an input for the visitor's own rating — it's read-only display; a rating
-  form needs real form controls.
+- Don't set `color` to make a rating stand out: the quiet, low-contrast treatment is deliberate,
+  and the accent-as-ink exception it already uses isn't meant to be extended
+- Avoid placing a `Review` where the thing being rated isn't obvious from the line above it
 
 {/* END: do-dont */}
 

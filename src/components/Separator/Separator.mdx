@@ -80,14 +80,16 @@ lighter choice — there is no presentational escape hatch here.
 
 ### Do
 
-- Use `Separator` between related items within one region — order-summary lines, sidebar groups.
+- Reach for `Separator` where the break carries meaning, e.g. between order-summary lines or
+  clusters of controls
+- Match `orientation` to the axis it divides on: it sets `aria-orientation` as well as the visual
+  rule
+- Supply the spacing around a separator yourself, as the component declares no margin of its own
 
 ### Don't
 
-- Avoid `Separator` between major layout regions or pages — a heading, a
-  [Card](?path=/docs/media-content-card--docs) boundary, or plain spacing draws that line better.
-- Avoid `Separator` for pure decoration — it always carries grouping meaning for assistive tech;
-  a styled border is the lighter choice.
+- Don't use `Separator` for pure decoration: every instance is announced as a separator, so a
+  purely visual rule is better drawn with a border
 
 {/* END: do-dont */}
 

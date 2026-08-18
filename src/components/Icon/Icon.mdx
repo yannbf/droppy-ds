@@ -97,16 +97,19 @@ sets the stroke inline instead, which wins over the class rule.
 
 ### Do
 
-- Pair `Icon` with a labelled control or nearby text — the icon itself is hidden from assistive
-  tech, so it can only decorate a meaning that's already there.
-- Pick names from the exported `iconNames` list.
+- Choose a glyph from `iconNames` that already carries the meaning, rather than repurposing a
+  shape for something the set has no icon for
+- Pair every `Icon` with a labelled control or nearby text: it is `aria-hidden`, so it can only
+  decorate a meaning that already exists
+- Set `color` only where the icon sits on a surface the theme's icon token wasn't picked for, e.g.
+  a photo or an inverse panel
 
 ### Don't
 
-- Don't use an `Icon` alone as something clickable — wrap it in a
-  [Button](?path=/docs/actions-button--docs) or
-  [IconButton](?path=/docs/actions-iconbutton--docs), which carry the name and the keyboard
-  behavior.
+- Don't attach a click handler to a bare `Icon`: it has no name, no focus and no keyboard
+  behaviour, so put it inside a real control
+- Don't let colour alone separate two icons; anyone who can't tell the colours apart sees the same
+  glyph twice
 
 {/* END: do-dont */}
 

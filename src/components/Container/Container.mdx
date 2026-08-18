@@ -79,14 +79,17 @@ Padding applies immediately and widens at 640px; the width cap and centering hol
 
 ### Do
 
-- Use `Container` to bound the page column's width.
+- Wrap the page's content column in one `Container` near the top of the page, and let the sections
+  inside inherit the bound
+- Reach for `desktopOnly` when a section already owns its mobile padding, e.g. a full-bleed hero,
+  and only wants the width cap once the layout goes multi-column
 
 ### Don't
 
-- Don't nest a `Container` inside another `Container` — the padding compounds instead of
-  replacing.
-- Avoid `Container` for a raised surface that groups content — use
-  [Card](?path=/docs/media-content-card--docs); `Container` has no background or shadow.
+- Don't nest a `Container` inside another `Container`: the side padding compounds instead of
+  replacing
+- Avoid re-declaring the max width in custom styles; the shared cap is what keeps line lengths
+  consistent from page to page
 
 {/* END: do-dont */}
 

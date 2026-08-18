@@ -84,15 +84,17 @@ A title row above caller-supplied content. The row holds the heading and, when a
 
 ### Do
 
-- Use `PageSection` for a titled, full-width band within a page.
-- Write a `title` that makes sense on its own — screen reader users jump between headings.
+- Write a `title` that makes sense read out of context: it renders as an `<h2>`, and screen reader
+  users jump between headings
+- Name the top action for where it goes, e.g. "See all Italian" rather than "View all"; nothing in
+  the markup ties it to the section title
+- Keep one `PageSection` per topic, so the page's `<h2>`s form a readable outline
 
 ### Don't
 
-- Avoid `PageSection` as the page's outer width bound when there's no heading — use
-  [Container](?path=/docs/layout-structure-container--docs).
-- Avoid `PageSection` for a raised, self-contained surface — use
-  [Card](?path=/docs/media-content-card--docs).
+- Don't reach for `PageSection` where an `<h2>` would break the page outline; its heading level is
+  fixed
+- Avoid a `title` long enough to wrap on mobile: it shares its row with the action button
 
 {/* END: do-dont */}
 

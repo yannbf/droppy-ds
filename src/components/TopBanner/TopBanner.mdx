@@ -88,13 +88,19 @@ A band with an optional heading. Both are optional: with neither `title` nor `ph
 
 ### Do
 
-- Use `TopBanner` as the full-width band above the page's content column.
-- Write a `title` that doesn't depend on the photo — the photo is decorative to screen readers.
+- Write a `title` whose meaning doesn't depend on the photo: `photoUrl` paints a CSS background,
+  which is never exposed to assistive tech
+- Pick a `photoUrl` dark enough across its upper area for white text, as the on-photo title has no
+  scrim behind it
+- Keep the banner the only green moment on the screen as per
+  [brand guidelines](?path=/docs/brand-guidelines--docs)
 
 ### Don't
 
-- Avoid `TopBanner` for a section title inside the content — use
-  [PageSection](?path=/docs/layout-structure-pagesection--docs).
+- Don't count on `TopBanner` for the page's `<h1>`: its title renders at `<h2>`, so the top-level
+  heading has to live elsewhere
+- Avoid a `title` long enough to wrap, as wrapped lines abandon the centred layout the band is
+  built around
 
 {/* END: do-dont */}
 
