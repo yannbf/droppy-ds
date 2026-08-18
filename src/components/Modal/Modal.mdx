@@ -96,6 +96,20 @@ A backdrop and the dialog card, with a supplied top bar holding the close afford
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Modal` for a decision that must block the page — the reader answers before continuing.
+
+### Don't
+
+- Avoid `Modal` for content reviewed alongside the page — use
+  [Sidebar](?path=/docs/overlays-sidebar--docs); `Modal` takes the page over, `Sidebar` shares
+  it.
+- Avoid `Modal` to explain what a control does — use
+  [Tooltip](?path=/docs/overlays-tooltip--docs); a hint needs no decision or focus trap.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

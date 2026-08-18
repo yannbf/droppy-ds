@@ -101,6 +101,24 @@ The control and its optional leading glyph. There is no label part: `children` r
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Button` for things that happen on the page: submitting a form, opening a panel, adding to
+  a cart.
+- Give icon-only buttons (`icon` with no `children`) an `aria-label` — the icon alone gives the
+  button no name.
+
+### Don't
+
+- Don't use `Button` to go to another page — use [Link](?path=/docs/actions-link--docs). A real
+  link is announced as one and supports right-click and opening in a new tab.
+- Don't put a `Button` inside a `Link` (or any control inside another control) — two controls in
+  one spot confuse keyboard focus and screen readers. If it navigates, it's a link.
+- Avoid `Button` for a floating icon-only control on top of a photo — that's
+  [IconButton](?path=/docs/actions-iconbutton--docs)'s job.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -125,6 +143,18 @@ The control and its optional leading glyph. There is no label part: `children` r
 {/* END: a11y */}
 
 {/* BEGIN: brand */}
+
+## Brand
+
+The [brand guidelines](?path=/docs/brand-guidelines--docs) shape buttons in three ways:
+
+- "The grey ramp carries every surface and almost all text, including the primary button." A
+  primary button is grey, not colorful.
+- Teal is Droppy talking about itself, "not for buttons, links, or interface chrome" — no teal
+  buttons.
+- Buttons use Hind, the "text and UI face for body copy, labels, and buttons", in sentence case —
+  never the display face, never ALL CAPS. A call to action earns attention through its fill, not
+  its lettering.
 
 {/* END: brand */}
 

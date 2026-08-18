@@ -75,6 +75,19 @@ Padding applies immediately and widens at 640px; the width cap and centering hol
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Container` to bound the page column's width.
+
+### Don't
+
+- Don't nest a `Container` inside another `Container` — the padding compounds instead of
+  replacing.
+- Avoid `Container` for a raised surface that groups content — use
+  [Card](?path=/docs/media-content-card--docs); `Container` has no background or shadow.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

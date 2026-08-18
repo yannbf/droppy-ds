@@ -99,6 +99,21 @@ holds still.
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Skeleton` while loading content whose shape you already know, so the layout doesn't jump
+  when the real content arrives.
+- Add loading semantics on the surrounding container (`role="status"` with a label) — `Skeleton`
+  itself is silent to assistive tech.
+
+### Don't
+
+- Avoid `Skeleton` when the final content's size is unknown — a wrong guess causes the exact
+  layout jump it exists to prevent; use
+  [Spinner](?path=/docs/feedback-status-spinner--docs) instead.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

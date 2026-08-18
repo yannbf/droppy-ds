@@ -108,6 +108,20 @@ A heading above a list of links. The list disappears entirely when `links` is em
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `FooterCard` only on a dark footer surface — it's a text-on-dark component, not a
+  self-contained dark panel.
+- Keep one `FooterCard` per topic so the footer's headings stay meaningful.
+
+### Don't
+
+- Don't place `FooterCard` on a light surface — its text color assumes a dark background.
+- Avoid `FooterCard` for a single standalone link — use
+  [Link](?path=/docs/actions-link--docs).
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -126,6 +140,14 @@ behaviour applies, no custom handling.
 {/* END: a11y */}
 
 {/* BEGIN: brand */}
+
+## Brand
+
+The on-dark text color is a documented usage principle, not a styling accident: a `FooterCard`
+only goes in a footer, and the footer surface is always dark, so the component carries its
+readable-on-dark text color directly and assumes that context. Placing it on a light surface
+breaks the principle rather than a style. The decision log records how this went from implicit
+default to stated rule.
 
 {/* END: brand */}
 

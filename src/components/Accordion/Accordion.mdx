@@ -121,6 +121,21 @@ compose. Item order is the array's order.
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Accordion` to manage several collapsible sections together.
+- Drive a controlled `Accordion` from state — pass `value` and `onValueChange` together; one
+  without the other leaves it stuck.
+
+### Don't
+
+- Avoid collapsing content that should be visible together — an accordion trades scanning for
+  compactness.
+- Avoid `Accordion` for a single show/hide section — one section doesn't need section
+  management; use Base UI's `Collapsible` directly.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

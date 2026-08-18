@@ -87,6 +87,20 @@ Two parts, and only the trigger is reachable by the **Anatomy** panel: the popup
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Put the trigger's accessible name on the trigger itself, closely matching the tip — the
+  tooltip is never announced and never opens on touch.
+
+### Don't
+
+- Don't put information the reader needs in a `Tooltip` — touch users never see it; use visible
+  text instead.
+- Avoid `Tooltip` for a transient confirmation like "Copied" — the tip's content isn't announced;
+  use a [Toast](?path=/docs/feedback-status-toast--docs).
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -109,6 +123,13 @@ Two parts, and only the trigger is reachable by the **Anatomy** panel: the popup
 {/* END: a11y */}
 
 {/* BEGIN: brand */}
+
+## Brand
+
+The tooltip's shadow is `--ds-shadow-lift`, following the
+[brand guidelines](?path=/docs/brand-guidelines--docs)' "elevation means floating, not
+importance" — lift is the shadow for small hover floaters, so the tooltip's shadow says "this
+floats above the page", never "this is important".
 
 {/* END: brand */}
 

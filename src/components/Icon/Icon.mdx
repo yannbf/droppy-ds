@@ -93,6 +93,21 @@ sets the stroke inline instead, which wins over the class rule.
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Pair `Icon` with a labelled control or nearby text — the icon itself is hidden from assistive
+  tech, so it can only decorate a meaning that's already there.
+- Pick names from the exported `iconNames` list.
+
+### Don't
+
+- Don't use an `Icon` alone as something clickable — wrap it in a
+  [Button](?path=/docs/actions-button--docs) or
+  [IconButton](?path=/docs/actions-iconbutton--docs), which carry the name and the keyboard
+  behavior.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

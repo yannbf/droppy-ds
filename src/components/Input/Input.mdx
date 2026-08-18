@@ -83,6 +83,19 @@ A field root wrapping a label, the control, and an always-mounted error slot. Th
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Input` for free text the reader types: names, addresses, search terms.
+
+### Don't
+
+- Avoid `Input` when the answer comes from a fixed list — use
+  [Select](?path=/docs/forms-input-select--docs); a select can't return a value the list doesn't
+  contain, which is often what you want.
+- Don't use `Input` for multi-line text — it's single-line only.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -186,6 +199,7 @@ class.
 - [#89](https://github.com/yannbf/droppy-ds/issues/89): disabled renders with zero visual difference — enabled colors everywhere and the hover focus-glow still lights up. **Workaround:** app CSS on .droppy-Input:disabled (opacity, hover box-shadow: none) plus a :has(input:disabled) rule for the label; avoid combining error with disabled.
 - [#91](https://github.com/yannbf/droppy-ds/issues/91): the "error slot never shifts layout" guarantee only holds for one short line — wrapping messages push fields down, unbroken tokens overflow horizontally. **Workaround:** keep messages to one short line, or app CSS raising min-height and adding overflow-wrap: anywhere on .droppy-Field-error.
 - [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
+- [#310](https://github.com/yannbf/droppy-ds/issues/310): `label` is typed optional, but omitting it leaves the field with no accessible name. **Workaround:** pass `label` at every call site.
 - [#133](https://github.com/yannbf/droppy-ds/issues/133): the shared `--ds-shadow-focus` ring is below the 3:1 non-text contrast minimum in light theme.
 - [#138](https://github.com/yannbf/droppy-ds/issues/138): theme chrome is bound to unnamespaced global classes (`.Button`, `.Input`, `.FieldRoot`, …) with no cascade layer, so host-app CSS collides in both directions.
 

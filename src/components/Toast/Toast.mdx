@@ -89,6 +89,19 @@ A portalled viewport holding one node per queued toast. There is no trigger part
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Toast` for a brief confirmation that doesn't need an answer — "added to cart".
+
+### Don't
+
+- Don't use `Toast` for a decision the reader must make — it times out, taking the choice with
+  it; use [Modal](?path=/docs/overlays-modal--docs).
+- Don't put must-read content in a `Toast` — put it on the page, where the reader reaches it at
+  their own pace.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

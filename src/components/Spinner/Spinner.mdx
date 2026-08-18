@@ -98,6 +98,18 @@ The announcing wrapper, a decorative graphic, and the shapes the keyframes drive
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Spinner` for a wait where the coming content has no known shape.
+
+### Don't
+
+- Avoid `Spinner` when the content's shape is already known — use
+  [Skeleton](?path=/docs/feedback-status-skeleton--docs), so the layout doesn't jump when the
+  content arrives.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -117,6 +129,17 @@ The announcing wrapper, a decorative graphic, and the shapes the keyframes drive
 {/* END: a11y */}
 
 {/* BEGIN: brand */}
+
+## Brand
+
+`Spinner` is one of the two places the brand teal is allowed in the interface: the
+[brand guidelines](?path=/docs/brand-guidelines--docs) reserve the identity colour "for brand
+surfaces: the logo, the loading spinner", never buttons, links, or interface chrome. In dark mode
+it shifts to the lime `brand-dark` ramp. Two rules follow:
+
+- Never repaint the spinner another colour — its teal is the point.
+- Never borrow the spinner's teal for anything else — if another element wears it, the brand
+  colour has blended into functional UI.
 
 {/* END: brand */}
 

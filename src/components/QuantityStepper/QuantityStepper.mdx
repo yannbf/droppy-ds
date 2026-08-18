@@ -87,6 +87,20 @@ A named group holding two round buttons around a live value. There is no text in
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `QuantityStepper` for a small, bounded count that's usually close to 1 — cart quantities,
+  number of guests.
+- Give each stepper its own `aria-label` when several share a screen — the default name is just
+  "quantity", and identical names don't tell a screen reader user which item they're changing.
+
+### Don't
+
+- Avoid `QuantityStepper` when the range is large or typing would be faster — use
+  [NumberField](?path=/docs/forms-input-numberfield--docs).
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

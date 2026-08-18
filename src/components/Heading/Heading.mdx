@@ -84,6 +84,22 @@ whatever type size happens to surround it.
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Keep heading levels sequential — each heading sits exactly one level below the heading it belongs under.
+- Use `size` when a correctly-levelled heading needs a different visual scale.
+- Pass an explicit `level` wherever the heading isn't the page title — the default is `level={1}`, and a page has exactly one `<h1>`.
+- Pair `level={5}` with `size={4}` or smaller — the type scale stops at h4, so a fifth outline level borrows a smaller step rather than presenting one of its own.
+
+### Don't
+
+- Don't skip a heading level to change how a heading looks — change `size`, not `level`.
+- Avoid overriding the rendered size with custom styles — `size` exists for exactly that.
+- Don't use `Heading` for text that is only visually large, like a stat number — every `Heading` enters the document outline; use plain text with the theme's type tokens instead.
+- Don't render a fifth visual step (`size={5}`).
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -99,6 +115,18 @@ whatever type size happens to surround it.
 {/* END: a11y */}
 
 {/* BEGIN: brand */}
+
+## Brand
+
+Headings carry the display face: the [brand guidelines](?path=/docs/brand-guidelines--docs) set
+Montserrat as the "display face for headings and wordmarks", with Hind reserved for body copy and
+UI. Two further brand rules shape how `Heading` is used:
+
+- "Text color communicates state, not hierarchy." Hierarchy comes from `size` and weight — a
+  heading is never recolored for emphasis.
+- "The scale stops at h4. There is no fifth heading step: a title that needs to sit below h4 takes
+  the heading face at a body-scale size rather than inventing one." This is why `level={5}` pairs
+  with a smaller `size`.
 
 {/* END: brand */}
 

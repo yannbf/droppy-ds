@@ -78,6 +78,17 @@ A clipped root, the scrolling viewport and its content wrapper, then a scrollbar
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `ScrollArea` for an embedded panel with its own scrolling — a cart list inside a sidebar.
+
+### Don't
+
+- Don't use `ScrollArea` for the page itself — rely on the document's own scrolling, which
+  keyboard and assistive-tech users already know how to drive.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

@@ -74,6 +74,19 @@ A column of header, content, and footer. Only the content area is a part the tem
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Render one `PageTemplate` per page, at the app-layout level — it carries the page's `<main>`
+  landmark.
+
+### Don't
+
+- Don't use `PageTemplate` for a section within a page — a nested one adds a second `<main>` to
+  the page. Use [Container](?path=/docs/layout-structure-container--docs) or
+  [PageSection](?path=/docs/layout-structure-pagesection--docs).
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

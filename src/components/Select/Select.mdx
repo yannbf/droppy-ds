@@ -89,6 +89,19 @@ A label above a wrapper that positions the chevron over the native control. Ther
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Select` for a single choice from a short, known list.
+- Drive it from state — pass `value` and `onChange` together.
+
+### Don't
+
+- Don't use `Select` to let someone type an answer — use
+  [Input](?path=/docs/forms-input-input--docs).
+- Avoid `Select` for a list too long to scan — it has no search.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -194,6 +207,7 @@ Merged onto the root alongside the component's own `droppy-Select` class.
 - [#169](https://github.com/yannbf/droppy-ds/issues/169): children are silently discarded — &lt;option&gt; markup, &lt;optgroup&gt;, and label-different-from-value are not possible. **Workaround** (plain lists only): use the `options` prop; none within this component when option text must differ from the submitted value, or for optgroups/disabled options.
 - [#173](https://github.com/yannbf/droppy-ds/issues/173): A long option string makes the control overflow its container — the flex item has no min-width: 0. **Workaround:** app CSS `.droppy-Select-control { min-width: 0; }`.
 - [#177](https://github.com/yannbf/droppy-ds/issues/177): className styles the wrapper while style and every other prop land on the &lt;select&gt;, so the style prop cannot size the control and no prop targets it. **Workaround:** size the field with `className` on the wrapper and reach the control with a descendant selector (`.myClass .droppy-Select-control`).
+- [#310](https://github.com/yannbf/droppy-ds/issues/310): `label` is typed optional, but omitting it leaves the control with no accessible name. **Workaround:** pass `label` at every call site.
 - [#181](https://github.com/yannbf/droppy-ds/issues/181): id="" defeats the generated-id fallback and leaves the label associated with nothing. **Workaround:** never pass an empty-string id — use `id={maybeId || undefined}` or omit the prop.
 - [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
 

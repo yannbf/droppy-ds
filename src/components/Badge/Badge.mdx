@@ -81,6 +81,22 @@ The pill grows with its content — there's no truncation or fixed width.
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Write badge text in sentence case — the brand guidelines say "never Title Case, never ALL
+  CAPS".
+- Reserve `variant="positive"` for genuine good news — a "new" tag, a special offer.
+
+### Don't
+
+- Avoid `Badge` for a status that changes while the reader watches (loading, saved, failed) —
+  that's status text, not a label.
+- Don't make a `Badge` clickable — it's a label, not a control, so a click on it doesn't exist
+  for keyboard or screen reader users. Use [Button](?path=/docs/actions-button--docs) with
+  `clear` instead.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

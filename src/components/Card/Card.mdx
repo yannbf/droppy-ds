@@ -88,6 +88,22 @@ of squaring off past it.
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Card` to group related content on one raised surface.
+- Wrap the whole `Card` in a [Link](?path=/docs/actions-link--docs) when clicking it opens
+  another page — the way the category tiles do.
+
+### Don't
+
+- Don't navigate by putting a click handler on a `Card` — it's invisible to keyboard and screen
+  reader users, and can't be opened in a new tab. Wrap it in a `Link` instead.
+- Avoid `Card` for content that floats above the page —
+  [Modal](?path=/docs/overlays-modal--docs) blocks it,
+  [Sidebar](?path=/docs/overlays-sidebar--docs) shares it; `Card` has no backdrop or dismissal.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -106,6 +122,16 @@ of squaring off past it.
 {/* END: a11y */}
 
 {/* BEGIN: brand */}
+
+## Brand
+
+The [brand guidelines](?path=/docs/brand-guidelines--docs) codify the card's whole surface
+treatment as "elevation means floating, not importance":
+
+- Resting cards stay flat — hover separates by a background dim, not a shadow, and
+  `--ds-shadow-lift` is reserved for surfaces that actually float.
+- The corner radius sits on the `--ds-radius-card` rung of the radius ladder, which expresses
+  "floatiness" — "the more elevated or overlay-like a surface, the larger the radius".
 
 {/* END: brand */}
 

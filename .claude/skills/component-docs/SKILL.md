@@ -23,7 +23,7 @@ Every page is divided into fenced facets, in this exact order, each wrapped in
 | `behavior` | `## How it works` — one `###` per behavior, each with a Canvas |
 | `anatomy` | `## Anatomy` — Canvas plus a table: Part, `data-part`, Renders, Purpose |
 | `examples` | Composed examples — required, see below |
-| `do-dont` | Optional do/don't pairs |
+| `do-dont` | `## Do's and don'ts` — required, see below |
 | `a11y` | `## Keyboard & screen reader` — key table (if interactive), then **ARIA** / **Screen reader** / **You must provide** bullets |
 | `brand` | Brand-specific notes, when the component embodies a brand rule |
 | `styling` | `## Styling` — token table, plus the `className`-merge contract |
@@ -46,6 +46,38 @@ What separates an example from the rest of the page:
 - **Hide the args.** Examples are compositions, so `argTypes: hide(...)` every prop — leaving controls live on a story whose `render` ignores them is a broken control panel.
 
 A composition is checked for accessibility as a whole, and it will surface problems the isolated stories never could: a placeholder heading that reaches the a11y tree with no text, an icon-only control with no name, several identical controls in a list that need distinguishing names. Fix these — they are real defects in the example, and often in how the component gets used.
+
+## Do's and don'ts rules
+
+The facet is required — an empty `do-dont` facet leaves the component unfinished, the same way an
+empty examples facet does. Format: a `## Do's and don'ts` heading with two lists, `### Do` then
+`### Don't`.
+
+The writing conventions follow the practice the major systems share
+([Polaris](https://shopify.dev/docs/apps/design/content),
+[Carbon](https://carbondesignsystem.com/guidelines/content/overview/),
+[Atlassian](https://atlassian.design/content/writing-style/),
+[GOV.UK](https://designnotes.blog.gov.uk/2018/11/05/how-we-document-components-and-patterns-in-the-gov-uk-design-system/),
+[NN/g](https://www.nngroup.com/articles/content-design-systems/),
+[EightShapes](https://medium.com/eightshapes-llc/component-design-guidelines-eca706100e7c)):
+
+- **Imperative voice, verb first; one rule per bullet.** If a bullet needs "and", split it. Keep
+  parallel structure within a list.
+- **Never a bare prohibition** — every don't names what to do instead.
+- **Concrete over abstract** — name the prop, the component, the situation, so a reviewer (or
+  checker) could spot the violation in consumer code.
+- **Rationale only when the reason isn't self-evident**, as a short clause after a dash.
+- **Graded strength** — "Don't"/"never" is reserved for hard constraints (accessibility, brand
+  law, broken HTML); "Avoid"/"prefer" marks a judgment call.
+- **Rules are about the component's job, not its API.** An obligation like "always pass X"
+  belongs in the type system; a known-issue workaround stays in known-issues.
+- **Overlap with when-to-use is deliberate** — do-dont restates the sharpest rules in short,
+  checkable form; when-to-use keeps the nuance.
+- **Plain words, no technology-specific phrasing.** Consumers style with different tools; say
+  "custom styles", not one library's idiom.
+- **Brand-flavoured rules live here too** and quote the Brand guidelines' actual wording, same as
+  decision-log brand claims. The brand facet carries the fuller note when the component embodies a
+  brand rule.
 
 ## Decision log rules
 

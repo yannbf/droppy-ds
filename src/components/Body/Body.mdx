@@ -86,6 +86,23 @@ a label rather than merely look like one.
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `Body` for paragraph copy, helper text, labels, and captions — text that supports the
+  content around it without heading semantics of its own.
+- Pair `type="label"` with your own `htmlFor`/`id` — `Body` renders the `<label>` element; the
+  association with the control is yours to wire.
+
+### Don't
+
+- Don't use `Body` for a page or section title — a title belongs in the document outline, which is
+  [Heading](?path=/docs/typography-heading--docs)'s job.
+- Don't use `color` to make text stand out — the
+  [brand guidelines](?path=/docs/brand-guidelines--docs) reserve text color for state: "Text color
+  communicates state, not hierarchy." Use `size` and `fontWeight` instead.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}

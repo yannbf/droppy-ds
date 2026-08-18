@@ -94,6 +94,18 @@ A `Field` wrapper for the label association, a scrub area holding the label, and
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `NumberField` for amounts the reader may want to type: prices, weights, large numbers.
+
+### Don't
+
+- Avoid `NumberField` for a small count close to 1 —
+  [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs) is the simpler, button-only
+  sibling.
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -199,6 +211,7 @@ Merged onto the root alongside the component's own `droppy-NumberField` class.
 - [#107](https://github.com/yannbf/droppy-ds/issues/107): aria-label / aria-labelledby / aria-describedby type-check but are inert — a field without the label prop has no accessible name. **Workaround:** pass `id` and supply your own (optionally visually hidden) external `<label htmlFor>`; descriptions require a post-mount DOM patch on the input.
 - [#110](https://github.com/yannbf/droppy-ds/issues/110): accessible strings "Increase", "Decrease", and "Number field" are hardcoded English with no way to localize them. **Workaround** (fragile): post-mount DOM setAttribute patch of the three ARIA strings from a wrapper ref, or bypass the wrapper and compose Base UI parts directly.
 - [#113](https://github.com/yannbf/droppy-ds/issues/113): no 'use client' directive — passing function props from a React Server Component module throws at the Base UI boundary. **Workaround:** add 'use client' to the consuming module, or create a single client re-export file and import the DS through it in server trees.
+- [#310](https://github.com/yannbf/droppy-ds/issues/310): `label` is typed optional, but omitting it leaves the field with no accessible name. **Workaround:** pass `label` at every call site.
 - [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
 - [#138](https://github.com/yannbf/droppy-ds/issues/138): theme chrome is bound to unnamespaced global classes (`.Button`, `.Input`, `.FieldRoot`, …) with no cascade layer, so host-app CSS collides in both directions.
 

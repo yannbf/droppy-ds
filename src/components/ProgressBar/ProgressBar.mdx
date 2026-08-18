@@ -81,6 +81,18 @@ Two parts: the track carries the `progressbar` role and the whole ARIA range, an
 
 {/* BEGIN: do-dont */}
 
+## Do's and don'ts
+
+### Do
+
+- Use `ProgressBar` for a compact, determinate bar in dense UI — checkout steps, upload rows.
+
+### Don't
+
+- Don't show a determinate bar for a wait you aren't measuring — it claims progress that isn't
+  happening. Use [Progress](?path=/docs/feedback-status-progress--docs), which can show
+  "unknown", or [Spinner](?path=/docs/feedback-status-spinner--docs).
+
 {/* END: do-dont */}
 
 {/* BEGIN: a11y */}
@@ -101,6 +113,14 @@ document.
 {/* END: a11y */}
 
 {/* BEGIN: brand */}
+
+## Brand
+
+The fill (`--ds-color-action-progress`) deliberately follows `--ds-color-action-primary` in both
+themes: the [brand guidelines](?path=/docs/brand-guidelines--docs) re-decide colour roles per
+theme — soft green even becomes the primary button in dark mode — rather than inverting light
+values. A progress fill therefore always looks like the theme's primary action, and is never
+restyled to a colour of its own.
 
 {/* END: brand */}
 
