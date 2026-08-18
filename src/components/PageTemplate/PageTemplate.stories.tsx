@@ -9,12 +9,6 @@ import { PageTemplate } from './PageTemplate'
 const hide = (...props: Array<keyof PageTemplateProps | 'children'>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
 
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
-
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
@@ -142,26 +136,6 @@ export const Anatomy: Story = {
       ],
     } satisfies AnatomyParameters,
   },
-}
-
-/* ------------------------------------------------------------------ */
-/* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — `App.tsx`
- * lays out its header, routes, and footer by hand, which is what this shell
- * replaces. The story to write: that layout assembled properly — Mealdrop's
- * `Header` (logo, search, cart) as `header`, a `HomePage` body of
- * `PageSection`s as children, and its four-column `FooterCard` row as
- * `footer` — with a deliberately short page so the min-height keeping the
- * footer at the fold is visible rather than merely described.
- */
-export const MealdropAppShell: Story = {
-  tags: ['examples'],
-  render: () => TODO,
 }
 
 /* ------------------------------------------------------------------ */

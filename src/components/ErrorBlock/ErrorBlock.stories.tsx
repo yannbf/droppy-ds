@@ -1,6 +1,10 @@
+import { LottieSvg } from 'lottie-react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent } from 'storybook/test'
+
+import errorAnimation from './animations/Error.json'
+import notFoundAnimation from './animations/NotFound.json'
 
 import type { ErrorBlockProps } from './ErrorBlock'
 import { ErrorBlock } from './ErrorBlock'
@@ -8,12 +12,6 @@ import { ErrorBlock } from './ErrorBlock'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ErrorBlockProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -164,22 +162,44 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): two importers —
- * `CategoryDetailPage` (empty category) and `RestaurantDetailPage` (restaurant
- * not found), which drive the Lottie animations in `src/assets/animations`.
- * The story to write: those two side by side with the real copy — 'This is not
- * the food you're looking for.' over an empty category, and the not-found
- * case — showing the same block doing an empty state and an error. The
- * illustration slot should hold a plain inline SVG, since the Lottie player
- * and its JSON are application assets rather than design-system ones
- * (docs/MEALDROP-PARITY.md).
- */
-export const MealdropEmptyAndNotFound: Story = {
+/** Mealdrop's own Lottie illustrations, copied from the app — the player and
+ *  the JSON are application assets, so they live with these stories rather
+ *  than shipping in the package. `chromatic-ignore` keeps the animation out of
+ *  visual regression, since a looping frame is never the same twice. */
+const AnimatedIllustration = ({ animation }: { animation: object }) => (
+  <span className="chromatic-ignore">
+    <LottieSvg src={animation} loop autoplay style={{ width: 320, height: 240 }} />
+  </span>
+)
+
+/** A category with nothing in it. */
+export const MealdropEmptyCategory: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('title', 'illustration', 'body', 'buttonText', 'onButtonClick', 'className'),
+  render: () => (
+    <ErrorBlock
+      illustration={<AnimatedIllustration animation={errorAnimation} />}
+      title="This is not the food you're looking for."
+      body="No restaurants are serving sushi near you right now. Try another category."
+      buttonText="Browse categories"
+      onButtonClick={() => {}}
+    />
+  ),
+}
+
+/** A restaurant that isn't there. */
+export const MealdropNotFound: Story = {
+  tags: ['examples'],
+  argTypes: hide('title', 'illustration', 'body', 'buttonText', 'onButtonClick', 'className'),
+  render: () => (
+    <ErrorBlock
+      illustration={<AnimatedIllustration animation={notFoundAnimation} />}
+      title="We couldn't find that restaurant."
+      body="It may have closed, or the link may be out of date."
+      buttonText="Back to home"
+      onButtonClick={() => {}}
+    />
+  ),
 }
 
 /* ------------------------------------------------------------------ */

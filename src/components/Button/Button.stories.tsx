@@ -4,18 +4,17 @@ import { expect, fn, userEvent } from 'storybook/test'
 
 import { iconNames } from '../Icon'
 
+import { Body } from '../Body'
+import { Card } from '../Card'
+import { Heading } from '../Heading'
+import { Separator } from '../Separator'
+
 import type { ButtonProps } from './Button'
 import { Button } from './Button'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ButtonProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -220,22 +219,39 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): seven files import
- * `Button` — `Header`, `ShoppingCartMenu`, the checkout `ContactDetails` and
- * `DeliveryDetails` forms, `AwardWinningSection`, `Banner`. The story to write
- * is the checkout footer, where the variants have to earn their difference in
- * one view: `large` 'Go to checkout' as the primary, `clear` 'Continue
- * shopping' beside it, and a `round clear` icon-only close on the cart panel —
- * the whole point being one obvious primary per screen. Mealdrop spaced its
- * button icons with a spacer element; Droppy uses `gap`, one fewer DOM node
- * for the same 1rem (docs/MEALDROP-PARITY.md).
- */
+/** The action stack in Mealdrop's cart panel. */
 export const MealdropCheckoutActions: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('children', 'clear', 'round', 'large', 'icon', 'iconSize', 'disabled', 'onClick'),
+  render: () => (
+    <Card padded style={{ maxWidth: '24rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Heading level={3} size={4}>
+          Your order
+        </Heading>
+        <Button round clear icon="cross" aria-label="Close cart" />
+      </div>
+
+      <div style={{ display: 'grid', gap: '0.5rem', margin: '1rem 0' }}>
+        <Body size="S">Cheeseburger ×2 — €17.00</Body>
+        <Body size="S">Fries ×1 — €2.50</Body>
+      </div>
+
+      <Separator />
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1rem 0' }}>
+        <Body fontWeight="bold">Total</Body>
+        <Body fontWeight="bold">€19.50</Body>
+      </div>
+
+      <div style={{ display: 'grid', gap: '0.5rem' }}>
+        <Button large icon="cart">
+          Go to checkout
+        </Button>
+        <Button clear>Continue shopping</Button>
+      </div>
+    </Card>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

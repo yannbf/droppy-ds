@@ -2,6 +2,14 @@
 
 Instructions for AI agents working in this repository — fixing bugs, creating components, or editing docs. Droppy is the design system of Mealdrop Corp; its Storybook is the product, so documentation quality is held to the same bar as code.
 
+**The repositories**, since agents and contributors both need them by name rather than by local path:
+
+| | Repository | What it is |
+| --- | --- | --- |
+| Droppy | [yannbf/droppy-ds](https://github.com/yannbf/droppy-ds) | This repo — the design system and its Storybook. |
+| Mealdrop | [yannbf/mealdrop](https://github.com/yannbf/mealdrop) | The consumer app. Branch [`agentic-reference/droppy`](https://github.com/yannbf/mealdrop/tree/agentic-reference/droppy) is the arm that consumes this package, and the source for example-story content. |
+| DropBoard | — | Mealdrop Corp's restaurant-partner back office. No repository; it lives in these docs as the second brand the system serves. |
+
 ## Before you start
 
 1. **Read the guidelines relevant to your change.** They are the source of truth, not suggestions:
@@ -19,6 +27,7 @@ Non-negotiables, summarized:
 
 - Five files in `src/components/<Name>/`: component, CSS, stories, MDX, index. Match an exemplar page (`Tabs.mdx`, `Card.mdx`) structurally — the MDX facet order and `{/* BEGIN/END */}` markers are load-bearing.
 - Every prop gets an `ArgTypes` entry, a `###` section, and a story. Every behavior claim in the docs has a story demonstrating it.
+- **At least one `examples` story, and a filled `examples` MDX facet.** A composed screen mined from Mealdrop ([yannbf/mealdrop](https://github.com/yannbf/mealdrop), branch [`agentic-reference/droppy`](https://github.com/yannbf/mealdrop/tree/agentic-reference/droppy)) or DropBoard — not a prop demo, and never a placeholder. Committing `render: () => TODO` or an empty examples facet means the component is not done. See the skill's *Example stories* section for what a real one looks like.
 - The `history` facet records the component's real origin and decisions (with commit links); the `known-issues` facet lists honest, issue-tracked defects — a new component audited to zero findings is more suspicious than one with five.
 - Styling reads design tokens; classes are `droppy-<Name>` namespaced; `className` merges rather than replaces.
 
@@ -37,7 +46,7 @@ Non-negotiables, summarized:
 pnpm check && pnpm lint && pnpm test:ci && pnpm build-storybook
 ```
 
-All four must pass. Visual changes additionally go through Chromatic on CI — expect and review snapshot diffs rather than avoiding them.
+All four must pass. Story tests go through the Storybook MCP's `run-story-tests` rather than a `package.json` script; composed example stories must come back with zero accessibility violations. Visual changes additionally go through Chromatic on CI — expect and review snapshot diffs rather than avoiding them.
 
 ## Keep these instructions current
 

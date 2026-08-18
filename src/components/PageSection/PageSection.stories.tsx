@@ -9,12 +9,6 @@ import { PageSection } from './PageSection'
 const hide = (...props: Array<keyof PageSectionProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
 
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
-
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
@@ -154,26 +148,6 @@ export const Anatomy: Story = {
       ],
     } satisfies AnatomyParameters,
   },
-}
-
-/* ------------------------------------------------------------------ */
-/* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): three importers, all on
- * the home page — `CategoriesSection`, `RestaurantsSection`, and
- * `AwardWinningSection`. The story to write: that home page stacked as it
- * really is — 'Categories' with a 'View all categories' action over a row of
- * category tiles, then 'Restaurants near you' with no action over
- * `RestaurantCard`s — which shows the action pulling its weight only where
- * there is somewhere further to go.
- */
-export const MealdropHomeSections: Story = {
-  tags: ['examples'],
-  render: () => TODO,
 }
 
 /* ------------------------------------------------------------------ */

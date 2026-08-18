@@ -3,18 +3,14 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { TopBanner } from '../TopBanner'
+
 import type { BreadcrumbProps } from './Breadcrumb'
 import { Breadcrumb } from './Breadcrumb'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof BreadcrumbProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -178,20 +174,28 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): one import, in
- * `CategoryDetailPage.tsx`, where the trail sits under the `TopBanner` on a
- * category page. The story to write: that page header — `TopBanner` with the
- * category photo, the breadcrumb 'categories / sushi' beneath it — with the
- * crumbs using `render={<RouterLink …/>}`, since Mealdrop had `react-router`'s
- * `Link` baked into the component before the escape hatch replaced it
- * (docs/MEALDROP-PARITY.md).
- */
+/** The trail under a category page banner. */
 export const MealdropCategoryTrail: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('items', 'className'),
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <div>
+      <TopBanner
+        title="Sushi"
+        photoUrl="https://images.pexels.com/photos/9210/food-japanese-food-photography-sushi.jpg?auto=compress&cs=tinysrgb&dpr=2&h=550"
+      />
+      <div style={{ padding: '1rem 1.5rem' }}>
+        <Breadcrumb
+          items={[
+            { label: 'home', render: <RouterLink to="/" /> },
+            { label: 'categories', render: <RouterLink to="/categories" /> },
+            { label: 'sushi', render: <RouterLink to="/categories/sushi" /> },
+          ]}
+        />
+      </div>
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

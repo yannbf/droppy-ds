@@ -2,7 +2,11 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Badge } from '../Badge'
+import { Body } from '../Body'
+import { Card } from '../Card'
 import { Heading } from '../Heading'
+import { Review } from '../Review'
 
 import type { SkeletonProps } from './Skeleton'
 import { Skeleton } from './Skeleton'
@@ -10,12 +14,6 @@ import { Skeleton } from './Skeleton'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof SkeletonProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -206,23 +204,53 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): imported by
- * `RestaurantCard`, which renders a skeleton twin of itself while the
- * restaurant list loads. The story to write: that card's loading state, a
- * `Skeleton` photo block above skeleton lines matching the real title,
- * `Review`, and category rows — wrapped in one `role="status"` labelled
- * 'Loading restaurants' with the placeholders `aria-hidden` beneath it. Worth
- * showing beside the resolved card so the widths visibly line up. Mealdrop
- * needed a `<SkeletonTheme>` wrapper around `react-loading-skeleton` to colour
- * it; Droppy's reads the skeleton tokens directly, so the wrapper and the
- * dependency both disappear (docs/MEALDROP-PARITY.md).
- */
+/** A restaurant tile loading, beside the tile it becomes. */
 export const MealdropRestaurantCardLoading: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('width', 'height', 'className', 'style'),
+  render: () => (
+    <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+      <div role="status" aria-label="Loading restaurants">
+        <Card aria-hidden style={{ width: '18rem' }}>
+          <Skeleton height={160} />
+          <div style={{ display: 'grid', gap: '0.5rem', padding: '1.5rem' }}>
+            <Heading level={2} size={4}>
+              <Skeleton width="60%" />
+            </Heading>
+            <Body size="S">
+              <Skeleton width="45%" />
+            </Body>
+            <Body size="S">
+              <Skeleton width="80%" />
+            </Body>
+            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+              <Skeleton width={72} height={24} />
+              <Skeleton width={104} height={24} />
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      <Card style={{ width: '18rem' }}>
+        <img
+          src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1003&q=20"
+          alt=""
+          style={{ display: 'block', height: 160, width: '100%', objectFit: 'cover' }}
+        />
+        <div style={{ display: 'grid', gap: '0.5rem', padding: '1.5rem' }}>
+          <Heading level={2} size={4}>
+            Burger Kingdom
+          </Heading>
+          <Review rating={4.2} />
+          <Body size="S">Nicest place for burgers</Body>
+          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+            <Badge text="burgers" />
+            <Badge text="comfort food" />
+          </div>
+        </div>
+      </Card>
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

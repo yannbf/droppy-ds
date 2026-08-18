@@ -5,8 +5,6 @@ import { expect, fn, userEvent, waitFor } from 'storybook/test'
 
 import { Badge } from '../Badge'
 import { Body } from '../Body'
-import { NumberField } from '../NumberField'
-import { Select } from '../Select'
 
 import type { AccordionItem, AccordionProps } from './Accordion'
 import { Accordion } from './Accordion'
@@ -386,98 +384,8 @@ export const PanelHeightTransition: Story = {
 /* examples — DropBoard, the restaurant-partner back office            */
 /* ------------------------------------------------------------------ */
 
-const PROMOTIONS = ['No promotion', '10% off', '2 for 1', 'Free with €20+'] as const
-
-type MenuRow = {
-  id: string
-  name: string
-  price: number
-  promotion: (typeof PROMOTIONS)[number]
-  available: boolean
-}
-
-// Mealdrop's own menu and prices (`src/stub/restaurants.ts` on
-// `agentic-reference/droppy`), with the back office's editable fields added.
-const initialMenu: MenuRow[] = [
-  { id: 'cheeseburger', name: 'Cheeseburger', price: 8.5, promotion: '2 for 1', available: true },
-  { id: 'fries', name: 'Fries', price: 2.5, promotion: 'No promotion', available: true },
-  {
-    id: 'vanilla-ice-cream',
-    name: 'Vanilla ice cream',
-    price: 2,
-    promotion: 'No promotion',
-    available: false,
-  },
-  { id: 'coca-cola', name: 'Coca-Cola', price: 1.75, promotion: '10% off', available: true },
-  { id: 'sprite', name: 'Sprite', price: 1.5, promotion: 'No promotion', available: true },
-]
-
 const euros = (amount: number) =>
   amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
-
-function MenuEditor({ items: _items, ...args }: React.ComponentProps<typeof Accordion>) {
-  const [menu, setMenu] = useState(initialMenu)
-
-  const patch = (id: string, next: Partial<MenuRow>) =>
-    setMenu((rows) => rows.map((row) => (row.id === id ? { ...row, ...next } : row)))
-
-  return (
-    <Accordion
-      {...args}
-      items={menu.map((row) => ({
-        value: row.id,
-        title: (
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-            {row.name}
-            {row.promotion !== 'No promotion' && <Badge text="promo" variant="positive" />}
-            {!row.available && <Badge text="sold out" />}
-          </span>
-        ),
-        content: (
-          <div style={{ display: 'grid', gap: '0.75rem' }}>
-            <NumberField
-              label="Price"
-              value={row.price}
-              onValueChange={(next) => patch(row.id, { price: next ?? 0 })}
-              min={0}
-              step={0.25}
-              format={{ style: 'currency', currency: 'EUR' }}
-            />
-            <Select
-              label="Promotion"
-              options={[...PROMOTIONS]}
-              value={row.promotion}
-              onChange={(next) => patch(row.id, { promotion: next as MenuRow['promotion'] })}
-            />
-            <Select
-              label="Availability"
-              options={['Available', 'Sold out']}
-              value={row.available ? 'Available' : 'Sold out'}
-              onChange={(next) => patch(row.id, { available: next === 'Available' })}
-            />
-          </div>
-        ),
-      }))}
-    />
-  )
-}
-
-/**
- * DropBoard's menu editor: one collapsible row per dish, each opening onto the
- * three fields a partner actually changes — price, a running promotion, and
- * whether the kitchen is still serving it. A promo badge surfaces in the header
- * so the list can be scanned without opening anything, and every row starts
- * closed because a partner arrives looking for one dish, not all of them.
- *
- * The badges are driven by the same state as the fields, so changing a row's
- * promotion or availability updates its header immediately.
- */
-export const DropBoardMenuEditor: Story = {
-  tags: ['examples'],
-  argTypes: hide('items', 'value', 'defaultValue', 'className'),
-  args: { openMultiple: false },
-  render: (args) => <MenuEditor {...args} />,
-}
 
 type OrderStatus = 'In the kitchen' | 'Out for delivery' | 'Delivered'
 
@@ -539,13 +447,7 @@ const orderTotal = (order: Order) =>
 // reverse-chronological puts everything actionable at the top.
 const orderedByTime = [...orders].sort((a, b) => b.placedAt.localeCompare(a.placedAt))
 
-/**
- * DropBoard's order feed: everything from today in one column, newest first,
- * so the orders still in play sit at the top. The two that haven't been handed
- * over yet carry a status badge in the header and start open — the partner's
- * actual work — while delivered orders collapse into plain rows kept for
- * reference.
- */
+/** DropBoard's order feed for the day. */
 export const DropBoardOrders: Story = {
   tags: ['examples'],
   argTypes: hide('value', 'className'),

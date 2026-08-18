@@ -1,6 +1,12 @@
+import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
+
+import { Body } from '../Body'
+import { Button } from '../Button'
+import { Card } from '../Card'
+import { Heading } from '../Heading'
 
 import type { ProgressBarProps } from './ProgressBar'
 import { ProgressBar } from './ProgressBar'
@@ -8,12 +14,6 @@ import { ProgressBar } from './ProgressBar'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ProgressBarProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -158,20 +158,52 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the
- * checkout is a single page there rather than a stepped flow. The story to
- * write is a DropBoard one: an order's kitchen progress — 'Received',
- * 'Preparing', 'Out for delivery', 'Delivered' as a four-step bar with the
- * step names as the caller's own markup above it, since the component renders
- * no visible label of its own. Worth contrasting with `Progress`, which owns
- * its label and value parts and can go indeterminate; `ProgressBar` cannot.
- */
-export const DropBoardOrderSteps: Story = {
+const checkoutSteps = ['Contact details', 'Delivery details']
+
+function CheckoutStepIndicator() {
+  const [step, setStep] = useState(1)
+
+  return (
+    <Card padded style={{ maxWidth: '30rem' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '1rem',
+          marginBottom: '0.5rem',
+        }}
+      >
+        <Heading level={3} size={4}>
+          {checkoutSteps[step - 1]}
+        </Heading>
+        <Body size="XS" type="span">
+          Step {step} of {checkoutSteps.length}
+        </Body>
+      </div>
+
+      <ProgressBar value={step} max={checkoutSteps.length} label="Checkout progress" />
+
+      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem' }}>
+        <Button clear disabled={step === 1} onClick={() => setStep((s) => Math.max(1, s - 1))}>
+          Previous
+        </Button>
+        <Button
+          disabled={step === checkoutSteps.length}
+          onClick={() => setStep((s) => Math.min(checkoutSteps.length, s + 1))}
+        >
+          Next
+        </Button>
+      </div>
+    </Card>
+  )
+}
+
+/** Mealdrop's checkout step indicator. */
+export const MealdropCheckoutSteps: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('value', 'max', 'label', 'className'),
+  render: () => <CheckoutStepIndicator />,
 }
 
 /* ------------------------------------------------------------------ */

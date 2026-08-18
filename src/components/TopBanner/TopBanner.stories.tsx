@@ -2,18 +2,15 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Badge } from '../Badge'
+import { Review } from '../Review'
+
 import type { TopBannerProps } from './TopBanner'
 import { TopBanner } from './TopBanner'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof TopBannerProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -167,19 +164,26 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): four importers, the
- * category and restaurant detail pages among them. The story to write: the
- * restaurant detail header — the banner carrying `restaurant.photoUrl` with
- * 'Burger Kingdom' over it, then `Review` and the category `Badge`s below the
- * band — which is the composition that shows why the heading needs its
- * on-photo treatment, since the photo behind it is uncontrolled.
- */
+/** The restaurant detail page header. */
 export const MealdropRestaurantHeader: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('title', 'photoUrl', 'onBackClick', 'className'),
+  parameters: { layout: 'fullscreen' },
+  render: () => (
+    <div>
+      <TopBanner
+        title="Burger Kingdom"
+        photoUrl="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1003&q=20"
+      />
+      <div style={{ display: 'grid', gap: '0.75rem', padding: '1.5rem' }}>
+        <Review rating={4.2} />
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <Badge text="burgers" />
+          <Badge text="comfort food" />
+        </div>
+      </div>
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

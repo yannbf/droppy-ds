@@ -2,6 +2,10 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Card } from '../Card'
+import { Heading } from '../Heading'
+
 import type { ProgressProps } from './Progress'
 import { Progress } from './Progress'
 
@@ -14,12 +18,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const meta = {
@@ -172,20 +170,31 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the app
- * has no upload or long-running task. The story to write is a DropBoard one:
- * the menu-photo uploader — a determinate bar with 'Uploading 3 of 8 photos'
- * and its percentage while bytes are in flight, then an indeterminate one
- * labelled 'Processing images' once the server takes over and the remaining
- * time stops being knowable. That pair is the argument for this component over
- * `ProgressBar`, which cannot express the second half.
- */
+/** DropBoard's menu-photo uploader, determinate then indeterminate. */
 export const DropBoardPhotoUpload: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('value', 'max', 'label', 'showValue', 'className'),
+  render: () => (
+    <Card padded style={{ maxWidth: '28rem' }}>
+      <Heading level={3} size={4}>
+        Menu photos
+      </Heading>
+
+      <div style={{ display: 'grid', gap: '2rem', marginTop: '1.5rem' }}>
+        <div style={{ display: 'grid', gap: '0.5rem' }}>
+          <Progress value={37} label="Uploading 3 of 8 photos" showValue />
+          <Body size="XXS">Bytes in flight — the browser knows the total.</Body>
+        </div>
+
+        <div style={{ display: 'grid', gap: '0.5rem' }}>
+          <Progress value={null} label="Processing images" />
+          <Body size="XXS">
+            The server owns this step, and will not say how long it has left.
+          </Body>
+        </div>
+      </div>
+    </Card>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

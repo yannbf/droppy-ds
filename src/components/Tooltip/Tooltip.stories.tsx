@@ -5,8 +5,10 @@ import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import { Button } from '../Button'
 
+import { IconButton } from '../IconButton'
+
 import type { TooltipProps } from './Tooltip'
-import { Tooltip } from './Tooltip'
+import { Tooltip, TooltipProvider } from './Tooltip'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof TooltipProps>) =>
@@ -17,12 +19,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const meta = {
@@ -183,20 +179,38 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the
- * app's icon-only controls rely on `aria-label` alone, which is correct but
- * leaves sighted mouse users guessing. The story to write is a DropBoard one:
- * the order row's action cluster — print, refund, and contact-courier icon
- * buttons, each with a tip repeating its `aria-label` — wrapped in
- * `TooltipProvider` so moving along the row doesn't replay the opening delay
- * on every button.
- */
-export const DropBoardOrderActions: Story = {
+/** Tips on Mealdrop's two icon-only header controls. */
+export const MealdropHeaderTips: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('label', 'children', 'sideOffset', 'className'),
+  render: () => (
+    <TooltipProvider>
+      <div style={{ display: 'flex', gap: '1rem' }}>
+        <Tooltip label="Your order">
+          <IconButton name="cart" aria-label="Your order" />
+        </Tooltip>
+        <Tooltip label="Turn on dark mode">
+          <IconButton name="moon" aria-label="Turn on dark mode" />
+        </Tooltip>
+      </div>
+    </TooltipProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    // Focus rather than hover: a hovered tip waits out the provider's opening
+    // delay, which a synthetic pointer event does not reliably clear on CI,
+    // while focus opens it immediately. Tab lands on the first trigger.
+    await userEvent.tab()
+
+    // Matched by class rather than by text and tag: the trigger's accessible
+    // name repeats the tip's text, and the popup's markup is Base UI's to
+    // change.
+    await waitFor(() => {
+      const popup = canvasElement.ownerDocument.querySelector('.droppy-Tooltip')
+
+      expect(popup).not.toBeNull()
+      expect(popup).toHaveTextContent('Your order')
+    })
+  },
 }
 
 /* ------------------------------------------------------------------ */

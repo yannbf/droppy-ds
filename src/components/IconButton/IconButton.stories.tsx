@@ -4,18 +4,16 @@ import { expect, fn, userEvent } from 'storybook/test'
 
 import { iconNames } from '../Icon'
 
+import { Body } from '../Body'
+import { Card } from '../Card'
+import { Heading } from '../Heading'
+
 import type { IconButtonProps } from './IconButton'
 import { IconButton } from './IconButton'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof IconButtonProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -152,19 +150,56 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): one import, in
- * `Carousel.tsx`, where a pair of them are the previous/next arrows floating
- * over the restaurant tiles. The story to write: that carousel rail — two
- * `IconButton`s positioned over a scrolling row of photo cards, which is
- * exactly the case the never-goes-dark rule exists for, since the arrows sit
- * on top of arbitrary restaurant imagery rather than on a themed surface.
- */
+const railTiles = [
+  {
+    name: 'Burger Kingdom',
+    photoUrl:
+      'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1003&q=20',
+  },
+  {
+    name: 'Kara Fin',
+    photoUrl:
+      'https://images.pexels.com/photos/1058277/pexels-photo-1058277.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+  },
+  {
+    name: 'Ciao Bella',
+    photoUrl:
+      'https://images.pexels.com/photos/6267/menu-restaurant-vintage-table.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+  },
+]
+
+/** Carousel arrows floating over restaurant photos. */
 export const MealdropCarouselArrows: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('name', 'small', 'onClick'),
+  render: () => (
+    <div style={{ position: 'relative', maxWidth: '34rem' }}>
+      <div style={{ display: 'flex', gap: '1rem', overflow: 'hidden' }}>
+        {railTiles.map((tile) => (
+          <Card key={tile.name} interactive style={{ minWidth: '16rem' }}>
+            <img
+              src={tile.photoUrl}
+              alt=""
+              style={{ display: 'block', height: 140, width: '100%', objectFit: 'cover' }}
+            />
+            <div style={{ padding: '1rem' }}>
+              <Heading level={3} size={5}>
+                {tile.name}
+              </Heading>
+              <Body size="XS">Delivers in 25–35 min</Body>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <div style={{ position: 'absolute', top: '3rem', left: '-1rem' }}>
+        <IconButton name="arrow-left" aria-label="Previous restaurants" />
+      </div>
+      <div style={{ position: 'absolute', top: '3rem', right: '-1rem' }}>
+        <IconButton name="arrow-right" aria-label="Next restaurants" />
+      </div>
+    </div>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

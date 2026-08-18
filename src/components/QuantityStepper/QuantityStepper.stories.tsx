@@ -3,6 +3,10 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, fn, userEvent } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Heading } from '../Heading'
+import { Separator } from '../Separator'
+
 import type { QuantityStepperProps } from './QuantityStepper'
 import { QuantityStepper } from './QuantityStepper'
 
@@ -15,12 +19,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const StepperDemo = ({
@@ -174,20 +172,68 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): the minus/plus pair was an
- * inline pattern in the food-item modal and the cart before it became a
- * component (docs/MEALDROP-PARITY.md). The story to write: a cart line —
- * 'Cheeseburger €8.50' with a stepper beside it and a running line total that
- * follows the quantity — with the `aria-label` naming the dish rather than
- * saying 'quantity', since a cart has several of these and the default name
- * would repeat for each.
- */
+const cartEuros = (amount: number) =>
+  amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
+
+const initialLines = [
+  { id: 'cheeseburger', name: 'Cheeseburger', price: 8.5, quantity: 2 },
+  { id: 'fries', name: 'Fries', price: 2.5, quantity: 1 },
+  { id: 'coca-cola', name: 'Coca-Cola', price: 1.75, quantity: 3 },
+]
+
+function CartLines() {
+  const [lines, setLines] = useState(initialLines)
+
+  const setQuantity = (id: string, quantity: number) =>
+    setLines((rows) => rows.map((row) => (row.id === id ? { ...row, quantity } : row)))
+
+  const total = lines.reduce((sum, line) => sum + line.price * line.quantity, 0)
+
+  return (
+    <div style={{ display: 'grid', gap: '1rem', maxWidth: '26rem' }}>
+      <Heading level={3} size={4}>
+        Your order
+      </Heading>
+
+      {lines.map((line) => (
+        <div
+          key={line.id}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+          }}
+        >
+          <Body size="S">{line.name}</Body>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <QuantityStepper
+              value={line.quantity}
+              onChange={(next) => setQuantity(line.id, next)}
+              aria-label={`${line.name} quantity`}
+            />
+            <Body size="S" fontWeight="bold" style={{ minWidth: '4rem', textAlign: 'right' }}>
+              {cartEuros(line.price * line.quantity)}
+            </Body>
+          </div>
+        </div>
+      ))}
+
+      <Separator />
+
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Body fontWeight="bold">Total</Body>
+        <Body fontWeight="bold">{cartEuros(total)}</Body>
+      </div>
+    </div>
+  )
+}
+
+/** Cart lines with per-dish quantity steppers. */
 export const MealdropCartLine: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('value', 'onChange', 'min', 'max', 'aria-label', 'className'),
+  render: () => <CartLines />,
 }
 
 /* ------------------------------------------------------------------ */

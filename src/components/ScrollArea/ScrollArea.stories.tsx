@@ -2,6 +2,10 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect, waitFor } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Button } from '../Button'
+import { Separator } from '../Separator'
+
 import type { ScrollAreaProps } from './ScrollArea'
 import { ScrollArea } from './ScrollArea'
 
@@ -14,12 +18,6 @@ const inBorderedBox: Decorator = (Story) => (
   <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
     <Story />
   </div>
-)
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
 )
 
 const paragraphs = [
@@ -191,19 +189,72 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the
- * cart panel scrolls with the platform's own scrollbar. The story to write:
- * that cart's item list inside a `ScrollArea`, sitting in a `Sidebar` above a
- * pinned footer, since a long order is exactly where the panel needs its own
- * scroll region rather than the page's — and it is the composition where the
- * hover-revealed scrollbar avoids competing with the drawer chrome.
- */
+const cartEuros = (amount: number) =>
+  amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
+
+const longOrder = [
+  { name: 'Cheeseburger', quantity: 2, price: 8.5 },
+  { name: 'Fries', quantity: 2, price: 2.5 },
+  { name: 'Coca-Cola', quantity: 3, price: 1.75 },
+  { name: 'Sprite', quantity: 1, price: 1.5 },
+  { name: 'Vanilla ice cream', quantity: 2, price: 2 },
+  { name: 'Garlic bread', quantity: 1, price: 4 },
+  { name: 'Sparkling water', quantity: 2, price: 2.5 },
+  { name: 'Tiramisu', quantity: 1, price: 5.5 },
+]
+
+const orderTotal = longOrder.reduce((sum, line) => sum + line.price * line.quantity, 0)
+
+/** A long Mealdrop order scrolling above a pinned total. */
 export const MealdropCartScroll: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('children', 'orientation', 'className'),
+  render: () => (
+    <>
+      {/* The theme layer hard-codes the root at 24rem x 8.5rem, so the panel
+          sizes it rather than being clipped by it. */}
+      <style>{`.mealdrop-cart-scroll { width: 100%; height: 14rem; background: transparent; }`}</style>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '22rem',
+          border: '1px solid var(--ds-color-border-subtle)',
+          borderRadius: '8px',
+          overflow: 'hidden',
+        }}
+      >
+        <div style={{ padding: '1rem' }}>
+          <Body fontWeight="bold">Your order</Body>
+        </div>
+        <Separator />
+
+        <ScrollArea className="mealdrop-cart-scroll">
+          <div style={{ display: 'grid', gap: '0.75rem' }}>
+            {longOrder.map((line) => (
+              <div key={line.name} style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+                <Body size="S">
+                  {line.quantity}× {line.name}
+                </Body>
+                <Body size="S" fontWeight="bold">
+                  {cartEuros(line.price * line.quantity)}
+                </Body>
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
+
+        <Separator />
+        <div style={{ display: 'grid', gap: '0.75rem', padding: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Body fontWeight="bold">Total</Body>
+            <Body fontWeight="bold">{cartEuros(orderTotal)}</Body>
+          </div>
+          <Button large>Checkout</Button>
+        </div>
+      </div>
+    </>
+  ),
 }
 
 /* ------------------------------------------------------------------ */

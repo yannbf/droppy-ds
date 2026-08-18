@@ -2,18 +2,16 @@ import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
 import { expect } from 'storybook/test'
 
+import { Body } from '../Body'
+import { Card } from '../Card'
+import { Heading } from '../Heading'
+
 import type { SeparatorProps } from './Separator'
 import { Separator } from './Separator'
 
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof SeparatorProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** Placeholder for an examples story whose content lands in a later session.
- *  Paints its own background so it keeps contrast on any surface. */
-const TODO = (
-  <p style={{ margin: 0, padding: '0.5rem', background: '#ffffff', color: '#1a1a1a' }}>TODO</p>
-)
 
 /** A bordered parent, so the margin the ClassName demo adds is actually visible. */
 const inBorderedBox: Decorator = (Story) => (
@@ -143,20 +141,44 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * TODO — real content lands in the dedicated examples session.
- *
- * Mined from Mealdrop (`agentic-reference/droppy`): no direct import — the app
- * draws its dividers with borders on `OrderSummary`'s rows. The story to write
- * is that summary rebuilt honestly: the cart's line items separated by
- * horizontal separators, with the total below a final one, which is where the
- * semantic role actually earns something a CSS border can't give. The brand
- * rule to respect is BR-02 / DS-01 — separators are `border.subtle` lines, and
- * an accent colour never draws one.
- */
+const summaryLines = [
+  { name: 'Cheeseburger ×2', amount: '€17.00' },
+  { name: 'Fries ×1', amount: '€2.50' },
+  { name: 'Coca-Cola ×3', amount: '€5.25' },
+]
+
+/** Dividers in Mealdrop's order summary. */
 export const MealdropOrderSummaryDividers: Story = {
   tags: ['examples'],
-  render: () => TODO,
+  argTypes: hide('orientation', 'style', 'className'),
+  render: () => (
+    <Card padded style={{ maxWidth: '24rem' }}>
+      <Heading level={3} size={4}>
+        Order summary
+      </Heading>
+
+      <div style={{ display: 'grid', gap: '0.75rem', marginTop: '1rem' }}>
+        {summaryLines.map((line, index) => (
+          <div key={line.name} style={{ display: 'grid', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <Body size="S">{line.name}</Body>
+              <Body size="S">{line.amount}</Body>
+            </div>
+            {index < summaryLines.length - 1 && <Separator />}
+          </div>
+        ))}
+      </div>
+
+      <div style={{ margin: '1.5rem 0' }}>
+        <Separator />
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Body fontWeight="bold">Total</Body>
+        <Body fontWeight="bold">€24.75</Body>
+      </div>
+    </Card>
+  ),
 }
 
 /* ------------------------------------------------------------------ */
