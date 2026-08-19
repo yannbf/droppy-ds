@@ -7,6 +7,8 @@
     "url": "git+https://github.com/yannbf/droppy-ds.git"
   },
   "license": "MIT",
+  "homepage": "https://github.com/yannbf/droppy-ds#readme",
+  "bugs": "https://github.com/yannbf/droppy-ds/issues",
   "type": "module",
   "sideEffects": [
     "*.css"
@@ -42,7 +44,8 @@
     "experiment:freeze": "tsx tools/storybook-freeze/src/cli.ts",
     "experiment:publish-branches": "tsx tools/storybook-freeze/src/publish-branches.ts",
     "experiment:check": "tsc --noEmit -p tools/storybook-freeze",
-    "experiment:test": "vitest run --config tools/storybook-freeze/vitest.config.ts"
+    "experiment:test": "vitest run --config tools/storybook-freeze/vitest.config.ts",
+    "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -115,5 +118,8 @@
     "base-ui",
     "components",
     "accessibility"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }
