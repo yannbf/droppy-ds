@@ -275,3 +275,8 @@ export const TestItemRenderKeepsItsDestination: Story = {
     await expect(link).toHaveAttribute('href', '/categories')
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+  args: { title: 'Discover us' },
+}

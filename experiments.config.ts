@@ -7,8 +7,11 @@
  * `branchName` must start with `experiment/`.
  *
  * Unlike base-ui, no story facet is pinned into every branch: there is no Droppy equivalent of
- * base-ui's `story.base` baseline, so a branch that selects no story facets genuinely has no
- * stories, and `experiment/empty` is an empty Storybook by design.
+ * base-ui's `story.base` baseline, so a branch that selects no story facets has no real
+ * stories. Every CSF file carries an `Empty` story (tagged `empty`, mandatory args only);
+ * `keepEmptyCsf` decides its fate. When false (the default) `empty`-tagged stories are
+ * deleted like any unkept story; when true they are kept, so a branch with no story facets
+ * preserves its CSF files instead of deleting them.
  *
  * After regenerating, `pnpm experiment:publish-branches` force-pushes the branches to origin;
  * each push triggers the "Storybook MCP preview" workflow, which publishes that branch's
@@ -17,6 +20,8 @@
 interface Experiment {
   branchName: string
   facets: string[]
+  /** Keep stories tagged `empty` instead of deleting them. Defaults to false. */
+  keepEmptyCsf?: boolean
 }
 
 /** Documentation every branch keeps, so branches differ only in the facets under test. */
@@ -69,6 +74,7 @@ const experiments: Experiment[] = [
   {
     branchName: 'experiment/empty',
     facets: [],
+    keepEmptyCsf: true,
   },
   {
     branchName: 'experiment/full',

@@ -352,3 +352,7 @@ export const TestContainerPortalsWhereAsked: Story = {
     await waitFor(() => expect(host.querySelector('[data-part="toast"]')).not.toBeNull())
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+}

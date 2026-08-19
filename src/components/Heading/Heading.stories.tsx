@@ -222,3 +222,5 @@ export const TestForwardsRefAndProps: Story = {
     await expect(canvas.getByRole('heading', { level: 2 })).toHaveAttribute('id', 'heading-demo-id')
   },
 }
+
+export const Empty: Story = { tags: ['empty'] }

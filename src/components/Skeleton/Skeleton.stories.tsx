@@ -288,3 +288,7 @@ export const TestStringsPassThrough: Story = {
     await expect(skeleton.style.height).toBe('2rem')
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+}

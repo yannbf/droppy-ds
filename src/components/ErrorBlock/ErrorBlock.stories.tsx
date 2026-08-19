@@ -232,3 +232,13 @@ export const TestIllustrationIsOptional: Story = {
     await expect(canvas.getByRole('button', { name: 'See all restaurants' })).toBeVisible()
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+  args: {
+    title: 'This is not the food you’re looking for.',
+    body: 'There seems that there are no restaurants in this category yet. Try to come back later?',
+    buttonText: 'See all restaurants',
+    onButtonClick: fn(),
+  },
+}

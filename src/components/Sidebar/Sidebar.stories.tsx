@@ -428,3 +428,8 @@ export const TestContainerPortalsWhereAsked: Story = {
     await waitFor(() => expect(host.querySelector('[role="dialog"]')).not.toBeNull())
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+  args: { isOpen: false, title: 'Your order', onClose: fn() },
+}

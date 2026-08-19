@@ -306,3 +306,7 @@ export const TestHorizontalOnlyOmitsVertical: Story = {
     await expect(canvasElement.querySelector('[data-orientation="vertical"]')).toBeNull()
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+}

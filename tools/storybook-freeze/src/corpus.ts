@@ -30,10 +30,11 @@ function withoutTsx(absolutePath: string): string {
 async function processStoryFile(
   file: string,
   keep: ReadonlySet<string>,
-  labels: Labels
+  labels: Labels,
+  keepEmptyCsf: boolean
 ): Promise<FileOutcome> {
   const code = await readFile(file, 'utf8')
-  const result = transformStory(file, code, keep, labels)
+  const result = transformStory(file, code, keep, labels, keepEmptyCsf)
   const base: FileOutcome = {
     csfKey: withoutTsx(file),
     removedNames: result.removedStoryNames,
@@ -118,7 +119,8 @@ function collect(summary: CorpusSummary, outcomes: FileOutcome[]): void {
 export async function runCorpus(
   cwd: string,
   keep: ReadonlySet<string>,
-  labels: Labels
+  labels: Labels,
+  keepEmptyCsf = false
 ): Promise<CorpusSummary> {
   const [storyFiles, mdxFiles, sourceFiles] = await Promise.all([
     globby('src/components/*/*.stories.tsx', { cwd, absolute: true }),
@@ -135,7 +137,7 @@ export async function runCorpus(
   const sourcesPromise = Promise.all(sourceFiles.map((file) => processSourceFile(file, keep)))
 
   const storyOutcomes = await Promise.all(
-    storyFiles.map((file) => processStoryFile(file, keep, labels))
+    storyFiles.map((file) => processStoryFile(file, keep, labels, keepEmptyCsf))
   )
 
   const prunedCsf = new Set<string>()

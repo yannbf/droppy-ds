@@ -57,20 +57,25 @@ function isJSDocRange(
   return comment !== undefined && comment.value.startsWith('*')
 }
 
+/** The tag marking placeholder stories whose fate `keepEmptyCsf` decides. */
+export const EMPTY_TAG = 'empty'
+
 /**
  * Decide which story exports survive on this branch, and strip CSF JSDoc.
  *
  * A story's effective tags are the union of its own `tags` and the `meta`-level `tags`,
  * narrowed to `labels.storyTags` (the recognized classification vocabulary). The export
  * survives if any of those, as `story.<tag>`, is kept — otherwise the whole export is removed,
- * comment and all. Independently, the `meta` docblock and each surviving story's docblock are
- * stripped unless `csf-jsdoc.meta` / `csf-jsdoc.story` is kept.
+ * comment and all. Stories tagged `empty` sit outside the facet vocabulary: `keepEmptyCsf`
+ * alone decides whether they survive. Independently, the `meta` docblock and each surviving
+ * story's docblock are stripped unless `csf-jsdoc.meta` / `csf-jsdoc.story` is kept.
  */
 export function transformStory(
   filename: string,
   code: string,
   keep: ReadonlySet<string>,
-  labels: Labels
+  labels: Labels,
+  keepEmptyCsf = false
 ): StoryTransformResult {
   const { program, comments } = parse(filename, code)
   const ms = new MagicString(code)
@@ -112,10 +117,11 @@ export function transformStory(
       continue
     }
 
-    const effectiveTags = [...new Set([...metaTags, ...tagsOf(declarator.init)])].filter((tag) =>
-      labels.storyTags.has(tag)
-    )
-    const isKept = effectiveTags.some((tag) => labels.isKept(`story.${tag}`, keep))
+    const rawTags = [...new Set([...metaTags, ...tagsOf(declarator.init)])]
+    const effectiveTags = rawTags.filter((tag) => labels.storyTags.has(tag))
+    const isKept = rawTags.includes(EMPTY_TAG)
+      ? keepEmptyCsf
+      : effectiveTags.some((tag) => labels.isKept(`story.${tag}`, keep))
 
     if (!isKept) {
       const lead = leadingBlockComment(node, comments, code)

@@ -7,6 +7,8 @@ import { type Labels } from './labels'
 export interface ExperimentConfig {
   branchName: string
   facets: string[]
+  /** Keep stories tagged `empty` instead of deleting them. Defaults to false. */
+  keepEmptyCsf: boolean
 }
 
 export const CONFIG_FILENAME = 'experiments.config.ts'
@@ -48,7 +50,7 @@ export function validateExperiments(raw: unknown, labels: Labels): ExperimentCon
       )
     }
 
-    const { branchName, facets } = entry as Record<string, unknown>
+    const { branchName, facets, keepEmptyCsf } = entry as Record<string, unknown>
 
     if (typeof branchName !== 'string' || !branchName.startsWith('experiment/')) {
       throw new Error(
@@ -83,6 +85,14 @@ export function validateExperiments(raw: unknown, labels: Labels): ExperimentCon
       )
     }
 
-    return { branchName, facets: facets as string[] }
+    if (keepEmptyCsf !== undefined && typeof keepEmptyCsf !== 'boolean') {
+      throw new Error(
+        `Droppy: ${CONFIG_FILENAME} ${where} (${branchName}) has an invalid keepEmptyCsf. ` +
+          'It decides whether stories tagged "empty" survive on the branch, so it must be a ' +
+          'boolean (or omitted, which means false).'
+      )
+    }
+
+    return { branchName, facets: facets as string[], keepEmptyCsf: keepEmptyCsf === true }
   })
 }

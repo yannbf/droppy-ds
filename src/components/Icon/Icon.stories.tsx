@@ -257,3 +257,8 @@ export const TestColorOverridesStroke: Story = {
     await expect(getComputedStyle(icon).stroke).toBe('rgb(183, 28, 28)')
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+  args: { name: 'cart' },
+}
