@@ -242,5 +242,5 @@ export const TestSeparatorIsNotAnnounced: Story = {
 
 export const Empty: Story = {
   tags: ['empty'],
-  args: { items: [{ label: 'categories', href: '/categories' }, { label: 'sushi' }] },
+  args: { items: [{ label: 'parent', href: '/parent' }, { label: 'current page' }] },
 }

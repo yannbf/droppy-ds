@@ -188,9 +188,7 @@ export const DropBoardPhotoUpload: Story = {
 
         <div style={{ display: 'grid', gap: '0.5rem' }}>
           <Progress value={null} label="Processing images" />
-          <Body size="XXS">
-            The server owns this step, and will not say how long it has left.
-          </Body>
+          <Body size="XXS">The server owns this step, and will not say how long it has left.</Body>
         </div>
       </div>
     </Card>

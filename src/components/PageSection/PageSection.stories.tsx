@@ -182,5 +182,5 @@ export const TestActionFiresItsCallback: Story = {
 
 export const Empty: Story = {
   tags: ['empty'],
-  args: { title: 'Asian', children: <p>Restaurant cards go here.</p> },
+  args: { title: 'Title', children: <p>Content goes here.</p> },
 }

@@ -219,15 +219,45 @@ type Order = { id: string; placedAt: string; customer: string; items: string; to
 
 const ordersByStatus: Record<string, Order[]> = {
   kitchen: [
-    { id: 'DB-2291', placedAt: '13:02', customer: 'Ada Lovelace', items: '2× Cheeseburger, 1× Fries', total: 19.5 },
-    { id: 'DB-2292', placedAt: '13:08', customer: 'Katherine Johnson', items: '1× Cheeseburger, 2× Sprite', total: 11.5 },
+    {
+      id: 'DB-2291',
+      placedAt: '13:02',
+      customer: 'Ada Lovelace',
+      items: '2× Cheeseburger, 1× Fries',
+      total: 19.5,
+    },
+    {
+      id: 'DB-2292',
+      placedAt: '13:08',
+      customer: 'Katherine Johnson',
+      items: '1× Cheeseburger, 2× Sprite',
+      total: 11.5,
+    },
   ],
   courier: [
-    { id: 'DB-2290', placedAt: '12:47', customer: 'Grace Hopper', items: '1× Cheeseburger, 2× Coca-Cola', total: 12 },
+    {
+      id: 'DB-2290',
+      placedAt: '12:47',
+      customer: 'Grace Hopper',
+      items: '1× Cheeseburger, 2× Coca-Cola',
+      total: 12,
+    },
   ],
   delivered: [
-    { id: 'DB-2289', placedAt: '12:31', customer: 'Alan Turing', items: '2× Fries, 1× Vanilla ice cream', total: 7 },
-    { id: 'DB-2288', placedAt: '12:04', customer: 'Barbara Liskov', items: '3× Cheeseburger', total: 25.5 },
+    {
+      id: 'DB-2289',
+      placedAt: '12:31',
+      customer: 'Alan Turing',
+      items: '2× Fries, 1× Vanilla ice cream',
+      total: 7,
+    },
+    {
+      id: 'DB-2288',
+      placedAt: '12:04',
+      customer: 'Barbara Liskov',
+      items: '3× Cheeseburger',
+      total: 25.5,
+    },
   ],
 }
 
@@ -351,5 +381,10 @@ export const TestControlledValueHoldsItsTab: Story = {
 
 export const Empty: Story = {
   tags: ['empty'],
-  args: { tabs: [...tabs] },
+  args: {
+    tabs: [
+      { value: 'one', label: 'One', content: 'Content for tab one' },
+      { value: 'two', label: 'Two', content: 'Content for tab two' },
+    ],
+  },
 }

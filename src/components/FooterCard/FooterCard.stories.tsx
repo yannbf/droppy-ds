@@ -278,5 +278,5 @@ export const TestItemRenderKeepsItsDestination: Story = {
 
 export const Empty: Story = {
   tags: ['empty'],
-  args: { title: 'Discover us' },
+  args: { title: 'Legal mentions' },
 }

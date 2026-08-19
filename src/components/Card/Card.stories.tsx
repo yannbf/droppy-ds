@@ -188,9 +188,21 @@ export const MealdropCategoryTile: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
       {[
-        { title: 'Burgers', photoUrl: 'https://images.pexels.com/photos/2233351/pexels-photo-2233351.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=550' },
-        { title: 'Pizza', photoUrl: 'https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=550' },
-        { title: 'Sushi', photoUrl: 'https://images.pexels.com/photos/9210/food-japanese-food-photography-sushi.jpg?auto=compress&cs=tinysrgb&dpr=2&h=550' },
+        {
+          title: 'Burgers',
+          photoUrl:
+            'https://images.pexels.com/photos/2233351/pexels-photo-2233351.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=550',
+        },
+        {
+          title: 'Pizza',
+          photoUrl:
+            'https://images.pexels.com/photos/2147491/pexels-photo-2147491.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=550',
+        },
+        {
+          title: 'Sushi',
+          photoUrl:
+            'https://images.pexels.com/photos/9210/food-japanese-food-photography-sushi.jpg?auto=compress&cs=tinysrgb&dpr=2&h=550',
+        },
       ].map((category) => (
         <Card
           key={category.title}

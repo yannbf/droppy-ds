@@ -280,5 +280,5 @@ export const TestColorOverridesToken: Story = {
 
 export const Empty: Story = {
   tags: ['empty'],
-  args: { children: 'The kitchen closes at 10pm, last orders 9:30.' },
+  args: { children: 'Body text' },
 }

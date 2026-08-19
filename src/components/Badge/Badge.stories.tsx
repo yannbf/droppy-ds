@@ -238,5 +238,5 @@ export const TestMergesClassName: Story = {
 
 export const Empty: Story = {
   tags: ['empty'],
-  args: { text: 'vegan' },
+  args: { text: 'Content' },
 }
