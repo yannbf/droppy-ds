@@ -52,6 +52,7 @@ export async function buildExperimentBranch(opts: {
   git: ReturnType<typeof createGit>
   branchName: string
   facets: string[]
+  keepEmptyCsf: boolean
   labels: Labels
   baseRef: string
   baseCommit: string
@@ -62,7 +63,7 @@ export async function buildExperimentBranch(opts: {
   await resetBranchToHead(opts.git, opts.branchName)
 
   const keep = new Set(opts.facets)
-  const summary = await runCorpus(opts.cwd, keep, opts.labels)
+  const summary = await runCorpus(opts.cwd, keep, opts.labels, opts.keepEmptyCsf)
   await purgeDeadCode(summary.written, opts.cwd)
   await formatFiles(summary.written)
 
@@ -104,6 +105,7 @@ export async function regenerateExperiments(opts: {
       git,
       branchName: experiment.branchName,
       facets: experiment.facets,
+      keepEmptyCsf: experiment.keepEmptyCsf,
       labels: opts.labels,
       baseRef,
       baseCommit,

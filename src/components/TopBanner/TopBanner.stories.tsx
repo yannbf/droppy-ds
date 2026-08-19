@@ -214,3 +214,7 @@ export const TestTitleIsOptional: Story = {
     await expect(canvas.queryByRole('heading')).not.toBeInTheDocument()
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+}

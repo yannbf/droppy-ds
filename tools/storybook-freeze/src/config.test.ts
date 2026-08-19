@@ -18,14 +18,32 @@ describe('validateExperiments', () => {
   it('accepts a well-formed config', () => {
     const raw = [
       { branchName: 'experiment/showcase', facets: ['story.showcase'] },
-      { branchName: 'experiment/api', facets: ['story.api-ref', 'mdx.general'] },
+      {
+        branchName: 'experiment/api',
+        facets: ['story.api-ref', 'mdx.general'],
+        keepEmptyCsf: true,
+      },
     ]
-    expect(validateExperiments(raw, labels)).toEqual(raw)
+    expect(validateExperiments(raw, labels)).toEqual([
+      { branchName: 'experiment/showcase', facets: ['story.showcase'], keepEmptyCsf: false },
+      {
+        branchName: 'experiment/api',
+        facets: ['story.api-ref', 'mdx.general'],
+        keepEmptyCsf: true,
+      },
+    ])
   })
 
   it('accepts an entry with no facets at all', () => {
     const raw = [{ branchName: 'experiment/empty', facets: [] }]
-    expect(validateExperiments(raw, labels)).toEqual(raw)
+    expect(validateExperiments(raw, labels)).toEqual([
+      { branchName: 'experiment/empty', facets: [], keepEmptyCsf: false },
+    ])
+  })
+
+  it('rejects a non-boolean keepEmptyCsf', () => {
+    const raw = [{ branchName: 'experiment/x', facets: [], keepEmptyCsf: 'yes' }]
+    expect(() => validateExperiments(raw, labels)).toThrow(/invalid keepEmptyCsf/)
   })
 
   it('rejects a non-array default export', () => {

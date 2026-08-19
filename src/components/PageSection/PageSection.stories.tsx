@@ -179,3 +179,8 @@ export const TestActionFiresItsCallback: Story = {
     await expect(args.onTopButtonClick).toHaveBeenCalledOnce()
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+  args: { title: 'Title', children: <p>Content goes here.</p> },
+}

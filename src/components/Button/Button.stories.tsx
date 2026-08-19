@@ -299,3 +299,5 @@ export const TestDefaultsToTypeButton: Story = {
     )
   },
 }
+
+export const Empty: Story = { tags: ['empty'] }

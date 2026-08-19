@@ -289,9 +289,21 @@ const cartEuros = (amount: number) =>
   amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
 
 const initialCart = [
-  { id: 'cheeseburger', name: 'Cheeseburger', description: 'Nice grilled burger with cheese', price: 8.5, quantity: 2 },
+  {
+    id: 'cheeseburger',
+    name: 'Cheeseburger',
+    description: 'Nice grilled burger with cheese',
+    price: 8.5,
+    quantity: 2,
+  },
   { id: 'fries', name: 'Fries', description: 'Fried french fries', price: 2.5, quantity: 1 },
-  { id: 'coca-cola', name: 'Coca-Cola', description: 'Chilled can, 330ml', price: 1.75, quantity: 3 },
+  {
+    id: 'coca-cola',
+    name: 'Coca-Cola',
+    description: 'Chilled can, 330ml',
+    price: 1.75,
+    quantity: 3,
+  },
 ]
 
 const QUANTITY_OPTIONS = Array.from({ length: 11 }, (_, index) => index)
@@ -320,7 +332,9 @@ function ShoppingCartMenu({ container }: Pick<SidebarProps, 'container'>) {
         container={container}
         footer={
           <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+            <div
+              style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}
+            >
               <Body type="span">Total</Body>
               <Body type="span">{cartEuros(totalPrice)}</Body>
             </div>
@@ -427,4 +441,9 @@ export const TestContainerPortalsWhereAsked: Story = {
 
     await waitFor(() => expect(host.querySelector('[role="dialog"]')).not.toBeNull())
   },
+}
+
+export const Empty: Story = {
+  tags: ['empty'],
+  args: { isOpen: false, title: 'Title', onClose: fn() },
 }

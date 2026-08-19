@@ -121,6 +121,36 @@ describe('transformStory', () => {
     expect(result.code).toContain('export const Hero')
   })
 
+  it('drops an empty-tagged story when keepEmptyCsf is false', () => {
+    const code = [
+      'const meta = {} satisfies Meta',
+      'export default meta',
+      'type Story = StoryObj<typeof meta>',
+      "export const Empty: Story = { tags: ['empty'] }",
+      "export const Hero: Story = { tags: ['showcase'], render: () => null }",
+      '',
+    ].join('\n')
+    const result = transformStory('S.stories.tsx', code, new Set(['story.showcase']), labels)
+    expect(result.code).not.toContain('export const Empty')
+    expect(result.code).toContain('export const Hero')
+    expect(result.removedStoryNames).toEqual(['Empty'])
+  })
+
+  it('keeps an empty-tagged story when keepEmptyCsf is true, even with no facets kept', () => {
+    const code = [
+      'const meta = {} satisfies Meta',
+      'export default meta',
+      'type Story = StoryObj<typeof meta>',
+      "export const Empty: Story = { tags: ['empty'] }",
+      "export const Hero: Story = { tags: ['showcase'], render: () => null }",
+      '',
+    ].join('\n')
+    const result = transformStory('S.stories.tsx', code, new Set(), labels, true)
+    expect(result.code).toContain('export const Empty')
+    expect(result.code).not.toContain('export const Hero')
+    expect(result.remainingStoryExports).toBe(1)
+  })
+
   it('always strips story.anatomy exports, because delete wins over keep', () => {
     const code = [
       'const meta = {} satisfies Meta',

@@ -15,8 +15,8 @@ const labels: Labels = {
 }
 
 const experiments = [
-  { branchName: 'experiment/showcase', facets: ['story.showcase'] },
-  { branchName: 'experiment/apiref', facets: ['story.api-ref'] },
+  { branchName: 'experiment/showcase', facets: ['story.showcase'], keepEmptyCsf: false },
+  { branchName: 'experiment/apiref', facets: ['story.api-ref'], keepEmptyCsf: false },
 ]
 
 const STORY_PATH = 'src/components/Checkbox/Checkbox.stories.tsx'

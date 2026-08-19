@@ -596,3 +596,21 @@ export const TestKeyboardTabFlow: Story = {
     await waitFor(() => expect(trigger2).toHaveAttribute('aria-expanded', 'true'))
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+  args: {
+    items: [
+      {
+        value: 'one',
+        title: 'Item one',
+        content: 'Content for item one',
+      },
+      {
+        value: 'two',
+        title: 'Item two',
+        content: 'Content for item two',
+      },
+    ],
+  },
+}

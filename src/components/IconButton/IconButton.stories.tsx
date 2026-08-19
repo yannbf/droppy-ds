@@ -239,3 +239,8 @@ export const TestSmallShrinksGlyph: Story = {
     await expect(small?.getAttribute('width')).toBe('15')
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+  args: { name: 'arrow-right' },
+}

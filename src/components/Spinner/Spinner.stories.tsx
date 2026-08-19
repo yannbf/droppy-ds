@@ -197,3 +197,7 @@ export const TestLabelOverridesName: Story = {
     await expect(canvas.queryByRole('status', { name: 'Loading' })).not.toBeInTheDocument()
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+}

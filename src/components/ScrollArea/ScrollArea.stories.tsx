@@ -232,7 +232,10 @@ export const MealdropCartScroll: Story = {
         <ScrollArea className="mealdrop-cart-scroll">
           <div style={{ display: 'grid', gap: '0.75rem' }}>
             {longOrder.map((line) => (
-              <div key={line.name} style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}>
+              <div
+                key={line.name}
+                style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}
+              >
                 <Body size="S">
                   {line.quantity}× {line.name}
                 </Body>
@@ -305,4 +308,8 @@ export const TestHorizontalOnlyOmitsVertical: Story = {
     })
     await expect(canvasElement.querySelector('[data-orientation="vertical"]')).toBeNull()
   },
+}
+
+export const Empty: Story = {
+  tags: ['empty'],
 }

@@ -4,11 +4,11 @@ Instructions for AI agents working in this repository — fixing bugs, creating 
 
 **The repositories**, since agents and contributors both need them by name rather than by local path:
 
-| | Repository | What it is |
-| --- | --- | --- |
-| Droppy | [yannbf/droppy-ds](https://github.com/yannbf/droppy-ds) | This repo — the design system and its Storybook. |
-| Mealdrop | [yannbf/mealdrop](https://github.com/yannbf/mealdrop) | The consumer app. Branch [`agentic-reference/droppy`](https://github.com/yannbf/mealdrop/tree/agentic-reference/droppy) is the arm that consumes this package, and the source for example-story content. |
-| DropBoard | — | Mealdrop Corp's restaurant-partner back office. No repository; it lives in these docs as the second brand the system serves. |
+|           | Repository                                              | What it is                                                                                                                                                                                               |
+| --------- | ------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Droppy    | [yannbf/droppy-ds](https://github.com/yannbf/droppy-ds) | This repo — the design system and its Storybook.                                                                                                                                                         |
+| Mealdrop  | [yannbf/mealdrop](https://github.com/yannbf/mealdrop)   | The consumer app. Branch [`agentic-reference/droppy`](https://github.com/yannbf/mealdrop/tree/agentic-reference/droppy) is the arm that consumes this package, and the source for example-story content. |
+| DropBoard | —                                                       | Mealdrop Corp's restaurant-partner back office. No repository; it lives in these docs as the second brand the system serves.                                                                             |
 
 ## Before you start
 
@@ -27,7 +27,7 @@ Non-negotiables, summarized:
 
 - Five files in `src/components/<Name>/`: component, CSS, stories, MDX, index. Match an exemplar page (`Tabs.mdx`, `Card.mdx`) structurally — the MDX facet order and `{/* BEGIN/END */}` markers are load-bearing.
 - Every prop gets an `ArgTypes` entry, a `###` section, and a story. Every behavior claim in the docs has a story demonstrating it.
-- **At least one `examples` story, and a filled `examples` MDX facet.** A composed screen mined from Mealdrop ([yannbf/mealdrop](https://github.com/yannbf/mealdrop), branch [`agentic-reference/droppy`](https://github.com/yannbf/mealdrop/tree/agentic-reference/droppy)) or DropBoard — not a prop demo, and never a placeholder. Committing `render: () => TODO` or an empty examples facet means the component is not done. See the skill's *Example stories* section for what a real one looks like.
+- **At least one `examples` story, and a filled `examples` MDX facet.** A composed screen mined from Mealdrop ([yannbf/mealdrop](https://github.com/yannbf/mealdrop), branch [`agentic-reference/droppy`](https://github.com/yannbf/mealdrop/tree/agentic-reference/droppy)) or DropBoard — not a prop demo, and never a placeholder. Committing `render: () => TODO` or an empty examples facet means the component is not done. See the skill's _Example stories_ section for what a real one looks like.
 - The `history` facet records the component's real origin and decisions (with commit links); the `known-issues` facet lists honest, issue-tracked defects — a new component audited to zero findings is more suspicious than one with five.
 - Styling reads design tokens; classes are `droppy-<Name>` namespaced; `className` merges rather than replaces.
 
@@ -50,4 +50,4 @@ All four must pass. Story tests go through the Storybook MCP's `run-story-tests`
 
 ## Keep these instructions current
 
-AGENTS.md and the [component-docs skill](.claude/skills/component-docs/SKILL.md) reference concrete, changeable facts: issue numbers, file paths, script names, guideline pages. **If your change invalidates any of them, update these files in the same PR** — a fixed systemic issue that this skill still tells agents to cite is a bug in the docs, treated exactly like a stale component page. Closing an issue means sweeping its references from *both* the component MDX pages and these instruction files; renaming a script or moving a doc means fixing every mention here. If you spot drift you didn't cause, fix it as part of your change anyway.
+AGENTS.md and the [component-docs skill](.claude/skills/component-docs/SKILL.md) reference concrete, changeable facts: issue numbers, file paths, script names, guideline pages. **If your change invalidates any of them, update these files in the same PR** — a fixed systemic issue that this skill still tells agents to cite is a bug in the docs, treated exactly like a stale component page. Closing an issue means sweeping its references from _both_ the component MDX pages and these instruction files; renaming a script or moving a doc means fixing every mention here. If you spot drift you didn't cause, fix it as part of your change anyway.

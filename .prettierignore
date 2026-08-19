@@ -4,6 +4,7 @@ storybook-static
 pnpm-lock.yaml
 CHANGELOG.md
 src/theme/tokens.css
+src/components/ErrorBlock/animations/
 .superpowers
 apps/*/manifests
 apps/*/services

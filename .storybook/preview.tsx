@@ -20,7 +20,13 @@ import '../src/styles/index.css'
  *
  * Stories that need a particular frame height set `parameters.portalHostHeight`.
  */
-const PortalHost = ({ Story, context }: { Story: Parameters<Decorator>[0]; context: Parameters<Decorator>[1] }) => {
+const PortalHost = ({
+  Story,
+  context,
+}: {
+  Story: Parameters<Decorator>[0]
+  context: Parameters<Decorator>[1]
+}) => {
   const [host, setHost] = useState<HTMLElement | null>(null)
   const isDocs = context.viewMode === 'docs'
   const height =

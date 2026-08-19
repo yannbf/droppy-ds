@@ -305,3 +305,7 @@ export const TestScrubbingTheLabel: Story = {
     scrubArea.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }))
   },
 }
+
+export const Empty: Story = {
+  tags: ['empty'],
+}
