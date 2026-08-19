@@ -1,5 +1,5 @@
 {
-  "name": "@droppy/design-system",
+  "name": "@droppy-ui/design-system",
   "version": "0.1.0",
   "description": "Droppy design system — React components built on Base UI and the Droppy theme.",
   "repository": {

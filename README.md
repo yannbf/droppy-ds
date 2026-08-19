@@ -1,4 +1,4 @@
-# @droppy/design-system
+# @droppy-ui/design-system
 
 React components for the Droppy design language, built on [Base UI](https://base-ui.com).
 
@@ -10,7 +10,7 @@ components with props instead of class names, so consuming code says
 ## Install
 
 ```bash
-npm install "@droppy/design-system@https://pkg.pr.new/yannbf/droppy-ds/@droppy/design-system@<sha>"
+npm install "@droppy-ui/design-system@https://pkg.pr.new/yannbf/droppy-ds/@droppy-ui/design-system@<sha>"
 ```
 
 Every commit publishes a build through [pkg.pr.new](https://pkg.pr.new); take the SHA from the
@@ -22,13 +22,13 @@ is bundled inside the package, so it never needs to be installed separately.
 Import the stylesheet once, in your app entry:
 
 ```tsx
-import '@droppy/design-system/styles.css'
+import '@droppy-ui/design-system/styles.css'
 ```
 
 It carries the Droppy tokens and every component's styles. Then import components anywhere:
 
 ```tsx
-import { Button, Input, Modal } from '@droppy/design-system'
+import { Button, Input, Modal } from '@droppy-ui/design-system'
 
 export const RemoveItem = ({ isOpen, onClose }) => (
   <Modal isOpen={isOpen} onClose={onClose}>
