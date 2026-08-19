@@ -16,20 +16,20 @@ Use an existing page as the exemplar before writing one: `src/components/Tabs/Ta
 Every page is divided into fenced facets, in this exact order, each wrapped in
 `{/* BEGIN: <facet> */}` … `{/* END: <facet> */}` markers. Keep empty facets present with their markers — tooling relies on them.
 
-| Facet | Content |
-| --- | --- |
-| `general` | One-sentence intro, `import` snippet in a `tsx` fence, `<Canvas of={Stories.Default} />`, `## Features` bullets |
-| `when-to-use` | `## When to use` and `## When not to use`, with links to the alternatives. A second `when-to-use` fence at the end of the page carries `## Related`, a bare index of neighbouring components |
-| `behavior` | `## How it works` — one `###` per behavior, each with a Canvas |
-| `anatomy` | `## Anatomy` — Canvas plus a table: Part, `data-part`, Renders, Purpose |
-| `examples` | Composed examples — required, see below |
-| `do-dont` | `## Do's and don'ts` — required, see below |
-| `a11y` | `## Keyboard & screen reader` — key table (if interactive), then **ARIA** / **Screen reader** / **You must provide** bullets |
-| `brand` | Brand-specific notes, when the component embodies a brand rule |
-| `styling` | `## Styling` — token table, plus the `className`-merge contract |
-| `props` | `## API reference` — `<ArgTypes />` then one `###` per prop with a Canvas |
-| `history` | `## Decision log` — see below |
-| `known-issues` | `## Known issues & open questions` — see below |
+| Facet          | Content                                                                                                                                                                                      |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `general`      | One-sentence intro, `import` snippet in a `tsx` fence, `<Canvas of={Stories.Default} />`, `## Features` bullets                                                                              |
+| `when-to-use`  | `## When to use` and `## When not to use`, with links to the alternatives. A second `when-to-use` fence at the end of the page carries `## Related`, a bare index of neighbouring components |
+| `behavior`     | `## How it works` — one `###` per behavior, each with a Canvas                                                                                                                               |
+| `anatomy`      | `## Anatomy` — Canvas plus a table: Part, `data-part`, Renders, Purpose                                                                                                                      |
+| `examples`     | Composed examples — required, see below                                                                                                                                                      |
+| `do-dont`      | `## Do's and don'ts` — required, see below                                                                                                                                                   |
+| `a11y`         | `## Keyboard & screen reader` — key table (if interactive), then **ARIA** / **Screen reader** / **You must provide** bullets                                                                 |
+| `brand`        | Brand-specific notes, when the component embodies a brand rule                                                                                                                               |
+| `styling`      | `## Styling` — token table, plus the `className`-merge contract                                                                                                                              |
+| `props`        | `## API reference` — `<ArgTypes />` then one `###` per prop with a Canvas                                                                                                                    |
+| `history`      | `## Decision log` — see below                                                                                                                                                                |
+| `known-issues` | `## Known issues & open questions` — see below                                                                                                                                               |
 
 ## Example stories
 
@@ -92,7 +92,7 @@ The writing conventions follow the practice the major systems share
 - Record **Droppy's decisions only** — never the upstream primitive's own history (no "Base UI decided…"), and no inventories of what a primitive supplies. If the decision was made by Base UI, it does not belong here.
 - Usable citations: pre-Droppy Mealdrop commits (`yannbf/mealdrop`), droppy-ds commits and PRs, the [parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md). Never cite transient agentic work: wave commits, Mealdrop's Droppy-adoption PRs, coverage percentages.
 - Brand claims must be anchored in Droppy's own docs — the Brand guidelines page (`?path=/docs/brand-guidelines--docs`) or the Design tokens pages — quoting their actual wording. If a rule is not codified there, state the decision plainly without a quote.
-- Keep resolution narratives concise: state the outcome ("removed in [droppy-ds #16], closing [#10]"), not the intermediate attempts — unless a rejection *is* the current state.
+- Keep resolution narratives concise: state the outcome ("removed in [droppy-ds #16], closing [#10]"), not the intermediate attempts — unless a rejection _is_ the current state.
 
 ## Known issues rules
 
@@ -117,7 +117,7 @@ The writing conventions follow the practice the major systems share
 ## When changing an existing component
 
 - **Fixing a tracked issue**: remove its known-issues bullet, close the issue (the PR should say `closes #N`), and if the fix embodies a decision worth remembering, add a dated decision-log entry recording the outcome.
-- **Behavior or API change**: add a dated decision-log entry with the *why*, and update every affected facet — Features, behavior, a11y, styling token table, props.
+- **Behavior or API change**: add a dated decision-log entry with the _why_, and update every affected facet — Features, behavior, a11y, styling token table, props.
 - **New defect noticed while working**: file an issue in the format above and add the bullet, even if you don't fix it.
 - **Docs claims must track reality**: if the code no longer does what a facet says, the facet changes in the same commit.
 

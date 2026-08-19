@@ -18,11 +18,19 @@ describe('validateExperiments', () => {
   it('accepts a well-formed config', () => {
     const raw = [
       { branchName: 'experiment/showcase', facets: ['story.showcase'] },
-      { branchName: 'experiment/api', facets: ['story.api-ref', 'mdx.general'], keepEmptyCsf: true },
+      {
+        branchName: 'experiment/api',
+        facets: ['story.api-ref', 'mdx.general'],
+        keepEmptyCsf: true,
+      },
     ]
     expect(validateExperiments(raw, labels)).toEqual([
       { branchName: 'experiment/showcase', facets: ['story.showcase'], keepEmptyCsf: false },
-      { branchName: 'experiment/api', facets: ['story.api-ref', 'mdx.general'], keepEmptyCsf: true },
+      {
+        branchName: 'experiment/api',
+        facets: ['story.api-ref', 'mdx.general'],
+        keepEmptyCsf: true,
+      },
     ])
   })
 
