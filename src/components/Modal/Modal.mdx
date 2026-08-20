@@ -5,29 +5,6 @@ import * as ModalStories from './Modal.stories'
 
 # Modal
 
-{/* BEGIN: general */}
-
-A centered overlay that asks for one decision before the page continues.
-
-```tsx
-import { Modal } from '@droppy/design-system'
-```
-
-{/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
-
-<Canvas of={ModalStories.Default} story={{ inline: false, height: '480px' }} />
-
-## Features
-
-- **Focus trap** — Tab loops inside the popup while it's open, so keyboard users can't tab into the page behind it.
-- **Scroll lock** — the page behind the modal stops scrolling while it's open.
-- **Escape and outside-press dismissal** — closing doesn't need a pointer to hit the close button exactly.
-- **Bottom sheet on mobile** — below 768px the popup docks to the bottom edge and slides up instead of appearing centered.
-- **Portal by default** — content renders at the end of `document.body`, so a parent's `overflow: hidden` or `z-index` stacking context can't clip or bury it.
-- **ARIA dialog wiring** — `role="dialog"` and the accessible name are set for you.
-
-{/* END: general */}
-
 {/* BEGIN: when-to-use */}
 
 ## When to use
@@ -41,31 +18,6 @@ import { Modal } from '@droppy/design-system'
 - To explain what a control does before it's activated, use [Tooltip](?path=/docs/overlays-tooltip--docs) — a hint doesn't need a decision or a focus trap.
 
 {/* END: when-to-use */}
-
-{/* BEGIN: behavior */}
-
-## How it works
-
-### Where focus lands
-
-Focus goes to the popup itself, not the close button: the content is what the reader asked for,
-and landing on "close" reads as an invitation to leave. Tab still reaches the close button first.
-
-<Canvas of={ModalStories.InitialFocusIsThePopup} />
-
-### Responsive shape
-
-Below 768px the card becomes a bottom sheet and slides up from the edge.
-
-<Canvas of={ModalStories.Mobile} />
-
-### Open and close motion
-
-Backdrop and popup both transition off `[data-starting-style]` and `[data-ending-style]`, and the
-popup stays mounted through the exit so the close animation runs before it disappears.
-
-<Canvas of={ModalStories.OpenCloseTransition} />
-{/* END: behavior */}
 
 {/* BEGIN: anatomy */}
 
@@ -83,134 +35,6 @@ A backdrop and the dialog card, with a supplied top bar holding the close afford
 | Close    | `close`     | `<button>` | The round icon button that dismisses                  |
 
 {/* END: anatomy */}
-
-{/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop food-item modal
-
-<Canvas of={ModalStories.MealdropFoodItemModal} />
-
-{/* END: examples */}
-
-{/* BEGIN: do-dont */}
-
-## Do's and don'ts
-
-### Do
-
-- Write `aria-label` to name the decision the user must make in the Modal, matching the visible title word for word
-- Label the buttons with their outcomes, e.g. "Remove" and "Keep" rather than "OK" and "Cancel",
-  so the choice reads from the buttons alone
-- Place the most important action on the bottom right in Desktop and bottom in Mobile variants, for predictability
-- Keep a modal to one decision and the copy it needs, short enough to read without scrolling
-
-### Don't
-
-- Don't treat `Modal` dismissal (Escape, click on the backdrop, etc) as a destructive action; always use an explicit Button for that
-- Don't open a `Modal` on top of a `Modal` as it will cause focus traps to fail
-- Don't abuse `Modal`: only use it when users must be interrupted or when it flows naturally from user action
-
-{/* END: do-dont */}
-
-{/* BEGIN: a11y */}
-
-## Keyboard & screen reader
-
-| Key                 | Action                                                                                                      |
-| ------------------- | ----------------------------------------------------------------------------------------------------------- |
-| `Tab` / `Shift+Tab` | Moves focus through the popup's tabbable elements; loops back to the start rather than escaping to the page |
-| `Escape`            | Closes the modal                                                                                            |
-
-- **ARIA**: the popup carries `role="dialog"`; the accessible name comes from the `aria-label` prop (default: `"dialog"`).
-- **Screen reader**: on open, the dialog is announced using its accessible name; on close, focus returns to wherever it was before the modal opened.
-- **You must provide:** a meaningful `aria-label` — the default value is a placeholder, not a real description of the decision being asked. Content inside the modal should also be reachable by Tab; nothing else is required to make it focusable, since the popup itself receives initial focus.
-
-{/* END: a11y */}
-
-{/* BEGIN: brand */}
-
-{/* END: brand */}
-
-{/* BEGIN: styling */}
-
-## Styling
-
-- `className` — merged with the modal's own classes, so wrapping `Modal` in `styled()` or adding utility classes composes rather than replacing the built-in styling.
-
-Modal has no CSS custom properties of its own to override — its dimensions and breakpoint are fixed by the design system. Use `className` for one-off layout changes.
-
-{/* END: styling */}
-
-{/* BEGIN: props */}
-
-## API reference
-
-<ArgTypes of={ModalStories} />
-
-### `isOpen` and `onClose`
-
-Fully controlled — the component holds no open state of its own. `onClose` fires for the button,
-Escape, and an outside press alike.
-
-<Canvas of={ModalStories.IsOpen} />
-
-### `children`
-
-The dialog body; the top bar and its close button are supplied.
-
-<Canvas of={ModalStories.Children} />
-
-### `aria-label`
-
-Names the dialog, since the body has no guaranteed heading.
-
-<Canvas of={ModalStories.AriaLabel} />
-
-### `container`
-
-Where to portal — an element or a selector. Mealdrop portals into its own `#modal` node; a package
-can't assume that exists, so it became a prop (docs/MEALDROP-PARITY.md).
-
-<Canvas of={ModalStories.Container} />
-
-### `className`
-
-Merged onto the popup alongside the component's own `droppy-Modal` class.
-
-<Canvas of={ModalStories.ClassName} />
-{/* END: props */}
-
-{/* BEGIN: history */}
-
-## Decision log
-
-- **2020-10**: overlays must lock body scroll while open — established as an early Mealdrop fix long before the design system existed, later delegated to Base UI's built-in scroll lock when Modal moved to Dialog ([mealdrop #2](https://github.com/yannbf/mealdrop/pull/2), [scroll-lock commit](https://github.com/yannbf/mealdrop/commit/c4aef0406a2e1cfddb072c9718d9f64f3c1fefdf)).
-- **2026-07**: Modal moved to Base UI Dialog, retiring the hand-rolled Portal component, CSSTransition animations, Escape hook, and body-scroll lock in favour of the primitive's built-in equivalents; the `#modal` portal target and test ids were preserved so existing play tests kept passing ([modal commit](https://github.com/yannbf/mealdrop/commit/8e76d7061086ee7f9cb809e28cc5083b0dcf6d55), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
-- **2026-07**: Modal took a `container` prop accepting an element or CSS selector (default document.body) because Mealdrop portalled into a `#modal` node hard-coded in its own index.html and a package cannot assume that node exists; selector resolution happens in an effect, safe because an overlay is closed on first paint anyway ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [useContainer.ts](https://github.com/yannbf/droppy-ds/blob/main/src/utils/useContainer.ts)).
-- **2026-07**: the pixel-parity pass separated theme opinion from structural behaviour: the theme's DialogPopup defaults (padding, flex gap, negative margin, border) were reset for edge-to-edge modal content, the backdrop darkened from the theme's 20% scrim to the original 40%, and the 120ms fade+scale desktop open restored over the theme's 300ms — establishing motion tokens as brand voice a consumer may legitimately retime ([popup padding commit](https://github.com/yannbf/mealdrop/commit/eee6cb87fefbef385265776839ba512cb04f5807), [scrim/spacing parity](https://github.com/yannbf/mealdrop/commit/e085f7d327906cc5568613e3fab91e343cd5ef6f), [animation timing](https://github.com/yannbf/mealdrop/commit/ac151a9710b9eb297274485d7bfa571f7acf19aa)).
-- **2026-07**: on open, focus goes to the popup container (tabindex −1) via initialFocus instead of the close button, so the modal opens without a visible focus ring while keyboard users can still Tab to the close button; popup overflow was restored to visible so a fixed-height card doesn't grow a scrollbar for its last few pixels ([initialFocus commit](https://github.com/yannbf/mealdrop/commit/7fd8d393288a13daff0295aa392f02e3f2acf94f)).
-- **Built on Base UI [`Dialog`](https://base-ui.com/react/components/dialog).** Droppy supplies the props, the theme classes, and the copy around it.
-
-{/* END: history */}
-
-{/* BEGIN: known-issues */}
-
-## Known issues & open questions
-
-- [#217](https://github.com/yannbf/droppy-ds/issues/217): content taller than the fixed frame (272px desktop, 50vh mobile) spills outside the popup with no way to scroll. **Workaround:** give your content wrapper its own max-height and overflow: auto, or re-assert `max-height`/`overflow: auto` on the popup via the `className` prop from app CSS.
-- [#218](https://github.com/yannbf/droppy-ds/issues/218): onClose carries no reason or event — dismissal sources are indistinguishable and cannot be selectively blocked. **Workaround** (partial): ignore `onClose` (don't flip `isOpen`) to veto every close path at once; per-reason control requires composing Base UI's Dialog directly.
-- [#219](https://github.com/yannbf/droppy-ds/issues/219): accessible name is a flat aria-label defaulting to "dialog" — the visible title cannot be associated with the dialog. **Workaround** (partial): always pass an `aria-label` mirroring the visible heading (share one constant) and enforce it via an app-level wrapper with a required prop; id-based association is not achievable.
-- [#220](https://github.com/yannbf/droppy-ds/issues/220): two open Modals break pointer isolation: the rear modal stays clickable while aria-hidden, and a nested Modal renders no backdrop. **Workaround:** avoid two simultaneous Modals, or portal the top one via `container` into a host element stacked above z-index 99; dim nested cases via `[data-nested-dialog-open]` app CSS.
-- [#221](https://github.com/yannbf/droppy-ds/issues/221): close button's accessible name is hardcoded English "close modal" with no way to localize it. **Workaround:** hide `.droppy-Modal-topBar` with app CSS and render your own localized close button inside children (Escape/backdrop dismissal still work).
-- [#222](https://github.com/yannbf/droppy-ds/issues/222): open/close animations ignore prefers-reduced-motion — a full-height 300ms slide plays for reduced-motion users. **Workaround:** an app-level `@media (prefers-reduced-motion: reduce)` rule setting `transition: none` on `.droppy-Modal` and `.droppy-Modal-backdrop`.
-- [#223](https://github.com/yannbf/droppy-ds/issues/223): invalid or empty `container` selector string crashes the app on mount, even while the modal is closed. **Workaround:** resolve the element yourself (try/catch around querySelector, or a callback ref) and pass an HTMLElement — never an unvalidated selector string.
-- [#224](https://github.com/yannbf/droppy-ds/issues/224): positioned child content paints over the close button, leaving it visible but unclickable. **Workaround:** one line of app CSS, `.droppy-Modal-topBar { z-index: 1 }`.
-- [#225](https://github.com/yannbf/droppy-ds/issues/225): `container` selector resolves once after first paint: an open modal re-parents (remounting its contents), a non-matching selector silently falls back to document.body, and the docs' "portals nowhere" claim is wrong. **Workaround:** pass a stable HTMLElement held in state via a callback ref instead of a selector or `ref.current`, and avoid changing `container` while open.
-- [#226](https://github.com/yannbf/droppy-ds/issues/226): backdrop fade is cut short on desktop close and entirely absent in dark mode. **Workaround:** app CSS aligning the desktop backdrop transition to 120ms and re-asserting the dark-mode fade rules at higher specificity.
-
-{/* END: known-issues */}
 
 {/* BEGIN: when-to-use */}
 
