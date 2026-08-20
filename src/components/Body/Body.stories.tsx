@@ -277,8 +277,3 @@ export const TestColorOverridesToken: Story = {
     await expect(getComputedStyle(canvas.getByText('Delivered')).color).toBe('rgb(10, 125, 50)')
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { children: 'Body text' },
-}

@@ -239,8 +239,3 @@ export const TestSeparatorIsNotAnnounced: Story = {
     await expect(separator).toHaveAttribute('aria-hidden', 'true')
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { items: [{ label: 'parent', href: '/parent' }, { label: 'current page' }] },
-}

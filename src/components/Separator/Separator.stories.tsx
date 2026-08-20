@@ -214,7 +214,3 @@ export const TestIsNotFocusable: Story = {
     await expect(canvas.getByRole('separator')).not.toHaveAttribute('tabindex')
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-}

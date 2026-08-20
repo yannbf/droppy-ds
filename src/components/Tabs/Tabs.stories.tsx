@@ -378,13 +378,3 @@ export const TestControlledValueHoldsItsTab: Story = {
     await expect(tab2).toHaveAttribute('aria-selected', 'true')
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: {
-    tabs: [
-      { value: 'one', label: 'One', content: 'Content for tab one' },
-      { value: 'two', label: 'Two', content: 'Content for tab two' },
-    ],
-  },
-}

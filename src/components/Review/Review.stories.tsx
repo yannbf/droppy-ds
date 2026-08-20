@@ -223,7 +223,3 @@ export const TestNoReviewsFallback: Story = {
     await expect(canvas.getByText('No reviews yet')).toBeInTheDocument()
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-}
