@@ -5,51 +5,6 @@ import * as SeparatorStories from './Separator.stories'
 
 # Separator
 
-{/* BEGIN: general */}
-
-A visual and semantic divider between two blocks of content.
-
-```tsx
-import { Separator } from '@droppy/design-system'
-```
-
-<Canvas of={SeparatorStories.Default} />
-
-## Features
-
-- **`orientation` (default `"horizontal"`) sets both the visual rule direction and the
-  `aria-orientation`/`data-orientation` attributes** — pass `"vertical"` for a divider between
-  inline content.
-- Renders `role="separator"`, so assistive technology recognizes it as a division between
-  content rather than decoration.
-- Merges any incoming `className` onto the root, alongside the theme layer's own class.
-
-{/* END: general */}
-
-{/* BEGIN: when-to-use */}
-
-## When to use
-
-- A plain visual and semantic break between two blocks or groups of content — a form's sections,
-  a toolbar's clusters of controls, a row of inline links.
-
-## When not to use
-
-- Between distinct pages or major layout regions — use a heading, a `Card` boundary, or layout
-  spacing instead; a separator is for dividing content within one region, not for structuring the
-  page itself.
-
-{/* END: when-to-use */}
-
-{/* BEGIN: behavior */}
-
-## How it works
-
-`Separator` renders `role="separator"` unconditionally, so it is a semantic divider rather than a
-decorative line. For a purely ornamental rule with no grouping meaning, a styled border is the
-lighter choice — there is no presentational escape hatch here.
-{/* END: behavior */}
-
 {/* BEGIN: anatomy */}
 
 ## Anatomy
@@ -63,79 +18,6 @@ lighter choice — there is no presentational escape hatch here.
 | Root | `root`      | `<div>` | The divider, carrying `role="separator"`, `aria-orientation`, and `data-orientation` |
 
 {/* END: anatomy */}
-
-{/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop order summary
-
-<Canvas of={SeparatorStories.MealdropOrderSummaryDividers} />
-
-{/* END: examples */}
-
-{/* BEGIN: do-dont */}
-
-## Do's and don'ts
-
-### Do
-
-- Reach for `Separator` where the break carries meaning, e.g. between order-summary lines or
-  clusters of controls
-- Match `orientation` to the axis it divides on: it sets `aria-orientation` as well as the visual
-  rule
-- Supply the spacing around a separator yourself, as the component declares no margin of its own
-
-### Don't
-
-- Don't use `Separator` for pure decoration: every instance is announced as a separator, so a
-  purely visual rule is better drawn with a border
-
-{/* END: do-dont */}
-
-{/* BEGIN: a11y */}
-
-## Keyboard & screen reader
-
-`Separator` is a passive, non-interactive element — there is no keyboard interaction to document.
-
-- **ARIA:** `role="separator"` with `aria-orientation` matching the `orientation` prop.
-- **Screen reader:** announced as a separator; carries no accessible name of its own.
-
-{/* END: a11y */}
-
-{/* BEGIN: brand */}
-
-{/* END: brand */}
-
-{/* BEGIN: styling */}
-
-## Styling
-
-Thickness, color, and margin come from the theme layer's `SeparatorRoot` class — this component
-adds no styling of its own beyond forwarding `className` to the root.
-
-{/* END: styling */}
-
-{/* BEGIN: props */}
-
-## API reference
-
-<ArgTypes of={SeparatorStories} />
-
-### `orientation`
-
-Drives `aria-orientation` and `data-orientation` together, so styling by `[data-orientation]` never
-needs the prop value duplicated in your own class logic.
-
-<Canvas of={SeparatorStories.Orientation} />
-
-### `className`
-
-Merged onto the root alongside the component's own `droppy-Separator` class.
-
-<Canvas of={SeparatorStories.ClassName} />
-{/* END: props */}
 
 {/* BEGIN: history */}
 
@@ -162,12 +44,3 @@ Merged onto the root alongside the component's own `droppy-Separator` class.
 - [#138](https://github.com/yannbf/droppy-ds/issues/138): theme chrome is bound to unnamespaced global classes (`.Button`, `.Input`, `.FieldRoot`, …) with no cascade layer, so host-app CSS collides in both directions.
 
 {/* END: known-issues */}
-
-{/* BEGIN: when-to-use */}
-
-## Related
-
-- [Card](?path=/docs/media-content-card--docs) — for dividing distinct regions of a page rather
-  than content within one region.
-
-{/* END: when-to-use */}
