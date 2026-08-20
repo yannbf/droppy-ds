@@ -39,7 +39,7 @@ const config: StorybookConfig = {
     changeDetection: true,
   },
   tags: {
-    anatomy: { excludeFromSidebar: true },
+    anatomy: { defaultFilterSelection: 'exclude' },
   },
   typescript: {
     reactDocgen: 'react-docgen-typescript',
