@@ -3,8 +3,6 @@ import * as ToastStories from './Toast.stories'
 
 <Meta of={ToastStories} />
 
-# Toast
-
 {/* BEGIN: general */}
 
 A stack of transient, self-dismissing notifications for things the reader doesn't need to act on right away.
@@ -24,20 +22,6 @@ import { ToastProvider, useToast } from '@droppy/design-system'
 
 {/* END: general */}
 
-{/* BEGIN: when-to-use */}
-
-## When to use
-
-- A confirmation of something that already happened — a draft saved, a file archived, an export finished — that the reader doesn't need to dismiss to keep working.
-- A transient status message like "Copied," which [Tooltip](?path=/docs/overlays-tooltip--docs) explicitly can't provide, since a tooltip's content is never announced to screen readers.
-
-## When not to use
-
-- A decision the reader must make before continuing — use [Modal](?path=/docs/overlays-modal--docs) instead, which blocks the page and traps focus until it's answered.
-- Content the reader must be able to reach at their own pace rather than within a timeout — put it on the page instead.
-
-{/* END: when-to-use */}
-
 {/* BEGIN: behavior */}
 
 ## How it works
@@ -55,7 +39,6 @@ Each toast enters and leaves off `[data-starting-style]` and `[data-ending-style
 additionally reads `[data-swipe-direction]` so a swiped toast leaves the way it was pushed rather
 than fading in place.
 
-<Canvas of={ToastStories.EnterExitTransition} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -76,134 +59,3 @@ A portalled viewport holding one node per queued toast. There is no trigger part
 | Close       | `close`       | `<button>` | `aria-hidden` until the stack is hovered or focused |
 
 {/* END: anatomy */}
-
-{/* BEGIN: examples */}
-
-## Examples
-
-### Adding to a cart, and saving a menu
-
-<Canvas of={ToastStories.MealdropAddedToCart} />
-
-{/* END: examples */}
-
-{/* BEGIN: do-dont */}
-
-## Do's and don'ts
-
-### Do
-
-- Wrap the app once in `ToastProvider` at the root, and raise toasts through `useToast().add(...)`
-  from anywhere beneath it
-- Reach for `promise` to chain an async task's loading state through to success or failure, so one
-  toast tells the whole story
-
-### Don't
-
-- Don't leave the only record of something in a toast: it dismisses itself, and cannot be reopened after the fact
-- Avoid raising several toasts for one action; `limit` marks older ones as limited rather than
-  dropping them, so the stack still fills
-
-{/* END: do-dont */}
-
-{/* BEGIN: a11y */}
-
-## Keyboard & screen reader
-
-| Key / interaction          | Context            | Action                                         |
-| -------------------------- | ------------------ | ---------------------------------------------- |
-| F6                         | anywhere           | Jumps focus to the toast stack                 |
-| Tab (from the stack)       | open               | Enters the stack at the newest toast           |
-| Escape                     | a toast is focused | Closes that toast; focus moves to the next one |
-| Shift+Tab (from the stack) | open               | Returns focus to wherever it was before        |
-
-- **ARIA:** the viewport is a live region so a new toast is announced without moving focus; each toast is announced according to its priority.
-- **Screen reader:** hears the toast's title and description as it appears, and can reach its `Dismiss` button by tabbing into the stack.
-- **You must provide:** a `title` or `description` on every toast that carries the information the reader needs — the toast itself supplies no default text.
-
-{/* END: a11y */}
-
-{/* BEGIN: brand */}
-
-{/* END: brand */}
-
-{/* BEGIN: styling */}
-
-## Styling
-
-Colors, spacing, and the stacking/swipe transforms come entirely from the theme layer's `Toast*` classes. `className` on `ToastProvider` merges onto the viewport, so it composes with the theme rather than replacing it.
-
-{/* END: styling */}
-
-{/* BEGIN: props */}
-
-## API reference
-
-<ArgTypes of={ToastStories} />
-
-### `children`
-
-The tree that raises toasts; the provider renders it as-is.
-
-<Canvas of={ToastStories.Children} />
-
-### `timeout`
-
-Milliseconds before a toast auto-dismisses. `0` keeps it until dismissed.
-
-<Canvas of={ToastStories.Timeout} />
-
-### `limit`
-
-How many show at once. Older toasts are marked limited rather than dropped.
-
-<Canvas of={ToastStories.Limit} />
-
-### `container`
-
-Where to portal the stack — an element or a selector.
-
-<Canvas of={ToastStories.Container} />
-
-### `className`
-
-Merged onto the viewport alongside the component's own `droppy-Toast` class.
-
-<Canvas of={ToastStories.ClassName} />
-{/* END: props */}
-
-{/* BEGIN: history */}
-
-## Decision log
-
-- **2026-07**: Toast shipped provider-only: it has no trigger and no `open` prop — an app wraps its tree once in ToastProvider and raises toasts imperatively through `useToast().add()`, with the provider owning the only rendering of the toast list; it reuses the same element-or-selector `container` prop as Modal and Sidebar, with `timeout` and `limit` as the tuning knobs ([additional components commit](https://github.com/yannbf/droppy-ds/commit/1fba4ce05fa71da8aa51a56ea60dae6b218c1868), [Toast.tsx](https://github.com/yannbf/droppy-ds/blob/main/src/components/Toast/Toast.tsx)).
-- **2026-07**: because Mealdrop has no status system beyond `text.error`, toast success/info/warning inks were collapsed to `text.primary` as a neutral-first gap fill; proper status surface/ink tokens (success/danger/warning/info surface + on-surface pairs) were identified as the missing piece but deliberately left for the system owner to decide rather than invented during extraction.
-- **Built on Base UI [`Toast`](https://base-ui.com/react/components/toast).** Droppy supplies the props, the theme classes, and the copy around it.
-
-{/* END: history */}
-
-{/* BEGIN: known-issues */}
-
-## Known issues & open questions
-
-- [#185](https://github.com/yannbf/droppy-ds/issues/185): viewport z-index: 1 renders toasts behind Modal, Sidebar, and other design-system overlays. **Workaround:** raise the viewport's z-index from app CSS via the stable droppy-Toast class (e.g. .droppy-Toast.droppy-Toast &#123; z-index: 100 &#125;) or a className on ToastProvider.
-- [#190](https://github.com/yannbf/droppy-ds/issues/190): add() options actionProps and positionerProps are accepted by the types but silently ignored — action onClick handlers are swallowed. **Workaround:** embed the action button in the description ReactNode (it stays clickable); no workaround for anchored positioning — do not pass positionerProps.
-- [#194](https://github.com/yannbf/droppy-ds/issues/194): 'Dismiss' button text and 'Notifications' region label are hardcoded English with no localization path. **Workaround** (partial): the region's aria-label can be patched post-mount via a DOM effect on .droppy-Toast; the visible 'Dismiss' label has no workaround.
-- [#198](https://github.com/yannbf/droppy-ds/issues/198): A toast raised while the window is unfocused starts its auto-dismiss timer anyway and can disappear unseen. **Workaround:** gate the per-toast timeout on document.hasFocus() at add time (timeout: document.hasFocus() ? undefined : 0).
-- [#201](https://github.com/yannbf/droppy-ds/issues/201): timeout/limit defaults (5000 ms, 3) are undocumented, and hidden 'limited' toasts keep their dismiss timers running contrary to the docs. **Workaround:** pass explicit limit/timeout sized to the worst-case burst (or timeout=&#123;0&#125;), and coalesce repeat notifications with add(&#123; id &#125;) upserts.
-- [#205](https://github.com/yannbf/droppy-ds/issues/205): timeout=&#123;Infinity&#125; (or any value &gt;= 2^31 ms) dismisses toasts almost instantly instead of never. **Workaround:** use the documented timeout=&#123;0&#125; / add(&#123; timeout: 0 &#125;) for persistent toasts; never pass Infinity or values &gt;= 2^31.
-- [#207](https://github.com/yannbf/droppy-ds/issues/207): limit=&#123;0&#125; silently hides every toast instead of meaning 'no limit'. **Workaround:** never pass limit=&#123;0&#125; or negative; omit the prop or pass a large finite number for 'unlimited'.
-- [#208](https://github.com/yannbf/droppy-ds/issues/208): no way to raise toasts from outside the React tree — Base UI's toastManager/createToastManager escape hatch is not exposed. **Workaround:** a bridge component inside ToastProvider stores useToast() in a module-level ref for non-React callers.
-- [#211](https://github.com/yannbf/droppy-ds/issues/211): useToast().promise() re-rejects its returned promise, so the fire-and-forget usage the docs suggest produces unhandled promise rejections on failure. **Workaround:** always await in try/catch or append .catch(() =&gt; &#123;&#125;); race never-settling promises with a timeout.
-- [#213](https://github.com/yannbf/droppy-ds/issues/213): every component calling useToast() re-renders on every toast lifecycle event app-wide. **Workaround:** capture the stable manager methods once in a bridge and distribute them via your own context/ref; React.memo contains the rest.
-
-{/* END: known-issues */}
-
-{/* BEGIN: when-to-use */}
-
-## Related
-
-- For a decision that must block the page until it's answered, use [Modal](?path=/docs/overlays-modal--docs).
-- For a hint about a control before it's activated — never for a confirmation message — use [Tooltip](?path=/docs/overlays-tooltip--docs).
-
-{/* END: when-to-use */}
