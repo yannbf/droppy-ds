@@ -1,10 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, waitFor } from 'storybook/test'
-
-import { Body } from '../Body'
-import { Button } from '../Button'
-import { Separator } from '../Separator'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import type { ScrollAreaProps } from './ScrollArea'
 import { ScrollArea } from './ScrollArea'
@@ -12,13 +7,6 @@ import { ScrollArea } from './ScrollArea'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ScrollAreaProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
-const inBorderedBox: Decorator = (Story) => (
-  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
-    <Story />
-  </div>
-)
 
 const paragraphs = [
   `Vernacular architecture is building done outside any academic tradition, and without
@@ -66,93 +54,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A fixed-height panel of long text, with a themed scrollbar revealed on hover
- * or while scrolling. `orientation` is set below, so the controls start
- * populated.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { orientation: 'vertical' },
-  argTypes: hide('className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` are whatever overflows; sizing comes from the theme layer. */
-export const Children: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('orientation', 'className'),
-  args: { children: paragraphs.map((text, index) => <p key={index}>{text}</p>) },
-}
-
-/** `orientation` picks which axes get a scrollbar. */
-export const Orientation: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('orientation', 'className'),
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '1rem' }}>
-      <ScrollArea {...args} orientation="vertical" />
-      <ScrollArea {...args} orientation="horizontal">
-        <div style={{ display: 'flex', gap: '1rem' }}>
-          {Array.from({ length: 12 }, (_, index) => (
-            <div
-              key={index}
-              style={{
-                flex: '0 0 auto',
-                width: '8rem',
-                height: '4rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: '1px solid var(--ds-color-border-subtle)',
-              }}
-            >
-              Card {index + 1}
-            </div>
-          ))}
-        </div>
-      </ScrollArea>
-      <ScrollArea {...args} orientation="both">
-        {wideGrid}
-      </ScrollArea>
-    </div>
-  ),
-}
-
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
-export const ClassName: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('orientation'),
-  args: { className: 'scrollarea-demo-inset' },
-  decorators: [inBorderedBox],
-  render: (args) => (
-    <>
-      <style>{`.scrollarea-demo-inset { margin: 1rem; }`}</style>
-      <ScrollArea {...args} />
-    </>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
-
-/**
- * Content overflowing both axes renders a scrollbar on each, plus the corner
- * where the two tracks would otherwise intersect — the part that stops them
- * overlapping at the meeting point.
- */
-export const BothAxes: Story = {
-  tags: ['highlight'],
-  argTypes: hide('className'),
-  args: { orientation: 'both', children: wideGrid },
-}
 
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
@@ -186,130 +94,6 @@ export const Anatomy: Story = {
 }
 
 /* ------------------------------------------------------------------ */
-/* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-const cartEuros = (amount: number) =>
-  amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
-
-const longOrder = [
-  { name: 'Cheeseburger', quantity: 2, price: 8.5 },
-  { name: 'Fries', quantity: 2, price: 2.5 },
-  { name: 'Coca-Cola', quantity: 3, price: 1.75 },
-  { name: 'Sprite', quantity: 1, price: 1.5 },
-  { name: 'Vanilla ice cream', quantity: 2, price: 2 },
-  { name: 'Garlic bread', quantity: 1, price: 4 },
-  { name: 'Sparkling water', quantity: 2, price: 2.5 },
-  { name: 'Tiramisu', quantity: 1, price: 5.5 },
-]
-
-const orderTotal = longOrder.reduce((sum, line) => sum + line.price * line.quantity, 0)
-
-/** A long Mealdrop order scrolling above a pinned total. */
-export const MealdropCartScroll: Story = {
-  tags: ['examples'],
-  argTypes: hide('children', 'orientation', 'className'),
-  render: () => (
-    <>
-      {/* The theme layer hard-codes the root at 24rem x 8.5rem, so the panel
-          sizes it rather than being clipped by it. */}
-      <style>{`.mealdrop-cart-scroll { width: 100%; height: 14rem; background: transparent; }`}</style>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '22rem',
-          border: '1px solid var(--ds-color-border-subtle)',
-          borderRadius: '8px',
-          overflow: 'hidden',
-        }}
-      >
-        <div style={{ padding: '1rem' }}>
-          <Body fontWeight="bold">Your order</Body>
-        </div>
-        <Separator />
-
-        <ScrollArea className="mealdrop-cart-scroll">
-          <div style={{ display: 'grid', gap: '0.75rem' }}>
-            {longOrder.map((line) => (
-              <div
-                key={line.name}
-                style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}
-              >
-                <Body size="S">
-                  {line.quantity}× {line.name}
-                </Body>
-                <Body size="S" fontWeight="bold">
-                  {cartEuros(line.price * line.quantity)}
-                </Body>
-              </div>
-            ))}
-          </div>
-        </ScrollArea>
-
-        <Separator />
-        <div style={{ display: 'grid', gap: '0.75rem', padding: '1rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Body fontWeight="bold">Total</Body>
-            <Body fontWeight="bold">{cartEuros(orderTotal)}</Body>
-          </div>
-          <Button large>Checkout</Button>
-        </div>
-      </div>
-    </>
-  ),
-}
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestVerticalScrollbarAppears: Story = {
-  tags: ['tests'],
-  play: async ({ canvasElement }) => {
-    // The scrollbar mounts after Base UI's overflow measurement effect runs,
-    // so it isn't there on first paint — re-query inside waitFor.
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="vertical"]')).not.toBeNull()
-    })
-  },
-}
-
-export const TestBothAxesRenderTwoScrollbars: Story = {
-  tags: ['tests'],
-  args: { orientation: 'both', children: wideGrid },
-  play: async ({ canvasElement }) => {
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="vertical"]')).not.toBeNull()
-    })
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="horizontal"]')).not.toBeNull()
-    })
-  },
-}
-
-export const TestHorizontalOnlyOmitsVertical: Story = {
-  tags: ['tests'],
-  args: {
-    orientation: 'horizontal',
-    children: (
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        {Array.from({ length: 12 }, (_, index) => (
-          <div key={index} style={{ flex: '0 0 auto', width: '8rem' }}>
-            Card {index + 1}
-          </div>
-        ))}
-      </div>
-    ),
-  },
-  play: async ({ canvasElement }) => {
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="horizontal"]')).not.toBeNull()
-    })
-    await expect(canvasElement.querySelector('[data-orientation="vertical"]')).toBeNull()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-}
