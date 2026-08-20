@@ -3,8 +3,6 @@ import * as SeparatorStories from './Separator.stories'
 
 <Meta of={SeparatorStories} />
 
-# Separator
-
 {/* BEGIN: general */}
 
 A visual and semantic divider between two blocks of content.
@@ -12,8 +10,6 @@ A visual and semantic divider between two blocks of content.
 ```tsx
 import { Separator } from '@droppy/design-system'
 ```
-
-<Canvas of={SeparatorStories.Default} />
 
 ## Features
 
@@ -65,12 +61,6 @@ lighter choice — there is no presentational escape hatch here.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop order summary
-
-<Canvas of={SeparatorStories.MealdropOrderSummaryDividers} />
 
 {/* END: examples */}
 
@@ -128,13 +118,10 @@ adds no styling of its own beyond forwarding `className` to the root.
 Drives `aria-orientation` and `data-orientation` together, so styling by `[data-orientation]` never
 needs the prop value duplicated in your own class logic.
 
-<Canvas of={SeparatorStories.Orientation} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Separator` class.
 
-<Canvas of={SeparatorStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

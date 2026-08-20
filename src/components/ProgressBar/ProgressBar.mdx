@@ -3,8 +3,6 @@ import * as ProgressBarStories from './ProgressBar.stories'
 
 <Meta of={ProgressBarStories} />
 
-# ProgressBar
-
 {/* BEGIN: general */}
 
 A track-and-fill indicator for progress through a known number of steps — a multi-step checkout,
@@ -13,8 +11,6 @@ an upload, a form with a fixed page count.
 ```tsx
 import { ProgressBar } from '@droppy/design-system'
 ```
-
-<Canvas of={ProgressBarStories.Default} />
 
 ## Features
 
@@ -51,7 +47,6 @@ A value past `max` clamps rather than overflowing the track, so a caller that co
 far still renders a full bar instead of a broken one — and `aria-valuenow` reports the clamped
 number, not the raw one.
 
-<Canvas of={ProgressBarStories.OverMaxClamps} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -70,12 +65,6 @@ Two parts: the track carries the `progressbar` role and the whole ARIA range, an
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop checkout steps
-
-<Canvas of={ProgressBarStories.MealdropCheckoutSteps} />
 
 {/* END: examples */}
 
@@ -153,26 +142,19 @@ restyled to a colour of its own.
 
 Positions the fill, from empty through to full. Clamped to `0`–`max` before it reaches the DOM.
 
-<Canvas of={ProgressBarStories.Value} />
-
 ### `max`
 
 The upper bound — step counts, not just percentages.
-
-<Canvas of={ProgressBarStories.Max} />
 
 ### `label`
 
 The accessible name. Nothing visible is rendered from it; the title and copy around the bar live in
 the caller's own markup.
 
-<Canvas of={ProgressBarStories.Label} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-ProgressBar` class.
 
-<Canvas of={ProgressBarStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

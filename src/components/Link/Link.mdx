@@ -3,8 +3,6 @@ import * as LinkStories from './Link.stories'
 
 <Meta of={LinkStories} />
 
-# Link
-
 {/* BEGIN: general */}
 
 An inline text link — a link inside a sentence or a short list, not a button and not a nav item.
@@ -12,8 +10,6 @@ An inline text link — a link inside a sentence or a short list, not a button a
 ```tsx
 import { Link } from '@droppy/design-system'
 ```
-
-<Canvas of={LinkStories.Default} />
 
 ## Features
 
@@ -50,14 +46,11 @@ import { Link } from '@droppy/design-system'
 `Link` is for a sentence link, not a button or a nav item — it inherits the surrounding text's
 font rather than setting its own.
 
-<Canvas of={LinkStories.Inline} />
-
 ### Inheriting colour
 
 On a dark surface, `Link` follows `currentColor` from the wrapping context rather than fighting it
 with a hard-coded light-mode token.
 
-<Canvas of={LinkStories.OnDarkSurface} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -75,12 +68,6 @@ with a hard-coded light-mode token.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop order confirmation
-
-<Canvas of={LinkStories.MealdropOrderConfirmationLink} />
 
 {/* END: examples */}
 
@@ -147,13 +134,9 @@ caller can override it with an inline `style`, a `className`, or `currentColor` 
 
 The link text — keep it descriptive out of context.
 
-<Canvas of={LinkStories.Children} />
-
 ### `href`
 
 The destination for the default `<a>`.
-
-<Canvas of={LinkStories.Href} />
 
 ### `render`
 
@@ -161,13 +144,10 @@ Swaps the `<a>` for a router-aware link, so the design system itself carries no 
 The passed element owns its own destination, so `href` is dropped rather than spread on top of it
 — a present-but-`undefined` key would still clobber a router `Link`'s `to`.
 
-<Canvas of={LinkStories.Render} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Link` class.
 
-<Canvas of={LinkStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

@@ -3,8 +3,6 @@ import * as ContainerStories from './Container.stories'
 
 <Meta of={ContainerStories} />
 
-# Container
-
 {/* BEGIN: general */}
 
 A max-width page wrapper with responsive side padding — the bound that keeps a page's content
@@ -13,8 +11,6 @@ from stretching edge to edge on wide screens.
 ```tsx
 import { Container } from '@droppy/design-system'
 ```
-
-<Canvas of={ContainerStories.Default} />
 
 ## Features
 
@@ -133,21 +129,16 @@ literal values — no token in the current scale matches them exactly.
 
 Rendered in normal flow; the wrapper only bounds the width.
 
-<Canvas of={ContainerStories.Children} />
-
 ### `desktopOnly`
 
 Below 1024px, `Container` renders with no width cap and no padding of its own. From 1024px up, it
 behaves exactly like the default. This covers what Mealdrop's second global `.container-desktop`
 class did, named for what it does rather than for the old suffix.
 
-<Canvas of={ContainerStories.DesktopOnly} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Container` class.
 
-<Canvas of={ContainerStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

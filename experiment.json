@@ -1,0 +1,27 @@
+{
+  "branchName": "experiment/docs-full",
+  "baseCommit": "29c38a90233698ee7e08bf2b15085e1aeabd8363",
+  "keptFacets": [
+    "general.general-a11y",
+    "general.general-brand",
+    "general.general-do-dont",
+    "general.general-setup",
+    "general.general-tokens",
+    "general.general-when-to-use",
+    "mdx.a11y",
+    "mdx.anatomy",
+    "mdx.behavior",
+    "mdx.brand",
+    "mdx.do-dont",
+    "mdx.examples",
+    "mdx.general",
+    "mdx.history",
+    "mdx.known-issues",
+    "mdx.props",
+    "mdx.styling",
+    "mdx.when-to-use",
+    "story.anatomy"
+  ],
+  "createdAt": "2026-08-20T07:43:56.948Z",
+  "version": 1
+}

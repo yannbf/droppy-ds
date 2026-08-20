@@ -3,8 +3,6 @@ import * as InputStories from './Input.stories'
 
 <Meta of={InputStories} />
 
-# Input
-
 {/* BEGIN: general */}
 
 A labelled text field with a reserved slot for its validation message.
@@ -12,8 +10,6 @@ A labelled text field with a reserved slot for its validation message.
 ```tsx
 import { Input } from '@droppy/design-system'
 ```
-
-<Canvas of={InputStories.Default} />
 
 ## Features
 
@@ -46,8 +42,6 @@ import { Input } from '@droppy/design-system'
 The error slot keeps its height whether or not a message is showing, so validating one field never
 shifts the ones below it.
 
-<Canvas of={InputStories.ErrorDoesNotShiftLayout} />
-
 Base UI's `Field` wires the label, the control and the error together — `for`/`id` and
 `aria-describedby` — so the caller never does it by hand. That is also why the component sets no
 `aria-label` of its own: an `aria-label` on top of a real `<label>` overrides the visible text,
@@ -72,12 +66,6 @@ A field root wrapping a label, the control, and an always-mounted error slot. Th
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop checkout
-
-<Canvas of={InputStories.MealdropCheckoutForm} />
 
 {/* END: examples */}
 
@@ -146,38 +134,27 @@ Everything else — colors, borders, radius, focus ring — comes from the theme
 
 Both the visible label and the control's accessible name.
 
-<Canvas of={InputStories.Label} />
-
 ### `error`
 
 Fills the reserved slot beneath the control, and is wired to the input via `aria-describedby`.
-
-<Canvas of={InputStories.Error} />
 
 ### `type`
 
 Native, and passed straight through — along with every other `<input>` attribute.
 
-<Canvas of={InputStories.Types} />
-
 ### `disabled`
 
 Native too; `Field` dims the label alongside the control.
 
-<Canvas of={InputStories.Disabled} />
-
 ### `placeholder`
 
 A hint, never a substitute for the label.
-
-<Canvas of={InputStories.Placeholder} />
 
 ### `className`
 
 Merged onto the **control**, not the field root, alongside the component's own `droppy-Input`
 class.
 
-<Canvas of={InputStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

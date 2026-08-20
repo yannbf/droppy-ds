@@ -3,8 +3,6 @@ import * as BreadcrumbStories from './Breadcrumb.stories'
 
 <Meta of={BreadcrumbStories} />
 
-# Breadcrumb
-
 {/* BEGIN: general */}
 
 A trail of ancestor pages leading to the current one — categories, restaurants, anything with a
@@ -13,8 +11,6 @@ browsable hierarchy above it.
 ```tsx
 import { Breadcrumb } from '@droppy/design-system'
 ```
-
-<Canvas of={BreadcrumbStories.Default} />
 
 ## Features
 
@@ -54,14 +50,11 @@ The last crumb carries `aria-current="page"` whether it renders as a link or as 
 the whole trail sits inside a `<nav aria-label="breadcrumb">` landmark — the semantics Mealdrop's
 `div`/`p` version had none of.
 
-<Canvas of={BreadcrumbStories.CurrentPageIsMarked} />
-
 ### Router links via `render`
 
 Item `render` swaps the default `<a>` for a router-aware link, so the design system carries no
 router dependency of its own.
 
-<Canvas of={BreadcrumbStories.ItemRender} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -84,12 +77,6 @@ A labelled landmark around an ordered list, one item per crumb. A crumb renders 
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop category page
-
-<Canvas of={BreadcrumbStories.MealdropCategoryTrail} />
 
 {/* END: examples */}
 
@@ -157,24 +144,17 @@ keyboard behaviour applies, no custom handling.
 
 The trail, as `{ label, href?, render? }`. The last item is the current page.
 
-<Canvas of={BreadcrumbStories.Items} />
-
 A single crumb is the current page on its own, and no separator renders.
-
-<Canvas of={BreadcrumbStories.SingleCrumb} />
 
 ### Item `render`
 
 Cloned with the crumb's link class and, on the last item, `aria-current`. The passed element owns
 its own destination, so `href` is dropped rather than spread on top of it.
 
-<Canvas of={BreadcrumbStories.ItemRender} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Breadcrumb` class.
 
-<Canvas of={BreadcrumbStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

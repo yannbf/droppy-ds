@@ -3,8 +3,6 @@ import * as ErrorBlockStories from './ErrorBlock.stories'
 
 <Meta of={ErrorBlockStories} />
 
-# ErrorBlock
-
 {/* BEGIN: general */}
 
 A titled message with an optional illustration and a single recovery action — an empty
@@ -15,8 +13,6 @@ import { ErrorBlock } from '@droppy/design-system'
 ```
 
 and [Button](?path=/docs/actions-button--docs) — no Base UI primitive of its own.
-
-<Canvas of={ErrorBlockStories.Default} />
 
 ## Features
 
@@ -53,7 +49,6 @@ The block is a fixed sequence — title, optional illustration, body, one action
 and a failure read the same way wherever they appear. There is deliberately one action, not two:
 an error state with competing choices is a decision the page should have made already.
 
-<Canvas of={ErrorBlockStories.WithoutIllustration} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -75,16 +70,6 @@ Title, optional illustration, body, and one action — in that DOM order. The he
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Empty category
-
-<Canvas of={ErrorBlockStories.MealdropEmptyCategory} />
-
-### Restaurant not found
-
-<Canvas of={ErrorBlockStories.MealdropNotFound} />
 
 {/* END: examples */}
 
@@ -150,32 +135,23 @@ for those.
 
 The `h2` — say what happened, not just that something did.
 
-<Canvas of={ErrorBlockStories.Title} />
-
 ### `body`
 
 The explanation and, ideally, what to try next.
 
-<Canvas of={ErrorBlockStories.Body} />
-
 ### `buttonText` and `onButtonClick`
 
 The single recovery action.
-
-<Canvas of={ErrorBlockStories.ButtonText} />
 
 ### `illustration`
 
 Optional, and takes any node. The Lottie player and its animation JSON are application assets, so
 the slot accepts whatever the caller drives rather than owning an animation itself.
 
-<Canvas of={ErrorBlockStories.Illustration} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-ErrorBlock` class.
 
-<Canvas of={ErrorBlockStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

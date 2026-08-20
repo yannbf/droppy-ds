@@ -3,8 +3,6 @@ import * as ToastStories from './Toast.stories'
 
 <Meta of={ToastStories} />
 
-# Toast
-
 {/* BEGIN: general */}
 
 A stack of transient, self-dismissing notifications for things the reader doesn't need to act on right away.
@@ -12,8 +10,6 @@ A stack of transient, self-dismissing notifications for things the reader doesn'
 ```tsx
 import { ToastProvider, useToast } from '@droppy/design-system'
 ```
-
-<Canvas of={ToastStories.Default} />
 
 ## Features
 
@@ -47,15 +43,12 @@ import { ToastProvider, useToast } from '@droppy/design-system'
 The close button is `aria-hidden` until the stack is hovered or focused, so a single passing
 notification doesn't compete with the page for keyboard attention.
 
-<Canvas of={ToastStories.CloseAppearsOnHover} />
-
 ### Enter and exit motion
 
 Each toast enters and leaves off `[data-starting-style]` and `[data-ending-style]`, and the exit
 additionally reads `[data-swipe-direction]` so a swiped toast leaves the way it was pushed rather
 than fading in place.
 
-<Canvas of={ToastStories.EnterExitTransition} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -78,12 +71,6 @@ A portalled viewport holding one node per queued toast. There is no trigger part
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Adding to a cart, and saving a menu
-
-<Canvas of={ToastStories.MealdropAddedToCart} />
 
 {/* END: examples */}
 
@@ -145,31 +132,22 @@ Colors, spacing, and the stacking/swipe transforms come entirely from the theme 
 
 The tree that raises toasts; the provider renders it as-is.
 
-<Canvas of={ToastStories.Children} />
-
 ### `timeout`
 
 Milliseconds before a toast auto-dismisses. `0` keeps it until dismissed.
-
-<Canvas of={ToastStories.Timeout} />
 
 ### `limit`
 
 How many show at once. Older toasts are marked limited rather than dropped.
 
-<Canvas of={ToastStories.Limit} />
-
 ### `container`
 
 Where to portal the stack — an element or a selector.
-
-<Canvas of={ToastStories.Container} />
 
 ### `className`
 
 Merged onto the viewport alongside the component's own `droppy-Toast` class.
 
-<Canvas of={ToastStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

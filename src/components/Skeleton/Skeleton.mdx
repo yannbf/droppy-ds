@@ -3,8 +3,6 @@ import * as SkeletonStories from './Skeleton.stories'
 
 <Meta of={SkeletonStories} />
 
-# Skeleton
-
 {/* BEGIN: general */}
 
 A loading placeholder that stands in for content before it arrives, shaped to match what it will
@@ -13,8 +11,6 @@ become.
 ```tsx
 import { Skeleton } from '@droppy/design-system'
 ```
-
-<Canvas of={SkeletonStories.Default} />
 
 ## Features
 
@@ -60,8 +56,6 @@ one only carries the loading state visually — the surrounding container is wha
 that the region is busy, which is why the placeholders sit `aria-hidden` beneath one
 `role="status"`.
 
-<Canvas of={SkeletonStories.TextBlock} />
-
 ### The shimmer
 
 The sweep animates `background-position` across a gradient built from `--ds-color-skeleton-base`
@@ -70,7 +64,6 @@ automatically. Under `prefers-reduced-motion: reduce` the animation is removed o
 background falls back to the flat base token — a placeholder still reads as a placeholder when it
 holds still.
 
-<Canvas of={SkeletonStories.ShimmerAnimation} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -88,12 +81,6 @@ holds still.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant tile, loading
-
-<Canvas of={SkeletonStories.MealdropRestaurantCardLoading} />
 
 {/* END: examples */}
 
@@ -160,27 +147,20 @@ holds still.
 
 Numbers are read as pixels; strings pass through unchanged. Defaults to `100%`.
 
-<Canvas of={SkeletonStories.Width} />
-
 ### `height`
 
 Numbers are read as pixels; strings pass through unchanged. Defaults to `1em`, so a bare skeleton
 matches the text around it.
 
-<Canvas of={SkeletonStories.Height} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Skeleton` class.
-
-<Canvas of={SkeletonStories.ClassName} />
 
 ### `style`
 
 Merged after the computed width and height, so a shape can carry its own border radius or other
 overrides on top.
 
-<Canvas of={SkeletonStories.Style} />
 {/* END: props */}
 
 {/* BEGIN: history */}

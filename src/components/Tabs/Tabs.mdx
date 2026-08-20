@@ -3,8 +3,6 @@ import * as TabsStories from './Tabs.stories'
 
 <Meta of={TabsStories} />
 
-# Tabs
-
 {/* BEGIN: general */}
 
 A set of panels, one visible at a time, switched by a row of tab buttons — settings sections, a
@@ -13,8 +11,6 @@ profile's sub-views, anything reviewed one part at a time rather than all at onc
 ```tsx
 import { Tabs } from '@droppy/design-system'
 ```
-
-<Canvas of={TabsStories.Default} />
 
 ## Features
 
@@ -57,21 +53,16 @@ Tabs activate on click, not on focus: arrowing along the row moves focus without
 panel, so a keyboard user can read the labels before committing. Only Enter, Space, or a click
 activates.
 
-<Canvas of={TabsStories.FocusDoesNotActivate} />
-
 ### Controlled value
 
 `value` with `onValueChange` hands the active tab to the caller's state. One without the other
 leaves the row stuck — the callback fires, the tab never moves.
-
-<Canvas of={TabsStories.ControlledValue} />
 
 ### The sliding indicator
 
 `Tabs.Indicator` writes the active tab's measured position and size to CSS custom properties,
 which the theme transitions on top of.
 
-<Canvas of={TabsStories.AnimatedIndicator} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -94,12 +85,6 @@ A tab row with its indicator, and one panel per tab. The list is flat — `tabs`
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### DropBoard order queue
-
-<Canvas of={TabsStories.DropBoardOrderQueue} />
 
 {/* END: examples */}
 
@@ -173,31 +158,22 @@ state, and indicator animation in full.
 
 The whole set, as `{ value, label, content, disabled? }`.
 
-<Canvas of={TabsStories.TabsProp} />
-
 ### Item `disabled`
 
 Keeps a tab focusable but never lets it activate.
-
-<Canvas of={TabsStories.DisabledTab} />
 
 ### `defaultValue`
 
 The tab active on first render, for an uncontrolled Tabs.
 
-<Canvas of={TabsStories.DefaultValue} />
-
 ### `value` and `onValueChange`
 
 The controlled pairing.
-
-<Canvas of={TabsStories.ControlledValue} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Tabs` class.
 
-<Canvas of={TabsStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

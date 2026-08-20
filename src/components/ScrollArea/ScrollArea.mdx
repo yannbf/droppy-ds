@@ -3,8 +3,6 @@ import * as ScrollAreaStories from './ScrollArea.stories'
 
 <Meta of={ScrollAreaStories} />
 
-# ScrollArea
-
 {/* BEGIN: general */}
 
 A scrollable panel with a themed scrollbar in place of the platform's own.
@@ -12,8 +10,6 @@ A scrollable panel with a themed scrollbar in place of the platform's own.
 ```tsx
 import { ScrollArea } from '@droppy/design-system'
 ```
-
-<Canvas of={ScrollAreaStories.Default} />
 
 ## Features
 
@@ -44,7 +40,6 @@ Scrollbars are only mounted once the content actually overflows, and only on the
 `orientation` asks for. With `both`, a corner part fills the square where the two tracks would
 otherwise intersect.
 
-<Canvas of={ScrollAreaStories.BothAxes} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -67,12 +62,6 @@ A clipped root, the scrolling viewport and its content wrapper, then a scrollbar
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop cart panel
-
-<Canvas of={ScrollAreaStories.MealdropCartScroll} />
 
 {/* END: examples */}
 
@@ -132,19 +121,14 @@ Colors, track/thumb sizing, and the hover/scroll-gated opacity come entirely fro
 
 Whatever overflows. Sizing comes from the theme layer, not from the content.
 
-<Canvas of={ScrollAreaStories.Children} />
-
 ### `orientation`
 
 Picks which axes get a scrollbar.
-
-<Canvas of={ScrollAreaStories.Orientation} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-ScrollArea` class.
 
-<Canvas of={ScrollAreaStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

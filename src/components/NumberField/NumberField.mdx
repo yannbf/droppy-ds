@@ -3,8 +3,6 @@ import * as NumberFieldStories from './NumberField.stories'
 
 <Meta of={NumberFieldStories} />
 
-# NumberField
-
 {/* BEGIN: general */}
 
 A typeable numeric input with increment/decrement buttons and pointer scrub, for a quantity or
@@ -16,8 +14,6 @@ import { NumberField } from '@droppy/design-system'
 
 labelled via [`Field`](https://base-ui.com/react/components/field) the same way
 [Input](?path=/docs/forms-input-input--docs) is.
-
-<Canvas of={NumberFieldStories.Default} />
 
 ## Features
 
@@ -58,7 +54,6 @@ sits behind the label text. That third route is what separates this from
 [QuantityStepper](?path=/docs/forms-input-quantitystepper--docs), which only does tap-tap
 increments.
 
-<Canvas of={NumberFieldStories.ThreeWaysToChangeTheValue} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -83,12 +78,6 @@ A `Field` wrapper for the label association, a scrub area holding the label, and
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### DropBoard menu-item editor
-
-<Canvas of={NumberFieldStories.DropBoardPriceEditor} />
 
 {/* END: examples */}
 
@@ -157,43 +146,30 @@ classes — this component adds no styling of its own beyond forwarding `classNa
 
 Names the field, and doubles as the scrub handle.
 
-<Canvas of={NumberFieldStories.Label} />
-
 ### `defaultValue`
 
 Seeds the field without making it controlled.
-
-<Canvas of={NumberFieldStories.DefaultValue} />
 
 ### `min` and `max`
 
 Bound the range; the buttons disable at each end.
 
-<Canvas of={NumberFieldStories.MinAndMax} />
-
 ### `step`
 
 How far each increment moves the value.
-
-<Canvas of={NumberFieldStories.Step} />
 
 ### `format`
 
 `Intl.NumberFormat` options — currency, percent, decimal places.
 
-<Canvas of={NumberFieldStories.Format} />
-
 ### `disabled`
 
 Dims the input and both buttons together.
-
-<Canvas of={NumberFieldStories.Disabled} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-NumberField` class.
 
-<Canvas of={NumberFieldStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

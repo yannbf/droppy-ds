@@ -3,8 +3,6 @@ import * as TooltipStories from './Tooltip.stories'
 
 <Meta of={TooltipStories} />
 
-# Tooltip
-
 {/* BEGIN: general */}
 
 A hover and focus hint for a control whose purpose isn't obvious from its face.
@@ -12,8 +10,6 @@ A hover and focus hint for a control whose purpose isn't obvious from its face.
 ```tsx
 import { Tooltip, TooltipProvider } from '@droppy/design-system'
 ```
-
-<Canvas of={TooltipStories.Default} />
 
 ## Features
 
@@ -50,14 +46,11 @@ The tip repeats the trigger's accessible name rather than supplying it. A toolti
 for touch, and a screen reader user who doesn't hover never meets it — so anything said only here
 is said to nobody. Give the trigger its own `aria-label` as well.
 
-<Canvas of={TooltipStories.NeverTheOnlyLabel} />
-
 ### Open and close motion
 
 The tip fades and scales in off `[data-starting-style]` and `[data-ending-style]`, staying mounted
 through the exit so the close runs before it leaves the DOM.
 
-<Canvas of={TooltipStories.OpenCloseTransition} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -76,12 +69,6 @@ Two parts, and only the trigger is reachable by the **Anatomy** panel: the popup
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop header tips
-
-<Canvas of={TooltipStories.MealdropHeaderTips} />
 
 {/* END: examples */}
 
@@ -162,25 +149,18 @@ Colors, padding, and border come from the theme layer's `TooltipPopup` class, la
 
 The tip's content — it repeats the trigger's name, never replaces it.
 
-<Canvas of={TooltipStories.Label} />
-
 ### `children`
 
 Becomes the trigger itself rather than being wrapped in one.
-
-<Canvas of={TooltipStories.Children} />
 
 ### `sideOffset`
 
 The gap between the trigger and the tip.
 
-<Canvas of={TooltipStories.SideOffset} />
-
 ### `className`
 
 Merged onto the popup alongside the component's own `droppy-Tooltip` class.
 
-<Canvas of={TooltipStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

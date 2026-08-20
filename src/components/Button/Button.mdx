@@ -3,8 +3,6 @@ import * as ButtonStories from './Button.stories'
 
 <Meta of={ButtonStories} />
 
-# Button
-
 {/* BEGIN: general */}
 
 The primary action control — chrome comes from the theme, variants and the icon slot come from
@@ -13,8 +11,6 @@ Droppy.
 ```tsx
 import { Button } from '@droppy/design-system'
 ```
-
-<Canvas of={ButtonStories.Default} />
 
 ## Features
 
@@ -65,13 +61,10 @@ import { Button } from '@droppy/design-system'
 Drop `children` and the button has no text to read, so its accessible name has to come from
 `aria-label`. The glyph itself is `aria-hidden` and contributes nothing.
 
-<Canvas of={ButtonStories.IconOnlyNeedsALabel} />
-
 ### The variant vocabulary
 
 The variants side by side — one obvious primary per screen, `clear` for the secondary beside it.
 
-<Canvas of={ButtonStories.Variants} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -90,12 +83,6 @@ The control and its optional leading glyph. There is no label part: `children` r
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop cart panel
-
-<Canvas of={ButtonStories.MealdropCheckoutActions} />
 
 {/* END: examples */}
 
@@ -184,50 +171,35 @@ this component doesn't override.
 
 The label. Omitted, the button is icon-only and needs an `aria-label`.
 
-<Canvas of={ButtonStories.Children} />
-
 ### `clear`
 
 Strips the fill, for the secondary action beside a primary one.
-
-<Canvas of={ButtonStories.Clear} />
 
 ### `large`
 
 Adds height, for the one action a screen is really about.
 
-<Canvas of={ButtonStories.Large} />
-
 ### `round`
 
 Fully rounds the control — pair it with an icon and no label.
-
-<Canvas of={ButtonStories.Round} />
 
 ### `icon`
 
 Renders a glyph before the label, spaced with `gap` rather than a spacer element — one fewer DOM
 node than Mealdrop's original, for the same 1rem.
 
-<Canvas of={ButtonStories.IconProp} />
-
 ### `iconSize`
 
 Overrides the glyph size without touching the button's own padding.
-
-<Canvas of={ButtonStories.IconSize} />
 
 ### `disabled`
 
 Dims the control and stops it firing `onClick`.
 
-<Canvas of={ButtonStories.Disabled} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Button` class.
 
-<Canvas of={ButtonStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

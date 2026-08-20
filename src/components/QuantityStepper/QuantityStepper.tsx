@@ -3,24 +3,14 @@ import { Button } from '../Button'
 import { cx } from '../../utils/cx'
 
 export type QuantityStepperProps = {
-  /** Current quantity. */
   value: number
   onChange: (value: number) => void
   min?: number
   max?: number
-  /** Accessible name for the control group. */
   'aria-label'?: string
   className?: string
 }
 
-/**
- * A minus/plus pair flanking a quantity, for adjusting the count of a single
- * item — a food order's line, a cart quantity.
- *
- * The two buttons disable at `min`/`max` rather than wrapping or clamping
- * silently, and the value announces its own changes via `aria-live`, since
- * the group has no other way to signal that a click landed.
- */
 export const QuantityStepper = ({
   value,
   onChange,

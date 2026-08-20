@@ -3,8 +3,6 @@ import * as CarouselStories from './Carousel.stories'
 
 <Meta of={CarouselStories} />
 
-# Carousel
-
 {/* BEGIN: general */}
 
 A horizontally scrolling row of items — restaurant cards, category tiles — showing a fixed number
@@ -15,8 +13,6 @@ import { Carousel } from '@droppy/design-system'
 ```
 
 and the design system's own `IconButton` for the arrows.
-
-<Canvas of={CarouselStories.Default} />
 
 ## Features
 
@@ -57,14 +53,11 @@ and the design system's own `IconButton` for the arrows.
 Neither arrow renders when that direction can't scroll, and both are desktop-only besides —
 smaller screens scroll by dragging or by horizontal wheel gesture.
 
-<Canvas of={CarouselStories.ArrowsOnlyWhenThereIsSomewhereToGo} />
-
 ### Dimmed slides
 
 Slides that aren't almost fully visible drop to 0.5 opacity, so a partially scrolled row signals
 there is more to reach rather than looking clipped.
 
-<Canvas of={CarouselStories.OffscreenSlidesDim} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -86,12 +79,6 @@ A rail wrapping a clipped viewport and the track inside it, one wrapper per chil
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant rail
-
-<Canvas of={CarouselStories.MealdropRestaurantRail} />
 
 {/* END: examples */}
 
@@ -164,26 +151,19 @@ with the component's own `droppy-Carousel` class.
 
 Become the slides — one wrapper is added per child.
 
-<Canvas of={CarouselStories.Children} />
-
 ### `itemsPerView`
 
 How many items fit per breakpoint, mobile-first. Fractions are deliberate: `1.2` shows a sliver of
 the next tile so the row reads as scrollable.
 
-<Canvas of={CarouselStories.ItemsPerView} />
-
 ### `slidesToScroll`
 
 How many items each arrow click advances, per breakpoint. Defaults to 1.
-
-<Canvas of={CarouselStories.SlidesToScroll} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Carousel` class.
 
-<Canvas of={CarouselStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

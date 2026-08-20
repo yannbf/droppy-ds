@@ -3,8 +3,6 @@ import * as ReviewStories from './Review.stories'
 
 <Meta of={ReviewStories} />
 
-# Review
-
 {/* BEGIN: general */}
 
 A star-rating and text line — "★ 4.5 Very good" or "No reviews yet" — for a restaurant tile, an
@@ -13,8 +11,6 @@ item card, or an order summary.
 ```tsx
 import { Review } from '@droppy/design-system'
 ```
-
-<Canvas of={ReviewStories.Default} />
 
 ## Features
 
@@ -50,14 +46,11 @@ import { Review } from '@droppy/design-system'
 The bands are fixed: under 2 is "Very poor", 2–4 "Adequate", 4–5 "Very good", and exactly 5
 "Excellent". The number always shows one decimal, so `4` and `4.0` read identically.
 
-<Canvas of={ReviewStories.RatingBands} />
-
 ### No rating
 
 A missing or falsy `rating` renders a plain fallback line rather than a zero-star score, so a
 newly-listed restaurant doesn't look badly reviewed.
 
-<Canvas of={ReviewStories.NoReviews} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -76,12 +69,6 @@ A wrapper and the text line inside it. The star, the number, and the band label 
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant tiles
-
-<Canvas of={ReviewStories.MealdropRestaurantScores} />
 
 {/* END: examples */}
 
@@ -153,20 +140,15 @@ inline.
 
 Drives both the number and the word beside it.
 
-<Canvas of={ReviewStories.Rating} />
-
 ### `color`
 
 Overrides the deliberately quiet default (`--ds-color-text-review`) — for a caller like Mealdrop's
 restaurant tiles that wants its own treatment.
 
-<Canvas of={ReviewStories.Color} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Review` class.
 
-<Canvas of={ReviewStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

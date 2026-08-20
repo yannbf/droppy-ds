@@ -3,8 +3,6 @@ import * as BadgeStories from './Badge.stories'
 
 <Meta of={BadgeStories} />
 
-# Badge
-
 {/* BEGIN: general */}
 
 A small pill for a short, static label — a dietary tag, a category, a "new" flag.
@@ -12,8 +10,6 @@ A small pill for a short, static label — a dietary tag, a category, a "new" fl
 ```tsx
 import { Badge } from '@droppy/design-system'
 ```
-
-<Canvas of={BadgeStories.Default} />
 
 ## Features
 
@@ -52,7 +48,6 @@ import { Badge } from '@droppy/design-system'
 
 The pill grows with its content — there's no truncation or fixed width.
 
-<Canvas of={BadgeStories.LongerText} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -70,12 +65,6 @@ The pill grows with its content — there's no truncation or fixed width.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant tiles
-
-<Canvas of={BadgeStories.MealdropRestaurantTags} />
 
 {/* END: examples */}
 
@@ -152,8 +141,6 @@ theme rather than following the page's theme-flipping text color.
 The label, and the only content the badge renders. Capitalization is a CSS rule, so the DOM keeps
 whatever casing you passed.
 
-<Canvas of={BadgeStories.Text} />
-
 ### `variant`
 
 The neutral default matches Mealdrop's original badge; `positive` matches its hand-rolled "new"
@@ -161,13 +148,10 @@ tag look, minus the absolute positioning that was specific to a restaurant card'
 placement is now the call site's job. The variant changes background, text color, and weight;
 padding, radius, and size stay put.
 
-<Canvas of={BadgeStories.Variant} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Badge` class.
 
-<Canvas of={BadgeStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

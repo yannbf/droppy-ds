@@ -3,8 +3,6 @@ import * as CardStories from './Card.stories'
 
 <Meta of={CardStories} />
 
-# Card
-
 {/* BEGIN: general */}
 
 A rounded, clipped surface for grouping content: a restaurant tile, a food item, an order summary.
@@ -12,8 +10,6 @@ A rounded, clipped surface for grouping content: a restaurant tile, a food item,
 ```tsx
 import { Card } from '@droppy/design-system'
 ```
-
-<Canvas of={CardStories.Default} />
 
 ## Features
 
@@ -55,7 +51,6 @@ import { Card } from '@droppy/design-system'
 `overflow: hidden`, so an edge-to-edge image child clips to the card's own corner radius instead
 of squaring off past it.
 
-<Canvas of={CardStories.WithImage} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -73,16 +68,6 @@ of squaring off past it.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant tile
-
-<Canvas of={CardStories.MealdropRestaurantTile} />
-
-### Mealdrop category tile
-
-<Canvas of={CardStories.MealdropCategoryTile} />
 
 {/* END: examples */}
 
@@ -162,27 +147,20 @@ treatment as "elevation means floating, not importance":
 
 Compose freely — `Card` provides the surface and nothing else.
 
-<Canvas of={CardStories.Children} />
-
 ### `padded`
 
 Adds `--ds-space-sm` on all sides. Bare by default, since most of the components it replaces
 already own their internal padding.
-
-<Canvas of={CardStories.Padded} />
 
 ### `interactive`
 
 Appearance only: a pointer cursor and a hover dim. It wires no `onClick`, `role`, or `tabIndex` —
 compose the interactive semantics yourself, or wrap the card in a real control.
 
-<Canvas of={CardStories.Interactive} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Card` class.
 
-<Canvas of={CardStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

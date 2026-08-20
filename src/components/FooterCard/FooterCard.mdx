@@ -3,8 +3,6 @@ import * as FooterCardStories from './FooterCard.stories'
 
 <Meta of={FooterCardStories} />
 
-# FooterCard
-
 {/* BEGIN: general */}
 
 A titled column of links for a page footer — "Discover us", "Our social media", or any other
@@ -13,8 +11,6 @@ grouped set of footer navigation.
 ```tsx
 import { FooterCard } from '@droppy/design-system'
 ```
-
-<Canvas of={FooterCardStories.Default} />
 
 ## Features
 
@@ -61,21 +57,16 @@ readable. Links inherit the same color via `currentColor` down an ancestor-quali
 (`.droppy-FooterCard .droppy-FooterCard-link`), so a consumer's own CSS reset can't strip it. The
 story below renders against `--ds-color-surface-inverse`, the token a footer would actually use.
 
-<Canvas of={FooterCardStories.Default} />
-
 ### External links
 
 An item marked `external` opens in a new tab with `rel="noopener noreferrer"` — the escaping
 hatch and the security attribute travel together, so a caller can't get one without the other.
-
-<Canvas of={FooterCardStories.ExternalLinks} />
 
 ### Router links per item
 
 `render` swaps the default `<a>` for a router-aware link on a single item, the same way
 `Breadcrumb` composes its crumbs.
 
-<Canvas of={FooterCardStories.ItemRender} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -97,12 +88,6 @@ A heading above a list of links. The list disappears entirely when `links` is em
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop footer row
-
-<Canvas of={FooterCardStories.MealdropFooterRow} />
 
 {/* END: examples */}
 
@@ -181,37 +166,26 @@ and the links together. `className` merges with the component's own `droppy-Foot
 
 The column heading, rendered as an `h2`.
 
-<Canvas of={FooterCardStories.Title} />
-
 ### `links`
 
 The list, as `{ name, href?, external?, render? }`. Omitted or empty, no list renders.
-
-<Canvas of={FooterCardStories.Links} />
 
 ### Item `external`
 
 Opens in a new tab with `rel="noopener noreferrer"`.
 
-<Canvas of={FooterCardStories.ExternalLinks} />
-
 ### Item `render`
 
 Swaps the default `<a>` for a router-aware link, per item.
-
-<Canvas of={FooterCardStories.ItemRender} />
 
 ### `children`
 
 Rendered below the list — app store badges, a short paragraph, anything a link list can't carry.
 
-<Canvas of={FooterCardStories.Children} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-FooterCard` class.
 
-<Canvas of={FooterCardStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

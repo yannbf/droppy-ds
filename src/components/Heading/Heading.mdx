@@ -3,8 +3,6 @@ import * as HeadingStories from './Heading.stories'
 
 <Meta of={HeadingStories} />
 
-# Heading
-
 {/* BEGIN: general */}
 
 Display type for page and section titles, rendered as a real semantic heading.
@@ -12,8 +10,6 @@ Display type for page and section titles, rendered as a real semantic heading.
 ```tsx
 import { Heading } from '@droppy/design-system'
 ```
-
-<Canvas of={HeadingStories.Levels} />
 
 ## Features
 
@@ -49,8 +45,6 @@ different visual size while `level` keeps choosing the rendered tag — a card t
 stay an `<h2>` in the outline but look like a level-4 heading, for instance. Dense layouts (card
 titles, compact sections) are the usual reason to reach for it; the outline still reads `level`.
 
-<Canvas of={HeadingStories.SizeDecoupledFromLevel} />
-
 ### Type scale across levels
 
 Levels 1 and 2 are the display sizes and get tighter letter-spacing; level 3 and below are section
@@ -73,12 +67,6 @@ whatever type size happens to surround it.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant detail page
-
-<Canvas of={HeadingStories.MealdropHeadingLadder} />
 
 {/* END: examples */}
 
@@ -159,26 +147,19 @@ UI. Two further brand rules shape how `Heading` is used:
 
 The heading text; nodes work as well as strings.
 
-<Canvas of={HeadingStories.Children} />
-
 ### `level`
 
 Picks the rendered tag and, on its own, the matching size step — `level={3}` is an `<h3>` at the
 level-3 size, not a styled `<div>`.
 
-<Canvas of={HeadingStories.Levels} />
-
 ### `size`
 
 Picks the visual step on its own; the tag still follows `level`.
-
-<Canvas of={HeadingStories.Sizes} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Heading` class.
 
-<Canvas of={HeadingStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

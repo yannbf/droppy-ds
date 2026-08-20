@@ -3,8 +3,6 @@ import * as PageTemplateStories from './PageTemplate.stories'
 
 <Meta of={PageTemplateStories} />
 
-# PageTemplate
-
 {/* BEGIN: general */}
 
 The page shell: header, a `<main>` content area, and footer — the top-level layout every routed
@@ -13,8 +11,6 @@ page sits inside.
 ```tsx
 import { PageTemplate } from '@droppy/design-system'
 ```
-
-<Canvas of={PageTemplateStories.Default} />
 
 ## Features
 
@@ -50,7 +46,6 @@ import { PageTemplate } from '@droppy/design-system'
 The content area carries a minimum height, so a short page's footer still lands at the bottom of
 the viewport instead of riding up under the fold.
 
-<Canvas of={PageTemplateStories.ShortPageKeepsFooterDown} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -133,25 +128,18 @@ component's own `droppy-PageTemplate` class.
 
 Rendered above the content area, outside the `<main>` landmark.
 
-<Canvas of={PageTemplateStories.HeaderProp} />
-
 ### `footer`
 
 Rendered below it, also outside the landmark.
-
-<Canvas of={PageTemplateStories.FooterProp} />
 
 ### `children`
 
 The page content — the only part inside `<main>`.
 
-<Canvas of={PageTemplateStories.Children} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-PageTemplate` class.
 
-<Canvas of={PageTemplateStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

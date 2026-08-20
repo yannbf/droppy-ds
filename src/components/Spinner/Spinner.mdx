@@ -3,8 +3,6 @@ import * as SpinnerStories from './Spinner.stories'
 
 <Meta of={SpinnerStories} />
 
-# Spinner
-
 {/* BEGIN: general */}
 
 An indeterminate loading indicator — three dots crossing an arc, in the theme's brand colors.
@@ -12,8 +10,6 @@ An indeterminate loading indicator — three dots crossing an arc, in the theme'
 ```tsx
 import { Spinner } from '@droppy/design-system'
 ```
-
-<Canvas of={SpinnerStories.Default} />
 
 ## Features
 
@@ -58,15 +54,12 @@ content the way a button or heading does — only `aria-label`, `aria-labelledby
 it. The SVG graphic carries `aria-hidden="true"` and contributes nothing to the accessibility
 tree either way.
 
-<Canvas of={SpinnerStories.AccessibleName} />
-
 ### The motion
 
 Three dots sweep across a two-part arc, all animated with CSS `@keyframes` rather than embedded
 SVG animation, so the motion can be tuned down under `prefers-reduced-motion` the same way any
 other CSS animation on the page can.
 
-<Canvas of={SpinnerStories.SpinAnimation} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -87,12 +80,6 @@ The announcing wrapper, a decorative graphic, and the shapes the keyframes drive
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### DropBoard payouts, loading
-
-<Canvas of={SpinnerStories.DropBoardPayoutsLoading} />
 
 {/* END: examples */}
 
@@ -170,13 +157,10 @@ it shifts to the lime `brand-dark` ramp. Two rules follow:
 
 Becomes the accessible name on the `status` role. Defaults to `Loading`.
 
-<Canvas of={SpinnerStories.Label} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Spinner` class.
 
-<Canvas of={SpinnerStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

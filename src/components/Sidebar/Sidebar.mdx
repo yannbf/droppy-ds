@@ -3,8 +3,6 @@ import * as SidebarStories from './Sidebar.stories'
 
 <Meta of={SidebarStories} />
 
-# Sidebar
-
 {/* BEGIN: general */}
 
 A panel that slides in from the trailing edge, for content reviewed alongside the page rather than instead of it.
@@ -14,8 +12,6 @@ import { Sidebar } from '@droppy/design-system'
 ```
 
 {/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
-
-<Canvas of={SidebarStories.Default} story={{ inline: false, height: '480px' }} />
 
 ## Features
 
@@ -53,13 +49,9 @@ import { Sidebar } from '@droppy/design-system'
 The footer stays put and the content scrolls above it, so a long order never pushes the checkout
 button out of reach.
 
-<Canvas of={SidebarStories.PinnedFooterWithScrollingContent} />
-
 ### Responsive width
 
 Below the mobile breakpoint the panel takes the full width.
-
-<Canvas of={SidebarStories.FullWidthOnMobile} />
 
 ### Slide motion
 
@@ -67,7 +59,6 @@ The panel slides from the trailing edge off `[data-starting-style]` and `[data-e
 stays mounted through the exit so the close animation runs before it leaves. Base UI drives
 swipe-to-dismiss from the same states.
 
-<Canvas of={SidebarStories.SlideTransition} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -91,12 +82,6 @@ A backdrop and the sliding panel, split into a top bar, a scrolling content regi
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop cart panel
-
-<Canvas of={SidebarStories.MealdropCartPanel} />
 
 {/* END: examples */}
 
@@ -163,37 +148,26 @@ The panel's desktop width (420px) is fixed by the design system and isn't expose
 
 Fully controlled. `onClose` fires for the button, Escape, a swipe, and an outside press alike.
 
-<Canvas of={SidebarStories.IsOpen} />
-
 ### `title`
 
 The top-bar heading, and the dialog's accessible name.
-
-<Canvas of={SidebarStories.Title} />
 
 ### `children`
 
 The scrolling panel content.
 
-<Canvas of={SidebarStories.Children} />
-
 ### `footer`
 
 Pinned to the bottom — a plain flex container the caller fills.
-
-<Canvas of={SidebarStories.Footer} />
 
 ### `container`
 
 Where to portal — an element or a selector.
 
-<Canvas of={SidebarStories.Container} />
-
 ### `className`
 
 Merged onto the popup alongside the component's own `droppy-Sidebar` class.
 
-<Canvas of={SidebarStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

@@ -3,8 +3,6 @@ import * as TopBannerStories from './TopBanner.stories'
 
 <Meta of={TopBannerStories} />
 
-# TopBanner
-
 {/* BEGIN: general */}
 
 A full-width band at the top of a page, with a centered title over either a theme color or a
@@ -13,8 +11,6 @@ background photo — a category page's header, a restaurant's hero image.
 ```tsx
 import { TopBanner } from '@droppy/design-system'
 ```
-
-<Canvas of={TopBannerStories.Default} />
 
 ## Features
 
@@ -54,7 +50,6 @@ import { TopBanner } from '@droppy/design-system'
 With a photo behind it the heading takes its on-photo treatment, so the text holds contrast
 against arbitrary imagery rather than trusting the surface token underneath.
 
-<Canvas of={TopBannerStories.HeadingOverPhoto} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -73,12 +68,6 @@ A band with an optional heading. Both are optional: with neither `title` nor `ph
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant detail page
-
-<Canvas of={TopBannerStories.MealdropRestaurantHeader} />
 
 {/* END: examples */}
 
@@ -158,26 +147,19 @@ The 240px band height is a literal value — no token in the current scale match
 
 Rendered as an `h2` inside the band. Omitted, the band is bare.
 
-<Canvas of={TopBannerStories.Title} />
-
 ### `photoUrl`
 
 Sets the background and switches the heading to its on-photo treatment.
-
-<Canvas of={TopBannerStories.PhotoUrl} />
 
 ### `onBackClick`
 
 Accepted for call-site parity with Mealdrop's own `TopBanner`, whose back button is commented out
 in its source. Nothing here renders a control, so the callback never fires.
 
-<Canvas of={TopBannerStories.OnBackClick} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-TopBanner` class.
 
-<Canvas of={TopBannerStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

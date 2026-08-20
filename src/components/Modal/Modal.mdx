@@ -3,8 +3,6 @@ import * as ModalStories from './Modal.stories'
 
 <Meta of={ModalStories} />
 
-# Modal
-
 {/* BEGIN: general */}
 
 A centered overlay that asks for one decision before the page continues.
@@ -14,8 +12,6 @@ import { Modal } from '@droppy/design-system'
 ```
 
 {/* Open overlay stories portal to document.body; an iframe keeps them inside the canvas. */}
-
-<Canvas of={ModalStories.Default} story={{ inline: false, height: '480px' }} />
 
 ## Features
 
@@ -51,20 +47,15 @@ import { Modal } from '@droppy/design-system'
 Focus goes to the popup itself, not the close button: the content is what the reader asked for,
 and landing on "close" reads as an invitation to leave. Tab still reaches the close button first.
 
-<Canvas of={ModalStories.InitialFocusIsThePopup} />
-
 ### Responsive shape
 
 Below 768px the card becomes a bottom sheet and slides up from the edge.
-
-<Canvas of={ModalStories.Mobile} />
 
 ### Open and close motion
 
 Backdrop and popup both transition off `[data-starting-style]` and `[data-ending-style]`, and the
 popup stays mounted through the exit so the close animation runs before it disappears.
 
-<Canvas of={ModalStories.OpenCloseTransition} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -85,12 +76,6 @@ A backdrop and the dialog card, with a supplied top bar holding the close afford
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop food-item modal
-
-<Canvas of={ModalStories.MealdropFoodItemModal} />
 
 {/* END: examples */}
 
@@ -154,32 +139,23 @@ Modal has no CSS custom properties of its own to override — its dimensions and
 Fully controlled — the component holds no open state of its own. `onClose` fires for the button,
 Escape, and an outside press alike.
 
-<Canvas of={ModalStories.IsOpen} />
-
 ### `children`
 
 The dialog body; the top bar and its close button are supplied.
 
-<Canvas of={ModalStories.Children} />
-
 ### `aria-label`
 
 Names the dialog, since the body has no guaranteed heading.
-
-<Canvas of={ModalStories.AriaLabel} />
 
 ### `container`
 
 Where to portal — an element or a selector. Mealdrop portals into its own `#modal` node; a package
 can't assume that exists, so it became a prop (docs/MEALDROP-PARITY.md).
 
-<Canvas of={ModalStories.Container} />
-
 ### `className`
 
 Merged onto the popup alongside the component's own `droppy-Modal` class.
 
-<Canvas of={ModalStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

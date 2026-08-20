@@ -3,8 +3,6 @@ import * as BodyStories from './Body.stories'
 
 <Meta of={BodyStories} />
 
-# Body
-
 {/* BEGIN: general */}
 
 Plain-text typography for paragraph copy, captions, and labels — the body-copy counterpart to
@@ -15,8 +13,6 @@ import { Body } from '@droppy/design-system'
 ```
 
 primitive.
-
-<Canvas of={BodyStories.Default} />
 
 ## Features
 
@@ -57,7 +53,6 @@ primitive.
 `type="label"` renders a real `<label>`, not a styled `span` — useful when the text needs to be
 a label rather than merely look like one.
 
-<Canvas of={BodyStories.RendersMatchingTag} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -75,12 +70,6 @@ a label rather than merely look like one.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant tile
-
-<Canvas of={BodyStories.MealdropRestaurantCardText} />
 
 {/* END: examples */}
 
@@ -152,38 +141,27 @@ overriding them wholesale.
 
 The text, or any nodes to render inside it.
 
-<Canvas of={BodyStories.Children} />
-
 ### `size`
 
 Optional — unset renders the base body size (`--ds-type-size-md`). `S`, `XS`, and `XXS` step down
 from there.
 
-<Canvas of={BodyStories.Sizes} />
-
 ### `fontWeight`
 
 Independent of both `size` and `type`.
-
-<Canvas of={BodyStories.Weights} />
 
 ### `type`
 
 Picks the rendered element. All four share the same styling.
 
-<Canvas of={BodyStories.ElementChoice} />
-
 ### `color`
 
 Sets the text color inline, ahead of the theme's token.
-
-<Canvas of={BodyStories.ColorOverride} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Body` class.
 
-<Canvas of={BodyStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

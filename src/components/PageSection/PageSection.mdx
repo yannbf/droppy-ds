@@ -3,8 +3,6 @@ import * as PageSectionStories from './PageSection.stories'
 
 <Meta of={PageSectionStories} />
 
-# PageSection
-
 {/* BEGIN: general */}
 
 A titled content section — a heading with an optional "view all" action above whatever the
@@ -15,8 +13,6 @@ import { PageSection } from '@droppy/design-system'
 ```
 
 [Button](?path=/docs/actions-button--docs).
-
-<Canvas of={PageSectionStories.Default} />
 
 ## Features
 
@@ -54,7 +50,6 @@ import { PageSection } from '@droppy/design-system'
 The action is optional and renders nothing at all when `topButtonLabel` is absent — the title row
 doesn't reserve space for a button that isn't there.
 
-<Canvas of={PageSectionStories.ActionIsOptional} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -145,25 +140,18 @@ exactly.
 
 Rendered as an `h2`, so sections nest correctly under a page `h1`.
 
-<Canvas of={PageSectionStories.Title} />
-
 ### `topButtonLabel` and `onTopButtonClick`
 
 Add a `clear` Button beside the title. Omit the label and no control renders.
-
-<Canvas of={PageSectionStories.TopButtonLabel} />
 
 ### `children`
 
 The section body, laid out by the caller.
 
-<Canvas of={PageSectionStories.Children} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-PageSection` class.
 
-<Canvas of={PageSectionStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

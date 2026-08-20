@@ -3,8 +3,6 @@ import * as IconStories from './Icon.stories'
 
 <Meta of={IconStories} />
 
-# Icon
-
 {/* BEGIN: general */}
 
 The icon set, inlined as SVG so it renders wherever the component tree renders, with no static
@@ -13,8 +11,6 @@ asset to serve.
 ```tsx
 import { Icon } from '@droppy/design-system'
 ```
-
-<Canvas of={IconStories.Default} />
 
 ## Features
 
@@ -59,8 +55,6 @@ Every icon renders `aria-hidden="true"` and `focusable="false"`, so it never rea
 accessibility tree. The control an icon sits inside is what carries the accessible name — reach
 for `Icon` directly and that naming becomes your job.
 
-<Canvas of={IconStories.DecorativeByDefault} />
-
 ### Colour
 
 Unset, the stroke follows `--ds-color-icon-default` and changes with the theme. Passing `color`
@@ -82,12 +76,6 @@ sets the stroke inline instead, which wins over the class rule.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop header
-
-<Canvas of={IconStories.MealdropHeader} />
 
 {/* END: examples */}
 
@@ -150,26 +138,19 @@ Icon renders a non-interactive `<svg>` — there is no keyboard interaction to d
 
 Indexes into the bundled set — every icon in it, below.
 
-<Canvas of={IconStories.Name} />
-
 ### `size`
 
 Takes any CSS length or a number of pixels, and drives width, height, and `minWidth` together, so
 the icon holds its size even inside a shrinking flex row.
 
-<Canvas of={IconStories.Size} />
-
 ### `color`
 
 Sets the stroke inline, ahead of the theme's icon token.
-
-<Canvas of={IconStories.Color} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Icon` class.
 
-<Canvas of={IconStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

@@ -3,8 +3,6 @@ import * as SelectStories from './Select.stories'
 
 <Meta of={SelectStories} />
 
-# Select
-
 {/* BEGIN: general */}
 
 A single-choice control over a short, known list.
@@ -12,8 +10,6 @@ A single-choice control over a short, known list.
 ```tsx
 import { Select } from '@droppy/design-system'
 ```
-
-<Canvas of={SelectStories.Default} />
 
 ## Features
 
@@ -49,15 +45,12 @@ Numeric options come back as numbers and text options as strings, so a caller ne
 value first — and a non-numeric option is never turned into `NaN`, which is what Mealdrop's
 blanket `Number()` did (docs/MEALDROP-PARITY.md).
 
-<Canvas of={SelectStories.ValueCoercion} />
-
 ### A native control
 
 The control is the native `<select>`. On touch devices that opens the platform picker, which no
 scripted listbox matches for accessibility or muscle memory — Droppy only restyles it and supplies
 its own chevron.
 
-<Canvas of={SelectStories.NativeControl} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -78,12 +71,6 @@ A label above a wrapper that positions the chevron over the native control. Ther
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Choosing extras for a customisable burger
-
-<Canvas of={SelectStories.MealdropBurgerExtras} />
 
 {/* END: examples */}
 
@@ -156,31 +143,22 @@ The chevron itself is a `mask` over a token-colored layer rather than a data-URL
 
 The visible label, wired to the control with `for`/`id`.
 
-<Canvas of={SelectStories.Label} />
-
 ### `options`
 
 Rendered as both the value and the visible text.
-
-<Canvas of={SelectStories.Options} />
 
 ### `value` and `onChange`
 
 The control is fully controlled; `onChange` receives the coerced value.
 
-<Canvas of={SelectStories.Value} />
-
 ### `disabled`
 
 Native, and passed straight through — as is every other `<select>` attribute.
-
-<Canvas of={SelectStories.Disabled} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Select` class.
 
-<Canvas of={SelectStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

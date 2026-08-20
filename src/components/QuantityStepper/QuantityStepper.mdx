@@ -3,8 +3,6 @@ import * as QuantityStepperStories from './QuantityStepper.stories'
 
 <Meta of={QuantityStepperStories} />
 
-# QuantityStepper
-
 {/* BEGIN: general */}
 
 A minus/plus pair flanking a quantity, for adjusting the count of a single item — a food order's
@@ -15,8 +13,6 @@ import { QuantityStepper } from '@droppy/design-system'
 ```
 
 and a [Body](?path=/docs/typography-body--docs) for the value.
-
-<Canvas of={QuantityStepperStories.Default} />
 
 ## Features
 
@@ -55,7 +51,6 @@ The buttons disable at the bounds rather than wrapping or clamping silently, so 
 looks like it did nothing. The value carries `aria-live="polite"`, because a disabled button and a
 changed number are the only signals the group gives — there is no input to announce itself.
 
-<Canvas of={QuantityStepperStories.BoundsDisableRatherThanClamp} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -76,12 +71,6 @@ A named group holding two round buttons around a live value. There is no text in
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop cart lines
-
-<Canvas of={QuantityStepperStories.MealdropCartLine} />
 
 {/* END: examples */}
 
@@ -151,32 +140,23 @@ Button and value colours, radius, and focus ring come from `Button` and `Body`'s
 
 The component is fully controlled — it holds no state of its own.
 
-<Canvas of={QuantityStepperStories.Value} />
-
 ### `min`
 
 The lower bound; the minus button disables on it. Defaults to 1.
 
-<Canvas of={QuantityStepperStories.Min} />
-
 ### `max`
 
 The upper bound; the plus button disables on it. Defaults to 10.
-
-<Canvas of={QuantityStepperStories.Max} />
 
 ### `aria-label`
 
 Names the group. Give it the item's name when a page has several steppers, or every one of them
 announces as "quantity".
 
-<Canvas of={QuantityStepperStories.AriaLabel} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-QuantityStepper` class.
 
-<Canvas of={QuantityStepperStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}
