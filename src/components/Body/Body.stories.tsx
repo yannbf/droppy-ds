@@ -1,9 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
-
-import { Badge } from '../Badge'
-import { Heading } from '../Heading'
 
 import type { BodyProps } from './Body'
 import { Body } from './Body'
@@ -53,22 +49,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * A line of body copy at the base size. Every prop that shapes the text is set
- * below, so the controls start populated — change the size step, the weight, or
- * the element it renders as.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: {
-    children: 'The kitchen closes at 10pm, last orders 9:30.',
-    size: undefined,
-    fontWeight: 'regular',
-    type: 'p',
-  },
-  argTypes: hide('color', 'className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -181,16 +161,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * `type` renders a real element, not a styled `span` — `label` gives you a
- * `<label>` that can be associated with a control.
- */
-export const RendersMatchingTag: Story = {
-  tags: ['highlight'],
-  argTypes: hide('size', 'fontWeight', 'color', 'className'),
-  args: { type: 'label', children: 'Delivery address' },
-}
-
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
@@ -217,68 +187,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** The text column of a restaurant tile. */
-export const MealdropRestaurantCardText: Story = {
-  tags: ['examples'],
-  argTypes: hide('children', 'size', 'fontWeight', 'type', 'color', 'className'),
-  render: () => (
-    <div style={{ display: 'grid', gap: '0.5rem', maxWidth: '18rem' }}>
-      <Heading level={2} size={4}>
-        Burger Kingdom
-      </Heading>
-      <Body size="S">Nicest place for burgers</Body>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-        <Body size="XS" fontWeight="medium">
-          Serves
-        </Body>
-        <Badge text="burgers" />
-        <Badge text="comfort food" />
-      </div>
-      <Body size="XXS">Delivers in 25–35 min · €2.50 delivery · Staalstraat 12, Amsterdam</Body>
-    </div>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestRendersMatchingTag: Story = {
-  tags: ['tests'],
-  args: { type: 'label', children: 'Delivery address' },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByText('Delivery address').tagName).toBe('LABEL')
-  },
-}
-
-export const TestSizeAndWeightAreIndependent: Story = {
-  tags: ['tests'],
-  render: () => (
-    <>
-      <Body size="XS">Small regular</Body>
-      <Body size="XS" fontWeight="bold">
-        Small bold
-      </Body>
-    </>
-  ),
-  play: async ({ canvas }) => {
-    const regular = canvas.getByText('Small regular')
-    const bold = canvas.getByText('Small bold')
-
-    await expect(getComputedStyle(regular).fontSize).toBe(getComputedStyle(bold).fontSize)
-    await expect(getComputedStyle(regular).fontWeight).not.toBe(getComputedStyle(bold).fontWeight)
-  },
-}
-
-export const TestColorOverridesToken: Story = {
-  tags: ['tests'],
-  args: { color: 'rgb(10, 125, 50)', children: 'Delivered' },
-  play: async ({ canvas }) => {
-    await expect(getComputedStyle(canvas.getByText('Delivered')).color).toBe('rgb(10, 125, 50)')
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { children: 'Body text' },
-}

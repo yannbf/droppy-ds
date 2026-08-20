@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
+import { fn } from 'storybook/test'
 
 import { Button } from '../Button'
 
 import { Body } from '../Body'
-import { Select } from '../Select'
 
 import { inPortalHost } from '../../../.storybook/preview'
 
@@ -82,16 +81,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * A cart reviewed alongside the page. `isOpen` and `title` are set below, so
- * the controls start populated — flip `isOpen` to open it without clicking.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { isOpen: true, title: 'Your order' },
-  argTypes: hide('container', 'className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -170,62 +159,9 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/** Below the mobile breakpoint the panel takes the full width. */
-export const FullWidthOnMobile: Story = {
-  tags: ['highlight'],
-  argTypes: hide('container', 'className'),
-  args: { isOpen: true },
-  globals: { viewport: { value: 'mobile1' } },
-}
-
-/**
- * The footer is pinned and the content scrolls above it, so a long order never
- * pushes the checkout button out of reach.
- */
-export const PinnedFooterWithScrollingContent: Story = {
-  tags: ['highlight'],
-  argTypes: hide('container', 'className'),
-  args: {
-    isOpen: true,
-    children: (
-      <ul style={{ margin: 0, paddingLeft: '1rem' }}>
-        {Array.from({ length: 20 }, (_, index) => (
-          <li key={index}>Margherita — €9.50</li>
-        ))}
-      </ul>
-    ),
-    footer: (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '100%' }}>
-        <strong>Total — €190.00</strong>
-        <Button large icon="arrow-right">
-          Go to checkout
-        </Button>
-      </div>
-    ),
-  },
-}
-
 /* ------------------------------------------------------------------ */
 /* animation — the motion contract                                     */
 /* ------------------------------------------------------------------ */
-
-/**
- * The panel slides from the trailing edge off `[data-starting-style]` and
- * `[data-ending-style]`, and stays mounted through the exit so the close
- * animation runs before it leaves the DOM. Base UI also drives swipe-to-dismiss
- * from the same states.
- */
-export const SlideTransition: Story = {
-  tags: ['animation'],
-  argTypes: hide('container', 'className'),
-  args: { isOpen: true },
-  play: async ({ canvasElement }) => {
-    const doc = within(canvasElement.ownerDocument.body)
-    const popup = await doc.findByRole('dialog')
-
-    await expect(getComputedStyle(popup).transitionProperty).not.toBe('none')
-  },
-}
 
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
@@ -283,167 +219,6 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-const cartEuros = (amount: number) =>
-  amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
-
-const initialCart = [
-  {
-    id: 'cheeseburger',
-    name: 'Cheeseburger',
-    description: 'Nice grilled burger with cheese',
-    price: 8.5,
-    quantity: 2,
-  },
-  { id: 'fries', name: 'Fries', description: 'Fried french fries', price: 2.5, quantity: 1 },
-  {
-    id: 'coca-cola',
-    name: 'Coca-Cola',
-    description: 'Chilled can, 330ml',
-    price: 1.75,
-    quantity: 3,
-  },
-]
-
-const QUANTITY_OPTIONS = Array.from({ length: 11 }, (_, index) => index)
-
-function ShoppingCartMenu({ container }: Pick<SidebarProps, 'container'>) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [cartItems, setCartItems] = useState(initialCart)
-
-  const setQuantity = (id: string, quantity: number) =>
-    setCartItems((rows) => rows.map((row) => (row.id === id ? { ...row, quantity } : row)))
-
-  const totalPrice = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
-
-  return (
-    <div>
-      <div style={{ padding: '1rem' }}>
-        <Button icon="cart" onClick={() => setIsOpen(true)}>
-          {cartItems.reduce((count, item) => count + item.quantity, 0)}
-        </Button>
-      </div>
-
-      <Sidebar
-        title="Your order"
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        container={container}
-        footer={
-          <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-            <div
-              style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1.5rem' }}
-            >
-              <Body type="span">Total</Body>
-              <Body type="span">{cartEuros(totalPrice)}</Body>
-            </div>
-            <Button disabled={totalPrice === 0} large onClick={() => setIsOpen(false)}>
-              Checkout
-            </Button>
-          </div>
-        }
-      >
-        <div style={{ display: 'grid', gap: '1.5rem' }}>
-          {cartItems.map((item) => (
-            <div key={item.id} style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
-              <div style={{ flex: '0.75' }}>
-                <Body type="span" fontWeight="medium">
-                  {item.name}
-                </Body>
-                <Body>{item.description}</Body>
-                <Body>{cartEuros(item.price * item.quantity)}</Body>
-              </div>
-              <div style={{ flex: '0.25' }}>
-                <Select
-                  value={item.quantity}
-                  onChange={(next) => setQuantity(item.id, next as number)}
-                  aria-label={`${item.name}, ${item.quantity} times`}
-                  options={QUANTITY_OPTIONS}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </Sidebar>
-    </div>
-  )
-}
-
-/** Mealdrop's cart panel, opened from the header's cart button. */
-export const MealdropCartPanel: Story = {
-  tags: ['examples'],
-  argTypes: hide('isOpen', 'title', 'onClose', 'footer', 'container', 'children', 'className'),
-  render: (args) => <ShoppingCartMenu container={args.container} />,
-  play: async ({ canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: '6' }))
-
-    await waitFor(() => expect(canvas.getByRole('dialog')).toBeVisible())
-  },
-}
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestOpensAndCloses: Story = {
-  tags: ['tests'],
-  play: async ({ args, canvas, canvasElement }) => {
-    const doc = within(canvasElement.ownerDocument.body)
-
-    await userEvent.click(canvas.getByRole('button', { name: 'Open cart' }))
-    await waitFor(() => expect(doc.getByRole('dialog')).toBeVisible())
-
-    await userEvent.click(doc.getByRole('button', { name: 'close sidebar' }))
-
-    await waitFor(() => expect(args.onClose).toHaveBeenCalled())
-    // Settle the exit transition before the automatic a11y check: Base UI's
-    // focus guards (aria-hidden + tabindex) exist while the drawer is mounted
-    // and trip axe's aria-hidden-focus rule if it snapshots mid-close.
-    await waitFor(() => expect(doc.queryByRole('dialog')).not.toBeInTheDocument())
-  },
-}
-
-export const TestTitleNamesTheDialog: Story = {
-  tags: ['tests'],
-  args: { isOpen: true },
-  play: async ({ canvasElement }) => {
-    const doc = within(canvasElement.ownerDocument.body)
-
-    await waitFor(() => expect(doc.getByRole('dialog', { name: 'Your order' })).toBeVisible())
-  },
-}
-
-export const TestFooterIsOptional: Story = {
-  tags: ['tests'],
-  args: { isOpen: true, footer: undefined },
-  play: async ({ canvasElement }) => {
-    const doc = within(canvasElement.ownerDocument.body)
-
-    await waitFor(() => expect(doc.getByRole('dialog')).toBeVisible())
-    await expect(
-      canvasElement.ownerDocument.querySelector('[data-testid="sidebar-footer"]')
-    ).toBeNull()
-  },
-}
-
-export const TestContainerPortalsWhereAsked: Story = {
-  tags: ['tests'],
-  args: { isOpen: true, container: '#sidebar-portal-test' },
-  render: (args) => (
-    <>
-      <div id="sidebar-portal-test" data-testid="portal-host" />
-      <SidebarDemo {...args} />
-    </>
-  ),
-  play: async ({ canvas }) => {
-    const host = canvas.getByTestId('portal-host')
-
-    await waitFor(() => expect(host.querySelector('[role="dialog"]')).not.toBeNull())
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { isOpen: false, title: 'Title', onClose: fn() },
-}

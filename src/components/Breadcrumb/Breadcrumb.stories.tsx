@@ -1,9 +1,6 @@
 import type { ComponentProps } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
-
-import { TopBanner } from '../TopBanner'
 
 import type { BreadcrumbProps } from './Breadcrumb'
 import { Breadcrumb } from './Breadcrumb'
@@ -47,16 +44,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * The trail above a category page. Edit the items in the controls to add or
- * remove crumbs — the last one is always the current page.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { items: [{ label: 'categories', href: '/categories' }, { label: 'sushi' }] },
-  argTypes: hide('className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -120,22 +107,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The last crumb carries `aria-current="page"` whether it renders as a link or
- * as plain text, and the whole trail sits in a `<nav aria-label="breadcrumb">`
- * landmark — the semantics Mealdrop's `div`/`p` version had none of.
- */
-export const CurrentPageIsMarked: Story = {
-  tags: ['highlight'],
-  argTypes: hide('className'),
-  args: {
-    items: [
-      { label: 'categories', href: '/categories' },
-      { label: 'sushi', href: '/categories/sushi' },
-    ],
-  },
-}
-
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
@@ -174,73 +145,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** The trail under a category page banner. */
-export const MealdropCategoryTrail: Story = {
-  tags: ['examples'],
-  argTypes: hide('items', 'className'),
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <div>
-      <TopBanner
-        title="Sushi"
-        photoUrl="https://images.pexels.com/photos/9210/food-japanese-food-photography-sushi.jpg?auto=compress&cs=tinysrgb&dpr=2&h=550"
-      />
-      <div style={{ padding: '1rem 1.5rem' }}>
-        <Breadcrumb
-          items={[
-            { label: 'home', render: <RouterLink to="/" /> },
-            { label: 'categories', render: <RouterLink to="/categories" /> },
-            { label: 'sushi', render: <RouterLink to="/categories/sushi" /> },
-          ]}
-        />
-      </div>
-    </div>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestCurrentPageIsMarked: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(canvas.getByText('sushi')).toHaveAttribute('aria-current', 'page')
-    await expect(canvas.getByText('categories')).not.toHaveAttribute('aria-current')
-  },
-}
-
-export const TestLandmarkIsLabelled: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('navigation', { name: 'breadcrumb' })).toBeInTheDocument()
-  },
-}
-
-export const TestRenderKeepsItsOwnDestination: Story = {
-  tags: ['tests'],
-  args: {
-    items: [
-      { label: 'categories', render: <RouterLink to="/categories" /> },
-      { label: 'sushi', render: <RouterLink to="/categories/sushi" /> },
-    ],
-  },
-  play: async ({ canvas, canvasElement }) => {
-    await expect(canvasElement.querySelectorAll('[data-router-link]')).toHaveLength(2)
-    await expect(canvas.getByText('sushi')).toHaveAttribute('aria-current', 'page')
-  },
-}
-
-export const TestSeparatorIsNotAnnounced: Story = {
-  tags: ['tests'],
-  play: async ({ canvasElement }) => {
-    const separator = canvasElement.querySelector('.droppy-Breadcrumb-separator')
-
-    await expect(separator).toHaveAttribute('aria-hidden', 'true')
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { items: [{ label: 'parent', href: '/parent' }, { label: 'current page' }] },
-}

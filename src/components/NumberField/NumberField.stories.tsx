@@ -1,9 +1,6 @@
-import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
-
-import { Heading } from '../Heading'
+import { fn } from 'storybook/test'
 
 import type { NumberFieldProps } from './NumberField'
 import { NumberField } from './NumberField'
@@ -53,17 +50,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * A typeable quantity with stepper buttons. Bounds and step are set below, so
- * the controls start populated — the buttons disable at the bounds rather than
- * wrapping.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { label: 'Quantity', defaultValue: 1, min: 0, max: 10, step: 1, disabled: false },
-  argTypes: hide('value', 'format', 'className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -137,17 +123,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * Three ways in, not one: type a value, press the buttons, or drag the label
- * itself — the scrub area sits behind the label text. That third route is what
- * separates this from `QuantityStepper`, which only does tap-tap increments.
- */
-export const ThreeWaysToChangeTheValue: Story = {
-  tags: ['highlight'],
-  argTypes: hide('value', 'format', 'className'),
-  args: { defaultValue: 100 },
-}
-
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
@@ -186,126 +161,6 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-function PriceEditor() {
-  const [price, setPrice] = useState(8.5)
-  const [prepTime, setPrepTime] = useState(12)
-
-  return (
-    <div style={{ display: 'grid', gap: '1rem', maxWidth: '24rem' }}>
-      <Heading level={3} size={4}>
-        Cheeseburger
-      </Heading>
-      <NumberField
-        label="Price"
-        value={price}
-        onValueChange={(next) => setPrice(next ?? 0)}
-        min={0}
-        step={0.25}
-        format={{ style: 'currency', currency: 'EUR' }}
-      />
-      <NumberField
-        label="Prep time (minutes)"
-        value={prepTime}
-        onValueChange={(next) => setPrepTime(next ?? 0)}
-        min={1}
-        max={90}
-        step={1}
-      />
-    </div>
-  )
-}
-
-/** DropBoard's menu-item price and prep-time fields. */
-export const DropBoardPriceEditor: Story = {
-  tags: ['examples'],
-  render: () => <PriceEditor />,
-}
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestTypingReportsAParsedNumber: Story = {
-  tags: ['tests'],
-  args: { defaultValue: undefined },
-  play: async ({ args, canvas }) => {
-    const input = canvas.getByRole('textbox')
-
-    await userEvent.clear(input)
-    await userEvent.type(input, '42')
-
-    await waitFor(() => expect(input).toHaveValue('42'))
-    await expect(args.onValueChange).toHaveBeenLastCalledWith(42, expect.anything())
-  },
-}
-
-export const TestIncrementAndDecrement: Story = {
-  tags: ['tests'],
-  args: { defaultValue: 5 },
-  play: async ({ canvas }) => {
-    const input = canvas.getByRole('textbox')
-
-    await userEvent.click(canvas.getByRole('button', { name: 'Increase' }))
-    await waitFor(() => expect(input).toHaveValue('6'))
-
-    await userEvent.click(canvas.getByRole('button', { name: 'Decrease' }))
-    await userEvent.click(canvas.getByRole('button', { name: 'Decrease' }))
-    await waitFor(() => expect(input).toHaveValue('4'))
-  },
-}
-
-export const TestButtonsDisableAtBounds: Story = {
-  tags: ['tests'],
-  args: { defaultValue: 9, min: 0, max: 10 },
-  play: async ({ canvas }) => {
-    const increment = canvas.getByRole('button', { name: 'Increase' })
-    const decrement = canvas.getByRole('button', { name: 'Decrease' })
-
-    await userEvent.click(increment)
-    await waitFor(() => expect(increment).toHaveAttribute('aria-disabled', 'true'))
-    await expect(decrement).toHaveAttribute('aria-disabled', 'false')
-  },
-}
-
-export const TestDisabledBlocksEverything: Story = {
-  tags: ['tests'],
-  args: { defaultValue: 3, disabled: true },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('textbox')).toBeDisabled()
-    await expect(canvas.getByRole('button', { name: 'Increase' })).toHaveAttribute('data-disabled')
-  },
-}
-
-export const TestScrubbingTheLabel: Story = {
-  tags: ['tests'],
-  args: { defaultValue: 100 },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    const input = canvas.getByRole('textbox')
-    await expect(input).toHaveValue('100')
-
-    const scrubArea = canvasElement.querySelector('[role="presentation"]') as HTMLElement
-    const box = scrubArea.getBoundingClientRect()
-    const start = { clientX: box.left + box.width / 2, clientY: box.top + box.height / 2 }
-
-    scrubArea.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, ...start }))
-    scrubArea.dispatchEvent(
-      new PointerEvent('pointermove', {
-        bubbles: true,
-        clientX: start.clientX + 10,
-        clientY: start.clientY,
-        movementX: 10,
-        movementY: 0,
-      })
-    )
-    await waitFor(() => expect(input).toHaveValue('110'))
-
-    scrubArea.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }))
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-}

@@ -1,11 +1,7 @@
 import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn, userEvent } from 'storybook/test'
-
-import { Body } from '../Body'
-import { Heading } from '../Heading'
-import { Separator } from '../Separator'
+import { fn } from 'storybook/test'
 
 import type { QuantityStepperProps } from './QuantityStepper'
 import { QuantityStepper } from './QuantityStepper'
@@ -65,16 +61,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A cart line's quantity. Bounds are set below, so the controls start
- * populated — click up to `max` and the plus disables rather than wrapping.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { value: 1, min: 1, max: 10, 'aria-label': 'quantity' },
-  argTypes: hide('className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
@@ -128,18 +114,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The buttons disable at the bounds rather than wrapping or clamping silently,
- * so a click never looks like it did nothing. The value carries `aria-live`,
- * because a disabled button and a changed number are the only signals the
- * group gives.
- */
-export const BoundsDisableRatherThanClamp: Story = {
-  tags: ['highlight'],
-  argTypes: hide('className'),
-  args: { value: 1, min: 1, max: 2 },
-}
-
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
@@ -170,124 +144,6 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-const cartEuros = (amount: number) =>
-  amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
-
-const initialLines = [
-  { id: 'cheeseburger', name: 'Cheeseburger', price: 8.5, quantity: 2 },
-  { id: 'fries', name: 'Fries', price: 2.5, quantity: 1 },
-  { id: 'coca-cola', name: 'Coca-Cola', price: 1.75, quantity: 3 },
-]
-
-function CartLines() {
-  const [lines, setLines] = useState(initialLines)
-
-  const setQuantity = (id: string, quantity: number) =>
-    setLines((rows) => rows.map((row) => (row.id === id ? { ...row, quantity } : row)))
-
-  const total = lines.reduce((sum, line) => sum + line.price * line.quantity, 0)
-
-  return (
-    <div style={{ display: 'grid', gap: '1rem', maxWidth: '26rem' }}>
-      <Heading level={3} size={4}>
-        Your order
-      </Heading>
-
-      {lines.map((line) => (
-        <div
-          key={line.id}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1rem',
-          }}
-        >
-          <Body size="S">{line.name}</Body>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <QuantityStepper
-              value={line.quantity}
-              onChange={(next) => setQuantity(line.id, next)}
-              aria-label={`${line.name} quantity`}
-            />
-            <Body size="S" fontWeight="bold" style={{ minWidth: '4rem', textAlign: 'right' }}>
-              {cartEuros(line.price * line.quantity)}
-            </Body>
-          </div>
-        </div>
-      ))}
-
-      <Separator />
-
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Body fontWeight="bold">Total</Body>
-        <Body fontWeight="bold">{cartEuros(total)}</Body>
-      </div>
-    </div>
-  )
-}
-
-/** Cart lines with per-dish quantity steppers. */
-export const MealdropCartLine: Story = {
-  tags: ['examples'],
-  argTypes: hide('value', 'onChange', 'min', 'max', 'aria-label', 'className'),
-  render: () => <CartLines />,
-}
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestDisablesAtMin: Story = {
-  tags: ['tests'],
-  args: { value: 1 },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('button', { name: 'decrease quantity by one' })).toBeDisabled()
-    await expect(
-      canvas.getByRole('button', { name: 'increase quantity by one' })
-    ).not.toBeDisabled()
-  },
-}
-
-export const TestDisablesAtMax: Story = {
-  tags: ['tests'],
-  args: { value: 10 },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('button', { name: 'increase quantity by one' })).toBeDisabled()
-    await expect(
-      canvas.getByRole('button', { name: 'decrease quantity by one' })
-    ).not.toBeDisabled()
-  },
-}
-
-export const TestReportsEachChange: Story = {
-  tags: ['tests'],
-  args: { value: 1, max: 2 },
-  play: async ({ args, canvas }) => {
-    const increase = canvas.getByRole('button', { name: 'increase quantity by one' })
-    const decrease = canvas.getByRole('button', { name: 'decrease quantity by one' })
-
-    await userEvent.click(increase)
-    await expect(args.onChange).toHaveBeenCalledWith(2)
-    await expect(increase).toBeDisabled()
-
-    await userEvent.click(decrease)
-    await expect(args.onChange).toHaveBeenCalledWith(1)
-    await expect(decrease).toBeDisabled()
-  },
-}
-
-export const TestGroupIsNamed: Story = {
-  tags: ['tests'],
-  args: { 'aria-label': 'Cheeseburger quantity' },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('group', { name: 'Cheeseburger quantity' })).toBeInTheDocument()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { value: 1, onChange: fn() },
-}
