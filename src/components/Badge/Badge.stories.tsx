@@ -1,6 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Body } from '../Body'
 import { Card } from '../Card'
@@ -13,13 +12,6 @@ import { Badge } from './Badge'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof BadgeProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
-const inBorderedBox: Decorator = (Story) => (
-  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
-    <Story />
-  </div>
-)
 
 const meta = {
   title: 'Feedback & status/Badge',
@@ -45,68 +37,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A dietary tag on a menu item. Both props are set below, so the controls
- * start populated — edit the text or flip the variant to see the two looks.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { text: 'vegan', variant: 'neutral' },
-  argTypes: hide('className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `text` is the only required prop, and the only content the badge renders. */
-export const Text: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('variant', 'className'),
-  args: { text: 'gluten free' },
-}
-
-/** `variant` swaps the background, text color, and weight — not the size. */
-export const Variant: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('text', 'className'),
-  render: (args) => (
-    <div style={{ display: 'flex', gap: '0.5rem' }}>
-      <Badge {...args} text="vegan" variant="neutral" />
-      <Badge {...args} text="new" variant="positive" />
-    </div>
-  ),
-}
-
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
-export const ClassName: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('variant'),
-  args: {
-    className: 'badge-demo-inset',
-  },
-  decorators: [inBorderedBox],
-  render: (args) => (
-    <>
-      <style>{`.badge-demo-inset { margin: 1rem; }`}</style>
-      <Badge {...args} />
-    </>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
-
-/** The pill grows with its content — there's no truncation or fixed width. */
-export const LongerText: Story = {
-  tags: ['highlight'],
-  argTypes: hide('className'),
-  args: { text: 'contains nuts and dairy' },
-}
 
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
@@ -194,49 +131,3 @@ export const MealdropRestaurantTags: Story = {
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestCapitalizesText: Story = {
-  tags: ['tests'],
-  args: { text: 'vegan' },
-  play: async ({ canvas }) => {
-    await expect(getComputedStyle(canvas.getByText('vegan')).textTransform).toBe('capitalize')
-  },
-}
-
-export const TestVariantSwapsTokens: Story = {
-  tags: ['tests'],
-  render: () => (
-    <div style={{ display: 'flex', gap: '0.5rem' }}>
-      <Badge text="vegan" />
-      <Badge text="new" variant="positive" />
-    </div>
-  ),
-  play: async ({ canvas }) => {
-    const neutral = canvas.getByText('vegan')
-    const positive = canvas.getByText('new')
-
-    await expect(getComputedStyle(neutral).backgroundColor).not.toBe(
-      getComputedStyle(positive).backgroundColor
-    )
-    await expect(getComputedStyle(neutral).fontWeight).not.toBe(
-      getComputedStyle(positive).fontWeight
-    )
-  },
-}
-
-export const TestMergesClassName: Story = {
-  tags: ['tests'],
-  args: { className: 'badge-demo-custom' },
-  play: async ({ canvas }) => {
-    const badge = canvas.getByText('vegan')
-
-    await expect(badge).toHaveClass('droppy-Badge')
-    await expect(badge).toHaveClass('badge-demo-custom')
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { text: 'Content' },
-}

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
+import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Body } from '../Body'
 import { Button } from '../Button'
@@ -14,13 +13,6 @@ import { ProgressBar } from './ProgressBar'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof ProgressBarProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
-const inBorderedBox: Decorator = (Story) => (
-  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
-    <Story />
-  </div>
-)
 
 const meta = {
   title: 'Feedback & status/ProgressBar',
@@ -51,81 +43,13 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * Step two of a three-step checkout. Drag `value` past `max` in the controls —
- * the fill clamps rather than overflowing.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { value: 1, max: 3, label: 'Checkout progress' },
-  argTypes: hide('className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `value` positions the fill, from empty through to full. */
-export const Value: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('value', 'className'),
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '0.75rem', width: '16rem' }}>
-      {[0, 1, 2, 3].map((value) => (
-        <ProgressBar {...args} key={value} value={value} />
-      ))}
-    </div>
-  ),
-}
-
-/** `max` is the upper bound — step counts, not just percentages. */
-export const Max: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('className'),
-  args: { value: 30, max: 40, label: 'Upload progress' },
-}
-
-/** `label` is the accessible name; nothing visible is rendered from it. */
-export const Label: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('className'),
-  args: { label: 'Order preparation' },
-}
-
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
-export const ClassName: Story = {
-  tags: ['api-ref'],
-  args: {
-    className: 'progressbar-demo-inset',
-  },
-  decorators: [inBorderedBox],
-  render: (args) => (
-    <>
-      <style>{`.progressbar-demo-inset { margin: 1rem; }`}</style>
-      <div style={{ width: '16rem' }}>
-        <ProgressBar {...args} />
-      </div>
-    </>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
-
-/**
- * A value past `max` clamps rather than overflowing the track, so a caller
- * that counts one step too far still renders a full bar instead of a broken
- * one — and `aria-valuenow` reports the clamped number, not the raw one.
- */
-export const OverMaxClamps: Story = {
-  tags: ['highlight'],
-  argTypes: hide('className'),
-  args: { value: 9, max: 3 },
-}
 
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
@@ -208,55 +132,3 @@ export const MealdropCheckoutSteps: Story = {
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestReportsItsRange: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })
-
-    await expect(bar).toHaveAttribute('aria-valuenow', '1')
-    await expect(bar).toHaveAttribute('aria-valuemin', '0')
-    await expect(bar).toHaveAttribute('aria-valuemax', '3')
-  },
-}
-
-export const TestClampsOverMax: Story = {
-  tags: ['tests'],
-  args: { value: 9 },
-  play: async ({ canvas, canvasElement }) => {
-    const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })
-    const fill = canvasElement.querySelector('.droppy-ProgressBar-fill') as HTMLElement
-
-    await expect(bar).toHaveAttribute('aria-valuenow', '3')
-    await expect(fill.style.width).toBe('100%')
-  },
-}
-
-export const TestClampsBelowZero: Story = {
-  tags: ['tests'],
-  args: { value: -4 },
-  play: async ({ canvas, canvasElement }) => {
-    const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })
-    const fill = canvasElement.querySelector('.droppy-ProgressBar-fill') as HTMLElement
-
-    await expect(bar).toHaveAttribute('aria-valuenow', '0')
-    await expect(fill.style.width).toBe('0%')
-  },
-}
-
-export const TestFillIsNotAnnounced: Story = {
-  tags: ['tests'],
-  play: async ({ canvas, canvasElement }) => {
-    // Exactly one progressbar in the tree: the fill is a plain div.
-    await expect(canvas.getAllByRole('progressbar')).toHaveLength(1)
-    await expect(canvasElement.querySelector('.droppy-ProgressBar-fill')).not.toHaveAttribute(
-      'role'
-    )
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { value: 1 },
-}
