@@ -7,8 +7,6 @@ import { cx } from '../../utils/cx'
 
 export type ErrorBlockProps = {
   title: string
-  /** Illustration slot — an inline SVG, an image, or an animation the caller drives itself.
-   *  Omitted, the block renders with no illustration at all. */
   illustration?: ReactNode
   body: string
   buttonText: string
@@ -16,10 +14,6 @@ export type ErrorBlockProps = {
   className?: string
 }
 
-/**
- * A titled message with an optional illustration and a single recovery action —
- * an empty category, a 404, a failed request.
- */
 export const ErrorBlock = ({
   title,
   illustration,
