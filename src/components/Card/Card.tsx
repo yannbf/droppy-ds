@@ -3,10 +3,7 @@ import type { ComponentProps, PropsWithChildren } from 'react'
 import { cx } from '../../utils/cx'
 
 type DefaultProps = {
-  /** Hover dim + pointer cursor. The shell only — callers wire their own onClick. */
   interactive?: boolean
-  /** Adds `--ds-space-sm` padding on all sides. Bare by default, since most of
-   *  the components this replaces already own their internal padding. */
   padded?: boolean
   className?: string
 }

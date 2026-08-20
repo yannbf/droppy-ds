@@ -290,8 +290,3 @@ export const TestItemsPerViewReachesCss: Story = {
     await expect(root.style.getPropertyValue('--droppy-Carousel-items-mobile')).toBe('1.2')
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { itemsPerView: { mobile: 1.2, tablet: 3, desktop: 4 }, children: tiles },
-}

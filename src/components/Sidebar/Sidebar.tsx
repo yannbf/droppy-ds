@@ -9,24 +9,14 @@ import { useContainer } from '../../utils/useContainer'
 
 export type SidebarProps = {
   isOpen: boolean
-  /** Heading shown in the top bar. Also names the dialog. */
   title: string
   onClose: () => void
-  /** Pinned to the bottom of the panel — for totals and primary actions. */
   footer?: ReactNode
-  /** Where to portal. Accepts an element or a selector; defaults to the body. */
   container?: HTMLElement | string | null
   className?: string
   children?: ReactNode
 }
 
-/**
- * A panel that slides in from the trailing edge — for carts, filters, and
- * anything reviewed alongside the page rather than instead of it.
- *
- * Base UI's `Drawer` supplies Escape-to-close, swipe-to-dismiss, the focus
- * trap and the scroll lock.
- */
 export const Sidebar = ({
   children,
   footer,

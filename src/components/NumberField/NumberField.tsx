@@ -7,7 +7,6 @@ import { Icon } from '../Icon'
 import { cx } from '../../utils/cx'
 
 type DefaultProps = {
-  /** Visible label. Also becomes the field's accessible name. */
   label?: string
   disabled?: boolean
   className?: string
@@ -16,17 +15,6 @@ type DefaultProps = {
 export type NumberFieldProps = DefaultProps &
   Omit<ComponentProps<typeof BaseNumberField.Root>, keyof DefaultProps | 'render'>
 
-/**
- * A typeable numeric input with increment/decrement buttons and pointer
- * scrub, for a quantity or amount that can also be reached by keyboard or
- * direct entry — unlike `QuantityStepper`, which only supports tap-tap
- * bounded increments.
- *
- * Built on Base UI's `NumberField`, wrapped in `Field` so the label is
- * associated with the control the same way `Input` does it. The label sits
- * inside a `ScrubArea`, so dragging it also changes the value, in addition
- * to typing, arrow keys, and the increment/decrement buttons.
- */
 export const NumberField = ({ label, disabled, className, ...rest }: NumberFieldProps) => (
   <Field.Root data-part="field" className={cx(theme.FieldRoot, 'droppy-Field')} disabled={disabled}>
     <BaseNumberField.Root

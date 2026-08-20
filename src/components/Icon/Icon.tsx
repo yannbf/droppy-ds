@@ -5,11 +5,8 @@ import { cx } from '../../utils/cx'
 import { icons, type IconName } from './icons'
 
 export type IconProps = {
-  /** Which icon to render. */
   name: IconName
-  /** Overrides the stroke colour. Defaults to the theme's icon token. */
   color?: string
-  /** Rendered width and height. */
   size?: number | string
 } & Omit<ComponentProps<'svg'>, 'color'>
 

@@ -3,9 +3,7 @@ import type { ComponentProps } from 'react'
 import { cx } from '../../utils/cx'
 
 type DefaultProps = {
-  /** The label. Rendered capitalized regardless of the casing passed in. */
   text: string
-  /** `positive` matches the look of an affirmative flag, e.g. "new". */
   variant?: 'neutral' | 'positive'
   className?: string
 }

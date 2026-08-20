@@ -5,13 +5,9 @@ import theme from '../../theme'
 import { cx } from '../../utils/cx'
 
 type DefaultProps = {
-  /** Current value. `null` (or omitted) renders an indeterminate bar. */
   value?: number | null
-  /** Upper bound `value` is measured against. */
   max?: number
-  /** Accessible name, rendered above the track. */
   label?: ReactNode
-  /** Renders the formatted value (a percentage by default) next to the label. */
   showValue?: boolean
   className?: string
 }
@@ -19,13 +15,6 @@ type DefaultProps = {
 export type ProgressProps = DefaultProps &
   Omit<ComponentProps<typeof BaseProgress.Root>, keyof DefaultProps | 'value' | 'render'>
 
-/**
- * A track-and-fill indicator built on Base UI's `Progress`, adding a `Label`
- * and formatted `Value` part on top of the plain fill `ProgressBar` renders.
- * `value={null}` (or omitting it) puts the bar in indeterminate mode, for a
- * wait whose length or step count isn't known — something `ProgressBar` has
- * no way to express.
- */
 export const Progress = ({
   value = null,
   max = 100,

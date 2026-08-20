@@ -271,5 +271,3 @@ export const TestInteractiveIsAppearanceOnly: Story = {
     await expect(canvas.queryByRole('button')).not.toBeInTheDocument()
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }

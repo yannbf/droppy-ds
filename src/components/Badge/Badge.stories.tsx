@@ -235,8 +235,3 @@ export const TestMergesClassName: Story = {
     await expect(badge).toHaveClass('badge-demo-custom')
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { text: 'Content' },
-}

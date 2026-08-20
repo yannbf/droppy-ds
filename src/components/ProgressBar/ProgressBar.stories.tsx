@@ -255,8 +255,3 @@ export const TestFillIsNotAnnounced: Story = {
     )
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { value: 1 },
-}
