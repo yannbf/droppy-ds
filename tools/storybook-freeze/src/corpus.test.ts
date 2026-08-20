@@ -87,6 +87,7 @@ describe('runCorpus', () => {
 
     expect(summary.storiesRemoved).toBe(3)
     expect(summary.removed).toHaveLength(2)
+    expect(summary.storyFilesKept).toBe(0)
   })
 
   it('deletes MDX star-importing a pruned CSF and keeps MDX importing a surviving one', async () => {
