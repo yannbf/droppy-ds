@@ -5,56 +5,6 @@ import * as ContainerStories from './Container.stories'
 
 # Container
 
-{/* BEGIN: general */}
-
-A max-width page wrapper with responsive side padding — the bound that keeps a page's content
-from stretching edge to edge on wide screens.
-
-```tsx
-import { Container } from '@droppy/design-system'
-```
-
-<Canvas of={ContainerStories.Default} />
-
-## Features
-
-- Caps width at 1600px and centers with `margin: 0 auto`.
-- Side padding starts at `1.5rem` and widens to `4rem` at the 640px breakpoint, so the bound
-  reads correctly on a phone and doesn't crowd content on a tablet or larger.
-- `desktopOnly` defers the width cap and padding to the 1024px breakpoint — below that width the
-  wrapper adds no constraint, so the caller's own mobile layout runs unconstrained until the page
-  is wide enough to want the bound.
-- Merges any incoming `className` with its own `droppy-Container` class.
-
-{/* END: general */}
-
-{/* BEGIN: when-to-use */}
-
-## When to use
-
-- Wrapping a page's main content so it caps at a readable width and doesn't touch the viewport
-  edges on desktop.
-- `desktopOnly` for a section that already owns its mobile padding (a hero, a banner) and only
-  needs the width cap once the layout goes multi-column.
-
-## When not to use
-
-- Inside a component that already manages its own width — nesting `Container` inside `Container`
-  compounds the padding instead of replacing it.
-- For a raised surface that groups content — use [Card](?path=/docs/media-content-card--docs)
-  instead; `Container` has no background, radius, or shadow.
-
-{/* END: when-to-use */}
-
-{/* BEGIN: behavior */}
-
-## How it works
-
-Padding applies immediately and widens at 640px; the width cap and centering hold at every size.
-`desktopOnly` defers both until 1024px, so a caller can supply its own mobile layout and let
-`Container` take over once the page is wide enough to want the bound.
-{/* END: behavior */}
-
 {/* BEGIN: anatomy */}
 
 ## Anatomy
@@ -68,10 +18,6 @@ Padding applies immediately and widens at 640px; the width cap and centering hol
 | Root | `root`      | `<div>` | The max-width bound, the centering, and the side padding |
 
 {/* END: anatomy */}
-
-{/* BEGIN: examples */}
-
-{/* END: examples */}
 
 {/* BEGIN: do-dont */}
 
@@ -92,94 +38,3 @@ Padding applies immediately and widens at 640px; the width cap and centering hol
   consistent from page to page
 
 {/* END: do-dont */}
-
-{/* BEGIN: a11y */}
-
-## Keyboard & screen reader
-
-`Container` is a non-interactive layout element — there is no keyboard interaction to document.
-
-- **ARIA:** none — a plain wrapping `<div>`.
-- **Screen reader:** not announced as a distinct region; its children are read in document order.
-
-{/* END: a11y */}
-
-{/* BEGIN: brand */}
-
-{/* END: brand */}
-
-{/* BEGIN: styling */}
-
-## Styling
-
-| Token           | Used for                                      |
-| --------------- | --------------------------------------------- |
-| `--ds-space-sm` | Side padding (both variants, at their widths) |
-
-The 1600px max-width, the 4rem wide-viewport padding, and the 640px/1024px breakpoints are
-literal values — no token in the current scale matches them exactly.
-
-`className` merges with the component's own `droppy-Container` class.
-
-{/* END: styling */}
-
-{/* BEGIN: props */}
-
-## API reference
-
-<ArgTypes of={ContainerStories} />
-
-### `children`
-
-Rendered in normal flow; the wrapper only bounds the width.
-
-<Canvas of={ContainerStories.Children} />
-
-### `desktopOnly`
-
-Below 1024px, `Container` renders with no width cap and no padding of its own. From 1024px up, it
-behaves exactly like the default. This covers what Mealdrop's second global `.container-desktop`
-class did, named for what it does rather than for the old suffix.
-
-<Canvas of={ContainerStories.DesktopOnly} />
-
-### `className`
-
-Merged onto the root alongside the component's own `droppy-Container` class.
-
-<Canvas of={ContainerStories.ClassName} />
-{/* END: props */}
-
-{/* BEGIN: history */}
-
-## Decision log
-
-- **2026-07**: Container replaced Mealdrop's global `.container`/`.container-desktop` stylesheet classes with a component; the `desktopOnly` prop covers the second class and is named for what it does — defer the width bound to the 1024px breakpoint — rather than for the old class suffix ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
-- **Built on a plain `<div>` element.** Droppy supplies the props, the theme classes, and the copy around it.
-
-{/* END: history */}
-
-{/* BEGIN: known-issues */}
-
-## Known issues & open questions
-
-- [#166](https://github.com/yannbf/droppy-ds/issues/166): desktopOnly variant gets 1.5rem side padding at &gt;=1024px instead of the documented parity with the default variant's 4rem. **Workaround:** app CSS loaded after the DS stylesheet can re-apply `padding: 0 4rem` to `.droppy-Container--desktopOnly` at &gt;=1024px.
-- [#180](https://github.com/yannbf/droppy-ds/issues/180): unlayered package CSS defeats cascade-layered app overrides — Tailwind v4 utilities like px-0 or max-w-\* via className have no effect. **Workaround:** import the DS stylesheet into a low-priority named layer (`@import ... layer(droppy)`) or use important/unlayered overrides.
-- [#184](https://github.com/yannbf/droppy-ds/issues/184): docs recommend placing PageSection inside Container, but the two compound padding (5.5rem/side at &gt;=1024px, asymmetric below) — the exact nesting failure Container.mdx warns about. **Workaround:** use PageSection standalone instead of nesting, or neutralize one layer's insets with a descendant override in app CSS.
-- [#188](https://github.com/yannbf/droppy-ds/issues/188): desktopOnly below 1024px is an active CSS reset, not the documented "no constraint", so consumer mobile classes can be zeroed depending on stylesheet order. **Workaround:** import the DS stylesheet before app CSS, raise selector specificity, or use the style prop.
-- [#193](https://github.com/yannbf/droppy-ds/issues/193): MDX claims no token matches the 640px/1024px breakpoints, but --ds-breakpoint-sm/--ds-breakpoint-lg match them exactly. **Workaround:** treat 640px/1024px as --ds-breakpoint-sm/--ds-breakpoint-lg per the tokens in styles.css, ignoring the MDX claim.
-- [#196](https://github.com/yannbf/droppy-ds/issues/196): crossing the 640px breakpoint shrinks available content width (591px to 512px), and the rem-based 4rem padding scales with browser font settings while the px breakpoint does not. **Workaround:** override the &gt;=640px padding in app CSS after the DS stylesheet, or use desktopOnly and own the mobile padding.
-- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only).
-
-{/* END: known-issues */}
-
-{/* BEGIN: when-to-use */}
-
-## Related
-
-- [PageSection](?path=/docs/layout-structure-pagesection--docs) — a titled content section, commonly
-  placed inside a `Container`.
-- [Card](?path=/docs/media-content-card--docs) — a raised surface for grouping content, instead of a
-  page-level wrapper.
-
-{/* END: when-to-use */}
