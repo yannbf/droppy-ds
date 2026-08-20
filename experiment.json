@@ -1,0 +1,18 @@
+{
+  "branchName": "experiment/a11y",
+  "baseCommit": "29c38a90233698ee7e08bf2b15085e1aeabd8363",
+  "keptFacets": [
+    "csf-jsdoc.meta",
+    "csf-jsdoc.story",
+    "general.general-a11y",
+    "general.general-brand",
+    "general.general-setup",
+    "mdx.a11y",
+    "mdx.anatomy",
+    "source-jsdoc.component",
+    "source-jsdoc.props",
+    "story.anatomy"
+  ],
+  "createdAt": "2026-08-20T07:43:56.948Z",
+  "version": 1
+}

@@ -5,54 +5,6 @@ import * as PageTemplateStories from './PageTemplate.stories'
 
 # PageTemplate
 
-{/* BEGIN: general */}
-
-The page shell: header, a `<main>` content area, and footer — the top-level layout every routed
-page sits inside.
-
-```tsx
-import { PageTemplate } from '@droppy/design-system'
-```
-
-<Canvas of={PageTemplateStories.Default} />
-
-## Features
-
-- `header` and `footer` are optional slots rendered outside the `<main>` landmark, above and below
-  the content area respectively.
-- `children` renders inside `<main>` — the one content landmark per page, so assistive tech can
-  jump straight to it.
-- The content area carries `min-height: calc(100vh - 200px)`, a literal allowance for a typical
-  header + footer height, so a short page's footer still lands at the bottom of the viewport
-  instead of riding up under the fold.
-- Merges any incoming `className` with its own `droppy-PageTemplate` class.
-
-{/* END: general */}
-
-{/* BEGIN: when-to-use */}
-
-## When to use
-
-- As the outermost layout of a routed page, wrapping the app's own header and footer components
-  around whatever page content renders for that route.
-
-## When not to use
-
-- For a section within a page — use [Container](?path=/docs/layout-structure-container--docs) or
-  [PageSection](?path=/docs/layout-structure-pagesection--docs) instead.
-
-{/* END: when-to-use */}
-
-{/* BEGIN: behavior */}
-
-## How it works
-
-The content area carries a minimum height, so a short page's footer still lands at the bottom of
-the viewport instead of riding up under the fold.
-
-<Canvas of={PageTemplateStories.ShortPageKeepsFooterDown} />
-{/* END: behavior */}
-
 {/* BEGIN: anatomy */}
 
 ## Anatomy
@@ -68,29 +20,6 @@ A column of header, content, and footer. Only the content area is a part the tem
 
 {/* END: anatomy */}
 
-{/* BEGIN: examples */}
-
-{/* END: examples */}
-
-{/* BEGIN: do-dont */}
-
-## Do's and don'ts
-
-### Do
-
-- Render one `PageTemplate` per page, at the app-layout level: it carries the page's `<main>`
-  landmark
-- Pass the site-wide header and footer through `header` and `footer`, so they stay outside `<main>`
-  and out of the main-content landmark
-- Put the app's own skip link ahead of the template; `PageTemplate` adds none of its own
-
-### Don't
-
-- Avoid header or footer content much taller than the usual chrome: the content area reserves a
-  fixed allowance for it, and a taller slot pushes the footer below the fold on short pages
-
-{/* END: do-dont */}
-
 {/* BEGIN: a11y */}
 
 ## Keyboard & screen reader
@@ -104,82 +33,3 @@ A column of header, content, and footer. Only the content area is a part the tem
   `<main>` — `PageTemplate` doesn't add one itself.
 
 {/* END: a11y */}
-
-{/* BEGIN: brand */}
-
-{/* END: brand */}
-
-{/* BEGIN: styling */}
-
-## Styling
-
-| Token / value             | Used for                           |
-| ------------------------- | ---------------------------------- |
-| `100vh - 200px` (literal) | Minimum height of the content area |
-
-No color or spacing tokens apply directly — `PageTemplate` is a layout shell; header, footer, and
-content styling come from whatever is passed into its slots. `className` merges with the
-component's own `droppy-PageTemplate` class.
-
-{/* END: styling */}
-
-{/* BEGIN: props */}
-
-## API reference
-
-<ArgTypes of={PageTemplateStories} />
-
-### `header`
-
-Rendered above the content area, outside the `<main>` landmark.
-
-<Canvas of={PageTemplateStories.HeaderProp} />
-
-### `footer`
-
-Rendered below it, also outside the landmark.
-
-<Canvas of={PageTemplateStories.FooterProp} />
-
-### `children`
-
-The page content — the only part inside `<main>`.
-
-<Canvas of={PageTemplateStories.Children} />
-
-### `className`
-
-Merged onto the root alongside the component's own `droppy-PageTemplate` class.
-
-<Canvas of={PageTemplateStories.ClassName} />
-{/* END: props */}
-
-{/* BEGIN: history */}
-
-## Decision log
-
-- **2020-09**: Mealdrop's page template shipped as a Header+Container+Footer wrapper and split within days into three variant exports — default, sticky header, and logo-only — establishing that page chrome varies per page; the content area's `min-height: calc(100vh - 200px)` literal dates from the same weeks and survives in Droppy unchanged ([template created](https://github.com/yannbf/mealdrop/commit/1e1550f8974e6381520d56380159b6edca8205cc), [three templates](https://github.com/yannbf/mealdrop/commit/9de500f658f392616db4b1dc513b988163a88a3e), [min-height](https://github.com/yannbf/mealdrop/commit/372790b024ed199af508ec435fbdd838fdcd251c)).
-- **2021**: the logo-only template dropped its footer — not every page wants one — and the three exports later merged back into a single `PageTemplate` switched by a `type` prop, the direct ancestor of Droppy's one-component API ([footer removed](https://github.com/yannbf/mealdrop/commit/db8312485efa8f7d79131aa835377a40d2a1dbe1), [templates merged](https://github.com/yannbf/mealdrop/commit/d73285877d84155f506da777aa7cb9e11c5ef969)).
-- **2026-08**: Droppy rebuilt the template as a pure slot shell: the closed `type` enum and the baked-in app Header/Footer went away in favour of opaque `header`/`footer` ReactNode slots — the parity doc excludes Header as "routing, cart state and a logo — an application component" — and a real `<main>` landmark replaced Mealdrop's plain div; the 2020 min-height literal was kept, documented in the stylesheet as an offset no token models ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267), [Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md)).
-- **Built on a plain `<div>` wrapping a `<main>` element.** Droppy supplies the props, the theme classes, and the copy around it.
-
-{/* END: history */}
-
-{/* BEGIN: known-issues */}
-
-## Known issues & open questions
-
-- [#269](https://github.com/yannbf/droppy-ds/issues/269): nesting one `PageTemplate` inside another renders two `<main>` landmarks in one document — nothing guards against it. **Workaround:** render a single `PageTemplate` per page, at the app-layout level; inner sections should be plain elements.
-- [#270](https://github.com/yannbf/droppy-ds/issues/270): the content area's `min-height: calc(100vh - 200px)` assumes ~200px of combined header/footer chrome — taller slots break the footer-at-the-bottom promise, shorter ones force empty scroll space. **Workaround:** override `min-height` on `.droppy-PageTemplate-content` in app CSS when your chrome differs substantially.
-- [#125](https://github.com/yannbf/droppy-ds/issues/125): the prop type is a closed set, so `id`/`data-testid`/`aria-*`/`style`/event handlers never reach the rendered DOM.
-
-{/* END: known-issues */}
-
-{/* BEGIN: when-to-use */}
-
-## Related
-
-- [Container](?path=/docs/layout-structure-container--docs) — for constraining width within a page.
-- [PageSection](?path=/docs/layout-structure-pagesection--docs) — for a titled section within a page.
-
-{/* END: when-to-use */}
