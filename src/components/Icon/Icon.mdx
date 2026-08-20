@@ -5,68 +5,6 @@ import * as IconStories from './Icon.stories'
 
 # Icon
 
-{/* BEGIN: general */}
-
-The icon set, inlined as SVG so it renders wherever the component tree renders, with no static
-asset to serve.
-
-```tsx
-import { Icon } from '@droppy/design-system'
-```
-
-<Canvas of={IconStories.Default} />
-
-## Features
-
-- Every icon is inlined rather than referenced from a sprite sheet — a package can't assume the
-  consuming app serves a given static file, and `<use xlink:href>` against a cross-origin sprite
-  fails outright.
-- Decorative by default: the root `<svg>` carries `aria-hidden="true"` and `focusable="false"`,
-  so it never intercepts focus or gets announced on its own.
-- `size` accepts a number or a string, sets width, height, and `minWidth` together so a flex
-  parent can't squeeze it, and defaults to `1.5rem`.
-- `color` overrides the stroke inline, which beats the class rule — unset, the icon uses the
-  theme's icon token and flips with the theme automatically.
-- Merges any incoming `className` with its own `droppy-Icon` class.
-
-{/* END: general */}
-
-{/* BEGIN: when-to-use */}
-
-## When to use
-
-- Inside a control that already carries (or will carry) an accessible name — `Button`'s `icon`
-  prop, or `IconButton`'s `name` prop.
-- As a standalone decorative glyph where the surrounding text or layout conveys the meaning.
-
-## When not to use
-
-- As the sole content of a clickable element with no accessible name of its own — `Icon` is
-  `aria-hidden` by design, so pair it with a labelled control such as
-  [Button](?path=/docs/actions-button--docs) or
-  [IconButton](?path=/docs/actions-iconbutton--docs) rather than attaching a click handler
-  directly to a bare `Icon`.
-
-{/* END: when-to-use */}
-
-{/* BEGIN: behavior */}
-
-## How it works
-
-### Decorative by default
-
-Every icon renders `aria-hidden="true"` and `focusable="false"`, so it never reaches the
-accessibility tree. The control an icon sits inside is what carries the accessible name — reach
-for `Icon` directly and that naming becomes your job.
-
-<Canvas of={IconStories.DecorativeByDefault} />
-
-### Colour
-
-Unset, the stroke follows `--ds-color-icon-default` and changes with the theme. Passing `color`
-sets the stroke inline instead, which wins over the class rule.
-{/* END: behavior */}
-
 {/* BEGIN: anatomy */}
 
 ## Anatomy
@@ -80,65 +18,6 @@ sets the stroke inline instead, which wins over the class rule.
 | Root | `root`      | `<svg>` | The glyph: viewBox, stroke colour, and the width/height/minWidth trio |
 
 {/* END: anatomy */}
-
-{/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop header
-
-<Canvas of={IconStories.MealdropHeader} />
-
-{/* END: examples */}
-
-{/* BEGIN: do-dont */}
-
-## Do's and don'ts
-
-### Do
-
-- Choose a glyph from `iconNames` that already carries the meaning, rather than repurposing a
-  shape for something the set has no icon for
-- Pair every `Icon` with a labelled control or nearby text: it is `aria-hidden`, so it can only
-  decorate a meaning that already exists
-- Set `color` only where the icon sits on a surface the theme's icon token wasn't picked for, e.g.
-  a photo or an inverse panel
-
-### Don't
-
-- Don't attach a click handler to a bare `Icon`: it has no name, no focus and no keyboard
-  behaviour, so put it inside a real control
-- Don't let colour alone separate two icons; anyone who can't tell the colours apart sees the same
-  glyph twice
-
-{/* END: do-dont */}
-
-{/* BEGIN: a11y */}
-
-## Keyboard & screen reader
-
-Icon renders a non-interactive `<svg>` — there is no keyboard interaction to document.
-
-- **ARIA**: `aria-hidden="true"` and `focusable="false"` on the root element, always.
-- **Screen reader**: not announced — the icon contributes nothing to the accessibility tree.
-- **You must provide:** the accessible name on whatever control renders the icon (`aria-label` or
-  visible text) — `Icon` itself carries none.
-
-{/* END: a11y */}
-
-{/* BEGIN: brand */}
-
-{/* END: brand */}
-
-{/* BEGIN: styling */}
-
-## Styling
-
-- `--ds-color-icon-default` — stroke colour, applied only when no `color` prop is given.
-- `color` prop — sets the stroke inline, overriding the token.
-- `className` merges with the component's own `droppy-Icon` class.
-
-{/* END: styling */}
 
 {/* BEGIN: props */}
 
@@ -171,39 +50,3 @@ Merged onto the root alongside the component's own `droppy-Icon` class.
 
 <Canvas of={IconStories.ClassName} />
 {/* END: props */}
-
-{/* BEGIN: history */}
-
-## Decision log
-
-- **2025-03**: the `name` prop was retyped from plain `string` to an `IconName` string-literal union (arrow-right, arrow-left, cross, cart, minus, plus, moon, sun, star), making invalid icon names a compile-time error; Droppy inherits this closed, typed icon set ([IconName union](https://github.com/yannbf/mealdrop/commit/14cf17a324a99c4744eec1495810f96d4e17bc5d), [mealdrop #42](https://github.com/yannbf/mealdrop/pull/42)).
-- **Built on a plain `<svg>` element.** Droppy supplies the props, the theme classes, and the copy around it.
-
-{/* END: history */}
-
-{/* BEGIN: known-issues */}
-
-## Known issues & open questions
-
-- [#200](https://github.com/yannbf/droppy-ds/issues/200): unknown `name` throws a TypeError during render — no guard or fallback, crashes the subtree (and the whole request on SSR). **Workaround:** validate dynamic names against the exported `iconNames` array before rendering, and keep data-driven regions inside an error boundary.
-- [#204](https://github.com/yannbf/droppy-ds/issues/204): `star` glyph is inconsistent with the rest of the set: fill-drawn path renders as a ~1.2px hairline outline, and its edge-to-edge 20-unit viewBox makes it optically oversized. **Workaround:** pass style=&#123;&#123; fill: 'currentColor', stroke: 'none' &#125;&#125; to paint it as the filled star, and render it slightly smaller (~5/6) to compensate for the unpadded viewBox.
-- [#206](https://github.com/yannbf/droppy-ds/issues/206): forwarded `stroke` and `strokeWidth` props are silent no-ops (class rule beats the attribute; inner `<g strokeWidth={2}>` beats inheritance — except on `star`). **Workaround:** use the `color` prop or style=&#123;&#123; stroke &#125;&#125; for colour, and a CSS rule targeting the inner g/path (which beats the presentation attribute) for stroke width.
-- [#209](https://github.com/yannbf/droppy-ds/issues/209): default stroke is pinned to the global icon token and ignores surrounding text colour — invisible on the theme's own inverse surface in light mode. **Workaround:** pass color="currentColor" (inline style beats the class rule) or add an app CSS override scoping `stroke: currentcolor` to the coloured context.
-- [#210](https://github.com/yannbf/droppy-ds/issues/210): `width`/`height` props are accepted but visually inert — the size-derived inline style always wins. **Workaround:** use the `size` prop, or pass dimensions through `style` (merged last, wins over the internal inline sizing).
-- [#212](https://github.com/yannbf/droppy-ds/issues/212): consumer-passed children (e.g. `<title>` for an accessible name) are silently discarded. **Workaround:** label the wrapping control instead, or pass aria-hidden=&#123;false&#125; role="img" aria-label — forwarded props override the hardcoded defaults.
-- [#214](https://github.com/yannbf/droppy-ds/issues/214): A unitless numeric string (`size="24"`) silently voids all inline sizing — the icon looks right but loses the flex-squeeze guard and style precedence. **Workaround:** always pass a number or a unit-bearing string (e.g. size=&#123;24&#125; or size="1.5rem"), never a unitless numeric string.
-- [#215](https://github.com/yannbf/droppy-ds/issues/215): glyphs paint nothing wherever the package stylesheet doesn't reach (shadow DOM, iframes, pre-CSS paint) — the SVG markup carries no colour. **Workaround:** pass color (rendered as inline style, works in any context) or adopt the package stylesheet inside the shadow root/iframe.
-- [#216](https://github.com/yannbf/droppy-ds/issues/216): docs claim `aria-hidden`/`focusable` are applied "always", but `{...rest}` spreads after them and consumer props override. **Workaround:** none needed — treat the attributes as overridable defaults; use the override deliberately and avoid spreading arbitrary prop bags if the decorative guarantee matters.
-- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only).
-
-{/* END: known-issues */}
-
-{/* BEGIN: when-to-use */}
-
-## Related
-
-- The icon-before-label slot on actions — see [Button](?path=/docs/actions-button--docs).
-- The icon-only floating control that renders an `Icon` internally — see
-  [IconButton](?path=/docs/actions-iconbutton--docs).
-
-{/* END: when-to-use */}

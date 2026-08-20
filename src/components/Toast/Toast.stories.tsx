@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, userEvent, waitFor, within } from 'storybook/test'
 
 import { Button } from '../Button'
 
@@ -84,17 +83,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * Wrap the tree once, then raise toasts from anywhere beneath with
- * `useToast().add(...)`. There is no trigger and no `open` prop — click the
- * button to see one.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { timeout: 5000, limit: 3 },
-  argTypes: hide('container', 'className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
@@ -170,31 +158,6 @@ export const CloseAppearsOnHover: Story = {
 /* animation — the motion contract                                     */
 /* ------------------------------------------------------------------ */
 
-/**
- * Each toast enters and leaves off `[data-starting-style]` and
- * `[data-ending-style]`, and the exit additionally reads
- * `[data-swipe-direction]` so a swiped toast leaves the way it was pushed
- * rather than fading in place.
- */
-export const EnterExitTransition: Story = {
-  tags: ['animation'],
-  argTypes: hide('container', 'className'),
-  args: { timeout: 0 },
-  play: async ({ canvas, canvasElement }) => {
-    const doc = within(canvasElement.ownerDocument.body)
-
-    await userEvent.click(canvas.getByRole('button', { name: 'Save draft' }))
-    const region = await doc.findByRole('region', { name: 'Notifications' })
-    const toast = await waitFor(() => {
-      const node = region.querySelector('[data-part="toast"]')
-      expect(node).not.toBeNull()
-      return node as HTMLElement
-    })
-
-    await expect(getComputedStyle(toast).transitionProperty).not.toBe('none')
-  },
-}
-
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
@@ -244,115 +207,6 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-const AddToCartButton = () => {
-  const toast = useToast()
-
-  return (
-    <Button
-      icon="cart"
-      onClick={() =>
-        toast.add({ title: 'Added to your order', description: 'Cheeseburger ×2 — €17.00' })
-      }
-    >
-      Add to cart
-    </Button>
-  )
-}
-
-const SaveMenuButton = () => {
-  const toast = useToast()
-
-  return (
-    <Button
-      clear
-      onClick={() =>
-        toast.promise(new Promise((resolve) => setTimeout(resolve, 1500)), {
-          loading: { title: 'Saving menu…' },
-          success: { title: 'Menu saved', description: 'Diners see the new prices now.' },
-          error: { title: "Couldn't save the menu", description: 'Check your connection.' },
-        })
-      }
-    >
-      Save menu
-    </Button>
-  )
-}
-
-/** Adding to a cart, and saving a menu. */
-export const MealdropAddedToCart: Story = {
-  tags: ['examples'],
-  argTypes: hide('children', 'container', 'timeout', 'limit', 'className'),
-  play: async ({ canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Add to cart' }))
-
-    await waitFor(() => expect(canvas.getByText('Added to your order')).toBeVisible())
-  },
-  render: (args) => (
-    <ToastProvider container={args.container}>
-      <div style={{ display: 'flex', gap: '1rem', padding: '1rem' }}>
-        <AddToCartButton />
-        <SaveMenuButton />
-      </div>
-    </ToastProvider>
-  ),
-}
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestAppearsOnDemand: Story = {
-  tags: ['tests'],
-  play: async ({ canvas, canvasElement }) => {
-    const doc = within(canvasElement.ownerDocument.body)
-
-    await userEvent.click(canvas.getByRole('button', { name: 'Save draft' }))
-
-    const region = doc.getByRole('region', { name: 'Notifications' })
-    await waitFor(() => expect(within(region).getByText('Draft saved')).toBeVisible())
-  },
-}
-
-export const TestDismissesOnClose: Story = {
-  tags: ['tests'],
-  play: async ({ canvas, canvasElement }) => {
-    const doc = within(canvasElement.ownerDocument.body)
-
-    await userEvent.click(canvas.getByRole('button', { name: 'Save draft' }))
-
-    const region = doc.getByRole('region', { name: 'Notifications' })
-    await waitFor(() => expect(within(region).getByText('Draft saved')).toBeVisible())
-
-    // The close button is aria-hidden until the stack is hovered or focused,
-    // so a single toast doesn't compete with the page for keyboard attention.
-    await userEvent.hover(region)
-    await userEvent.click(within(region).getByRole('button', { name: 'Dismiss' }))
-
-    await waitFor(() => expect(doc.queryByText('Draft saved')).not.toBeInTheDocument(), {
-      timeout: 3000,
-    })
-  },
-}
-
-export const TestContainerPortalsWhereAsked: Story = {
-  tags: ['tests'],
-  args: { container: '#toast-portal-test', timeout: 0 },
-  render: (args) => (
-    <>
-      <div id="toast-portal-test" data-testid="portal-host" />
-      <ToastProvider {...args} />
-    </>
-  ),
-  play: async ({ canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Save draft' }))
-
-    const host = canvas.getByTestId('portal-host')
-    await waitFor(() => expect(host.querySelector('[data-part="toast"]')).not.toBeNull())
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-}

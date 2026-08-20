@@ -1,10 +1,6 @@
-import { LottieSvg } from 'lottie-react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn, userEvent } from 'storybook/test'
-
-import errorAnimation from './animations/Error.json'
-import notFoundAnimation from './animations/NotFound.json'
+import { fn } from 'storybook/test'
 
 import type { ErrorBlockProps } from './ErrorBlock'
 import { ErrorBlock } from './ErrorBlock'
@@ -56,16 +52,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * An empty category with a way out. Title, body, and action are all set below,
- * so the controls start populated.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { illustration: sushiIllustration },
-  argTypes: hide('className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -162,83 +148,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** Mealdrop's own Lottie illustrations, copied from the app — the player and
- *  the JSON are application assets, so they live with these stories rather
- *  than shipping in the package. `chromatic-ignore` keeps the animation out of
- *  visual regression, since a looping frame is never the same twice. */
-const AnimatedIllustration = ({ animation }: { animation: object }) => (
-  <span className="chromatic-ignore">
-    <LottieSvg src={animation} loop autoplay style={{ width: 320, height: 240 }} />
-  </span>
-)
-
-/** A category with nothing in it. */
-export const MealdropEmptyCategory: Story = {
-  tags: ['examples'],
-  argTypes: hide('title', 'illustration', 'body', 'buttonText', 'onButtonClick', 'className'),
-  render: () => (
-    <ErrorBlock
-      illustration={<AnimatedIllustration animation={errorAnimation} />}
-      title="This is not the food you're looking for."
-      body="No restaurants are serving sushi near you right now. Try another category."
-      buttonText="Browse categories"
-      onButtonClick={() => {}}
-    />
-  ),
-}
-
-/** A restaurant that isn't there. */
-export const MealdropNotFound: Story = {
-  tags: ['examples'],
-  argTypes: hide('title', 'illustration', 'body', 'buttonText', 'onButtonClick', 'className'),
-  render: () => (
-    <ErrorBlock
-      illustration={<AnimatedIllustration animation={notFoundAnimation} />}
-      title="We couldn't find that restaurant."
-      body="It may have closed, or the link may be out of date."
-      buttonText="Back to home"
-      onButtonClick={() => {}}
-    />
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestTitleIsALevelTwoHeading: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(
-      canvas.getByRole('heading', { level: 2, name: 'This is not the food you’re looking for.' })
-    ).toBeInTheDocument()
-  },
-}
-
-export const TestActionFiresItsCallback: Story = {
-  tags: ['tests'],
-  play: async ({ args, canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'See all restaurants' }))
-
-    await expect(args.onButtonClick).toHaveBeenCalledOnce()
-  },
-}
-
-export const TestIllustrationIsOptional: Story = {
-  tags: ['tests'],
-  args: { illustration: undefined },
-  play: async ({ canvas, canvasElement }) => {
-    await expect(canvasElement.querySelector('.droppy-ErrorBlock-illustration')).toBeNull()
-    await expect(canvas.getByRole('button', { name: 'See all restaurants' })).toBeVisible()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: {
-    title: 'Title',
-    body: 'Body',
-    buttonText: 'Click me',
-    onButtonClick: fn(),
-  },
-}

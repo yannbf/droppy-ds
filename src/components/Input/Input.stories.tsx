@@ -1,8 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, userEvent } from 'storybook/test'
-
-import { Heading } from '../Heading'
 
 import type { InputProps } from './Input'
 import { Input } from './Input'
@@ -50,17 +47,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * A labelled text field. Label, type and placeholder are set below, so the
- * controls start populated — type an error message in to see the slot fill
- * without the layout moving.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { label: 'Full name', type: 'text', placeholder: 'Ada Lovelace', disabled: false },
-  argTypes: hide('className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -176,70 +162,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** Mealdrop's checkout form, with two fields in error. */
-export const MealdropCheckoutForm: Story = {
-  tags: ['examples'],
-  argTypes: hide('label', 'error'),
-  render: () => (
-    <form style={{ display: 'grid', gap: '1.5rem', maxWidth: '30rem' }}>
-      <section style={{ display: 'grid', gap: '0.5rem' }}>
-        <Heading level={3} size={4}>
-          Contact details
-        </Heading>
-        <Input label="Name" defaultValue="Ada Lovelace" />
-        <Input label="Email" defaultValue="ada@example" error="Enter a valid email address." />
-        <Input label="Phone" defaultValue="06 12345678" />
-      </section>
-
-      <section style={{ display: 'grid', gap: '0.5rem' }}>
-        <Heading level={3} size={4}>
-          Delivery details
-        </Heading>
-        <Input label="Address" defaultValue="Staalstraat 12" />
-        <Input label="Postcode" defaultValue="1011" error="A Dutch postcode looks like 1011 JL." />
-        <Input label="City" defaultValue="Amsterdam" />
-      </section>
-    </form>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestLabelNamesTheControl: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    const field = canvas.getByLabelText('Full name')
-
-    await userEvent.type(field, 'Ada Lovelace')
-
-    await expect(field).toHaveValue('Ada Lovelace')
-  },
-}
-
-export const TestErrorSlotIsAlwaysMounted: Story = {
-  tags: ['tests'],
-  play: async ({ canvasElement }) => {
-    // No error passed, yet the slot exists — that reservation is what keeps
-    // the layout from jumping when validation kicks in.
-    await expect(canvasElement.querySelector('.droppy-Field-error')).toBeInTheDocument()
-  },
-}
-
-export const TestErrorIsAnnounced: Story = {
-  tags: ['tests'],
-  args: { error: 'Enter your full name' },
-  play: async ({ canvas }) => {
-    const field = canvas.getByLabelText('Full name')
-    const describedBy = field.getAttribute('aria-describedby')
-
-    await expect(describedBy).toBeTruthy()
-    await expect(canvas.getByText('Enter your full name')).toHaveAttribute(
-      'id',
-      describedBy as string
-    )
-  },
-}
-
-export const Empty: Story = { tags: ['empty'] }

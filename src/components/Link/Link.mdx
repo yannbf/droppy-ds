@@ -5,61 +5,6 @@ import * as LinkStories from './Link.stories'
 
 # Link
 
-{/* BEGIN: general */}
-
-An inline text link — a link inside a sentence or a short list, not a button and not a nav item.
-
-```tsx
-import { Link } from '@droppy/design-system'
-```
-
-<Canvas of={LinkStories.Default} />
-
-## Features
-
-- Inherits the surrounding font (`font: inherit`) so it drops into a paragraph, a list, or a
-  heading without a size or family mismatch.
-- Colored with the primary text token by default; underlines on hover rather than staying
-  underlined at rest, so a paragraph of body copy with an inline link doesn't read as noisy.
-- No router dependency: renders a plain `<a href>` by default. Pass `render` to swap in a
-  router-aware link instead (see below) — the design system itself never imports a router.
-- Merges any incoming `className` with its own `droppy-Link` class.
-
-{/* END: general */}
-
-{/* BEGIN: when-to-use */}
-
-## When to use
-
-- A link inside a sentence, a paragraph, or a short inline list of related links.
-
-## When not to use
-
-- A primary or secondary action a visitor is meant to notice and act on — use
-  [Button](?path=/docs/actions-button--docs) instead.
-- A trail of ancestor pages — use [Breadcrumb](?path=/docs/navigation-breadcrumb--docs).
-
-{/* END: when-to-use */}
-
-{/* BEGIN: behavior */}
-
-## How it works
-
-### Inline in a sentence
-
-`Link` is for a sentence link, not a button or a nav item — it inherits the surrounding text's
-font rather than setting its own.
-
-<Canvas of={LinkStories.Inline} />
-
-### Inheriting colour
-
-On a dark surface, `Link` follows `currentColor` from the wrapping context rather than fighting it
-with a hard-coded light-mode token.
-
-<Canvas of={LinkStories.OnDarkSurface} />
-{/* END: behavior */}
-
 {/* BEGIN: anatomy */}
 
 ## Anatomy
@@ -73,69 +18,6 @@ with a hard-coded light-mode token.
 | Root | `root`      | `<a>` (or the `render` element) | The link: colour, underline, and focus ring |
 
 {/* END: anatomy */}
-
-{/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop order confirmation
-
-<Canvas of={LinkStories.MealdropOrderConfirmationLink} />
-
-{/* END: examples */}
-
-{/* BEGIN: do-dont */}
-
-## Do's and don'ts
-
-### Do
-
-- Write link text that names the destination, e.g. "View the menu" rather than "click here":
-  screen reader users often browse a list of links out of context
-- Pass the app's router element through `render` rather than rebuilding navigation on a plain
-  `href`
-- Set `rel="noopener noreferrer"` alongside any `target="_blank"`, and say in the link text that a
-  new tab opens
-
-### Don't
-
-- Don't nest a control inside a `Link`, or a `Link` inside a control: two controls in one spot
-  confuse keyboard focus and screen readers
-- Don't rely on colour alone to mark a link inside a paragraph; at rest it matches the surrounding
-  body text, so the wording has to make it findable
-
-{/* END: do-dont */}
-
-{/* BEGIN: a11y */}
-
-## Keyboard & screen reader
-
-A real `<a>` (or the router element passed via `render`) — standard link keyboard behaviour
-applies, no custom handling.
-
-- **ARIA:** none beyond the native link semantics.
-- **Screen reader:** announced as a link with its text content as the accessible name.
-- **You must provide:** link text that makes sense out of context (avoid bare "click here").
-
-{/* END: a11y */}
-
-{/* BEGIN: brand */}
-
-{/* END: brand */}
-
-{/* BEGIN: styling */}
-
-## Styling
-
-| Token                     | Used for           |
-| ------------------------- | ------------------ |
-| `--ds-color-text-primary` | Default link color |
-| `--ds-shadow-focus`       | Focus ring         |
-
-`className` merges with the component's own `droppy-Link` class. Color is a plain CSS rule, so a
-caller can override it with an inline `style`, a `className`, or `currentColor` inheritance.
-
-{/* END: styling */}
 
 {/* BEGIN: props */}
 
@@ -169,36 +51,3 @@ Merged onto the root alongside the component's own `droppy-Link` class.
 
 <Canvas of={LinkStories.ClassName} />
 {/* END: props */}
-
-{/* BEGIN: history */}
-
-## Decision log
-
-- **2025-03**: Mealdrop never shipped a standalone link component — router `Link`s were baked into styled `<p>` wrappers across the app; the first Breadcrumb formalized one such site while still importing react-router directly ([breadcrumb component](https://github.com/yannbf/mealdrop/commit/71ea43d7d7387b5a79a7e495cf08e0dffcf6eab0)).
-- **2026-08**: Link shipped as an inline `<a>` with the same `render` swap-in pattern as Breadcrumb, for router-aware links without a router dependency; `href` is spread only when `render` is absent, so a present-but-undefined key can never clobber the render element's own destination — the exact hazard tracked against Breadcrumb as [#126](https://github.com/yannbf/droppy-ds/issues/126). At rest it stays body-ink with a hover-only underline so prose doesn't read as noisy ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267)).
-- **2026-08**: when a routed crumb carrying both `droppy-Breadcrumb-link` and `droppy-Link` classes lost styling on bundle order, the fix ancestor-qualified Breadcrumb's rules rather than zeroing Link's specificity with `:where()` — which would have let any consumer `* { color }` reset override links everywhere ([droppy-ds #18](https://github.com/yannbf/droppy-ds/pull/18), closing [#12](https://github.com/yannbf/droppy-ds/issues/12)).
-- **Built on a plain `<a>` element.** Droppy supplies the props, the theme classes, and the copy around it.
-
-{/* END: history */}
-
-{/* BEGIN: known-issues */}
-
-## Known issues & open questions
-
-- [#279](https://github.com/yannbf/droppy-ds/issues/279): `target="_blank"` passes through with no default `rel` — the opened tab keeps `window.opener` access to the page (reverse tabnabbing). **Workaround:** always pair `target="_blank"` with an explicit `rel="noopener noreferrer"`.
-- [#280](https://github.com/yannbf/droppy-ds/issues/280): at rest a Link is visually identical to surrounding body text — primary ink, no underline until hover, and the underline is gated behind `@media (hover: hover)` — so touch and keyboard users get no rest affordance beyond wording. **Workaround:** restore `text-decoration: underline` on `.droppy-Link` from app CSS where discoverability matters.
-- [#281](https://github.com/yannbf/droppy-ds/issues/281): omitting both `href` and `render` renders an anchor with no destination — not focusable, no link role, and no warning. **Workaround:** treat `href` as required unless `render` is provided.
-- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only).
-- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
-
-{/* END: known-issues */}
-
-{/* BEGIN: when-to-use */}
-
-## Related
-
-- [Breadcrumb](?path=/docs/navigation-breadcrumb--docs) — for a trail of ancestor pages, which uses
-  the same `render` pattern.
-- [Button](?path=/docs/actions-button--docs) — for a primary or secondary action.
-
-{/* END: when-to-use */}

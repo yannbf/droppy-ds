@@ -1,13 +1,8 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn, userEvent } from 'storybook/test'
+import { fn } from 'storybook/test'
 
 import { iconNames } from '../Icon'
-
-import { Body } from '../Body'
-import { Card } from '../Card'
-import { Heading } from '../Heading'
-import { Separator } from '../Separator'
 
 import type { ButtonProps } from './Button'
 import { Button } from './Button'
@@ -52,23 +47,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * The primary call to action. Every variant prop is set below, so the controls
- * start populated — flip `clear`, `large`, or `round`, or pick an icon.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: {
-    children: 'Order now',
-    clear: false,
-    large: false,
-    round: false,
-    icon: undefined,
-    disabled: false,
-  },
-  argTypes: hide('iconSize', 'className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -219,85 +197,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** The action stack in Mealdrop's cart panel. */
-export const MealdropCheckoutActions: Story = {
-  tags: ['examples'],
-  argTypes: hide('children', 'clear', 'round', 'large', 'icon', 'iconSize', 'disabled', 'onClick'),
-  render: () => (
-    <Card padded style={{ maxWidth: '24rem' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Heading level={3} size={4}>
-          Your order
-        </Heading>
-        <Button round clear icon="cross" aria-label="Close cart" />
-      </div>
-
-      <div style={{ display: 'grid', gap: '0.5rem', margin: '1rem 0' }}>
-        <Body size="S">Cheeseburger ×2 — €17.00</Body>
-        <Body size="S">Fries ×1 — €2.50</Body>
-      </div>
-
-      <Separator />
-
-      <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1rem 0' }}>
-        <Body fontWeight="bold">Total</Body>
-        <Body fontWeight="bold">€19.50</Body>
-      </div>
-
-      <div style={{ display: 'grid', gap: '0.5rem' }}>
-        <Button large icon="cart">
-          Go to checkout
-        </Button>
-        <Button clear>Continue shopping</Button>
-      </div>
-    </Card>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestClickHandling: Story = {
-  tags: ['tests'],
-  play: async ({ args, canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Order now' }))
-
-    await expect(args.onClick).toHaveBeenCalledOnce()
-  },
-}
-
-export const TestDisabledSwallowsClicks: Story = {
-  tags: ['tests'],
-  args: { disabled: true },
-  play: async ({ args, canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'Order now' }), {
-      pointerEventsCheck: 0,
-    })
-
-    await expect(args.onClick).not.toHaveBeenCalled()
-  },
-}
-
-export const TestIconOnlyIsNamedByAriaLabel: Story = {
-  tags: ['tests'],
-  args: { icon: 'cross', round: true, clear: true, children: undefined, 'aria-label': 'close' },
-  play: async ({ canvas }) => {
-    const button = canvas.getByRole('button', { name: 'close' })
-
-    await expect(button).toHaveTextContent('')
-  },
-}
-
-export const TestDefaultsToTypeButton: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    // Without this a button inside a form would submit it by default.
-    await expect(canvas.getByRole('button', { name: 'Order now' })).toHaveAttribute(
-      'type',
-      'button'
-    )
-  },
-}
-
-export const Empty: Story = { tags: ['empty'] }

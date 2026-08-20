@@ -5,56 +5,6 @@ import * as BadgeStories from './Badge.stories'
 
 # Badge
 
-{/* BEGIN: general */}
-
-A small pill for a short, static label — a dietary tag, a category, a "new" flag.
-
-```tsx
-import { Badge } from '@droppy/design-system'
-```
-
-<Canvas of={BadgeStories.Default} />
-
-## Features
-
-- `text` renders capitalized regardless of the casing passed in — `"vegan"` and `"Vegan"` render
-  identically.
-- `variant="positive"` swaps the background, text color, and font weight for an affirmative flag
-  such as "new" — padding, radius, and size stay the same as the neutral default.
-- Merges any incoming `className` with its own `droppy-Badge` class.
-
-{/* END: general */}
-
-{/* BEGIN: when-to-use */}
-
-## When to use
-
-- A short, static label attached to something else — a dietary tag on a menu item, a category
-  chip, a "new" flag on a card.
-- Anywhere the surrounding layout, not the badge itself, decides placement — `Badge` renders
-  inline where you put it; floating it over a photo or corner is a call-site concern.
-
-## When not to use
-
-- For a live status that changes over time (loading, saved, failed) — that's status text, not a
-  label. Style it with the theme's text tokens directly rather than stretching `Badge`'s two
-  variants to cover states it wasn't designed for.
-- As a clickable control — `Badge` has no interactive semantics. If the label needs to respond to
-  a click, use [Button](?path=/docs/actions-button--docs) with `clear` instead.
-
-{/* END: when-to-use */}
-
-{/* BEGIN: behavior */}
-
-## How it works
-
-### Longer labels
-
-The pill grows with its content — there's no truncation or fixed width.
-
-<Canvas of={BadgeStories.LongerText} />
-{/* END: behavior */}
-
 {/* BEGIN: anatomy */}
 
 ## Anatomy
@@ -68,78 +18,6 @@ The pill grows with its content — there's no truncation or fixed width.
 | Root | `root`      | `<span>` | The pill: background, radius, padding, and the capitalization rule |
 
 {/* END: anatomy */}
-
-{/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant tiles
-
-<Canvas of={BadgeStories.MealdropRestaurantTags} />
-
-{/* END: examples */}
-
-{/* BEGIN: do-dont */}
-
-## Do's and don'ts
-
-### Do
-
-- Write `text` in sentence case to match brand guidelines ("never Title Case, never ALL CAPS")
-- Reserve `variant="positive"` for genuine good news, e.g. a "new" tag or a special offer
-- Keep `text` to a word or two so the pill stays on one line at every breakpoint
-
-### Don't
-
-- Don't put information in a badge that appears nowhere else: it carries no semantics of its own
-  and is read as part of the surrounding text
-- Avoid crowding one item with badges; past two or three they stop being scannable and become
-  noise
-
-{/* END: do-dont */}
-
-{/* BEGIN: a11y */}
-
-## Keyboard & screen reader
-
-`Badge` renders a non-interactive `<span>` — there is no keyboard interaction to document.
-
-- **ARIA:** none — a plain text node, read as part of the surrounding content.
-- **Screen reader:** announced as part of the enclosing text flow, in reading order.
-- **You must provide:** an accessible name on whatever control the badge sits inside, if any —
-  `Badge` itself carries none.
-
-{/* END: a11y */}
-
-{/* BEGIN: brand */}
-
-## Brand
-
-`variant="positive"` carries the [brand guidelines'](?path=/docs/brand-guidelines--docs) soft
-green "good news" accent, used for "new" tags among other positive moments. Per the guidelines,
-"Accents are surfaces, not ink" — soft green is a background that carries dark text, so the
-badge's text stays pinned to the ink color (`Ink/primary text: #2C2C2C`) in both light and dark
-theme rather than following the page's theme-flipping text color.
-
-{/* END: brand */}
-
-{/* BEGIN: styling */}
-
-## Styling
-
-| Token                                | Used for                          |
-| ------------------------------------ | --------------------------------- |
-| `--ds-color-badge-bg`                | Background, neutral (default)     |
-| `--ds-color-badge-text`              | Text color, neutral (default)     |
-| `--ds-color-badge-positive-bg`       | Background, `positive`            |
-| `--ds-color-badge-positive-text`     | Text color, `positive`            |
-| `--ds-radius-control`                | Corner radius                     |
-| `--ds-type-size-sm`                  | Font size                         |
-| `--ds-type-weight-regular` / `-bold` | Font weight, neutral / `positive` |
-
-`className` merges with the component's own `droppy-Badge` class.
-
-{/* END: styling */}
 
 {/* BEGIN: props */}
 
@@ -169,38 +47,3 @@ Merged onto the root alongside the component's own `droppy-Badge` class.
 
 <Canvas of={BadgeStories.ClassName} />
 {/* END: props */}
-
-{/* BEGIN: history */}
-
-## Decision log
-
-- **2026-07**: Badge absorbed RestaurantCard's hand-rolled NewTag styled-span as `<Badge text="new" variant="positive" />`, collapsing Mealdrop's two implementations of one visual role and establishing the `variant` API for semantic colour roles while keeping the original text-as-prop API; absolute positioning over the card photo was judged a call-site concern and stays in the app ([Mealdrop parity doc](https://github.com/yannbf/droppy-ds/blob/main/docs/MEALDROP-PARITY.md), [migration commit](https://github.com/yannbf/mealdrop/commit/dea29009cb06ec78eb7e2c52f216da78d913e747)).
-- **2026-07**: casing moved into CSS per the [brand guidelines](?path=/docs/brand-guidelines--docs) rule "sentence case everywhere — never Title Case, never ALL CAPS": badge labels are written lowercase in source and `text-transform: capitalize` handles presentation, so labels are never uppercased by hand.
-- **2026-08**: `--ds-color-badge-positive-text` was pinned to the ink value (`ds.palette.neutral.900`) in both themes instead of following the theme-flipping `text.primary` role — the soft green "good news" accent is a fixed surface in both themes, and per the [brand guidelines](?path=/docs/brand-guidelines--docs) "Accents are surfaces, not ink", so text on it stays ink rather than inverting with the theme ([droppy-ds #292](https://github.com/yannbf/droppy-ds/pull/292), closing [#28](https://github.com/yannbf/droppy-ds/issues/28)).
-- **Built on a plain `<span>` element.** Droppy supplies the props, the theme classes, and the copy around it.
-
-{/* END: history */}
-
-{/* BEGIN: known-issues */}
-
-## Known issues & open questions
-
-- [#29](https://github.com/yannbf/droppy-ds/issues/29): docs promise casing-normalized rendering, but CSS `capitalize` never lowercases — "VEGAN" renders as-is, against the brand's "never ALL CAPS" sentence-case rule. **Workaround:** lowercase the label at the call site (`text={label.toLowerCase()}`), and query the raw string in tests.
-- [#31](https://github.com/yannbf/droppy-ds/issues/31): JSX children are silently discarded at runtime; empty or missing `text` renders a visible empty pill. **Workaround:** always use the `text` prop and guard falsy labels at the call site (`{tag ? <Badge text={tag}/> : null}`); typecheck JSX in JS projects.
-- [#34](https://github.com/yannbf/droppy-ds/issues/34): no wrap/overflow strategy — multi-word labels wrap into cramped line-height:1 lines; unbroken strings overflow the container. **Workaround:** add `white-space: nowrap` via className/app CSS and handle oversized labels at the call site.
-- [#37](https://github.com/yannbf/droppy-ds/issues/37): `dangerouslySetInnerHTML` is accepted by the types but always crashes on render. **Workaround:** never pass `dangerouslySetInnerHTML`; render markup around the badge instead.
-- [#41](https://github.com/yannbf/droppy-ds/issues/41): positive variant's bold is synthesized — the [brand guidelines](?path=/docs/brand-guidelines--docs) ship Hind at weights 400/500 only, so there is no real 700 face and the bold disappears under `font-synthesis: none`. **Workaround:** declare a real Hind 700 @font-face in app CSS (merges into the family), or avoid `font-synthesis: none` on badge text.
-- [#43](https://github.com/yannbf/droppy-ds/issues/43): excluded from the theme cross-fade — colors snap on theme toggle while theme-layer parts fade over 250ms. **Workaround:** add a matching background-color/color transition on `.droppy-Badge` in app CSS.
-- [#122](https://github.com/yannbf/droppy-ds/issues/122): components are plain function components, so `ref` type-checks but never attaches on React 18 (works on React 19 only).
-- [#129](https://github.com/yannbf/droppy-ds/issues/129): focus indicators are box-shadow-only with `outline: none`, so they vanish entirely in Windows High Contrast mode.
-- [#286](https://github.com/yannbf/droppy-ds/issues/286): the docs describe Badge as "a small pill", but it renders with `--ds-radius-control` (4px) — on the radius scale documented in the [Spacing and layout tokens](?path=/docs/design-tokens-spacing-and-layout--docs), pills sit on the 32px `--ds-radius-pill` rung, so the copy and the radius disagree about which shape Badge is.
-
-{/* END: known-issues */}
-
-{/* BEGIN: when-to-use */}
-
-## Related
-
-- [Button](?path=/docs/actions-button--docs) — for a label that needs to be clickable.
-
-{/* END: when-to-use */}

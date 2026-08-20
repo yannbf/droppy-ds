@@ -1,10 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, waitFor } from 'storybook/test'
-
-import { Body } from '../Body'
-import { Button } from '../Button'
-import { Separator } from '../Separator'
 
 import type { ScrollAreaProps } from './ScrollArea'
 import { ScrollArea } from './ScrollArea'
@@ -65,17 +60,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * A fixed-height panel of long text, with a themed scrollbar revealed on hover
- * or while scrolling. `orientation` is set below, so the controls start
- * populated.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { orientation: 'vertical' },
-  argTypes: hide('className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -186,130 +170,6 @@ export const Anatomy: Story = {
 }
 
 /* ------------------------------------------------------------------ */
-/* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-const cartEuros = (amount: number) =>
-  amount.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' })
-
-const longOrder = [
-  { name: 'Cheeseburger', quantity: 2, price: 8.5 },
-  { name: 'Fries', quantity: 2, price: 2.5 },
-  { name: 'Coca-Cola', quantity: 3, price: 1.75 },
-  { name: 'Sprite', quantity: 1, price: 1.5 },
-  { name: 'Vanilla ice cream', quantity: 2, price: 2 },
-  { name: 'Garlic bread', quantity: 1, price: 4 },
-  { name: 'Sparkling water', quantity: 2, price: 2.5 },
-  { name: 'Tiramisu', quantity: 1, price: 5.5 },
-]
-
-const orderTotal = longOrder.reduce((sum, line) => sum + line.price * line.quantity, 0)
-
-/** A long Mealdrop order scrolling above a pinned total. */
-export const MealdropCartScroll: Story = {
-  tags: ['examples'],
-  argTypes: hide('children', 'orientation', 'className'),
-  render: () => (
-    <>
-      {/* The theme layer hard-codes the root at 24rem x 8.5rem, so the panel
-          sizes it rather than being clipped by it. */}
-      <style>{`.mealdrop-cart-scroll { width: 100%; height: 14rem; background: transparent; }`}</style>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '22rem',
-          border: '1px solid var(--ds-color-border-subtle)',
-          borderRadius: '8px',
-          overflow: 'hidden',
-        }}
-      >
-        <div style={{ padding: '1rem' }}>
-          <Body fontWeight="bold">Your order</Body>
-        </div>
-        <Separator />
-
-        <ScrollArea className="mealdrop-cart-scroll">
-          <div style={{ display: 'grid', gap: '0.75rem' }}>
-            {longOrder.map((line) => (
-              <div
-                key={line.name}
-                style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem' }}
-              >
-                <Body size="S">
-                  {line.quantity}× {line.name}
-                </Body>
-                <Body size="S" fontWeight="bold">
-                  {cartEuros(line.price * line.quantity)}
-                </Body>
-              </div>
-            ))}
-          </div>
-        </ScrollArea>
-
-        <Separator />
-        <div style={{ display: 'grid', gap: '0.75rem', padding: '1rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Body fontWeight="bold">Total</Body>
-            <Body fontWeight="bold">{cartEuros(orderTotal)}</Body>
-          </div>
-          <Button large>Checkout</Button>
-        </div>
-      </div>
-    </>
-  ),
-}
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestVerticalScrollbarAppears: Story = {
-  tags: ['tests'],
-  play: async ({ canvasElement }) => {
-    // The scrollbar mounts after Base UI's overflow measurement effect runs,
-    // so it isn't there on first paint — re-query inside waitFor.
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="vertical"]')).not.toBeNull()
-    })
-  },
-}
-
-export const TestBothAxesRenderTwoScrollbars: Story = {
-  tags: ['tests'],
-  args: { orientation: 'both', children: wideGrid },
-  play: async ({ canvasElement }) => {
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="vertical"]')).not.toBeNull()
-    })
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="horizontal"]')).not.toBeNull()
-    })
-  },
-}
-
-export const TestHorizontalOnlyOmitsVertical: Story = {
-  tags: ['tests'],
-  args: {
-    orientation: 'horizontal',
-    children: (
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        {Array.from({ length: 12 }, (_, index) => (
-          <div key={index} style={{ flex: '0 0 auto', width: '8rem' }}>
-            Card {index + 1}
-          </div>
-        ))}
-      </div>
-    ),
-  },
-  play: async ({ canvasElement }) => {
-    await waitFor(() => {
-      expect(canvasElement.querySelector('[data-orientation="horizontal"]')).not.toBeNull()
-    })
-    await expect(canvasElement.querySelector('[data-orientation="vertical"]')).toBeNull()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-}

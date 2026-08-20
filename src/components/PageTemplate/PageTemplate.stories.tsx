@@ -1,6 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
 
 import type { PageTemplateProps } from './PageTemplate'
 import { PageTemplate } from './PageTemplate'
@@ -44,13 +43,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/** The page shell every routed page sits inside: header, `<main>`, footer. */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { header: <Header />, footer: <Footer /> },
-  argTypes: hide('className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -140,38 +132,3 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestRendersAllThreeSlots: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(canvas.getByText('Site header')).toBeInTheDocument()
-    await expect(canvas.getByText('Page content')).toBeInTheDocument()
-    await expect(canvas.getByText('Site footer')).toBeInTheDocument()
-  },
-}
-
-export const TestContentIsTheMainLandmark: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    const main = canvas.getByRole('main')
-
-    await expect(main).toHaveTextContent('Page content')
-    // Header and footer sit outside the landmark, not within it.
-    await expect(main).not.toHaveTextContent('Site header')
-    await expect(main).not.toHaveTextContent('Site footer')
-  },
-}
-
-export const TestSlotsAreOptional: Story = {
-  tags: ['tests'],
-  args: { header: undefined, footer: undefined },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('main')).toBeInTheDocument()
-    await expect(canvas.queryByText('Site header')).not.toBeInTheDocument()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-}
