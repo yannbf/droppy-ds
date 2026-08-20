@@ -104,12 +104,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A customer-facing delivery FAQ: three independent questions, one open at a
- * time. Every prop worth playing with is set explicitly below, so the controls
- * start populated — toggle `openMultiple`, seed a different `defaultValue`, or
- * edit the items directly.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: {
@@ -125,10 +119,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/**
- * `items` is the only required prop. With `value` omitted, each item is keyed
- * by its index — so `defaultValue={['1']}` opens the second one.
- */
 export const Items: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'openMultiple', 'onValueChange', 'className'),
@@ -141,7 +131,6 @@ export const Items: Story = {
   },
 }
 
-/** Giving each item an explicit `value` decouples the open state from list order. */
 export const ItemValues: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'openMultiple', 'onValueChange', 'className'),
@@ -150,10 +139,6 @@ export const ItemValues: Story = {
   },
 }
 
-/**
- * `title` and `content` are `ReactNode`, not strings — a title can carry a
- * badge, and content can be any markup.
- */
 export const RichContent: Story = {
   tags: ['api-ref', 'highlight'],
   argTypes: hide('value', 'openMultiple', 'onValueChange', 'className'),
@@ -190,7 +175,6 @@ export const RichContent: Story = {
   },
 }
 
-/** A disabled item's trigger stays focusable, but never toggles its panel. */
 export const DisabledItem: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'defaultValue', 'openMultiple', 'onValueChange', 'className'),
@@ -199,7 +183,6 @@ export const DisabledItem: Story = {
   },
 }
 
-/** `openMultiple` lets several panels stay open at once. */
 export const OpenMultiple: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'onValueChange', 'className'),
@@ -209,7 +192,6 @@ export const OpenMultiple: Story = {
   },
 }
 
-/** `defaultValue` seeds the open items without making the accordion controlled. */
 export const DefaultValue: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'openMultiple', 'onValueChange', 'className'),
@@ -236,11 +218,6 @@ function ControlledAccordion({ onValueChange, ...args }: React.ComponentProps<ty
   )
 }
 
-/**
- * `value` and `onValueChange` together drive the open state from outside the
- * component — the pair is what makes it controlled, and one without the other
- * leaves the accordion stuck.
- */
 export const ControlledValue: Story = {
   tags: ['api-ref', 'highlight'],
   // `openMultiple` stays visible: it composes with a controlled value.
@@ -248,10 +225,6 @@ export const ControlledValue: Story = {
   render: (args) => <ControlledAccordion {...args} />,
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'defaultValue', 'openMultiple', 'onValueChange'),
@@ -271,11 +244,6 @@ export const ClassName: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/**
- * The seven parts an Accordion renders. Hover an entry in the Anatomy panel to
- * highlight it in the canvas, or hover the canvas to activate the entry. One
- * item starts open, since the panel and content parts only mount while open.
- */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide(...ALL_BUT_ITEMS),
@@ -328,10 +296,6 @@ export const Anatomy: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * Single-open is the default: opening a second item closes the first, so the
- * list never grows past one panel's worth of height.
- */
 export const SingleOpenReplaces: Story = {
   tags: ['highlight'],
   argTypes: hide('value', 'defaultValue', 'onValueChange', 'className'),
@@ -345,13 +309,6 @@ export const SingleOpenReplaces: Story = {
 /* animation — the open/close transition contract                      */
 /* ------------------------------------------------------------------ */
 
-/**
- * Base UI measures the panel and writes its height to
- * `--accordion-panel-height`; the theme transitions `height` on top of that,
- * and rotates the trigger's plus icon 45° into a cross via `[data-panel-open]`.
- * This asserts the mechanism — the variable actually resolves to a measured
- * height — rather than trusting the visible sweep.
- */
 export const PanelHeightTransition: Story = {
   tags: ['animation'],
   argTypes: hide(...ALL_BUT_ITEMS),
@@ -447,7 +404,6 @@ const orderTotal = (order: Order) =>
 // reverse-chronological puts everything actionable at the top.
 const orderedByTime = [...orders].sort((a, b) => b.placedAt.localeCompare(a.placedAt))
 
-/** DropBoard's order feed for the day. */
 export const DropBoardOrders: Story = {
   tags: ['examples'],
   argTypes: hide('value', 'className'),
@@ -570,11 +526,6 @@ export const TestControlledValue: Story = {
   },
 }
 
-/**
- * No arrow-key navigation between headers by design (Base UI's Accordion
- * removed roving focus to match the current W3C APG pattern) — only Tab
- * order moves focus between triggers, and Space toggles the focused one.
- */
 export const TestKeyboardTabFlow: Story = {
   tags: ['tests'],
   argTypes: hide(...ALL_BUT_ITEMS),
@@ -594,23 +545,5 @@ export const TestKeyboardTabFlow: Story = {
 
     await userEvent.keyboard(' ')
     await waitFor(() => expect(trigger2).toHaveAttribute('aria-expanded', 'true'))
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: {
-    items: [
-      {
-        value: 'one',
-        title: 'Item one',
-        content: 'Content for item one',
-      },
-      {
-        value: 'two',
-        title: 'Item two',
-        content: 'Content for item two',
-      },
-    ],
   },
 }

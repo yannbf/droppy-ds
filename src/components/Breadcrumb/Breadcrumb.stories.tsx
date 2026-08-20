@@ -48,10 +48,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * The trail above a category page. Edit the items in the controls to add or
- * remove crumbs — the last one is always the current page.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { items: [{ label: 'categories', href: '/categories' }, { label: 'sushi' }] },
@@ -62,7 +58,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `items` is the trail. A crumb with no `href` and no `render` renders as text. */
 export const Items: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
@@ -76,17 +71,12 @@ export const Items: Story = {
   },
 }
 
-/** A single crumb is the current page on its own — no separator is rendered. */
 export const SingleCrumb: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { items: [{ label: 'restaurants' }] },
 }
 
-/**
- * Item `render` swaps the default `<a>` for a router-aware link, cloned with
- * the crumb's class and — on the last item — `aria-current`.
- */
 export const ItemRender: Story = {
   tags: ['api-ref', 'highlight'],
   argTypes: hide('className'),
@@ -98,10 +88,6 @@ export const ItemRender: Story = {
   },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   args: {
@@ -120,11 +106,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The last crumb carries `aria-current="page"` whether it renders as a link or
- * as plain text, and the whole trail sits in a `<nav aria-label="breadcrumb">`
- * landmark — the semantics Mealdrop's `div`/`p` version had none of.
- */
 export const CurrentPageIsMarked: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -140,7 +121,6 @@ export const CurrentPageIsMarked: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The landmark, the list, and one crumb per item with its separator. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('items', 'className'),
@@ -174,7 +154,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** The trail under a category page banner. */
 export const MealdropCategoryTrail: Story = {
   tags: ['examples'],
   argTypes: hide('items', 'className'),
@@ -238,9 +217,4 @@ export const TestSeparatorIsNotAnnounced: Story = {
 
     await expect(separator).toHaveAttribute('aria-hidden', 'true')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { items: [{ label: 'parent', href: '/parent' }, { label: 'current page' }] },
 }

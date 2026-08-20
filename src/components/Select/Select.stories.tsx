@@ -53,10 +53,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A short, known list — how many servings. Every prop is set below, so the
- * controls start populated; edit the options array to change the list.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { label: 'servings', options: [1, 2, 3, 4, 5], value: 2, disabled: false },
@@ -67,14 +63,12 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `label` is the visible label, wired to the control with `for`/`id`. */
 export const Label: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { label: 'delivery window' },
 }
 
-/** `options` are rendered as both the value and the visible text. */
 export const Options: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
@@ -85,24 +79,18 @@ export const Options: Story = {
   },
 }
 
-/** `value` and `onChange` make the control fully controlled. */
 export const Value: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { value: 4 },
 }
 
-/** `disabled` is native, and passed straight through. */
 export const Disabled: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { disabled: true },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   args: { className: 'select-demo-inset' },
@@ -119,11 +107,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * Numeric options come back as numbers and text options as strings, so a
- * caller never parses the value first — and a non-numeric option is never
- * turned into `NaN`, which is what Mealdrop's blanket `Number()` did.
- */
 export const ValueCoercion: Story = {
   tags: ['highlight'],
   argTypes: hide('options', 'value', 'className'),
@@ -135,11 +118,6 @@ export const ValueCoercion: Story = {
   ),
 }
 
-/**
- * The control is the native `<select>`. On touch devices that opens the
- * platform picker, which no scripted listbox matches for accessibility or
- * muscle memory — Droppy only restyles it and supplies its own chevron.
- */
 export const NativeControl: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -149,7 +127,6 @@ export const NativeControl: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** Label, a wrapper carrying the chevron, and the native control inside it. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('label', 'options', 'value', 'disabled', 'className'),
@@ -227,7 +204,6 @@ function BurgerCustomiser() {
   )
 }
 
-/** Choosing up to two extras for a customisable burger. */
 export const MealdropBurgerExtras: Story = {
   tags: ['examples'],
   argTypes: hide('label', 'options', 'value', 'onChange', 'disabled', 'className'),
@@ -267,8 +243,4 @@ export const TestLabelNamesTheControl: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByLabelText('servings').tagName).toBe('SELECT')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

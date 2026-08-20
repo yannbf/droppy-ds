@@ -42,10 +42,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * One glyph from the set. Name and size are set below, so the controls start
- * populated — pick another icon from the dropdown or change the size.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { name: 'cart', size: '1.5rem' },
@@ -56,7 +52,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `name` picks from the bundled set — every icon in it, below. */
 export const Name: Story = {
   tags: ['api-ref'],
   argTypes: hide('name', 'color', 'className'),
@@ -72,7 +67,6 @@ export const Name: Story = {
   ),
 }
 
-/** `size` sets width and height together; numbers and CSS lengths both work. */
 export const Size: Story = {
   tags: ['api-ref'],
   argTypes: hide('size', 'color', 'className'),
@@ -85,17 +79,12 @@ export const Size: Story = {
   ),
 }
 
-/** `color` overrides the stroke, for the cases the icon token doesn't cover. */
 export const Color: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { color: 'var(--ds-color-text-error)', size: '2rem' },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('color'),
@@ -116,11 +105,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * Icons are decorative by default: `aria-hidden` and `focusable="false"`, so
- * they never reach the accessibility tree. The control an icon sits inside is
- * what carries the accessible name — see `IconButton`'s `aria-label`.
- */
 export const DecorativeByDefault: Story = {
   tags: ['highlight'],
   argTypes: hide('color', 'className'),
@@ -135,7 +119,6 @@ export const DecorativeByDefault: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A single part: one `<svg>`, its paths supplied by `name`. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('name', 'size', 'color', 'className'),
@@ -161,8 +144,6 @@ export const Anatomy: Story = {
 const toCurrency = (amount: number) =>
   amount.toLocaleString(undefined, { style: 'currency', currency: 'EUR' })
 
-/** Mealdrop's header, where every icon reaches the page through a control's
- *  `icon` prop rather than a bare `Icon`. */
 export const MealdropHeader: Story = {
   tags: ['examples'],
   argTypes: hide('name', 'color', 'size'),
@@ -256,9 +237,4 @@ export const TestColorOverridesStroke: Story = {
 
     await expect(getComputedStyle(icon).stroke).toBe('rgb(183, 28, 28)')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { name: 'cart' },
 }

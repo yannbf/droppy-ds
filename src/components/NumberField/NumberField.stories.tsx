@@ -54,11 +54,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A typeable quantity with stepper buttons. Bounds and step are set below, so
- * the controls start populated — the buttons disable at the bounds rather than
- * wrapping.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { label: 'Quantity', defaultValue: 1, min: 0, max: 10, step: 1, disabled: false },
@@ -69,35 +64,30 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `label` names the field and doubles as the scrub handle. */
 export const Label: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'format', 'className'),
   args: { label: 'Servings' },
 }
 
-/** `defaultValue` seeds the field without making it controlled. */
 export const DefaultValue: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'format', 'className'),
   args: { defaultValue: 5 },
 }
 
-/** `min` and `max` bound the range; the buttons disable at each end. */
 export const MinAndMax: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'format', 'className'),
   args: { defaultValue: 9, min: 0, max: 10 },
 }
 
-/** `step` sets how far each increment moves. */
 export const Step: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'format', 'className'),
   args: { defaultValue: 1, step: 0.5 },
 }
 
-/** `format` takes `Intl.NumberFormat` options — currency, percent, decimals. */
 export const Format: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'className'),
@@ -109,17 +99,12 @@ export const Format: Story = {
   },
 }
 
-/** `disabled` dims the input and both buttons together. */
 export const Disabled: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'format', 'className'),
   args: { defaultValue: 3, disabled: true },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'format'),
@@ -137,11 +122,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * Three ways in, not one: type a value, press the buttons, or drag the label
- * itself — the scrub area sits behind the label text. That third route is what
- * separates this from `QuantityStepper`, which only does tap-tap increments.
- */
 export const ThreeWaysToChangeTheValue: Story = {
   tags: ['highlight'],
   argTypes: hide('value', 'format', 'className'),
@@ -152,7 +132,6 @@ export const ThreeWaysToChangeTheValue: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A field wrapper, the scrub area holding the label, and the button group. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('label', 'defaultValue', 'value', 'min', 'max', 'step', 'format', 'className'),
@@ -217,7 +196,6 @@ function PriceEditor() {
   )
 }
 
-/** DropBoard's menu-item price and prep-time fields. */
 export const DropBoardPriceEditor: Story = {
   tags: ['examples'],
   render: () => <PriceEditor />,
@@ -304,8 +282,4 @@ export const TestScrubbingTheLabel: Story = {
 
     scrubArea.dispatchEvent(new PointerEvent('pointerup', { bubbles: true }))
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

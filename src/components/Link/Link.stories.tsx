@@ -55,10 +55,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A plain sentence link. Text and destination are set below, so the controls
- * start populated.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { children: 'Order again', href: '/orders' },
@@ -69,35 +65,24 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` is the link text — keep it descriptive out of context. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('render', 'className'),
   args: { children: 'Track your order' },
 }
 
-/** `href` is the destination for the default `<a>`. */
 export const Href: Story = {
   tags: ['api-ref'],
   argTypes: hide('render', 'className'),
   args: { href: 'https://droppy.example/help', children: 'Visit the help centre' },
 }
 
-/**
- * `render` swaps the `<a>` for a router-aware link — a stand-in here for
- * `react-router`'s `Link`. The passed element owns its own destination, so
- * `href` is dropped rather than spread on top of it.
- */
 export const Render: Story = {
   tags: ['api-ref', 'highlight'],
   argTypes: hide('href', 'className'),
   args: { href: undefined, render: <RouterLink to="/orders" /> },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('render'),
@@ -117,7 +102,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/** Inline inside a sentence, inheriting the surrounding text's font. */
 export const Inline: Story = {
   tags: ['highlight'],
   argTypes: hide('render', 'className'),
@@ -128,10 +112,6 @@ export const Inline: Story = {
   ),
 }
 
-/**
- * On a dark surface, `Link` inherits `currentColor` from the wrapping context
- * rather than fighting it with a hard-coded light-mode token.
- */
 export const OnDarkSurface: Story = {
   tags: ['highlight'],
   argTypes: hide('render', 'className'),
@@ -148,7 +128,6 @@ export const OnDarkSurface: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A single part, whose tag is the `<a>` — or whatever `render` supplies. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('children', 'href', 'render', 'className'),
@@ -169,7 +148,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** An order-confirmation paragraph with an inline link. */
 export const MealdropOrderConfirmationLink: Story = {
   tags: ['examples'],
   argTypes: hide('href', 'render', 'children', 'className'),
@@ -232,5 +210,3 @@ export const TestMergesClassName: Story = {
     await expect(link).toHaveClass('link-demo-custom')
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }

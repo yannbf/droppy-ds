@@ -83,10 +83,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A cart reviewed alongside the page. `isOpen` and `title` are set below, so
- * the controls start populated — flip `isOpen` to open it without clicking.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { isOpen: true, title: 'Your order' },
@@ -97,28 +93,24 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `isOpen` drives everything — the component holds no open state of its own. */
 export const IsOpen: Story = {
   tags: ['api-ref'],
   argTypes: hide('container', 'className'),
   args: { isOpen: false },
 }
 
-/** `title` is the top-bar heading, and the dialog's accessible name. */
 export const Title: Story = {
   tags: ['api-ref'],
   argTypes: hide('container', 'className'),
   args: { isOpen: true, title: 'Filter restaurants' },
 }
 
-/** `children` scroll; the top bar and footer stay put around them. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('container', 'className'),
   args: { isOpen: true, children: order },
 }
 
-/** `footer` is pinned to the bottom — a plain flex container the caller fills. */
 export const Footer: Story = {
   tags: ['api-ref'],
   argTypes: hide('container', 'className'),
@@ -135,7 +127,6 @@ export const Footer: Story = {
   },
 }
 
-/** `container` picks the portal target — an element or a selector. */
 export const Container: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
@@ -148,10 +139,6 @@ export const Container: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('container'),
@@ -170,7 +157,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/** Below the mobile breakpoint the panel takes the full width. */
 export const FullWidthOnMobile: Story = {
   tags: ['highlight'],
   argTypes: hide('container', 'className'),
@@ -178,10 +164,6 @@ export const FullWidthOnMobile: Story = {
   globals: { viewport: { value: 'mobile1' } },
 }
 
-/**
- * The footer is pinned and the content scrolls above it, so a long order never
- * pushes the checkout button out of reach.
- */
 export const PinnedFooterWithScrollingContent: Story = {
   tags: ['highlight'],
   argTypes: hide('container', 'className'),
@@ -209,12 +191,6 @@ export const PinnedFooterWithScrollingContent: Story = {
 /* animation — the motion contract                                     */
 /* ------------------------------------------------------------------ */
 
-/**
- * The panel slides from the trailing edge off `[data-starting-style]` and
- * `[data-ending-style]`, and stays mounted through the exit so the close
- * animation runs before it leaves the DOM. Base UI also drives swipe-to-dismiss
- * from the same states.
- */
 export const SlideTransition: Story = {
   tags: ['animation'],
   argTypes: hide('container', 'className'),
@@ -231,11 +207,6 @@ export const SlideTransition: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/**
- * Portalled into a node inside the canvas via `container`, so the Anatomy
- * panel can reach the parts — it only scans the story canvas, and the default
- * portal target is the document body.
- */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('isOpen', 'title', 'children', 'footer', 'container', 'className'),
@@ -370,7 +341,6 @@ function ShoppingCartMenu({ container }: Pick<SidebarProps, 'container'>) {
   )
 }
 
-/** Mealdrop's cart panel, opened from the header's cart button. */
 export const MealdropCartPanel: Story = {
   tags: ['examples'],
   argTypes: hide('isOpen', 'title', 'onClose', 'footer', 'container', 'children', 'className'),
@@ -441,9 +411,4 @@ export const TestContainerPortalsWhereAsked: Story = {
 
     await waitFor(() => expect(host.querySelector('[role="dialog"]')).not.toBeNull())
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { isOpen: false, title: 'Title', onClose: fn() },
 }

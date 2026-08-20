@@ -64,11 +64,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A scrolling row of tiles. `itemsPerView` is set below, so the controls start
- * populated — the fractional mobile value is deliberate, so a sliver of the
- * next tile shows and the row reads as scrollable.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { itemsPerView: { mobile: 1.2, tablet: 3, desktop: 4 } },
@@ -79,31 +74,24 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` become the slides — one wrapper is added per child. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('slidesToScroll', 'className'),
   args: { children: Array.from({ length: 4 }, (_, i) => <Tile key={i} label={`Card ${i + 1}`} />) },
 }
 
-/** `itemsPerView` sets how many fit per breakpoint. Fractions show a sliver of the next. */
 export const ItemsPerView: Story = {
   tags: ['api-ref'],
   argTypes: hide('slidesToScroll', 'className'),
   args: { itemsPerView: { mobile: 1, tablet: 2, desktop: 3 } },
 }
 
-/** `slidesToScroll` advances more than one item per arrow click. */
 export const SlidesToScroll: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { slidesToScroll: { desktop: 4 } },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('slidesToScroll'),
@@ -121,21 +109,12 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * Arrows only render once there is somewhere to go in that direction — with
- * fewer items than fit, neither appears. They are desktop-only besides;
- * smaller screens scroll by dragging or by horizontal wheel gesture.
- */
 export const ArrowsOnlyWhenThereIsSomewhereToGo: Story = {
   tags: ['highlight'],
   argTypes: hide('slidesToScroll', 'className'),
   args: { children: tiles.slice(0, 2) },
 }
 
-/**
- * Slides that aren't almost fully visible dim to 0.5, so a partially scrolled
- * row signals there is more to reach rather than looking clipped.
- */
 export const OffscreenSlidesDim: Story = {
   tags: ['highlight'],
   argTypes: hide('slidesToScroll', 'className'),
@@ -146,7 +125,6 @@ export const OffscreenSlidesDim: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The rail, its viewport and track, one wrapper per slide, and the arrows. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('children', 'itemsPerView', 'slidesToScroll', 'className'),
@@ -220,7 +198,6 @@ const nearbyRestaurants = [
   },
 ]
 
-/** The 'Restaurants near you' rail. */
 export const MealdropRestaurantRail: Story = {
   tags: ['examples'],
   argTypes: hide('children', 'itemsPerView', 'slidesToScroll', 'className'),
@@ -289,9 +266,4 @@ export const TestItemsPerViewReachesCss: Story = {
     await expect(root.style.getPropertyValue('--droppy-Carousel-items-desktop')).toBe('4')
     await expect(root.style.getPropertyValue('--droppy-Carousel-items-mobile')).toBe('1.2')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { itemsPerView: { mobile: 1.2, tablet: 3, desktop: 4 }, children: tiles },
 }

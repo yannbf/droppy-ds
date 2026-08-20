@@ -83,10 +83,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A blocking confirmation. `isOpen` and the accessible name are set below, so
- * the controls start populated — flip `isOpen` to open it without clicking.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { isOpen: true, 'aria-label': 'Remove from cart' },
@@ -97,14 +93,12 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `isOpen` drives everything — the component holds no open state of its own. */
 export const IsOpen: Story = {
   tags: ['api-ref'],
   argTypes: hide('container', 'className'),
   args: { isOpen: false },
 }
 
-/** `children` are the body; the top bar and its close button are supplied. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('container', 'className'),
@@ -119,7 +113,6 @@ export const Children: Story = {
   },
 }
 
-/** `aria-label` names the dialog, since the body has no guaranteed heading. */
 export const AriaLabel: Story = {
   name: 'aria-label',
   tags: ['api-ref'],
@@ -127,10 +120,6 @@ export const AriaLabel: Story = {
   args: { isOpen: true, 'aria-label': 'Remove from cart' },
 }
 
-/**
- * `container` picks the portal target — an element or a selector. Mealdrop
- * portals into its own `#modal` node; unset, it goes to the body.
- */
 export const Container: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
@@ -143,10 +132,6 @@ export const Container: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('container'),
@@ -165,7 +150,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/** Below 768px the card becomes a bottom sheet and slides up from the edge. */
 export const Mobile: Story = {
   tags: ['highlight'],
   argTypes: hide('container', 'className'),
@@ -173,11 +157,6 @@ export const Mobile: Story = {
   globals: { viewport: { value: 'mobile1' } },
 }
 
-/**
- * Focus lands on the popup itself, not the close button: the content is what
- * the reader asked for, and landing on "close" reads as an invitation to
- * leave. Tab still reaches the close button first.
- */
 export const InitialFocusIsThePopup: Story = {
   tags: ['highlight'],
   argTypes: hide('container', 'className'),
@@ -188,12 +167,6 @@ export const InitialFocusIsThePopup: Story = {
 /* animation — the motion contract                                     */
 /* ------------------------------------------------------------------ */
 
-/**
- * Both the backdrop and the popup transition off `[data-starting-style]` and
- * `[data-ending-style]`, which Base UI sets while the dialog enters and
- * leaves. The popup stays mounted through the exit, so the close animation
- * runs before it disappears.
- */
 export const OpenCloseTransition: Story = {
   tags: ['animation'],
   argTypes: hide('container', 'className'),
@@ -214,11 +187,6 @@ export const OpenCloseTransition: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/**
- * Portalled into a node inside the canvas via `container`, so the Anatomy
- * panel can reach the parts — it only scans the story canvas, and the default
- * portal target is the document body.
- */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('isOpen', 'children', 'container', 'className'),
@@ -329,7 +297,6 @@ function FoodItemModal({ container }: Pick<ModalProps, 'container'>) {
   )
 }
 
-/** Mealdrop's food-item modal, opened from a dish on the menu. */
 export const MealdropFoodItemModal: Story = {
   tags: ['examples'],
   argTypes: hide('isOpen', 'onClose', 'container', 'aria-label', 'children', 'className'),
@@ -397,9 +364,4 @@ export const TestContainerPortalsWhereAsked: Story = {
 
     await waitFor(() => expect(host.querySelector('[role="dialog"]')).not.toBeNull())
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { isOpen: false, onClose: fn() },
 }

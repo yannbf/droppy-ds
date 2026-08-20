@@ -52,10 +52,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A hint for an icon-only control. Label and offset are set below, so the
- * controls start populated — hover or focus the button to see the tip.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { label: 'turn on dark mode', sideOffset: 8 },
@@ -66,14 +62,12 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `label` is the tip's content — it repeats the name, never replaces it. */
 export const Label: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { label: 'add to your order' },
 }
 
-/** `children` becomes the trigger itself rather than being wrapped in one. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
@@ -83,17 +77,12 @@ export const Children: Story = {
   },
 }
 
-/** `sideOffset` is the gap between trigger and tip. */
 export const SideOffset: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { sideOffset: 24 },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   args: { className: 'tooltip-demo-inset' },
@@ -110,12 +99,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The tip repeats the trigger's accessible name rather than supplying it. A
- * tooltip is a supplement — it never appears for touch or for a screen reader
- * that doesn't hover, so anything only said here is said to nobody. Give the
- * trigger its own `aria-label` as well, as the demo does.
- */
 export const NeverTheOnlyLabel: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -125,11 +108,6 @@ export const NeverTheOnlyLabel: Story = {
 /* animation — the motion contract                                     */
 /* ------------------------------------------------------------------ */
 
-/**
- * The tip fades and scales in off `[data-starting-style]` and
- * `[data-ending-style]`, staying mounted through the exit so the close runs
- * before it leaves the DOM.
- */
 export const OpenCloseTransition: Story = {
   tags: ['animation'],
   argTypes: hide('className'),
@@ -152,13 +130,6 @@ export const OpenCloseTransition: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/**
- * Two parts. Only the trigger is reachable by the Anatomy panel: the popup is
- * portalled to the document body, outside the story canvas the panel scans,
- * and `Tooltip` exposes no `container` prop the way `Modal` and `Sidebar` do.
- * The popup's `data-part` is still on the element for anyone inspecting the
- * DOM.
- */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('label', 'sideOffset', 'className'),
@@ -179,7 +150,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** Tips on Mealdrop's two icon-only header controls. */
 export const MealdropHeaderTips: Story = {
   tags: ['examples'],
   argTypes: hide('label', 'children', 'sideOffset', 'className'),
@@ -251,13 +221,5 @@ export const TestTriggerKeepsItsOwnName: Story = {
     const trigger = canvas.getByRole('button', { name: 'turn on dark mode' })
 
     await expect(trigger).toHaveAttribute('data-part', 'trigger')
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: {
-    label: 'turn on dark mode',
-    children: <Button round clear icon="moon" aria-label="turn on dark mode" />,
   },
 }

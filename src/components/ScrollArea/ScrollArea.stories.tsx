@@ -66,11 +66,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A fixed-height panel of long text, with a themed scrollbar revealed on hover
- * or while scrolling. `orientation` is set below, so the controls start
- * populated.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { orientation: 'vertical' },
@@ -81,14 +76,12 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` are whatever overflows; sizing comes from the theme layer. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('orientation', 'className'),
   args: { children: paragraphs.map((text, index) => <p key={index}>{text}</p>) },
 }
 
-/** `orientation` picks which axes get a scrollbar. */
 export const Orientation: Story = {
   tags: ['api-ref'],
   argTypes: hide('orientation', 'className'),
@@ -122,10 +115,6 @@ export const Orientation: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('orientation'),
@@ -143,11 +132,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * Content overflowing both axes renders a scrollbar on each, plus the corner
- * where the two tracks would otherwise intersect — the part that stops them
- * overlapping at the meeting point.
- */
 export const BothAxes: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -158,7 +142,6 @@ export const BothAxes: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** Root, viewport, content, and a scrollbar with its thumb per axis. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('children', 'orientation', 'className'),
@@ -205,7 +188,6 @@ const longOrder = [
 
 const orderTotal = longOrder.reduce((sum, line) => sum + line.price * line.quantity, 0)
 
-/** A long Mealdrop order scrolling above a pinned total. */
 export const MealdropCartScroll: Story = {
   tags: ['examples'],
   argTypes: hide('children', 'orientation', 'className'),
@@ -308,8 +290,4 @@ export const TestHorizontalOnlyOmitsVertical: Story = {
     })
     await expect(canvasElement.querySelector('[data-orientation="vertical"]')).toBeNull()
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

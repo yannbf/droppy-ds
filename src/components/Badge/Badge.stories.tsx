@@ -45,10 +45,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A dietary tag on a menu item. Both props are set below, so the controls
- * start populated — edit the text or flip the variant to see the two looks.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { text: 'vegan', variant: 'neutral' },
@@ -59,14 +55,12 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `text` is the only required prop, and the only content the badge renders. */
 export const Text: Story = {
   tags: ['api-ref'],
   argTypes: hide('variant', 'className'),
   args: { text: 'gluten free' },
 }
 
-/** `variant` swaps the background, text color, and weight — not the size. */
 export const Variant: Story = {
   tags: ['api-ref'],
   argTypes: hide('text', 'className'),
@@ -78,10 +72,6 @@ export const Variant: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('variant'),
@@ -101,7 +91,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/** The pill grows with its content — there's no truncation or fixed width. */
 export const LongerText: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -112,7 +101,6 @@ export const LongerText: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A single part: `Badge` renders one `<span>` and nothing inside it. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('text', 'variant', 'className'),
@@ -154,7 +142,6 @@ const listings = [
   },
 ]
 
-/** Category tags and a new flag on a restaurant tile. */
 export const MealdropRestaurantTags: Story = {
   tags: ['examples'],
   argTypes: hide('text', 'variant', 'className'),
@@ -234,9 +221,4 @@ export const TestMergesClassName: Story = {
     await expect(badge).toHaveClass('droppy-Badge')
     await expect(badge).toHaveClass('badge-demo-custom')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { text: 'Content' },
 }

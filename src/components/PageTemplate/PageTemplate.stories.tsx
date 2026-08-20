@@ -45,7 +45,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** The page shell every routed page sits inside: header, `<main>`, footer. */
 export const Default: Story = {
   tags: ['showcase'],
   args: { header: <Header />, footer: <Footer /> },
@@ -56,7 +55,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `header` sits above the content area, outside the `<main>` landmark. */
 export const HeaderProp: Story = {
   name: 'Header',
   tags: ['api-ref'],
@@ -64,7 +62,6 @@ export const HeaderProp: Story = {
   args: { footer: undefined },
 }
 
-/** `footer` sits below the content area, also outside `<main>`. */
 export const FooterProp: Story = {
   name: 'Footer',
   tags: ['api-ref'],
@@ -72,7 +69,6 @@ export const FooterProp: Story = {
   args: { header: undefined },
 }
 
-/** `children` are the page content — the only part inside the landmark. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('header', 'footer', 'className'),
@@ -83,10 +79,6 @@ export const Children: Story = {
   },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('header', 'footer'),
@@ -106,10 +98,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The content area carries a minimum height, so a short page's footer still
- * lands at the bottom of the viewport instead of riding up under the fold.
- */
 export const ShortPageKeepsFooterDown: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -120,7 +108,6 @@ export const ShortPageKeepsFooterDown: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The shell and its `<main>` landmark. Header and footer are the caller's nodes. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('header', 'footer', 'children', 'className'),
@@ -170,8 +157,4 @@ export const TestSlotsAreOptional: Story = {
     await expect(canvas.getByRole('main')).toBeInTheDocument()
     await expect(canvas.queryByText('Site header')).not.toBeInTheDocument()
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

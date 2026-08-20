@@ -53,10 +53,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * The primary call to action. Every variant prop is set below, so the controls
- * start populated — flip `clear`, `large`, or `round`, or pick an icon.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: {
@@ -74,35 +70,30 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` is the label. Omitted, the button is icon-only and needs an `aria-label`. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('clear', 'large', 'round', 'iconSize', 'className'),
   args: { children: 'Add to basket' },
 }
 
-/** `clear` strips the fill, for the secondary action beside a primary one. */
 export const Clear: Story = {
   tags: ['api-ref'],
   argTypes: hide('large', 'round', 'icon', 'iconSize', 'className'),
   args: { clear: true, children: 'Not now' },
 }
 
-/** `large` adds height, for the one action a screen is really about. */
 export const Large: Story = {
   tags: ['api-ref'],
   argTypes: hide('clear', 'round', 'icon', 'iconSize', 'className'),
   args: { large: true },
 }
 
-/** `round` fully rounds the control — pair it with an icon and no label. */
 export const Round: Story = {
   tags: ['api-ref'],
   argTypes: hide('clear', 'large', 'iconSize', 'className'),
   args: { round: true, clear: true, icon: 'cross', children: undefined, 'aria-label': 'close' },
 }
 
-/** `icon` renders a glyph before the label, spaced with `gap` rather than a spacer node. */
 export const IconProp: Story = {
   name: 'Icon',
   tags: ['api-ref'],
@@ -110,7 +101,6 @@ export const IconProp: Story = {
   args: { icon: 'cart' },
 }
 
-/** `iconSize` overrides the glyph size without touching the button's padding. */
 export const IconSize: Story = {
   tags: ['api-ref'],
   argTypes: hide('clear', 'large', 'round', 'className'),
@@ -122,17 +112,12 @@ export const IconSize: Story = {
   ),
 }
 
-/** `disabled` dims the control and stops it firing `onClick`. */
 export const Disabled: Story = {
   tags: ['api-ref'],
   argTypes: hide('clear', 'large', 'round', 'icon', 'iconSize', 'className'),
   args: { disabled: true },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('clear', 'large', 'round', 'icon', 'iconSize'),
@@ -152,17 +137,12 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * An icon-only button has no text to read, so its accessible name has to come
- * from `aria-label`. Drop the label without one and the control is unnamed.
- */
 export const IconOnlyNeedsALabel: Story = {
   tags: ['highlight'],
   argTypes: hide('iconSize', 'className'),
   args: { icon: 'cross', round: true, clear: true, children: undefined, 'aria-label': 'close' },
 }
 
-/** The variants side by side — the vocabulary a screen picks from. */
 export const Variants: Story = {
   tags: ['highlight'],
   argTypes: hide('clear', 'large', 'round', 'icon', 'iconSize', 'className'),
@@ -192,7 +172,6 @@ export const Variants: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The control and its optional leading glyph. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('children', 'clear', 'large', 'round', 'icon', 'iconSize', 'className'),
@@ -219,7 +198,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** The action stack in Mealdrop's cart panel. */
 export const MealdropCheckoutActions: Story = {
   tags: ['examples'],
   argTypes: hide('children', 'clear', 'round', 'large', 'icon', 'iconSize', 'disabled', 'onClick'),
@@ -299,5 +277,3 @@ export const TestDefaultsToTypeButton: Story = {
     )
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }

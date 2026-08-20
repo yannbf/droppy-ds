@@ -16,13 +16,9 @@ type ElementProps<T extends BodyElement> = T extends 'label'
 
 type DefaultProps = {
   className?: string
-  /** Visual size step. Absent renders the base body size. */
   size?: BodySize
-  /** Font weight. */
   fontWeight?: BodyWeight
-  /** Rendered element. */
   type?: BodyElement
-  /** Overrides the text color inline. Unset, follows the theme's primary text token. */
   color?: string
   children: ReactNode
 }
@@ -42,14 +38,6 @@ const weightClassName: Record<BodyWeight, string> = {
   black: 'droppy-Body--weight-black',
 }
 
-/**
- * Plain-text typography — the body-copy counterpart to `Heading`.
- *
- * `type` picks the rendered element (`p` by default, or `span`, `label`,
- * `figcaption`); `size` and `fontWeight` pick the type-scale step and weight
- * independently of it, so any of the four elements can land on the same
- * scale.
- */
 export const Body = ({
   size,
   fontWeight = 'regular',

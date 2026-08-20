@@ -14,9 +14,7 @@ export type ItemsPerView = {
 
 export type CarouselProps = {
   children: ReactNode
-  /** Number of items visible per breakpoint (mobile-first). */
   itemsPerView: ItemsPerView
-  /** How many items each arrow click advances, per breakpoint (defaults to 1). */
   slidesToScroll?: Partial<ItemsPerView>
   className?: string
 }
@@ -27,15 +25,6 @@ export type CarouselProps = {
 const TABLET_QUERY = '(min-width: 640px)'
 const DESKTOP_QUERY = '(min-width: 1024px)'
 
-/**
- * A horizontally scrolling row of items — restaurant cards, category tiles —
- * showing a fixed number per breakpoint with drag, wheel-gesture, and arrow
- * navigation.
- *
- * Non-visible or partially scrolled slides dim to signal there's more to
- * scroll to. Arrows only render once there's somewhere to go in that
- * direction, and only appear on desktop; smaller screens scroll by dragging.
- */
 export const Carousel = ({ children, itemsPerView, slidesToScroll, className }: CarouselProps) => {
   const step = { mobile: 1, tablet: 1, desktop: 1, ...slidesToScroll }
   const [emblaRef, emblaApi] = useEmblaCarousel(

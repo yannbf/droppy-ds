@@ -45,10 +45,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A page title. `level` and `size` are both set below, so the controls start
- * populated — move them apart to see the tag and the visual size decouple.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { children: 'Best food in town', level: 1, size: undefined },
@@ -59,7 +55,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` is the heading text; nodes work as well as strings. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('level', 'size', 'className'),
@@ -72,7 +67,6 @@ export const Children: Story = {
   },
 }
 
-/** `level` picks the tag and, on its own, the size step to match. */
 export const Levels: Story = {
   tags: ['api-ref'],
   argTypes: hide('level', 'size', 'className'),
@@ -87,7 +81,6 @@ export const Levels: Story = {
   ),
 }
 
-/** `size` picks the visual step on its own; the tag still follows `level`. */
 export const Sizes: Story = {
   tags: ['api-ref'],
   argTypes: hide('level', 'size', 'className'),
@@ -102,10 +95,6 @@ export const Sizes: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('level', 'size'),
@@ -125,11 +114,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * `size` decouples the visual size from the outline, so a card title can stay
- * an `h2` for screen readers while looking like a level-4 heading. Without it
- * you'd reach for a wrong `level` and break the document outline.
- */
 export const SizeDecoupledFromLevel: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -140,7 +124,6 @@ export const SizeDecoupledFromLevel: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A single part, whose tag follows `level`. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('children', 'level', 'size', 'className'),
@@ -161,7 +144,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** The heading ladder on a restaurant detail page. */
 export const MealdropHeadingLadder: Story = {
   tags: ['examples'],
   argTypes: hide('children', 'level', 'size', 'className'),
@@ -222,5 +204,3 @@ export const TestForwardsRefAndProps: Story = {
     await expect(canvas.getByRole('heading', { level: 2 })).toHaveAttribute('id', 'heading-demo-id')
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }

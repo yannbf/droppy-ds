@@ -54,11 +54,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A line of body copy at the base size. Every prop that shapes the text is set
- * below, so the controls start populated — change the size step, the weight, or
- * the element it renders as.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: {
@@ -74,7 +69,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` takes nodes as well as strings, so inline markup composes. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('size', 'fontWeight', 'color', 'className'),
@@ -87,7 +81,6 @@ export const Children: Story = {
   },
 }
 
-/** `size` picks the type-scale step, leaving the element and weight alone. */
 export const Sizes: Story = {
   tags: ['api-ref'],
   argTypes: hide('size', 'color', 'className'),
@@ -107,7 +100,6 @@ export const Sizes: Story = {
   ),
 }
 
-/** `fontWeight` is independent of both size and element. */
 export const Weights: Story = {
   tags: ['api-ref'],
   argTypes: hide('fontWeight', 'color', 'className'),
@@ -129,7 +121,6 @@ export const Weights: Story = {
   ),
 }
 
-/** `type` picks which element is rendered — all four share the same styling. */
 export const ElementChoice: Story = {
   tags: ['api-ref'],
   argTypes: hide('type', 'color', 'className'),
@@ -151,17 +142,12 @@ export const ElementChoice: Story = {
   ),
 }
 
-/** `color` overrides the text token inline, for the cases the scale doesn't cover. */
 export const ColorOverride: Story = {
   tags: ['api-ref'],
   argTypes: hide('size', 'fontWeight', 'className'),
   args: { color: 'var(--ds-color-text-error)', children: 'Delivery unavailable at this address.' },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('size', 'fontWeight', 'color'),
@@ -181,10 +167,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * `type` renders a real element, not a styled `span` — `label` gives you a
- * `<label>` that can be associated with a control.
- */
 export const RendersMatchingTag: Story = {
   tags: ['highlight'],
   argTypes: hide('size', 'fontWeight', 'color', 'className'),
@@ -195,7 +177,6 @@ export const RendersMatchingTag: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A single part, whose tag follows `type`. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('size', 'fontWeight', 'type', 'color', 'className'),
@@ -217,7 +198,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** The text column of a restaurant tile. */
 export const MealdropRestaurantCardText: Story = {
   tags: ['examples'],
   argTypes: hide('children', 'size', 'fontWeight', 'type', 'color', 'className'),
@@ -276,9 +256,4 @@ export const TestColorOverridesToken: Story = {
   play: async ({ canvas }) => {
     await expect(getComputedStyle(canvas.getByText('Delivered')).color).toBe('rgb(10, 125, 50)')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { children: 'Body text' },
 }
