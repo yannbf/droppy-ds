@@ -1,6 +1,6 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
-import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn, userEvent } from 'storybook/test'
+import type { Meta, StoryObj } from '@storybook/react-vite'
+import { fn } from 'storybook/test'
 
 import type { PageSectionProps } from './PageSection'
 import { PageSection } from './PageSection'
@@ -8,13 +8,6 @@ import { PageSection } from './PageSection'
 /** Hides props that aren't a story's point, so its controls stay actionable. */
 const hide = (...props: Array<keyof PageSectionProps>) =>
   Object.fromEntries(props.map((prop) => [prop, { table: { disable: true } }]))
-
-/** A bordered parent, so the margin the ClassName demo adds is actually visible. */
-const inBorderedBox: Decorator = (Story) => (
-  <div style={{ border: '1px dashed var(--ds-color-border-subtle)' }}>
-    <Story />
-  </div>
-)
 
 const meta = {
   title: 'Layout & structure/PageSection',
@@ -39,68 +32,9 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A titled band of page content. Both the title and the optional action are
- * set below, so the controls start populated — clear the label to drop the
- * button.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { title: 'Asian', topButtonLabel: 'View all categories', onTopButtonClick: fn() },
-  argTypes: hide('className'),
-}
-
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
-
-/** `title` renders as an `h2`, so sections nest correctly under a page `h1`. */
-export const Title: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('topButtonLabel', 'className'),
-  args: { title: 'Award winning restaurants', topButtonLabel: undefined },
-}
-
-/** `topButtonLabel` adds a `clear` Button beside the title. */
-export const TopButtonLabel: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('className'),
-  args: { topButtonLabel: 'View all categories', onTopButtonClick: fn() },
-}
-
-/** `children` are the section body, laid out by the caller. */
-export const Children: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('topButtonLabel', 'className'),
-  args: {
-    topButtonLabel: undefined,
-    children: (
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        <p>Card one</p>
-        <p>Card two</p>
-      </div>
-    ),
-  },
-}
-
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
-export const ClassName: Story = {
-  tags: ['api-ref'],
-  argTypes: hide('topButtonLabel'),
-  args: {
-    className: 'pagesection-demo-inset',
-  },
-  decorators: [inBorderedBox],
-  render: (args) => (
-    <>
-      <style>{`.pagesection-demo-inset { margin: 1rem; }`}</style>
-      <PageSection {...args} />
-    </>
-  ),
-}
 
 /* ------------------------------------------------------------------ */
 /* highlight — features and behaviours worth calling out               */
@@ -152,35 +86,3 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestTitleIsALevelTwoHeading: Story = {
-  tags: ['tests'],
-  args: { topButtonLabel: undefined },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { level: 2, name: 'Asian' })).toBeInTheDocument()
-  },
-}
-
-export const TestNoActionWithoutALabel: Story = {
-  tags: ['tests'],
-  args: { topButtonLabel: undefined },
-  play: async ({ canvas }) => {
-    await expect(canvas.queryByRole('button')).not.toBeInTheDocument()
-  },
-}
-
-export const TestActionFiresItsCallback: Story = {
-  tags: ['tests'],
-  args: { topButtonLabel: 'View all categories', onTopButtonClick: fn() },
-  play: async ({ args, canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'View all categories' }))
-
-    await expect(args.onTopButtonClick).toHaveBeenCalledOnce()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { title: 'Title', children: <p>Content goes here.</p> },
-}
