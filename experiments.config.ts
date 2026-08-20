@@ -112,8 +112,12 @@ const experiments: Experiment[] = [
     // No story facets: without the empty CSF files the whole Storybook index
     // is empty and every component MDX page is dropped with its pruned CSF.
     branchName: 'experiment/docs-full',
-    facets: [...ALL_MDX, ...ALL_GENERAL],
-    keepEmptyCsf: true,
+    facets: [
+      ...ALL_MDX,
+      ...ALL_GENERAL,
+      // Needed for mdx.anatomy to work, and also acts as an empty story to preserve CSF
+      'story.anatomy',
+    ],
   },
   {
     branchName: 'experiment/stories-api-ref',
