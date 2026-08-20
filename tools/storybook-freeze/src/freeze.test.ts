@@ -103,4 +103,17 @@ describe('regenerateExperiments', () => {
     await writeFile(path.join(dir, 'dirty.txt'), 'x\n')
     await expect(run()).rejects.toThrow(/clean working tree/)
   })
+
+  it('refuses a branch that would keep no story files', async () => {
+    const storyless = [{ branchName: 'experiment/none', facets: [], keepEmptyCsf: false }]
+    await expect(
+      regenerateExperiments({
+        cwd: dir,
+        experiments: storyless,
+        labels,
+        now: '2026-08-13T00:00:00.000Z',
+        version: 1,
+      })
+    ).rejects.toThrow(/keeps no story files/)
+  })
 })

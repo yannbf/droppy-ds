@@ -12,6 +12,8 @@ export interface CorpusSummary {
   written: string[]
   removed: string[]
   storiesRemoved: number
+  /** Story files still on disk after processing — zero means an empty Storybook index. */
+  storyFilesKept: number
 }
 
 interface FileOutcome {
@@ -158,7 +160,12 @@ export async function runCorpus(
   )
   const sourceOutcomes = await sourcesPromise
 
-  const summary: CorpusSummary = { written: [], removed: [], storiesRemoved: 0 }
+  const summary: CorpusSummary = {
+    written: [],
+    removed: [],
+    storiesRemoved: 0,
+    storyFilesKept: storyOutcomes.filter((outcome) => !outcome.pruned).length,
+  }
   collect(summary, storyOutcomes)
   collect(summary, mdxOutcomes)
   collect(summary, sourceOutcomes)

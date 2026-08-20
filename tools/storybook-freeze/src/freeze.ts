@@ -64,6 +64,13 @@ export async function buildExperimentBranch(opts: {
 
   const keep = new Set(opts.facets)
   const summary = await runCorpus(opts.cwd, keep, opts.labels, opts.keepEmptyCsf)
+  if (summary.storyFilesKept === 0) {
+    throw new Error(
+      `Droppy: ${opts.branchName} keeps no story files. An empty Storybook index publishes ` +
+        'an empty MCP manifest, and every component MDX page is dropped with its pruned ' +
+        'CSF. Keep a story facet or set keepEmptyCsf: true in experiments.config.ts.'
+    )
+  }
   await purgeDeadCode(summary.written, opts.cwd)
   await formatFiles(summary.written)
 
