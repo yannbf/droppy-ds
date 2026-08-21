@@ -1,9 +1,9 @@
 /**
- * @droppy/design-system
+ * @droppy-ui/design-system
  *
  * Components only. Import the stylesheet once in your app entry:
  *
- *   import '@droppy/design-system/styles.css'
+ *   import '@droppy-ui/design-system/styles.css'
  */
 
 export { Button } from './components/Button'

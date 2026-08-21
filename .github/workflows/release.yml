@@ -1,0 +1,46 @@
+name: Release
+
+# Publishes to npm via changesets. On every push to main, opens or updates a
+# "Version Packages" PR that aggregates pending changesets; when that PR merges,
+# builds and publishes the new version. Authentication uses npm trusted
+# publishing (OIDC) — the repo and workflow filename are registered as a trusted
+# publisher on npmjs.com, so no npm token is stored in the repo.
+
+on:
+  push:
+    branches: [main]
+
+concurrency: release-${{ github.ref }}
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      # OIDC trusted publishing requires npm 11.5+.
+      - run: npm install -g npm@latest
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      - uses: changesets/action@v1
+        with:
+          publish: pnpm release
+          title: 'Version packages'
+          commit: 'Version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
