@@ -8,7 +8,7 @@ const entry = (path: string) => fileURLToPath(new URL(path, import.meta.url))
 
 // Library build. Two entries: the component barrel (`.`) and the stylesheet
 // (`./styles.css`). Components never import CSS themselves — consumers import
-// `@droppy/design-system/styles.css` once — so the JS stays side-effect free
+// `@droppy-ui/design-system/styles.css` once — so the JS stays side-effect free
 // and tree-shakes.
 export default defineConfig({
   plugins: [

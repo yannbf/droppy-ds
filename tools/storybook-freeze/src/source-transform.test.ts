@@ -130,7 +130,7 @@ describe('transformSource', () => {
   it('leaves a /** module banner above a non-declaration statement untouched', () => {
     const code = [
       '/**',
-      ' * @droppy/design-system — internal helpers.',
+      ' * @droppy-ui/design-system — internal helpers.',
       ' */',
       '',
       "export { helper } from './helper'",
