@@ -56,5 +56,15 @@ function that asserts it.
 
 ## Releasing
 
-`pkg.pr.new` publishes a build for every commit, so nothing needs releasing to be consumed —
-install from a SHA. Version bumps go through changesets when the package graduates to a registry.
+Releases go through [changesets](https://github.com/changesets/changesets). A PR that changes
+the package ships a changeset (`pnpm changeset`). On merge to `main`, the release workflow opens
+or updates a "Version packages" PR aggregating the pending changesets; merging that PR builds
+and publishes `@droppy-ui/design-system` to npm via trusted publishing — no token, no manual
+step.
+
+`pkg.pr.new` still publishes a build for every commit, so unreleased work is installable from
+a SHA:
+
+```bash
+npm install "@droppy-ui/design-system@https://pkg.pr.new/yannbf/droppy-ds/@droppy-ui/design-system@<sha>"
+```
