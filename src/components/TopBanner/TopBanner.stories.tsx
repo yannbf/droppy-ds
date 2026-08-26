@@ -34,7 +34,16 @@ const meta = {
   component: TopBanner,
   args: { title: 'Categories' },
   argTypes: {
-    title: { control: 'text', description: 'Rendered as an `h2`. Omitted, the banner is bare.' },
+    title: {
+      control: 'text',
+      description: 'Rendered as a heading at `level`. Omitted, the banner is bare.',
+    },
+    level: {
+      control: { type: 'select' },
+      options: [1, 2, 3, 4, 5],
+      description:
+        'Heading level of the title. Defaults to 1, for the common case where the banner carries the page’s primary title.',
+    },
     photoUrl: {
       control: 'text',
       description: 'Background image. Present, the heading switches to its on-photo treatment.',
@@ -62,24 +71,35 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   tags: ['showcase'],
   args: { title: 'Categories', photoUrl: photoDataUri },
-  argTypes: hide('onBackClick', 'className'),
+  argTypes: hide('level', 'onBackClick', 'className'),
 }
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `title` renders as an `h2` inside the band. */
+/** `title` renders as a heading at `level` inside the band. */
 export const Title: Story = {
   tags: ['api-ref'],
-  argTypes: hide('photoUrl', 'onBackClick', 'className'),
+  argTypes: hide('level', 'photoUrl', 'onBackClick', 'className'),
   args: { title: 'Sushi places near you', photoUrl: undefined },
+}
+
+/**
+ * `level` sets the heading level without changing the visual treatment's role:
+ * the default `h1` fits a page whose primary title the banner carries; pass a
+ * deeper level when the page's `h1` lives elsewhere.
+ */
+export const Level: Story = {
+  tags: ['api-ref'],
+  argTypes: hide('photoUrl', 'onBackClick', 'className'),
+  args: { title: 'Categories', level: 2, photoUrl: undefined },
 }
 
 /** `photoUrl` sets the background and switches the heading to its on-photo treatment. */
 export const PhotoUrl: Story = {
   tags: ['api-ref'],
-  argTypes: hide('onBackClick', 'className'),
+  argTypes: hide('level', 'onBackClick', 'className'),
   args: { photoUrl: photoDataUri },
 }
 
@@ -90,7 +110,7 @@ export const PhotoUrl: Story = {
  */
 export const OnBackClick: Story = {
   tags: ['api-ref'],
-  argTypes: hide('photoUrl', 'className'),
+  argTypes: hide('level', 'photoUrl', 'className'),
   args: { onBackClick: () => {}, photoUrl: undefined },
 }
 
@@ -100,7 +120,7 @@ export const OnBackClick: Story = {
  */
 export const ClassName: Story = {
   tags: ['api-ref'],
-  argTypes: hide('onBackClick'),
+  argTypes: hide('level', 'onBackClick'),
   args: {
     className: 'topbanner-demo-inset',
   },
@@ -124,7 +144,7 @@ export const ClassName: Story = {
  */
 export const HeadingOverPhoto: Story = {
   tags: ['highlight'],
-  argTypes: hide('onBackClick', 'className'),
+  argTypes: hide('level', 'onBackClick', 'className'),
   render: (args) => (
     <>
       <TopBanner {...args} title="Without a photo" photoUrl={undefined} />
@@ -140,7 +160,7 @@ export const HeadingOverPhoto: Story = {
 /** The band and its optional heading. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
-  argTypes: hide('title', 'photoUrl', 'onBackClick', 'className'),
+  argTypes: hide('title', 'level', 'photoUrl', 'onBackClick', 'className'),
   args: { photoUrl: photoDataUri },
   parameters: {
     anatomy: {
@@ -153,7 +173,7 @@ export const Anatomy: Story = {
         {
           id: 'title',
           name: 'Title',
-          description: 'The `h2`, switched to its on-photo treatment when there is a photo.',
+          description: 'The heading (`h1` by default), switched to its on-photo treatment when there is a photo.',
         },
       ],
     } satisfies AnatomyParameters,
@@ -167,7 +187,7 @@ export const Anatomy: Story = {
 /** The restaurant detail page header. */
 export const MealdropRestaurantHeader: Story = {
   tags: ['examples'],
-  argTypes: hide('title', 'photoUrl', 'onBackClick', 'className'),
+  argTypes: hide('title', 'level', 'photoUrl', 'onBackClick', 'className'),
   parameters: { layout: 'fullscreen' },
   render: () => (
     <div>
@@ -193,7 +213,15 @@ export const MealdropRestaurantHeader: Story = {
 export const TestRendersTitleAsHeading: Story = {
   tags: ['tests'],
   play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { level: 2, name: 'Categories' })).toBeInTheDocument()
+    await expect(canvas.getByRole('heading', { level: 1, name: 'Categories' })).toBeInTheDocument()
+  },
+}
+
+export const TestLevelSetsHeadingLevel: Story = {
+  tags: ['tests'],
+  args: { level: 3 },
+  play: async ({ canvas }) => {
+    await expect(canvas.getByRole('heading', { level: 3, name: 'Categories' })).toBeInTheDocument()
   },
 }
 
@@ -201,7 +229,7 @@ export const TestPhotoBecomesBackground: Story = {
   tags: ['tests'],
   args: { photoUrl: photoDataUri },
   play: async ({ canvas }) => {
-    const banner = canvas.getByRole('heading', { level: 2 }).parentElement as HTMLElement
+    const banner = canvas.getByRole('heading', { level: 1 }).parentElement as HTMLElement
 
     await expect(getComputedStyle(banner).backgroundImage).toContain('url(')
   },
