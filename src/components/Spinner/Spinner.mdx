@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as SpinnerStories from './Spinner.stories'
 
@@ -73,9 +74,11 @@ other CSS animation on the page can.
 
 ## Anatomy
 
-The announcing wrapper, a decorative graphic, and the shapes the keyframes drive. Only the root reaches the accessibility tree.
-
 <Canvas of={SpinnerStories.Anatomy} />
+
+<Anatomy of={SpinnerStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part    | `data-part` | Renders        | Purpose                                                  |
 | :------ | :---------- | :------------- | :------------------------------------------------------- |
@@ -83,6 +86,8 @@ The announcing wrapper, a decorative graphic, and the shapes the keyframes drive
 | Graphic | `graphic`   | `<svg>`        | The `aria-hidden` drawing surface                        |
 | Dot     | `dot`       | `<circle>` × 3 | Same keyframes, staggered by negative `animation-delay`  |
 | Arc     | `arc`       | `<path>` × 3   | The sweeping wedges behind the dots                      |
+
+</span>
 
 {/* END: anatomy */}
 

@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as ToastStories from './Toast.stories'
 
@@ -62,9 +63,11 @@ than fading in place.
 
 ## Anatomy
 
-A portalled viewport holding one node per queued toast. There is no trigger part — a toast is raised imperatively through `useToast().add(...)`, so nothing here is composed by hand. The anatomy story portals into a node inside the story canvas via `container`, so the **Anatomy** panel can reach the parts — it only scans the canvas, and the default portal target is the document body.
-
 <Canvas of={ToastStories.Anatomy} />
+
+<Anatomy of={ToastStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part        | `data-part`   | Renders    | Purpose                                             |
 | :---------- | :------------ | :--------- | :-------------------------------------------------- |
@@ -74,6 +77,8 @@ A portalled viewport holding one node per queued toast. There is no trigger part
 | Title       | `title`       | `<div>`    | The headline                                        |
 | Description | `description` | `<div>`    | The supporting line                                 |
 | Close       | `close`       | `<button>` | `aria-hidden` until the stack is hovered or focused |
+
+</span>
 
 {/* END: anatomy */}
 

@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as CarouselStories from './Carousel.stories'
 
@@ -71,9 +72,11 @@ there is more to reach rather than looking clipped.
 
 ## Anatomy
 
-A rail wrapping a clipped viewport and the track inside it, one wrapper per child, with the arrows as siblings of the viewport. The per-breakpoint counts reach the CSS as custom properties rather than inline widths, so the stylesheet owns the breakpoints.
-
 <Canvas of={CarouselStories.Anatomy} />
+
+<Anatomy of={CarouselStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part      | `data-part` | Renders    | Purpose                                                    |
 | :-------- | :---------- | :--------- | :--------------------------------------------------------- |
@@ -82,6 +85,8 @@ A rail wrapping a clipped viewport and the track inside it, one wrapper per chil
 | Container | `container` | `<div>`    | The track that slides horizontally                         |
 | Slide     | `slide`     | `<div>`    | One wrapper per child; dims when not almost fully in view  |
 | Nav       | `nav`       | `<button>` | Previous/next; mounted only when that direction can scroll |
+
+</span>
 
 {/* END: anatomy */}
 

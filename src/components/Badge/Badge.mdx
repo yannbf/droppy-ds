@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as BadgeStories from './Badge.stories'
 
@@ -59,13 +60,17 @@ The pill grows with its content — there's no truncation or fixed width.
 
 ## Anatomy
 
-`Badge` is a single-part component: one `<span>` with the label as its only child. There are no slots, so anything around it — placement, spacing, a photo behind it — belongs to the call site.
-
 <Canvas of={BadgeStories.Anatomy} />
+
+<Anatomy of={BadgeStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders  | Purpose                                                            |
 | :--- | :---------- | :------- | :----------------------------------------------------------------- |
 | Root | `root`      | `<span>` | The pill: background, radius, padding, and the capitalization rule |
+
+</span>
 
 {/* END: anatomy */}
 

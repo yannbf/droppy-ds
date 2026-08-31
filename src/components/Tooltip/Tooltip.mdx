@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as TooltipStories from './Tooltip.stories'
 
@@ -64,14 +65,18 @@ through the exit so the close runs before it leaves the DOM.
 
 ## Anatomy
 
-Two parts, and only the trigger is reachable by the **Anatomy** panel: the popup is portalled to the document body, outside the canvas the panel scans, and `Tooltip` exposes no `container` prop the way `Modal` and `Sidebar` do. The popup still carries its `data-part` for anyone inspecting the DOM. Note the trigger is the child element itself — `Tooltip` renders no wrapper around it, so the layout stays flat.
-
 <Canvas of={TooltipStories.Anatomy} />
+
+<Anatomy of={TooltipStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part    | `data-part` | Renders           | Purpose                                     |
 | :------ | :---------- | :---------------- | :------------------------------------------ |
 | Trigger | `trigger`   | the child element | Rendered as the trigger itself, not wrapped |
 | Popup   | `popup`     | `<div>`           | The tip; portalled outside the canvas       |
+
+</span>
 
 {/* END: anatomy */}
 

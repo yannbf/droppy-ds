@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as ContainerStories from './Container.stories'
 
@@ -59,13 +60,17 @@ Padding applies immediately and widens at 640px; the width cap and centering hol
 
 ## Anatomy
 
-`Container` is a single-part component: one `<div>` that bounds the page width. It adds no layout of its own inside — children render in normal flow.
-
 <Canvas of={ContainerStories.Anatomy} />
+
+<Anatomy of={ContainerStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders | Purpose                                                  |
 | :--- | :---------- | :------ | :------------------------------------------------------- |
 | Root | `root`      | `<div>` | The max-width bound, the centering, and the side padding |
+
+</span>
 
 {/* END: anatomy */}
 

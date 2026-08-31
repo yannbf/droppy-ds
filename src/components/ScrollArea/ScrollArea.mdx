@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as ScrollAreaStories from './ScrollArea.stories'
 
@@ -51,9 +52,11 @@ otherwise intersect.
 
 ## Anatomy
 
-A clipped root, the scrolling viewport and its content wrapper, then a scrollbar with a thumb per axis. Sizing is fixed by the theme layer — `className` is the escape hatch for one-off layout changes.
-
 <Canvas of={ScrollAreaStories.Anatomy} />
+
+<Anatomy of={ScrollAreaStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part      | `data-part` | Renders | Purpose                                               |
 | :-------- | :---------- | :------ | :---------------------------------------------------- |
@@ -63,6 +66,8 @@ A clipped root, the scrolling viewport and its content wrapper, then a scrollbar
 | Scrollbar | `scrollbar` | `<div>` | One per axis; mounted only once the content overflows |
 | Thumb     | `thumb`     | `<div>` | The draggable handle                                  |
 | Corner    | `corner`    | `<div>` | Only with `orientation="both"`                        |
+
+</span>
 
 {/* END: anatomy */}
 

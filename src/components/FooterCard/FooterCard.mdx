@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as FooterCardStories from './FooterCard.stories'
 
@@ -82,9 +83,11 @@ hatch and the security attribute travel together, so a caller can't get one with
 
 ## Anatomy
 
-A heading above a list of links. The list disappears entirely when `links` is empty, so a column of `children` alone renders no stray `<ul>`.
-
 <Canvas of={FooterCardStories.Anatomy} />
+
+<Anatomy of={FooterCardStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part  | `data-part` | Renders                         | Purpose                                            |
 | :---- | :---------- | :------------------------------ | :------------------------------------------------- |
@@ -93,6 +96,8 @@ A heading above a list of links. The list disappears entirely when `links` is em
 | List  | `list`      | `<ul>`                          | Absent when `links` is empty                       |
 | Item  | `item`      | `<li>`                          | One per entry                                      |
 | Link  | `link`      | `<a>` (or the `render` element) | Rendered through `Link`                            |
+
+</span>
 
 {/* END: anatomy */}
 

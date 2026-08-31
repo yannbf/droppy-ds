@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as ModalStories from './Modal.stories'
 
@@ -71,9 +72,11 @@ popup stays mounted through the exit so the close animation runs before it disap
 
 ## Anatomy
 
-A backdrop and the dialog card, with a supplied top bar holding the close affordance. Base UI supplies the modal behaviour — focus trap, Escape, outside press, scroll lock, `aria-modal`. The anatomy story portals into a node inside the story canvas via `container`, so the **Anatomy** panel can reach the parts — it only scans the canvas, and the default portal target is the document body.
-
 <Canvas of={ModalStories.Anatomy} />
+
+<Anatomy of={ModalStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part     | `data-part` | Renders    | Purpose                                               |
 | :------- | :---------- | :--------- | :---------------------------------------------------- |
@@ -81,6 +84,8 @@ A backdrop and the dialog card, with a supplied top bar holding the close afford
 | Popup    | `root`      | `<div>`    | The card: `aria-modal`, the focus trap, and the shape |
 | Top bar  | `topbar`    | `<div>`    | Holds the close affordance                            |
 | Close    | `close`     | `<button>` | The round icon button that dismisses                  |
+
+</span>
 
 {/* END: anatomy */}
 

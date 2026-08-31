@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as TabsStories from './Tabs.stories'
 
@@ -78,9 +79,11 @@ which the theme transitions on top of.
 
 ## Anatomy
 
-A tab row with its indicator, and one panel per tab. The list is flat — `tabs` renders the whole set, so there is no `Tabs.Tab`/`Tabs.Panel` to compose by hand.
-
 <Canvas of={TabsStories.Anatomy} />
+
+<Anatomy of={TabsStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part      | `data-part` | Renders    | Purpose                                                                  |
 | :-------- | :---------- | :--------- | :----------------------------------------------------------------------- |
@@ -90,6 +93,8 @@ A tab row with its indicator, and one panel per tab. The list is flat — `tabs`
 | Indicator | `indicator` | `<span>`   | The sliding underline; writes the active tab's position as CSS variables |
 | Viewport  | `viewport`  | `<div>`    | Wraps the panels                                                         |
 | Panel     | `panel`     | `<div>`    | One per tab; only the active one shows                                   |
+
+</span>
 
 {/* END: anatomy */}
 
