@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as BreadcrumbStories from './Breadcrumb.stories'
 
@@ -68,9 +69,11 @@ router dependency of its own.
 
 ## Anatomy
 
-A labelled landmark around an ordered list, one item per crumb. A crumb renders as a link when it has a destination and as text when it does not — usually the last one.
-
 <Canvas of={BreadcrumbStories.Anatomy} />
+
+<Anatomy of={BreadcrumbStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part      | `data-part` | Renders  | Purpose                                    |
 | :-------- | :---------- | :------- | :----------------------------------------- |
@@ -80,6 +83,8 @@ A labelled landmark around an ordered list, one item per crumb. A crumb renders 
 | Link      | `link`      | `<a>`    | A crumb with a destination                 |
 | Text      | `text`      | `<span>` | A crumb without one                        |
 | Separator | `separator` | `<span>` | The `aria-hidden` slash; never announced   |
+
+</span>
 
 {/* END: anatomy */}
 

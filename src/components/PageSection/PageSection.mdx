@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as PageSectionStories from './PageSection.stories'
 
@@ -61,9 +62,11 @@ doesn't reserve space for a button that isn't there.
 
 ## Anatomy
 
-A title row above caller-supplied content. The row holds the heading and, when a label is given, one `clear` Button.
-
 <Canvas of={PageSectionStories.Anatomy} />
+
+<Anatomy of={PageSectionStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part   | `data-part` | Renders    | Purpose                                                     |
 | :----- | :---------- | :--------- | :---------------------------------------------------------- |
@@ -71,6 +74,8 @@ A title row above caller-supplied content. The row holds the heading and, when a
 | Top    | `top`       | `<div>`    | The title row — heading one side, optional action the other |
 | Title  | `title`     | `<h2>`     | The section heading                                         |
 | Action | `action`    | `<button>` | Rendered only when `topButtonLabel` is set                  |
+
+</span>
 
 {/* END: anatomy */}
 

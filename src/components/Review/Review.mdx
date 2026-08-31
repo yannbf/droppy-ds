@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as ReviewStories from './Review.stories'
 
@@ -64,14 +65,18 @@ newly-listed restaurant doesn't look badly reviewed.
 
 ## Anatomy
 
-A wrapper and the text line inside it. The star, the number, and the band label are one string rather than separate parts — there is no per-star markup to target.
-
 <Canvas of={ReviewStories.Anatomy} />
+
+<Anatomy of={ReviewStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders  | Purpose                                        |
 | :--- | :---------- | :------- | :--------------------------------------------- |
 | Root | `root`      | `<div>`  | The wrapper the caller positions               |
 | Text | `text`      | `<span>` | The score line, in the quiet review text token |
+
+</span>
 
 {/* END: anatomy */}
 

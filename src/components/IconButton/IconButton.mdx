@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as IconButtonStories from './IconButton.stories'
 
@@ -68,14 +69,18 @@ readable on the pill instead of flipping to the theme's colour underneath it.
 
 ## Anatomy
 
-The circular control and the glyph it centres. There is no label part — the button is icon-only, so its accessible name comes from `aria-label`.
-
 <Canvas of={IconButtonStories.Anatomy} />
+
+<Anatomy of={IconButtonStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders    | Purpose                                                             |
 | :--- | :---------- | :--------- | :------------------------------------------------------------------ |
 | Root | `root`      | `<button>` | The circle: fixed size, radius, and focus ring                      |
 | Icon | `icon`      | `<svg>`    | The glyph, sized by `small` and coloured independently of the theme |
+
+</span>
 
 {/* END: anatomy */}
 

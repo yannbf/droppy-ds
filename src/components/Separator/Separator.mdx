@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as SeparatorStories from './Separator.stories'
 
@@ -54,13 +55,17 @@ lighter choice — there is no presentational escape hatch here.
 
 ## Anatomy
 
-`Separator` is a single-part component: one `<div>` with `role="separator"` and no children. The caller sizes it — width or height in CSS — to read visually as a line.
-
 <Canvas of={SeparatorStories.Anatomy} />
+
+<Anatomy of={SeparatorStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders | Purpose                                                                              |
 | :--- | :---------- | :------ | :----------------------------------------------------------------------------------- |
 | Root | `root`      | `<div>` | The divider, carrying `role="separator"`, `aria-orientation`, and `data-orientation` |
+
+</span>
 
 {/* END: anatomy */}
 

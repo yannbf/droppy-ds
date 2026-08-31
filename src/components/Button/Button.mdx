@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as ButtonStories from './Button.stories'
 
@@ -78,14 +79,18 @@ The variants side by side — one obvious primary per screen, `clear` for the se
 
 ## Anatomy
 
-The control and its optional leading glyph. There is no label part: `children` render directly inside the button, spaced from the icon with `gap` rather than a spacer node.
-
 <Canvas of={ButtonStories.Anatomy} />
+
+<Anatomy of={ButtonStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders    | Purpose                                                      |
 | :--- | :---------- | :--------- | :----------------------------------------------------------- |
 | Root | `root`      | `<button>` | Fill, radius, focus ring, and the disabled state             |
 | Icon | `icon`      | `<svg>`    | The optional leading glyph, rendered only when `icon` is set |
+
+</span>
 
 {/* END: anatomy */}
 

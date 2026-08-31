@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as ProgressBarStories from './ProgressBar.stories'
 
@@ -58,14 +59,18 @@ number, not the raw one.
 
 ## Anatomy
 
-Two parts: the track carries the `progressbar` role and the whole ARIA range, and the fill is a plain width-driven sibling underneath it with no semantics of its own. There is no label part — the copy around the bar is the caller's own markup.
-
 <Canvas of={ProgressBarStories.Anatomy} />
+
+<Anatomy of={ProgressBarStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders | Purpose                                                              |
 | :--- | :---------- | :------ | :------------------------------------------------------------------- |
 | Root | `root`      | `<div>` | `role="progressbar"` with `aria-valuenow`/`-min`/`-max` and the name |
 | Fill | `fill`      | `<div>` | The width-driven bar; purely visual                                  |
+
+</span>
 
 {/* END: anatomy */}
 
