@@ -7,6 +7,8 @@ export interface Manifest {
   keptFacets: string[]
   createdAt: string
   version: number
+  /** When true, .storybook/main.ts strips all generated docgen from the branch's build. */
+  purgeAllDocgen: boolean
 }
 
 export function buildManifest(args: {
@@ -15,6 +17,7 @@ export function buildManifest(args: {
   keptFacets: string[]
   createdAt: string
   version: number
+  purgeAllDocgen: boolean
 }): Manifest {
   return {
     branchName: args.branchName,
@@ -22,6 +25,7 @@ export function buildManifest(args: {
     keptFacets: [...args.keptFacets].sort(),
     createdAt: args.createdAt,
     version: args.version,
+    purgeAllDocgen: args.purgeAllDocgen,
   }
 }
 

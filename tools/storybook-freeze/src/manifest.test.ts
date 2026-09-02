@@ -11,6 +11,7 @@ const args = {
   keptFacets: ['story.showcase', 'mdx.general'],
   createdAt: '2026-08-13T00:00:00.000Z',
   version: 1,
+  purgeAllDocgen: false,
 }
 
 describe('buildManifest', () => {
@@ -30,6 +31,11 @@ describe('buildManifest', () => {
     expect(manifest.baseCommit).toBe('abc123')
     expect(manifest.createdAt).toBe('2026-08-13T00:00:00.000Z')
     expect(manifest.version).toBe(1)
+    expect(manifest.purgeAllDocgen).toBe(false)
+  })
+
+  it('records purgeAllDocgen so the Storybook build on the branch can read it', () => {
+    expect(buildManifest({ ...args, purgeAllDocgen: true }).purgeAllDocgen).toBe(true)
   })
 })
 

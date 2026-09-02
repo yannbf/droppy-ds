@@ -1,7 +1,24 @@
+import { fileURLToPath } from 'node:url'
+
 import type { StorybookConfig } from '@storybook/react-vite'
+import type { Manifests } from 'storybook/internal/types'
 import remarkGfm from 'remark-gfm'
 
-const config: StorybookConfig = {
+import { purgeDocgenFromManifests, readPurgeAllDocgen } from './docgen-purge'
+
+// On freeze-generated experiment branches, experiment.json records whether this build must
+// strip all generated docgen (see experiments.config.ts). On a regular checkout the file does
+// not exist and the config below is unchanged.
+const purgeAllDocgen = readPurgeAllDocgen(
+  fileURLToPath(new URL('../experiment.json', import.meta.url))
+)
+
+// The public StorybookConfig type only declares experimental_manifests in its raw (resolved)
+// form, but main.ts is itself a preset, so a function here composes over the framework's
+// generated manifests.
+const config: StorybookConfig & {
+  experimental_manifests?: (existing: Manifests | undefined) => Manifests | undefined
+} = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.tsx'],
   addons: [
     {
@@ -41,15 +58,27 @@ const config: StorybookConfig = {
   tags: {
     anatomy: { defaultFilterSelection: 'exclude' },
   },
-  typescript: {
-    reactDocgen: 'react-docgen-typescript',
-    reactDocgenTypescriptOptions: {
-      // Overriding `exclude` replaces the plugin default (stories), so restate it.
-      // The config dir has no component props, and docgen's file discovery can't
-      // descend into dot-directories — left in, every run warns about preview.tsx.
-      exclude: ['**/*.stories.tsx', '.storybook/**'],
-    },
-  },
+  // reactDocgen: false also strips the __docgenInfo the vite plugin would inline into the
+  // preview bundle, so a purged branch shows no prop tables in the rendered docs either. The
+  // manifest generator keeps its react-component-meta engine regardless (that feature flag
+  // stays on); its output is stripped by experimental_manifests below.
+  typescript: purgeAllDocgen
+    ? { reactDocgen: false }
+    : {
+        reactDocgen: 'react-docgen-typescript',
+        reactDocgenTypescriptOptions: {
+          // Overriding `exclude` replaces the plugin default (stories), so restate it.
+          // The config dir has no component props, and docgen's file discovery can't
+          // descend into dot-directories — left in, every run warns about preview.tsx.
+          exclude: ['**/*.stories.tsx', '.storybook/**'],
+        },
+      },
+  ...(purgeAllDocgen
+    ? {
+        experimental_manifests: (existing: Manifests | undefined) =>
+          existing ? purgeDocgenFromManifests(existing) : existing,
+      }
+    : {}),
 }
 
 export default config
