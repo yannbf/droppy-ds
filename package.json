@@ -9,6 +9,10 @@
   "license": "MIT",
   "homepage": "https://github.com/yannbf/droppy-ds#readme",
   "bugs": "https://github.com/yannbf/droppy-ds/issues",
+  "storybook": {
+    "url": "https://main--6a6b3f5765e7f685e7f73656.chromatic.com",
+    "title": "Droppy Design System"
+  },
   "type": "module",
   "sideEffects": [
     "*.css"
