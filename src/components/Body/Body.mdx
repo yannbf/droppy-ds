@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as BodyStories from './Body.stories'
 
@@ -64,13 +65,17 @@ a label rather than merely look like one.
 
 ## Anatomy
 
-`Body` is a single-part component. The tag it renders follows `type`; `size` and `fontWeight` only add classes, so all four elements can land on the same scale.
-
 <Canvas of={BodyStories.Anatomy} />
+
+<Anatomy of={BodyStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders                                       | Purpose                                                |
 | :--- | :---------- | :-------------------------------------------- | :----------------------------------------------------- |
 | Root | `root`      | `<p>` / `<span>` / `<label>` / `<figcaption>` | The text element, carrying the size and weight classes |
+
+</span>
 
 {/* END: anatomy */}
 

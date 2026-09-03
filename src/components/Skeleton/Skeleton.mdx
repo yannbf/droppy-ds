@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as SkeletonStories from './Skeleton.stories'
 
@@ -77,13 +78,17 @@ holds still.
 
 ## Anatomy
 
-`Skeleton` is a single-part component: one `<span>`, so it can sit inline inside a `Heading` or a line of text and take on the surrounding font size. It has no children and announces nothing.
-
 <Canvas of={SkeletonStories.Anatomy} />
+
+<Anatomy of={SkeletonStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders  | Purpose                                                                             |
 | :--- | :---------- | :------- | :---------------------------------------------------------------------------------- |
 | Root | `root`      | `<span>` | The placeholder: computed width and height, the shimmer gradient, and `aria-hidden` |
+
+</span>
 
 {/* END: anatomy */}
 

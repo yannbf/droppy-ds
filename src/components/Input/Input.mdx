@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as InputStories from './Input.stories'
 
@@ -58,9 +59,11 @@ leaving what a screen reader announces disagreeing with what the page shows.
 
 ## Anatomy
 
-A field root wrapping a label, the control, and an always-mounted error slot. The slot is the unusual part: it stays in the DOM holding a non-breaking space when there is no message, which is what reserves the height.
-
 <Canvas of={InputStories.Anatomy} />
+
+<Anatomy of={InputStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part    | `data-part` | Renders   | Purpose                                                          |
 | :------ | :---------- | :-------- | :--------------------------------------------------------------- |
@@ -68,6 +71,8 @@ A field root wrapping a label, the control, and an always-mounted error slot. Th
 | Label   | `label`     | `<label>` | Absent when `label` is empty                                     |
 | Control | `control`   | `<input>` | The control itself; `className` lands here                       |
 | Error   | `error`     | `<div>`   | Always mounted, so showing a message never moves the layout      |
+
+</span>
 
 {/* END: anatomy */}
 

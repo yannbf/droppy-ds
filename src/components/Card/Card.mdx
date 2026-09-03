@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as CardStories from './Card.stories'
 
@@ -62,13 +63,17 @@ of squaring off past it.
 
 ## Anatomy
 
-`Card` is a single-part component: one `<div>` that provides the surface, with children in normal flow. There are deliberately no slots — no image, title, or footer part — so the composition inside belongs entirely to the caller.
-
 <Canvas of={CardStories.Anatomy} />
+
+<Anatomy of={CardStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders | Purpose                                                                                |
 | :--- | :---------- | :------ | :------------------------------------------------------------------------------------- |
 | Root | `root`      | `<div>` | The surface: background, radius, resting shadow, and the clipping that keeps images in |
+
+</span>
 
 {/* END: anatomy */}
 

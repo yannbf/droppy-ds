@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as AccordionStories from './Accordion.stories'
 
@@ -88,11 +89,11 @@ while `[data-panel-open]` is set. Nothing here needs a fixed height.
 
 ## Anatomy
 
-`Accordion` renders seven parts, each carrying a `data-part` attribute. Open the story below in
-the canvas and use the **Anatomy** panel to hover a part and see it highlighted, or hover the
-canvas to activate the matching entry.
-
 <Canvas of={AccordionStories.Anatomy} />
+
+<Anatomy of={AccordionStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part    | `data-part` | Renders    | Purpose                                                                    |
 | :------ | :---------- | :--------- | :------------------------------------------------------------------------- |
@@ -104,8 +105,7 @@ canvas to activate the matching entry.
 | Panel   | `panel`     | `<div>`    | The animated region; mounted only while open, sized by the height variable |
 | Content | `content`   | `<div>`    | The padded inner wrapper the panel clips as it animates                    |
 
-The tree is flat by design: `items` renders the whole list, so there is no sub-component to
-compose. Item order is the array's order.
+</span>
 
 {/* END: anatomy */}
 

@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as ErrorBlockStories from './ErrorBlock.stories'
 
@@ -60,9 +61,11 @@ an error state with competing choices is a decision the page should have made al
 
 ## Anatomy
 
-Title, optional illustration, body, and one action — in that DOM order. The heading comes first in the DOM even though the illustration sits above it visually, so the announcement leads with what happened.
-
 <Canvas of={ErrorBlockStories.Anatomy} />
+
+<Anatomy of={ErrorBlockStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part         | `data-part`    | Renders    | Purpose                                                 |
 | :----------- | :------------- | :--------- | :------------------------------------------------------ |
@@ -71,6 +74,8 @@ Title, optional illustration, body, and one action — in that DOM order. The he
 | Illustration | `illustration` | `<div>`    | The optional slot; absent, nothing renders in its place |
 | Body         | `body`         | `<p>`      | The explanation                                         |
 | Action       | `action`       | `<button>` | The single recovery action                              |
+
+</span>
 
 {/* END: anatomy */}
 

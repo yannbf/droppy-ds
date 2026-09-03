@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as SidebarStories from './Sidebar.stories'
 
@@ -74,9 +75,11 @@ swipe-to-dismiss from the same states.
 
 ## Anatomy
 
-A backdrop and the sliding panel, split into a top bar, a scrolling content region, and an optional pinned footer. The anatomy story portals into a node inside the story canvas via `container`, so the **Anatomy** panel can reach the parts — it only scans the canvas, and the default portal target is the document body.
-
 <Canvas of={SidebarStories.Anatomy} />
+
+<Anatomy of={SidebarStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part     | `data-part` | Renders    | Purpose                                     |
 | :------- | :---------- | :--------- | :------------------------------------------ |
@@ -87,6 +90,8 @@ A backdrop and the sliding panel, split into a top bar, a scrolling content regi
 | Close    | `close`     | `<button>` | The round icon button that dismisses        |
 | Content  | `content`   | `<div>`    | The scrolling region between the two        |
 | Footer   | `footer`    | `<div>`    | Pinned to the bottom; absent without one    |
+
+</span>
 
 {/* END: anatomy */}
 
