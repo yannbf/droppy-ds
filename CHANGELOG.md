@@ -1,5 +1,11 @@
 # @droppy-ui/design-system
 
+## 0.3.1
+
+### Patch Changes
+
+- 3b68001: Publish the design system's Storybook URL in package.json (`storybook.url`), so consumers' Storybooks compose it automatically.
+
 ## 0.3.0
 
 ### Minor Changes
