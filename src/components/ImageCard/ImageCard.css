@@ -1,0 +1,38 @@
+.droppy-ImageCard {
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+}
+
+.droppy-ImageCard-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.droppy-ImageCard-caption {
+  margin-top: var(--ds-space-3xs);
+}
+
+.droppy-ImageCard--round {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.droppy-ImageCard--round .droppy-ImageCard-image {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--ds-radius-round);
+}
+
+.droppy-ImageCard-caption--overlay {
+  position: absolute;
+  top: var(--ds-space-sm);
+  left: var(--ds-space-sm);
+  margin-top: 0;
+  padding: var(--ds-space-2xs) var(--ds-space-xs);
+  border-radius: var(--ds-radius-control);
+  background-color: var(--ds-color-chip-contrast-bg);
+}
