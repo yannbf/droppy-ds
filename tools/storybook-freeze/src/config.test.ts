@@ -22,14 +22,21 @@ describe('validateExperiments', () => {
         branchName: 'experiment/api',
         facets: ['story.api-ref', 'mdx.general'],
         keepEmptyCsf: true,
+        purgeAllDocgen: true,
       },
     ]
     expect(validateExperiments(raw, labels)).toEqual([
-      { branchName: 'experiment/showcase', facets: ['story.showcase'], keepEmptyCsf: false },
+      {
+        branchName: 'experiment/showcase',
+        facets: ['story.showcase'],
+        keepEmptyCsf: false,
+        purgeAllDocgen: false,
+      },
       {
         branchName: 'experiment/api',
         facets: ['story.api-ref', 'mdx.general'],
         keepEmptyCsf: true,
+        purgeAllDocgen: true,
       },
     ])
   })
@@ -37,13 +44,18 @@ describe('validateExperiments', () => {
   it('accepts an entry with no facets at all', () => {
     const raw = [{ branchName: 'experiment/empty', facets: [] }]
     expect(validateExperiments(raw, labels)).toEqual([
-      { branchName: 'experiment/empty', facets: [], keepEmptyCsf: false },
+      { branchName: 'experiment/empty', facets: [], keepEmptyCsf: false, purgeAllDocgen: false },
     ])
   })
 
   it('rejects a non-boolean keepEmptyCsf', () => {
     const raw = [{ branchName: 'experiment/x', facets: [], keepEmptyCsf: 'yes' }]
     expect(() => validateExperiments(raw, labels)).toThrow(/invalid keepEmptyCsf/)
+  })
+
+  it('rejects a non-boolean purgeAllDocgen', () => {
+    const raw = [{ branchName: 'experiment/x', facets: [], purgeAllDocgen: 'yes' }]
+    expect(() => validateExperiments(raw, labels)).toThrow(/invalid purgeAllDocgen/)
   })
 
   it('rejects a non-array default export', () => {
@@ -95,7 +107,18 @@ describe('the repo experiments.config.ts', () => {
     const root = path.resolve(fileURLToPath(import.meta.url), '../../../..')
     const labelsFromDisk = loadLabels(path.join(root, 'classification-labels.jsonc'))
     const validated = validateExperiments(await loadExperiments(root), labelsFromDisk)
-    expect(validated).toHaveLength(16)
+    expect(validated).toHaveLength(17)
     expect(validated.map((entry) => entry.branchName)).toContain('experiment/full')
+  })
+
+  it('gives purge-docgen the same facets as full, plus the purge flag', async () => {
+    const root = path.resolve(fileURLToPath(import.meta.url), '../../../..')
+    const labelsFromDisk = loadLabels(path.join(root, 'classification-labels.jsonc'))
+    const validated = validateExperiments(await loadExperiments(root), labelsFromDisk)
+    const full = validated.find((entry) => entry.branchName === 'experiment/full')
+    const purge = validated.find((entry) => entry.branchName === 'experiment/purge-docgen')
+    expect(purge?.facets).toEqual(full?.facets)
+    expect(full?.purgeAllDocgen).toBe(false)
+    expect(purge?.purgeAllDocgen).toBe(true)
   })
 })

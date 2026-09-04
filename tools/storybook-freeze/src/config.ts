@@ -9,6 +9,12 @@ export interface ExperimentConfig {
   facets: string[]
   /** Keep stories tagged `empty` instead of deleting them. Defaults to false. */
   keepEmptyCsf: boolean
+  /**
+   * Strip all docgen output (prop/type tables, docgen-extracted descriptions and JSDoc tags)
+   * from the branch's Storybook build. Recorded in experiment.json, which .storybook/main.ts
+   * reads at build time. Defaults to false.
+   */
+  purgeAllDocgen: boolean
 }
 
 export const CONFIG_FILENAME = 'experiments.config.ts'
@@ -50,7 +56,7 @@ export function validateExperiments(raw: unknown, labels: Labels): ExperimentCon
       )
     }
 
-    const { branchName, facets, keepEmptyCsf } = entry as Record<string, unknown>
+    const { branchName, facets, keepEmptyCsf, purgeAllDocgen } = entry as Record<string, unknown>
 
     if (typeof branchName !== 'string' || !branchName.startsWith('experiment/')) {
       throw new Error(
@@ -93,6 +99,19 @@ export function validateExperiments(raw: unknown, labels: Labels): ExperimentCon
       )
     }
 
-    return { branchName, facets: facets as string[], keepEmptyCsf: keepEmptyCsf === true }
+    if (purgeAllDocgen !== undefined && typeof purgeAllDocgen !== 'boolean') {
+      throw new Error(
+        `Droppy: ${CONFIG_FILENAME} ${where} (${branchName}) has an invalid purgeAllDocgen. ` +
+          "It decides whether the branch's Storybook build strips all generated docgen, so it " +
+          'must be a boolean (or omitted, which means false).'
+      )
+    }
+
+    return {
+      branchName,
+      facets: facets as string[],
+      keepEmptyCsf: keepEmptyCsf === true,
+      purgeAllDocgen: purgeAllDocgen === true,
+    }
   })
 }
