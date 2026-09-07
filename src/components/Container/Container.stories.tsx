@@ -141,5 +141,3 @@ export const TestMergesClassName: Story = {
     await expect(root).toHaveClass('container-demo-custom')
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }

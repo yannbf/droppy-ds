@@ -171,7 +171,3 @@ export const TestSlotsAreOptional: Story = {
     await expect(canvas.queryByText('Site header')).not.toBeInTheDocument()
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-}
