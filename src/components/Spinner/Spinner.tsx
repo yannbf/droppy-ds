@@ -3,24 +3,12 @@ import type { ComponentProps } from 'react'
 import { cx } from '../../utils/cx'
 
 type DefaultProps = {
-  /** Accessible name announced while the spinner is visible. The graphic
-   *  itself is decorative. */
   label?: string
   className?: string
 }
 
 export type SpinnerProps = DefaultProps & Omit<ComponentProps<'div'>, keyof DefaultProps>
 
-/**
- * An indeterminate loading indicator — three dots crossing an arc, in the
- * theme's brand colors.
- *
- * Announces itself with `role="status"` and `aria-label`, so a screen reader
- * gets a busy state even though the SVG graphic carries no visible text.
- * `status` doesn't derive its accessible name from its content the way a
- * button or heading does, so the label has to be `aria-label` rather than
- * visually-hidden text in the DOM.
- */
 export const Spinner = ({ label = 'Loading', className, ...rest }: SpinnerProps) => (
   <div
     data-part="root"

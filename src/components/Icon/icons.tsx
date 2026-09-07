@@ -14,11 +14,6 @@ const strokeDefaults = {
   strokeLinejoin: 'round',
 } as const
 
-/**
- * Icons are inlined rather than referenced from a sprite sheet: a package
- * cannot assume the consuming app serves a given static file, and `<use
- * xlink:href>` against a cross-origin sprite fails outright.
- */
 export const icons: Record<IconName, IconDefinition> = {
   'arrow-right': {
     viewBox: '0 0 24 24',

@@ -6,15 +6,10 @@ import { Icon, type IconName } from '../Icon'
 import { cx } from '../../utils/cx'
 
 type DefaultProps = {
-  /** Strips the fill, leaving just the label — for secondary actions. */
   clear?: boolean
-  /** Fully rounded, for icon-only affordances like a close button. */
   round?: boolean
-  /** Taller padding, for primary calls to action. */
   large?: boolean
-  /** Renders an icon before the label. */
   icon?: IconName
-  /** Overrides the icon's rendered size. */
   iconSize?: number
   disabled?: boolean
   children?: ReactNode
@@ -23,12 +18,6 @@ type DefaultProps = {
 
 export type ButtonProps = DefaultProps & Omit<ComponentProps<'button'>, keyof DefaultProps>
 
-/**
- * The primary action control.
- *
- * Chrome (fill, radius, focus ring, typeface, disabled state) comes from
- * the theme layer; Droppy layers the variants and the icon slot on top.
- */
 export const Button = ({
   children,
   large = false,
