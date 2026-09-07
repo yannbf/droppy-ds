@@ -27,6 +27,9 @@ export type { BadgeProps } from './components/Badge'
 export { Card } from './components/Card'
 export type { CardProps } from './components/Card'
 
+export { ImageCard } from './components/ImageCard'
+export type { ImageCardProps } from './components/ImageCard'
+
 export { Skeleton } from './components/Skeleton'
 export type { SkeletonProps } from './components/Skeleton'
 

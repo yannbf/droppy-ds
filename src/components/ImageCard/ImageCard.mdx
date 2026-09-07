@@ -1,0 +1,257 @@
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
+import * as ImageCardStories from './ImageCard.stories'
+
+<Meta of={ImageCardStories} />
+
+# ImageCard
+
+{/* BEGIN: general */}
+
+A `figure`/`figcaption` pair for an image with a caption — a photo tile, a category chip, an
+avatar with a name underneath.
+
+```tsx
+import { ImageCard } from '@droppy/design-system'
+```
+
+<Canvas of={ImageCardStories.Default} />
+
+## Features
+
+- Renders a real `<figure>` with a real `<figcaption>` — the caption becomes the figure's
+  accessible name natively, with no `aria-*` wiring required.
+- `caption` is optional; omitted, no `<figcaption>` renders at all.
+- `captionOverlay` floats the caption as a chip over the image's corner, for a squared tile with
+  no shell.
+- `round` clips the image to a circle and keeps the caption below it, centered. It takes
+  precedence over `captionOverlay` — a floating chip has no circular-safe corner to sit in.
+- `shell` adds `Card`'s own surface classes (background, radius, clipping, padding) to the root,
+  reusing `droppy-Card`'s CSS rather than duplicating it.
+- Merges any incoming `className` with its own `droppy-ImageCard` class.
+
+{/* END: general */}
+
+{/* BEGIN: when-to-use */}
+
+## When to use
+
+- An image that always needs a caption read as belonging to it — a category tile, a partner
+  logo with a name, a review author's avatar — where the `figure`/`figcaption` relationship
+  should be real, not implied by nearby markup.
+
+## When not to use
+
+- A plain photo with no caption — just render an `<img>`, there's nothing this component adds.
+- A tile that groups more than an image and a caption (price, rating, a button) — compose that
+  from [Card](?path=/docs/media-content-card--docs) directly instead; `ImageCard`'s slots are
+  deliberately just the two.
+
+{/* END: when-to-use */}
+
+{/* BEGIN: behavior */}
+
+## How it works
+
+### Caption below the image, by default
+
+`caption` renders as a `<figcaption>` in normal flow, right after the image — the reading order
+MealDrop's squared tile always had.
+
+<Canvas of={ImageCardStories.Default} />
+
+### Caption floating as a chip
+
+`captionOverlay` takes the same `<figcaption>` out of flow and pins it to the image's top-left
+corner as a small chip, matching MealDrop's `Category` component's floating title.
+
+<Canvas of={ImageCardStories.CaptionOverlay} />
+
+### `round` takes precedence over `captionOverlay`
+
+A round image has no corner for a floating chip to sit in without looking disconnected from the
+image, so `round` always renders the caption below, even if `captionOverlay` is also set.
+
+<Canvas of={ImageCardStories.RoundIgnoresCaptionOverlay} />
+
+### `shell` reuses Card's own surface classes
+
+`shell` adds `droppy-Card` and `droppy-Card--padded` to the root — the same classes `Card`
+renders with — instead of nesting a `Card` element inside the figure (the root has to stay a
+`<figure>` for its semantics to hold). Paired with `round`, this reproduces MealDrop's avatar
+tile: a circular image and caption inside a padded card surface.
+
+<Canvas of={ImageCardStories.RoundAvatarInCard} />
+{/* END: behavior */}
+
+{/* BEGIN: anatomy */}
+
+## Anatomy
+
+<Canvas of={ImageCardStories.Anatomy} />
+
+| Part    | `data-part` | Renders        | Purpose                                                          |
+| :------ | :---------- | :------------- | :--------------------------------------------------------------- |
+| Root    | `root`      | `<figure>`     | The margin-reset container; optionally carries `shell`'s classes |
+| Image   | `image`     | `<img>`        | The photo itself                                                 |
+| Caption | `caption`   | `<figcaption>` | Rendered via `Body`, only when `caption` is set                  |
+
+{/* END: anatomy */}
+
+{/* BEGIN: examples */}
+
+{/* END: examples */}
+
+{/* BEGIN: do-dont */}
+
+{/* END: do-dont */}
+
+{/* BEGIN: a11y */}
+
+## Keyboard & screen reader
+
+`ImageCard` renders a non-interactive `<figure>` — there is no keyboard interaction to document.
+
+The `captionOverlay` chip pairs `--ds-color-chip-contrast-bg` with `--ds-color-chip-contrast-text`
+— both pinned to the same values in light and dark theme, computing to roughly **16.3:1** contrast
+(the palette's neutral-950 against neutral-0), well past the 4.5:1 WCAG 2.2 AA minimum for normal
+text regardless of which theme or photo it floats over.
+
+- **ARIA:** none — a `<figcaption>` as the figure's first or last child is used by browsers as
+  the figure's accessible name automatically, with no `aria-labelledby` needed. `ImageCard`
+  always renders the caption last, so this holds whenever `caption` is set.
+- **Screen reader:** the image announces via `alt` (or is skipped entirely when `alt=""`); the
+  figure separately announces with the caption text as its name.
+- **You must provide:** a meaningful `alt` describing the image itself — it is not inferred from
+  `caption`, since the two serve different purposes (content description vs. a label for the
+  tile). Pass `alt=""` only when the image is purely decorative and the caption alone carries the
+  meaning.
+
+{/* END: a11y */}
+
+{/* BEGIN: brand */}
+
+## Brand
+
+The caption uses `Body`'s `size="XS"` — the [type scale](?path=/docs/brand-guidelines--docs)
+names that step (`--ds-type-size-xs`, 0.9rem) for **"UI labels and captions"** specifically.
+
+The `captionOverlay` chip's background token, `--ds-color-chip-contrast-bg`, resolves to the same
+`#202020` the brand guidelines list under **"Dark surface / footer"** in the neutral ramp — the
+overlay reuses an existing brand-anchored dark surface rather than a one-off color.
+
+{/* END: brand */}
+
+{/* BEGIN: styling */}
+
+## Styling
+
+| Token                              | Used for                                                         |
+| ---------------------------------- | ---------------------------------------------------------------- |
+| `--ds-type-size-xs`                | Caption font size (`Body size="XS"`)                             |
+| `--ds-space-3xs`                   | Gap between the image and a below-image caption                  |
+| `--ds-space-sm`                    | Overlay chip's inset from the top-left corner; `shell`'s padding |
+| `--ds-space-2xs` / `--ds-space-xs` | Overlay chip's own padding                                       |
+| `--ds-radius-control`              | Overlay chip corner radius                                       |
+| `--ds-color-chip-contrast-bg`      | Overlay chip background                                          |
+| `--ds-color-chip-contrast-text`    | Overlay chip text color                                          |
+| `--ds-radius-round`                | Image corner radius, when `round`                                |
+| `--ds-color-surface-card`          | Background, when `shell`                                         |
+| `--ds-radius-card`                 | Corner radius, when `shell`                                      |
+
+`className` merges with the component's own `droppy-ImageCard` class (and with `droppy-Card` /
+`droppy-Card--padded` too, when `shell` is set).
+
+{/* END: styling */}
+
+{/* BEGIN: props */}
+
+## API reference
+
+<ArgTypes of={ImageCardStories} />
+
+### `src` and `alt`
+
+The only two required props. `alt` is not optional even when `caption` is set — see
+[Keyboard & screen reader](#keyboard--screen-reader) for why the two are independent.
+
+<Canvas of={ImageCardStories.SrcAndAlt} />
+
+### `caption`
+
+Rendered as a real `<figcaption>` via `Body`. Omit it and no `<figcaption>` renders at all.
+
+<Canvas of={ImageCardStories.Caption} />
+
+### `captionOverlay`
+
+Floats the caption as a chip over the image's top-left corner. Has no effect when `round` is set.
+
+<Canvas of={ImageCardStories.CaptionOverlay} />
+
+### `round`
+
+Clips the image to a circle and centers the caption below it. Takes precedence over
+`captionOverlay`.
+
+<Canvas of={ImageCardStories.Round} />
+
+### `shell`
+
+Adds `Card`'s own `droppy-Card` and `droppy-Card--padded` classes to the root.
+
+<Canvas of={ImageCardStories.Shell} />
+
+### `className`
+
+Merged onto the root alongside the component's own `droppy-ImageCard` class.
+
+<Canvas of={ImageCardStories.ClassName} />
+{/* END: props */}
+
+{/* BEGIN: history */}
+
+## Decision log
+
+- **2026-08**: `ImageCard` was suggested by Steve Dodier-Lazaro reviewing MealDrop's Droppy
+  adoption, once as "Def worth moving to the DS as a TitledImage or something. It'll let us
+  remove even more custom code" on the squared tile
+  ([Category comment](https://github.com/yannbf/mealdrop/pull/65#discussion_r3782454970)), and
+  again as "Maybe instead of this, there could be an ImageCard component in Droppy that does
+  everything right from the start?" on the round tile losing its `figcaption`
+  ([figcaption comment](https://github.com/yannbf/mealdrop/pull/67#discussion_r3782251275)).
+  Tracked as [#296](https://github.com/yannbf/droppy-ds/issues/296).
+- **2026-08**: named `ImageCard` over the two alternatives the tracking issue left open
+  (`TitledImage`, `AnnotatedImage`) because that's the name Steve used on the call describing
+  what the component should be.
+- **Built on a plain `<figure>` element.** Droppy supplies the props, the theme classes, and the
+  copy around it — composing `Body`'s `figcaption` variant for the caption and reusing `Card`'s
+  own surface classes, never duplicated, for `shell`.
+
+{/* END: history */}
+
+{/* BEGIN: known-issues */}
+
+## Known issues & open questions
+
+- [#300](https://github.com/yannbf/droppy-ds/issues/300): no way to pass `<img>`-specific
+  attributes (`loading`, `decoding`, `sizes`, `srcSet`) — rest props spread onto the `<figure>`,
+  not the `<img>`. **Workaround:** none — the `<img>` node isn't reachable from the public props.
+- [#301](https://github.com/yannbf/droppy-ds/issues/301): `shell`'s padding and
+  `captionOverlay`'s corner inset stack, pushing the chip further in than without `shell`; no
+  story or test covers the combination. **Workaround** (partial): avoid combining `shell` and
+  `captionOverlay` until the offset is resolved, or override `.droppy-ImageCard-caption--overlay`'s
+  `top`/`left` from app CSS.
+- [#122](https://github.com/yannbf/droppy-ds/issues/122): the component is a plain function
+  component, so `ref` type-checks but never attaches on React 18 (works on React 19 only).
+
+{/* END: known-issues */}
+
+{/* BEGIN: when-to-use */}
+
+## Related
+
+- [Card](?path=/docs/media-content-card--docs) — for a surface that groups more than an image
+  and a caption.
+- [Body](?path=/docs/typography-body--docs) — the typography `ImageCard` uses for its caption.
+
+{/* END: when-to-use */}
