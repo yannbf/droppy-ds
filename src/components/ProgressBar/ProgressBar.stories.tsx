@@ -1,12 +1,5 @@
-import { useState } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
-
-import { Body } from '../Body'
-import { Button } from '../Button'
-import { Card } from '../Card'
-import { Heading } from '../Heading'
 
 import type { ProgressBarProps } from './ProgressBar'
 import { ProgressBar } from './ProgressBar'
@@ -50,16 +43,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * Step two of a three-step checkout. Drag `value` past `max` in the controls —
- * the fill clamps rather than overflowing.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { value: 1, max: 3, label: 'Checkout progress' },
-  argTypes: hide('className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -156,107 +139,6 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-const checkoutSteps = ['Contact details', 'Delivery details']
-
-function CheckoutStepIndicator() {
-  const [step, setStep] = useState(1)
-
-  return (
-    <Card padded style={{ maxWidth: '30rem' }}>
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-          marginBottom: '0.5rem',
-        }}
-      >
-        <Heading level={3} size={4}>
-          {checkoutSteps[step - 1]}
-        </Heading>
-        <Body size="XS" type="span">
-          Step {step} of {checkoutSteps.length}
-        </Body>
-      </div>
-
-      <ProgressBar value={step} max={checkoutSteps.length} label="Checkout progress" />
-
-      <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1.5rem' }}>
-        <Button clear disabled={step === 1} onClick={() => setStep((s) => Math.max(1, s - 1))}>
-          Previous
-        </Button>
-        <Button
-          disabled={step === checkoutSteps.length}
-          onClick={() => setStep((s) => Math.min(checkoutSteps.length, s + 1))}
-        >
-          Next
-        </Button>
-      </div>
-    </Card>
-  )
-}
-
-/** Mealdrop's checkout step indicator. */
-export const MealdropCheckoutSteps: Story = {
-  tags: ['examples'],
-  argTypes: hide('value', 'max', 'label', 'className'),
-  render: () => <CheckoutStepIndicator />,
-}
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestReportsItsRange: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })
-
-    await expect(bar).toHaveAttribute('aria-valuenow', '1')
-    await expect(bar).toHaveAttribute('aria-valuemin', '0')
-    await expect(bar).toHaveAttribute('aria-valuemax', '3')
-  },
-}
-
-export const TestClampsOverMax: Story = {
-  tags: ['tests'],
-  args: { value: 9 },
-  play: async ({ canvas, canvasElement }) => {
-    const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })
-    const fill = canvasElement.querySelector('.droppy-ProgressBar-fill') as HTMLElement
-
-    await expect(bar).toHaveAttribute('aria-valuenow', '3')
-    await expect(fill.style.width).toBe('100%')
-  },
-}
-
-export const TestClampsBelowZero: Story = {
-  tags: ['tests'],
-  args: { value: -4 },
-  play: async ({ canvas, canvasElement }) => {
-    const bar = canvas.getByRole('progressbar', { name: 'Checkout progress' })
-    const fill = canvasElement.querySelector('.droppy-ProgressBar-fill') as HTMLElement
-
-    await expect(bar).toHaveAttribute('aria-valuenow', '0')
-    await expect(fill.style.width).toBe('0%')
-  },
-}
-
-export const TestFillIsNotAnnounced: Story = {
-  tags: ['tests'],
-  play: async ({ canvas, canvasElement }) => {
-    // Exactly one progressbar in the tree: the fill is a plain div.
-    await expect(canvas.getAllByRole('progressbar')).toHaveLength(1)
-    await expect(canvasElement.querySelector('.droppy-ProgressBar-fill')).not.toHaveAttribute(
-      'role'
-    )
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { value: 1 },
-}

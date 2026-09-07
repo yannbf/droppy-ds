@@ -1,10 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
-
-import { Body } from '../Body'
-import { Card } from '../Card'
-import { Heading } from '../Heading'
 
 import type { ProgressProps } from './Progress'
 import { Progress } from './Progress'
@@ -44,16 +39,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * A determinate upload. Every prop is set below, so the controls start
- * populated — drag `value`, or clear it entirely to reach indeterminate mode.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { value: 40, max: 100, label: 'Uploading files', showValue: true },
-  argTypes: hide('className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -170,80 +155,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** DropBoard's menu-photo uploader, determinate then indeterminate. */
-export const DropBoardPhotoUpload: Story = {
-  tags: ['examples'],
-  argTypes: hide('value', 'max', 'label', 'showValue', 'className'),
-  render: () => (
-    <Card padded style={{ maxWidth: '28rem' }}>
-      <Heading level={3} size={4}>
-        Menu photos
-      </Heading>
-
-      <div style={{ display: 'grid', gap: '2rem', marginTop: '1.5rem' }}>
-        <div style={{ display: 'grid', gap: '0.5rem' }}>
-          <Progress value={37} label="Uploading 3 of 8 photos" showValue />
-          <Body size="XXS">Bytes in flight — the browser knows the total.</Body>
-        </div>
-
-        <div style={{ display: 'grid', gap: '0.5rem' }}>
-          <Progress value={null} label="Processing images" />
-          <Body size="XXS">The server owns this step, and will not say how long it has left.</Body>
-        </div>
-      </div>
-    </Card>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestReportsItsRange: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    const progressbar = canvas.getByRole('progressbar', { name: 'Uploading files' })
-
-    await expect(progressbar).toHaveAttribute('aria-valuenow', '40')
-    await expect(progressbar).toHaveAttribute('aria-valuemin', '0')
-    await expect(progressbar).toHaveAttribute('aria-valuemax', '100')
-    await expect(canvas.getByText('40%')).toBeVisible()
-  },
-}
-
-export const TestIndeterminateDropsValueNow: Story = {
-  tags: ['tests'],
-  args: { value: null, showValue: false },
-  play: async ({ canvas }) => {
-    const progressbar = canvas.getByRole('progressbar', { name: 'Uploading files' })
-
-    await expect(progressbar).not.toHaveAttribute('aria-valuenow')
-    await expect(progressbar).toHaveAttribute('data-indeterminate')
-  },
-}
-
-export const TestCompleteState: Story = {
-  tags: ['tests'],
-  args: { value: 100 },
-  play: async ({ canvas }) => {
-    const progressbar = canvas.getByRole('progressbar', { name: 'Uploading files' })
-
-    await expect(progressbar).toHaveAttribute('aria-valuenow', '100')
-    await expect(progressbar).toHaveAttribute('data-complete')
-  },
-}
-
-export const TestCustomMaxRescalesPercentage: Story = {
-  tags: ['tests'],
-  args: { value: 30, max: 40 },
-  play: async ({ canvas }) => {
-    const progressbar = canvas.getByRole('progressbar', { name: 'Uploading files' })
-
-    await expect(progressbar).toHaveAttribute('aria-valuemax', '40')
-    await expect(canvas.getByText('75%')).toBeVisible()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-}

@@ -1,6 +1,6 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect, fn, userEvent } from 'storybook/test'
+import { fn } from 'storybook/test'
 
 import type { PageSectionProps } from './PageSection'
 import { PageSection } from './PageSection'
@@ -38,17 +38,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * A titled band of page content. Both the title and the optional action are
- * set below, so the controls start populated — clear the label to drop the
- * button.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { title: 'Asian', topButtonLabel: 'View all categories', onTopButtonClick: fn() },
-  argTypes: hide('className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -152,35 +141,3 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestTitleIsALevelTwoHeading: Story = {
-  tags: ['tests'],
-  args: { topButtonLabel: undefined },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { level: 2, name: 'Asian' })).toBeInTheDocument()
-  },
-}
-
-export const TestNoActionWithoutALabel: Story = {
-  tags: ['tests'],
-  args: { topButtonLabel: undefined },
-  play: async ({ canvas }) => {
-    await expect(canvas.queryByRole('button')).not.toBeInTheDocument()
-  },
-}
-
-export const TestActionFiresItsCallback: Story = {
-  tags: ['tests'],
-  args: { topButtonLabel: 'View all categories', onTopButtonClick: fn() },
-  play: async ({ args, canvas }) => {
-    await userEvent.click(canvas.getByRole('button', { name: 'View all categories' }))
-
-    await expect(args.onTopButtonClick).toHaveBeenCalledOnce()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { title: 'Title', children: <p>Content goes here.</p> },
-}

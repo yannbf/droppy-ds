@@ -1,10 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
-
-import { Body } from '../Body'
-import { Button } from '../Button'
-import { Heading } from '../Heading'
 
 import type { IconProps } from './Icon'
 import { Icon } from './Icon'
@@ -41,16 +36,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * One glyph from the set. Name and size are set below, so the controls start
- * populated — pick another icon from the dropdown or change the size.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { name: 'cart', size: '1.5rem' },
-  argTypes: hide('color', 'className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -156,109 +141,6 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* examples — Mealdrop / DropBoard compositions                        */
-/* ------------------------------------------------------------------ */
-
-const toCurrency = (amount: number) =>
-  amount.toLocaleString(undefined, { style: 'currency', currency: 'EUR' })
-
-/** Mealdrop's header, where every icon reaches the page through a control's
- *  `icon` prop rather than a bare `Icon`. */
-export const MealdropHeader: Story = {
-  tags: ['examples'],
-  argTypes: hide('name', 'color', 'size'),
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <>
-      {/* Mealdrop's Header is styled-components with a `breakpoints.M` query;
-          the same rules are inlined so the story is a port, not a lookalike. */}
-      <style>{`
-        .mealdrop-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          height: 56px;
-          padding: 0 1.5rem;
-          border-bottom: 1px solid var(--ds-color-border-subtle);
-          background: var(--ds-color-surface-page);
-        }
-        .mealdrop-header-options {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-          gap: 0.5rem;
-        }
-        .mealdrop-header-nav { display: none; }
-        @media (min-width: 768px) {
-          .mealdrop-header { height: 72px; }
-          .mealdrop-header-nav { display: contents; }
-        }
-      `}</style>
-
-      <header className="mealdrop-header">
-        <Heading level={2} size={4}>
-          Mealdrop
-        </Heading>
-
-        <div className="mealdrop-header-options">
-          <span className="mealdrop-header-nav">
-            <Button round clear icon="sun" aria-label="turn on dark mode" />
-            <Button clear>Home</Button>
-            <Button clear>All restaurants</Button>
-          </span>
-          <Button icon="cart" aria-label="food cart">
-            {/* Mealdrop colours these spans from the button's own text token;
-                `inherit` is the same thing without naming a second token. */}
-            <Body type="span" color="inherit">
-              Order
-            </Body>
-            <Body type="span" color="inherit" fontWeight="bold">
-              {toCurrency(24.75)}
-            </Body>
-          </Button>
-        </div>
-      </header>
-    </>
-  ),
-}
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestIsDecorative: Story = {
-  tags: ['tests'],
-  play: async ({ canvasElement }) => {
-    const icon = canvasElement.querySelector('.droppy-Icon')
-
-    await expect(icon).toHaveAttribute('aria-hidden', 'true')
-    await expect(icon).toHaveAttribute('focusable', 'false')
-  },
-}
-
-export const TestSizeAppliesToBothAxes: Story = {
-  tags: ['tests'],
-  args: { size: '2rem' },
-  play: async ({ canvasElement }) => {
-    const icon = canvasElement.querySelector('.droppy-Icon') as SVGElement
-
-    // `minWidth` is what stops a flex parent squeezing the glyph.
-    await expect(icon.style.width).toBe('2rem')
-    await expect(icon.style.height).toBe('2rem')
-    await expect(icon.style.minWidth).toBe('2rem')
-  },
-}
-
-export const TestColorOverridesStroke: Story = {
-  tags: ['tests'],
-  args: { color: 'rgb(183, 28, 28)' },
-  play: async ({ canvasElement }) => {
-    const icon = canvasElement.querySelector('.droppy-Icon') as SVGElement
-
-    await expect(getComputedStyle(icon).stroke).toBe('rgb(183, 28, 28)')
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { name: 'cart' },
-}

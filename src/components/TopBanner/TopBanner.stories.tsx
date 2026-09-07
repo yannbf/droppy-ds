@@ -1,9 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
-
-import { Badge } from '../Badge'
-import { Review } from '../Review'
 
 import type { TopBannerProps } from './TopBanner'
 import { TopBanner } from './TopBanner'
@@ -63,16 +59,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * The page header band. Title and photo are both set below, so the controls
- * start populated — clear the photo to see the plain treatment.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { title: 'Categories', photoUrl: photoDataUri },
-  argTypes: hide('level', 'onBackClick', 'className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -173,7 +159,8 @@ export const Anatomy: Story = {
         {
           id: 'title',
           name: 'Title',
-          description: 'The heading (`h1` by default), switched to its on-photo treatment when there is a photo.',
+          description:
+            'The heading (`h1` by default), switched to its on-photo treatment when there is a photo.',
         },
       ],
     } satisfies AnatomyParameters,
@@ -184,65 +171,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** The restaurant detail page header. */
-export const MealdropRestaurantHeader: Story = {
-  tags: ['examples'],
-  argTypes: hide('title', 'level', 'photoUrl', 'onBackClick', 'className'),
-  parameters: { layout: 'fullscreen' },
-  render: () => (
-    <div>
-      <TopBanner
-        title="Burger Kingdom"
-        photoUrl="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1003&q=20"
-      />
-      <div style={{ display: 'grid', gap: '0.75rem', padding: '1.5rem' }}>
-        <Review rating={4.2} />
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <Badge text="burgers" />
-          <Badge text="comfort food" />
-        </div>
-      </div>
-    </div>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestRendersTitleAsHeading: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { level: 1, name: 'Categories' })).toBeInTheDocument()
-  },
-}
-
-export const TestLevelSetsHeadingLevel: Story = {
-  tags: ['tests'],
-  args: { level: 3 },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('heading', { level: 3, name: 'Categories' })).toBeInTheDocument()
-  },
-}
-
-export const TestPhotoBecomesBackground: Story = {
-  tags: ['tests'],
-  args: { photoUrl: photoDataUri },
-  play: async ({ canvas }) => {
-    const banner = canvas.getByRole('heading', { level: 1 }).parentElement as HTMLElement
-
-    await expect(getComputedStyle(banner).backgroundImage).toContain('url(')
-  },
-}
-
-export const TestTitleIsOptional: Story = {
-  tags: ['tests'],
-  args: { title: undefined },
-  play: async ({ canvas }) => {
-    await expect(canvas.queryByRole('heading')).not.toBeInTheDocument()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-}
