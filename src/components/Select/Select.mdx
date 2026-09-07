@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as SelectStories from './Select.stories'
 
@@ -64,9 +65,11 @@ its own chevron.
 
 ## Anatomy
 
-A label above a wrapper that positions the chevron over the native control. There is no listbox part: the options are real `<option>` elements the platform renders.
-
 <Canvas of={SelectStories.Anatomy} />
+
+<Anatomy of={SelectStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part    | `data-part` | Renders    | Purpose                                |
 | :------ | :---------- | :--------- | :------------------------------------- |
@@ -74,6 +77,8 @@ A label above a wrapper that positions the chevron over the native control. Ther
 | Label   | `label`     | `<label>`  | Tied to the control by `for`/`id`      |
 | Wrapper | `wrapper`   | `<div>`    | Positions the chevron over the control |
 | Control | `control`   | `<select>` | The native control                     |
+
+</span>
 
 {/* END: anatomy */}
 

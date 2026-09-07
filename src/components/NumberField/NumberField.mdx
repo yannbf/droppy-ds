@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as NumberFieldStories from './NumberField.stories'
 
@@ -65,9 +66,11 @@ increments.
 
 ## Anatomy
 
-A `Field` wrapper for the label association, a scrub area holding the label, and a group of decrement, input, and increment. The label being inside the scrub area is what makes dragging it change the value.
-
 <Canvas of={NumberFieldStories.Anatomy} />
+
+<Anatomy of={NumberFieldStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part       | `data-part` | Renders    | Purpose                                             |
 | :--------- | :---------- | :--------- | :-------------------------------------------------- |
@@ -79,6 +82,8 @@ A `Field` wrapper for the label association, a scrub area holding the label, and
 | Decrement  | `decrement` | `<button>` | Disabled at `min`                                   |
 | Input      | `input`     | `<input>`  | The typeable control                                |
 | Increment  | `increment` | `<button>` | Disabled at `max`                                   |
+
+</span>
 
 {/* END: anatomy */}
 

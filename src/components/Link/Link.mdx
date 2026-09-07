@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as LinkStories from './Link.stories'
 
@@ -64,13 +65,17 @@ with a hard-coded light-mode token.
 
 ## Anatomy
 
-`Link` is a single-part component. By default it renders an `<a>`; with `render` it clones the element you pass, so the part is whatever your router link renders.
-
 <Canvas of={LinkStories.Anatomy} />
+
+<Anatomy of={LinkStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders                         | Purpose                                     |
 | :--- | :---------- | :------------------------------ | :------------------------------------------ |
 | Root | `root`      | `<a>` (or the `render` element) | The link: colour, underline, and focus ring |
+
+</span>
 
 {/* END: anatomy */}
 

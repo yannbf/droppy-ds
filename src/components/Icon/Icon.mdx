@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as IconStories from './Icon.stories'
 
@@ -71,13 +72,17 @@ sets the stroke inline instead, which wins over the class rule.
 
 ## Anatomy
 
-`Icon` is a single-part component: one `<svg>`, whose paths come from the bundled set that `name` indexes into. Nothing inside it is addressable.
-
 <Canvas of={IconStories.Anatomy} />
+
+<Anatomy of={IconStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders | Purpose                                                               |
 | :--- | :---------- | :------ | :-------------------------------------------------------------------- |
 | Root | `root`      | `<svg>` | The glyph: viewBox, stroke colour, and the width/height/minWidth trio |
+
+</span>
 
 {/* END: anatomy */}
 

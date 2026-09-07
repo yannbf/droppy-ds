@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as HeadingStories from './Heading.stories'
 
@@ -62,13 +63,17 @@ whatever type size happens to surround it.
 
 ## Anatomy
 
-`Heading` is a single-part component. It forwards its ref and remaining props, so composition wrappers — Base UI's `Dialog.Title`, `Drawer.Title` — can point `aria-labelledby` at the real heading element.
-
 <Canvas of={HeadingStories.Anatomy} />
+
+<Anatomy of={HeadingStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part | `data-part` | Renders       | Purpose                                            |
 | :--- | :---------- | :------------ | :------------------------------------------------- |
 | Root | `root`      | `<h1>`–`<h5>` | The heading, tagged by `level` and sized by `size` |
+
+</span>
 
 {/* END: anatomy */}
 

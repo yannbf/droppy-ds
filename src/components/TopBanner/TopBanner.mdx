@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as TopBannerStories from './TopBanner.stories'
 
@@ -61,14 +62,18 @@ against arbitrary imagery rather than trusting the surface token underneath.
 
 ## Anatomy
 
-A band with an optional heading. Both are optional: with neither `title` nor `photoUrl` the band renders empty.
-
 <Canvas of={TopBannerStories.Anatomy} />
+
+<Anatomy of={TopBannerStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part  | `data-part` | Renders | Purpose                                                        |
 | :---- | :---------- | :------ | :------------------------------------------------------------- |
 | Root  | `root`      | `<div>` | The band, carrying the background image when `photoUrl` is set |
 | Title | `title`     | `<h1>`–`<h5>` per `level` | Switched to its on-photo treatment when there is a photo |
+
+</span>
 
 {/* END: anatomy */}
 

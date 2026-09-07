@@ -1,3 +1,4 @@
+import { Anatomy } from '@component-anatomy/storybook/blocks'
 import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks'
 import * as PageTemplateStories from './PageTemplate.stories'
 
@@ -57,14 +58,18 @@ the viewport instead of riding up under the fold.
 
 ## Anatomy
 
-A column of header, content, and footer. Only the content area is a part the template owns — header and footer are whatever nodes the caller passes, rendered as-is outside the landmark.
-
 <Canvas of={PageTemplateStories.Anatomy} />
+
+<Anatomy of={PageTemplateStories.Anatomy} />
+
+<span className="sb-sr-only">
 
 | Part    | `data-part` | Renders  | Purpose                                                         |
 | :------ | :---------- | :------- | :-------------------------------------------------------------- |
 | Root    | `root`      | `<div>`  | The column: header, content, footer in order                    |
 | Content | `content`   | `<main>` | The landmark, carrying the min-height that pins the footer down |
+
+</span>
 
 {/* END: anatomy */}
 
