@@ -1,0 +1,16 @@
+{
+  "branchName": "experiment/stories-full",
+  "baseCommit": "24f722b0450cf74bce18d168303f0690feb7e9a1",
+  "keptFacets": [
+    "story.anatomy",
+    "story.animation",
+    "story.api-ref",
+    "story.examples",
+    "story.highlight",
+    "story.showcase",
+    "story.tests"
+  ],
+  "createdAt": "2026-09-07T10:57:06.620Z",
+  "version": 1,
+  "purgeAllDocgen": false
+}

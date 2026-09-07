@@ -59,10 +59,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A store's sub-views. The set and the starting tab are both set below, so the
- * controls start populated — edit the tabs or change which one opens first.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { tabs: [...tabs], defaultValue: 'overview', onValueChange: fn() },
@@ -73,7 +69,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `tabs` is the whole set — no `Tabs.Tab`/`Tabs.Panel` to compose by hand. */
 export const TabsProp: Story = {
   name: 'tabs',
   tags: ['api-ref'],
@@ -87,31 +82,24 @@ export const TabsProp: Story = {
   },
 }
 
-/** Item `disabled` keeps a tab focusable but never lets it activate. */
 export const DisabledTab: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'onValueChange', 'className'),
   args: { tabs: [tabs[0], { ...tabs[1], disabled: true }, tabs[2]] },
 }
 
-/** `defaultValue` picks the starting tab without making Tabs controlled. */
 export const DefaultValue: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'onValueChange', 'className'),
   args: { defaultValue: 'settings' },
 }
 
-/** `value` and `onValueChange` hand the active tab to the caller's state. */
 export const ControlledValue: Story = {
   tags: ['api-ref', 'highlight'],
   argTypes: hide('defaultValue', 'className'),
   args: { defaultValue: undefined, value: 'items', onValueChange: fn() },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'onValueChange'),
@@ -129,11 +117,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * Tabs activate on click, not on focus: arrowing along the row moves focus
- * without swapping the panel, so a keyboard user can read the labels before
- * committing. Only Enter, Space, or a click activates.
- */
 export const FocusDoesNotActivate: Story = {
   tags: ['highlight'],
   argTypes: hide('value', 'onValueChange', 'className'),
@@ -149,12 +132,6 @@ export const FocusDoesNotActivate: Story = {
 /* animation — the motion contract                                     */
 /* ------------------------------------------------------------------ */
 
-/**
- * `Tabs.Indicator` writes the active tab's measured position and size to CSS
- * custom properties, which the theme transitions on top of — the sliding
- * underline. This asserts the mechanism, not the recipe: the variables really
- * do change when the active tab changes.
- */
 export const AnimatedIndicator: Story = {
   tags: ['animation'],
   argTypes: hide('value', 'onValueChange', 'className'),
@@ -178,7 +155,6 @@ export const AnimatedIndicator: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The tab row, its indicator, and one panel per tab. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('tabs', 'defaultValue', 'value', 'onValueChange', 'className'),
@@ -285,7 +261,6 @@ const OrderList = ({ orders }: { orders: Order[] }) => (
   </div>
 )
 
-/** DropBoard's order queue, split by where each order has got to. */
 export const DropBoardOrderQueue: Story = {
   tags: ['examples'],
   argTypes: hide('tabs', 'value', 'defaultValue', 'onValueChange', 'className'),
@@ -376,15 +351,5 @@ export const TestControlledValueHoldsItsTab: Story = {
     // Controlled with no state behind it: the callback fires, the tab doesn't move.
     await expect(args.onValueChange).toHaveBeenCalledWith('settings', expect.anything())
     await expect(tab2).toHaveAttribute('aria-selected', 'true')
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: {
-    tabs: [
-      { value: 'one', label: 'One', content: 'Content for tab one' },
-      { value: 'two', label: 'Two', content: 'Content for tab two' },
-    ],
   },
 }

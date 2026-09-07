@@ -39,11 +39,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A titled band of page content. Both the title and the optional action are
- * set below, so the controls start populated — clear the label to drop the
- * button.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { title: 'Asian', topButtonLabel: 'View all categories', onTopButtonClick: fn() },
@@ -54,21 +49,18 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `title` renders as an `h2`, so sections nest correctly under a page `h1`. */
 export const Title: Story = {
   tags: ['api-ref'],
   argTypes: hide('topButtonLabel', 'className'),
   args: { title: 'Award winning restaurants', topButtonLabel: undefined },
 }
 
-/** `topButtonLabel` adds a `clear` Button beside the title. */
 export const TopButtonLabel: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { topButtonLabel: 'View all categories', onTopButtonClick: fn() },
 }
 
-/** `children` are the section body, laid out by the caller. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('topButtonLabel', 'className'),
@@ -83,10 +75,6 @@ export const Children: Story = {
   },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('topButtonLabel'),
@@ -106,10 +94,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The action is optional and renders nothing at all when `topButtonLabel` is
- * absent — the title row doesn't reserve space for a button that isn't there.
- */
 export const ActionIsOptional: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -125,7 +109,6 @@ export const ActionIsOptional: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The section, its title row, and the optional action inside it. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('title', 'topButtonLabel', 'className'),
@@ -178,9 +161,4 @@ export const TestActionFiresItsCallback: Story = {
 
     await expect(args.onTopButtonClick).toHaveBeenCalledOnce()
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { title: 'Title', children: <p>Content goes here.</p> },
 }

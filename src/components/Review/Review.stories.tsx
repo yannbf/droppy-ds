@@ -44,10 +44,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A restaurant's score line. Drag the rating control across the bands to watch
- * the label change — and past zero to see the empty state.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { rating: 4.5 },
@@ -58,7 +54,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `rating` drives both the number and the word beside it. */
 export const Rating: Story = {
   tags: ['api-ref'],
   argTypes: hide('rating', 'color', 'className'),
@@ -72,17 +67,12 @@ export const Rating: Story = {
   ),
 }
 
-/** `color` overrides the deliberately quiet default token. */
 export const Color: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { rating: 4.2, color: '#0a7d32' },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('color'),
@@ -102,11 +92,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The bands are fixed: under 2 is "Very poor", 2–4 "Adequate", 4–5 "Very
- * good", and exactly 5 "Excellent". The number is always shown to one decimal,
- * so 4 and 4.0 read the same.
- */
 export const RatingBands: Story = {
   tags: ['highlight'],
   argTypes: hide('rating', 'color', 'className'),
@@ -119,7 +104,6 @@ export const RatingBands: Story = {
   ),
 }
 
-/** No rating renders a plain fallback line instead of a zero-star score. */
 export const NoReviews: Story = {
   tags: ['highlight'],
   argTypes: hide('color', 'className'),
@@ -130,7 +114,6 @@ export const NoReviews: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A wrapper and the text line inside it. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('rating', 'color', 'className'),
@@ -152,7 +135,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** Rated and unrated restaurant tiles. */
 export const MealdropRestaurantScores: Story = {
   tags: ['examples'],
   argTypes: hide('rating', 'color', 'className'),
@@ -222,8 +204,4 @@ export const TestNoReviewsFallback: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByText('No reviews yet')).toBeInTheDocument()
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

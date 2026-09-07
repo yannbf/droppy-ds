@@ -45,10 +45,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A determinate upload. Every prop is set below, so the controls start
- * populated — drag `value`, or clear it entirely to reach indeterminate mode.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { value: 40, max: 100, label: 'Uploading files', showValue: true },
@@ -59,7 +55,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `value` positions the indicator; `null` switches to indeterminate. */
 export const Value: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'className'),
@@ -73,21 +68,18 @@ export const Value: Story = {
   ),
 }
 
-/** `max` rescales the range — the reported percentage follows it. */
 export const Max: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { value: 30, max: 40 },
 }
 
-/** `label` is the accessible name and the visible caption above the track. */
 export const Label: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { label: 'Preparing your order' },
 }
 
-/** `showValue` renders the formatted value beside the label. */
 export const ShowValue: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
@@ -99,10 +91,6 @@ export const ShowValue: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   args: { className: 'progress-demo-inset' },
@@ -119,18 +107,12 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * `value={null}` is indeterminate: `aria-valuenow` is dropped entirely rather
- * than reported as zero, and `[data-indeterminate]` drives the animation. This
- * is the case `ProgressBar` has no way to express.
- */
 export const Indeterminate: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
   args: { value: null, showValue: false },
 }
 
-/** At the top of the range the root gains `[data-complete]`, for a finished state. */
 export const Complete: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -141,7 +123,6 @@ export const Complete: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** Root, the optional label and value, and the track holding the indicator. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('value', 'max', 'label', 'showValue', 'className'),
@@ -170,7 +151,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** DropBoard's menu-photo uploader, determinate then indeterminate. */
 export const DropBoardPhotoUpload: Story = {
   tags: ['examples'],
   argTypes: hide('value', 'max', 'label', 'showValue', 'className'),
@@ -242,8 +222,4 @@ export const TestCustomMaxRescalesPercentage: Story = {
     await expect(progressbar).toHaveAttribute('aria-valuemax', '40')
     await expect(canvas.getByText('75%')).toBeVisible()
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

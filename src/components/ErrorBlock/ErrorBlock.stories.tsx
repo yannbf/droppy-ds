@@ -57,10 +57,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * An empty category with a way out. Title, body, and action are all set below,
- * so the controls start populated.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { illustration: sushiIllustration },
@@ -71,38 +67,30 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `title` is the `h2` — say what happened, not just that something did. */
 export const Title: Story = {
   tags: ['api-ref'],
   argTypes: hide('illustration', 'className'),
   args: { title: 'We couldn’t reach the kitchen.' },
 }
 
-/** `body` carries the explanation and, ideally, what to try next. */
 export const Body: Story = {
   tags: ['api-ref'],
   argTypes: hide('illustration', 'className'),
   args: { body: 'The restaurant stopped taking orders while you were browsing.' },
 }
 
-/** `buttonText` and `onButtonClick` are the single recovery action. */
 export const ButtonText: Story = {
   tags: ['api-ref'],
   argTypes: hide('illustration', 'className'),
   args: { buttonText: 'Back to restaurants', onButtonClick: fn() },
 }
 
-/** `illustration` takes any node — the Lottie player and its JSON stay app assets. */
 export const Illustration: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { illustration: sushiIllustration },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('illustration'),
@@ -122,10 +110,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The illustration slot is optional, and the block reads fine without it — the
- * title, body, and action carry the whole message on their own.
- */
 export const WithoutIllustration: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -136,7 +120,6 @@ export const WithoutIllustration: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** Title, optional illustration, body, and one action — in that DOM order. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('title', 'body', 'buttonText', 'illustration', 'className'),
@@ -172,7 +155,6 @@ const AnimatedIllustration = ({ animation }: { animation: object }) => (
   </span>
 )
 
-/** A category with nothing in it. */
 export const MealdropEmptyCategory: Story = {
   tags: ['examples'],
   argTypes: hide('title', 'illustration', 'body', 'buttonText', 'onButtonClick', 'className'),
@@ -187,7 +169,6 @@ export const MealdropEmptyCategory: Story = {
   ),
 }
 
-/** A restaurant that isn't there. */
 export const MealdropNotFound: Story = {
   tags: ['examples'],
   argTypes: hide('title', 'illustration', 'body', 'buttonText', 'onButtonClick', 'className'),
@@ -230,15 +211,5 @@ export const TestIllustrationIsOptional: Story = {
   play: async ({ canvas, canvasElement }) => {
     await expect(canvasElement.querySelector('.droppy-ErrorBlock-illustration')).toBeNull()
     await expect(canvas.getByRole('button', { name: 'See all restaurants' })).toBeVisible()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: {
-    title: 'Title',
-    body: 'Body',
-    buttonText: 'Click me',
-    onButtonClick: fn(),
   },
 }

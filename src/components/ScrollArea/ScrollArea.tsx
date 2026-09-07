@@ -6,21 +6,10 @@ import { cx } from '../../utils/cx'
 
 export type ScrollAreaProps = {
   children?: ReactNode
-  /** Which axes get a scrollbar. `'vertical'` and `'horizontal'` render one
-   *  scrollbar; `'both'` renders one of each plus the corner where they meet. */
   orientation?: 'vertical' | 'horizontal' | 'both'
   className?: string
 }
 
-/**
- * A scrollable panel with a themed, hover-revealed scrollbar in place of the
- * platform's own.
- *
- * Base UI's `ScrollArea` supplies the scroll mechanics — overflow detection,
- * thumb drag, hover/scroll visibility state — so this only adds the shape and
- * which axes get a scrollbar. Sizing is fixed by the theme layer, matching
- * every other Droppy overlay; use `className` for one-off layout changes.
- */
 export const ScrollArea = ({ children, orientation = 'vertical', className }: ScrollAreaProps) => (
   <BaseScrollArea.Root
     data-part="root"

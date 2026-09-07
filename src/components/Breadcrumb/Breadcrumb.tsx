@@ -4,13 +4,8 @@ import { useRender } from '@base-ui/react/use-render'
 import { cx } from '../../utils/cx'
 
 export type BreadcrumbItem = {
-  /** Visible label. Ignored when `render` supplies its own children. */
   label: string
-  /** Destination for the default `<a>`. Ignored when `render` is set — the
-   *  passed element owns its own destination (e.g. a router `to` prop). */
   href?: string
-  /** Escape hatch for a router-aware link, e.g. `<Link to="/categories" />` —
-   *  cloned with this crumb's link class and, on the last item, `aria-current`. */
   render?: ReactElement
 }
 
@@ -35,14 +30,6 @@ const Crumb = ({ item, isLast }: { item: BreadcrumbItem; isLast: boolean }) => {
   })
 }
 
-/**
- * A trail of ancestor pages leading to the current one — categories,
- * restaurants, anything with a browsable hierarchy above it.
- *
- * Renders plain `<a>` crumbs by default. Pass `render` on an item to swap in
- * a router-aware link instead — the design system itself has no router
- * dependency.
- */
 export const Breadcrumb = ({ items, className }: BreadcrumbProps) => (
   <nav data-part="root" aria-label="breadcrumb" className={cx('droppy-Breadcrumb', className)}>
     <ol data-part="list" className="droppy-Breadcrumb-list">

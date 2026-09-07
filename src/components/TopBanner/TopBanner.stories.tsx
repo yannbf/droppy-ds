@@ -64,10 +64,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * The page header band. Title and photo are both set below, so the controls
- * start populated — clear the photo to see the plain treatment.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { title: 'Categories', photoUrl: photoDataUri },
@@ -78,46 +74,30 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `title` renders as a heading at `level` inside the band. */
 export const Title: Story = {
   tags: ['api-ref'],
   argTypes: hide('level', 'photoUrl', 'onBackClick', 'className'),
   args: { title: 'Sushi places near you', photoUrl: undefined },
 }
 
-/**
- * `level` sets the heading level without changing the visual treatment's role:
- * the default `h1` fits a page whose primary title the banner carries; pass a
- * deeper level when the page's `h1` lives elsewhere.
- */
 export const Level: Story = {
   tags: ['api-ref'],
   argTypes: hide('photoUrl', 'onBackClick', 'className'),
   args: { title: 'Categories', level: 2, photoUrl: undefined },
 }
 
-/** `photoUrl` sets the background and switches the heading to its on-photo treatment. */
 export const PhotoUrl: Story = {
   tags: ['api-ref'],
   argTypes: hide('level', 'onBackClick', 'className'),
   args: { photoUrl: photoDataUri },
 }
 
-/**
- * `onBackClick` is accepted for call-site parity with Mealdrop's own
- * `TopBanner`, whose back button is commented out in its source. Nothing here
- * renders a control, so the callback never fires.
- */
 export const OnBackClick: Story = {
   tags: ['api-ref'],
   argTypes: hide('level', 'photoUrl', 'className'),
   args: { onBackClick: () => {}, photoUrl: undefined },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('level', 'onBackClick'),
@@ -137,11 +117,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * With a photo behind it the heading takes its on-photo treatment, so the text
- * holds contrast against arbitrary imagery rather than trusting the surface
- * token underneath.
- */
 export const HeadingOverPhoto: Story = {
   tags: ['highlight'],
   argTypes: hide('level', 'onBackClick', 'className'),
@@ -157,7 +132,6 @@ export const HeadingOverPhoto: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The band and its optional heading. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('title', 'level', 'photoUrl', 'onBackClick', 'className'),
@@ -173,7 +147,8 @@ export const Anatomy: Story = {
         {
           id: 'title',
           name: 'Title',
-          description: 'The heading (`h1` by default), switched to its on-photo treatment when there is a photo.',
+          description:
+            'The heading (`h1` by default), switched to its on-photo treatment when there is a photo.',
         },
       ],
     } satisfies AnatomyParameters,
@@ -184,7 +159,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** The restaurant detail page header. */
 export const MealdropRestaurantHeader: Story = {
   tags: ['examples'],
   argTypes: hide('title', 'level', 'photoUrl', 'onBackClick', 'className'),
@@ -241,8 +215,4 @@ export const TestTitleIsOptional: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.queryByRole('heading')).not.toBeInTheDocument()
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

@@ -38,10 +38,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * An indeterminate wait. `label` is set below so the controls start populated —
- * change it to hear what a screen reader would announce.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { label: 'Loading' },
@@ -52,17 +48,12 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `label` becomes the accessible name on the `status` role. */
 export const Label: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { label: 'Loading your order' },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('label'),
@@ -82,11 +73,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The graphic is `aria-hidden`, and the name rides on `aria-label` rather than
- * visually-hidden text — `role="status"` doesn't take its name from its
- * content the way a button or heading does.
- */
 export const AccessibleName: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -97,12 +83,6 @@ export const AccessibleName: Story = {
 /* animation — the motion contract                                     */
 /* ------------------------------------------------------------------ */
 
-/**
- * Three dots and two arcs run on CSS keyframes at 1.2s. Under
- * `prefers-reduced-motion` the animation is slowed to 4.8s rather than
- * removed: the motion is what communicates "loading", so stopping it would
- * leave a static graphic that says nothing.
- */
 export const SpinAnimation: Story = {
   tags: ['animation'],
   argTypes: hide('label', 'className'),
@@ -120,7 +100,6 @@ export const SpinAnimation: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The status wrapper, the decorative graphic, and the shapes inside it. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('label', 'className'),
@@ -152,7 +131,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** DropBoard's payouts panel while the figures load. */
 export const DropBoardPayoutsLoading: Story = {
   tags: ['examples'],
   argTypes: hide('label', 'className'),
@@ -196,8 +174,4 @@ export const TestLabelOverridesName: Story = {
     await expect(canvas.getByRole('status', { name: 'Loading your order' })).toBeInTheDocument()
     await expect(canvas.queryByRole('status', { name: 'Loading' })).not.toBeInTheDocument()
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

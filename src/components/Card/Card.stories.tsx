@@ -45,10 +45,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A rounded, clipped surface for grouping content. Both variant props are set
- * below, so the controls start populated — flip `padded` or `interactive`.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { children: 'Card content', padded: true, interactive: false },
@@ -59,7 +55,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` compose freely — `Card` provides the surface and nothing else. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('interactive', 'padded', 'className'),
@@ -74,24 +69,18 @@ export const Children: Story = {
   },
 }
 
-/** `padded` adds uniform padding, for children that don't own their own. */
 export const Padded: Story = {
   tags: ['api-ref'],
   argTypes: hide('interactive', 'className'),
   args: { padded: true },
 }
 
-/** `interactive` is appearance only: hover dim and a pointer cursor. */
 export const Interactive: Story = {
   tags: ['api-ref'],
   argTypes: hide('padded', 'className'),
   args: { interactive: true, padded: true, children: 'Hover me' },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('interactive', 'padded'),
@@ -113,7 +102,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/** An edge-to-edge image clips to the card's own corner radius instead of squaring off past it. */
 export const WithImage: Story = {
   tags: ['highlight'],
   argTypes: hide('children', 'interactive', 'padded', 'className'),
@@ -133,7 +121,6 @@ export const WithImage: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A single part: one `<div>` providing the surface, with children in normal flow. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('children', 'interactive', 'padded', 'className'),
@@ -155,7 +142,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** A restaurant listing tile: photo, name, rating, specialty, categories. */
 export const MealdropRestaurantTile: Story = {
   tags: ['examples'],
   argTypes: hide('children', 'interactive', 'padded', 'className'),
@@ -181,7 +167,6 @@ export const MealdropRestaurantTile: Story = {
   ),
 }
 
-/** A category tile: round photo and a single label, on the same shell. */
 export const MealdropCategoryTile: Story = {
   tags: ['examples'],
   argTypes: hide('children', 'interactive', 'padded', 'className'),
@@ -271,5 +256,3 @@ export const TestInteractiveIsAppearanceOnly: Story = {
     await expect(canvas.queryByRole('button')).not.toBeInTheDocument()
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }

@@ -84,11 +84,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * Wrap the tree once, then raise toasts from anywhere beneath with
- * `useToast().add(...)`. There is no trigger and no `open` prop — click the
- * button to see one.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { timeout: 5000, limit: 3 },
@@ -99,28 +94,24 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` is the tree that raises toasts — the provider renders it as-is. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('container', 'className'),
   args: { children: <CreateToastButton label="Notify me" /> },
 }
 
-/** `timeout` sets how long a toast lingers. `0` keeps it until dismissed. */
 export const Timeout: Story = {
   tags: ['api-ref'],
   argTypes: hide('container', 'className'),
   args: { timeout: 0 },
 }
 
-/** `limit` caps how many show at once; older ones are marked limited, not dropped. */
 export const Limit: Story = {
   tags: ['api-ref'],
   argTypes: hide('container', 'className'),
   args: { limit: 1, timeout: 0 },
 }
 
-/** `container` picks the portal target for the stack. */
 export const Container: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
@@ -133,10 +124,6 @@ export const Container: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('container'),
@@ -155,11 +142,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The close button is `aria-hidden` until the stack is hovered or focused, so
- * a single passing notification doesn't compete with the page for keyboard
- * attention. Hover the stack to reveal it.
- */
 export const CloseAppearsOnHover: Story = {
   tags: ['highlight'],
   argTypes: hide('container', 'className'),
@@ -170,12 +152,6 @@ export const CloseAppearsOnHover: Story = {
 /* animation — the motion contract                                     */
 /* ------------------------------------------------------------------ */
 
-/**
- * Each toast enters and leaves off `[data-starting-style]` and
- * `[data-ending-style]`, and the exit additionally reads
- * `[data-swipe-direction]` so a swiped toast leaves the way it was pushed
- * rather than fading in place.
- */
 export const EnterExitTransition: Story = {
   tags: ['animation'],
   argTypes: hide('container', 'className'),
@@ -199,12 +175,6 @@ export const EnterExitTransition: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/**
- * Portalled into a node inside the canvas via `container`, so the Anatomy
- * panel can reach the parts — it only scans the story canvas, and the default
- * portal target is the document body. A toast is raised on play so the stack
- * isn't empty.
- */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('children', 'timeout', 'limit', 'container', 'className'),
@@ -280,7 +250,6 @@ const SaveMenuButton = () => {
   )
 }
 
-/** Adding to a cart, and saving a menu. */
 export const MealdropAddedToCart: Story = {
   tags: ['examples'],
   argTypes: hide('children', 'container', 'timeout', 'limit', 'className'),
@@ -351,8 +320,4 @@ export const TestContainerPortalsWhereAsked: Story = {
     const host = canvas.getByTestId('portal-host')
     await waitFor(() => expect(host.querySelector('[data-part="toast"]')).not.toBeNull())
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

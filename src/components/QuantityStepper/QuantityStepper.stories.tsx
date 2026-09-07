@@ -65,10 +65,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A cart line's quantity. Bounds are set below, so the controls start
- * populated — click up to `max` and the plus disables rather than wrapping.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { value: 1, min: 1, max: 10, 'aria-label': 'quantity' },
@@ -79,28 +75,24 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `value` is the current quantity — the component is fully controlled. */
 export const Value: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { value: 4 },
 }
 
-/** `min` is the lower bound; the minus button disables on it. */
 export const Min: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { value: 2, min: 2 },
 }
 
-/** `max` is the upper bound; the plus button disables on it. */
 export const Max: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { value: 3, max: 3 },
 }
 
-/** `aria-label` names the group, since the two buttons alone don't say what of. */
 export const AriaLabel: Story = {
   name: 'aria-label',
   tags: ['api-ref'],
@@ -108,10 +100,6 @@ export const AriaLabel: Story = {
   args: { 'aria-label': 'Cheeseburger quantity' },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   args: { className: 'quantitystepper-demo-inset' },
@@ -128,12 +116,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The buttons disable at the bounds rather than wrapping or clamping silently,
- * so a click never looks like it did nothing. The value carries `aria-live`,
- * because a disabled button and a changed number are the only signals the
- * group gives.
- */
 export const BoundsDisableRatherThanClamp: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -144,7 +126,6 @@ export const BoundsDisableRatherThanClamp: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The group, its two round buttons, and the live value between them. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('value', 'min', 'max', 'aria-label', 'className'),
@@ -229,7 +210,6 @@ function CartLines() {
   )
 }
 
-/** Cart lines with per-dish quantity steppers. */
 export const MealdropCartLine: Story = {
   tags: ['examples'],
   argTypes: hide('value', 'onChange', 'min', 'max', 'aria-label', 'className'),
@@ -285,9 +265,4 @@ export const TestGroupIsNamed: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.getByRole('group', { name: 'Cheeseburger quantity' })).toBeInTheDocument()
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { value: 1, onChange: fn() },
 }

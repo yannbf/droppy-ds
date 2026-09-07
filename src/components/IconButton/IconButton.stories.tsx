@@ -40,10 +40,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A floating circular affordance — a carousel arrow, an overlay dismissal.
- * Both props are set below, so the controls start populated.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { name: 'arrow-right', small: false },
@@ -54,14 +50,12 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `name` picks the glyph; the button is icon-only, so pass `aria-label` too. */
 export const Name: Story = {
   tags: ['api-ref'],
   argTypes: hide('small', 'className'),
   args: { name: 'cross', 'aria-label': 'close' },
 }
 
-/** `small` swaps the 4rem control for the 3rem one, glyph included. */
 export const Small: Story = {
   tags: ['api-ref'],
   argTypes: hide('name', 'className'),
@@ -73,10 +67,6 @@ export const Small: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('small'),
@@ -96,11 +86,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * Deliberately not theme-reactive: it stays a light pill in dark mode so it
- * reads against arbitrary imagery. Only the radius and focus ring are tokens,
- * and the glyph colour is hard-coded rather than following the icon token.
- */
 export const StaysLightOnAnySurface: Story = {
   tags: ['highlight'],
   argTypes: hide('small', 'className'),
@@ -124,7 +109,6 @@ export const StaysLightOnAnySurface: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The circular control and the glyph it centres. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('name', 'small', 'className'),
@@ -168,7 +152,6 @@ const railTiles = [
   },
 ]
 
-/** Carousel arrows floating over restaurant photos. */
 export const MealdropCarouselArrows: Story = {
   tags: ['examples'],
   argTypes: hide('name', 'small', 'onClick'),
@@ -238,9 +221,4 @@ export const TestSmallShrinksGlyph: Story = {
     await expect(regular?.getAttribute('width')).toBe('24')
     await expect(small?.getAttribute('width')).toBe('15')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { name: 'arrow-right' },
 }

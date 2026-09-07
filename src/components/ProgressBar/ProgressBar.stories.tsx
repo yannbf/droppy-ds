@@ -51,10 +51,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * Step two of a three-step checkout. Drag `value` past `max` in the controls —
- * the fill clamps rather than overflowing.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { value: 1, max: 3, label: 'Checkout progress' },
@@ -65,7 +61,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `value` positions the fill, from empty through to full. */
 export const Value: Story = {
   tags: ['api-ref'],
   argTypes: hide('value', 'className'),
@@ -78,24 +73,18 @@ export const Value: Story = {
   ),
 }
 
-/** `max` is the upper bound — step counts, not just percentages. */
 export const Max: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { value: 30, max: 40, label: 'Upload progress' },
 }
 
-/** `label` is the accessible name; nothing visible is rendered from it. */
 export const Label: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { label: 'Order preparation' },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   args: {
@@ -116,11 +105,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * A value past `max` clamps rather than overflowing the track, so a caller
- * that counts one step too far still renders a full bar instead of a broken
- * one — and `aria-valuenow` reports the clamped number, not the raw one.
- */
 export const OverMaxClamps: Story = {
   tags: ['highlight'],
   argTypes: hide('className'),
@@ -131,7 +115,6 @@ export const OverMaxClamps: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The track carries the ARIA; the fill is a decorative sibling underneath it. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('value', 'max', 'label', 'className'),
@@ -199,7 +182,6 @@ function CheckoutStepIndicator() {
   )
 }
 
-/** Mealdrop's checkout step indicator. */
 export const MealdropCheckoutSteps: Story = {
   tags: ['examples'],
   argTypes: hide('value', 'max', 'label', 'className'),
@@ -254,9 +236,4 @@ export const TestFillIsNotAnnounced: Story = {
       'role'
     )
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { value: 1 },
 }

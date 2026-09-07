@@ -45,10 +45,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A placeholder line inside a paragraph, taking the height of the surrounding
- * font. Both dimensions are set below, so the controls start populated.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { width: '100%', height: '1em' },
@@ -64,7 +60,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `width` takes a number of pixels or any CSS length. */
 export const Width: Story = {
   tags: ['api-ref'],
   argTypes: hide('width', 'className', 'style'),
@@ -77,7 +72,6 @@ export const Width: Story = {
   ),
 }
 
-/** `height` defaults to `1em`, so a bare skeleton matches its text context. */
 export const Height: Story = {
   tags: ['api-ref'],
   argTypes: hide('height', 'className', 'style'),
@@ -90,10 +84,6 @@ export const Height: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('style'),
@@ -111,7 +101,6 @@ export const ClassName: Story = {
   ),
 }
 
-/** `style` is merged after the computed width and height, so it can add anything else. */
 export const Style: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
@@ -127,11 +116,6 @@ export const Style: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * A card's text column while it loads: each width fixed to the shape it stands
- * in for, so the layout doesn't jump once the real copy arrives. The loading
- * container owns the announcement — the placeholders underneath are hidden.
- */
 export const TextBlock: Story = {
   tags: ['highlight'],
   argTypes: hide('width', 'height', 'className', 'style'),
@@ -159,12 +143,6 @@ export const TextBlock: Story = {
 /* animation — the motion contract                                     */
 /* ------------------------------------------------------------------ */
 
-/**
- * The shimmer is a gradient swept by CSS keyframes, entirely from
- * `Skeleton.css`. Unlike Spinner, it is removed outright under
- * `prefers-reduced-motion` — a placeholder still reads as a placeholder when
- * it holds still, so nothing is lost by stopping it.
- */
 export const ShimmerAnimation: Story = {
   tags: ['animation'],
   argTypes: hide('width', 'height', 'className', 'style'),
@@ -181,7 +159,6 @@ export const ShimmerAnimation: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A single part: one `aria-hidden` `<span>` with no children. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('width', 'height', 'className', 'style'),
@@ -204,7 +181,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** A restaurant tile loading, beside the tile it becomes. */
 export const MealdropRestaurantCardLoading: Story = {
   tags: ['examples'],
   argTypes: hide('width', 'height', 'className', 'style'),
@@ -287,8 +263,4 @@ export const TestStringsPassThrough: Story = {
     await expect(skeleton.style.width).toBe('50%')
     await expect(skeleton.style.height).toBe('2rem')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

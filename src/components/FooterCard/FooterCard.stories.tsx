@@ -72,10 +72,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * One column of a page footer. Title and links are both set below, so the
- * controls start populated — edit the list to add or remove entries.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: {
@@ -93,14 +89,12 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `title` is the column heading, rendered as an `h2`. */
 export const Title: Story = {
   tags: ['api-ref'],
   argTypes: hide('links', 'children', 'className'),
   args: { title: 'Our social media' },
 }
 
-/** `links` is the list. Omitted or empty, no `<ul>` is rendered at all. */
 export const Links: Story = {
   tags: ['api-ref'],
   argTypes: hide('children', 'className'),
@@ -112,7 +106,6 @@ export const Links: Story = {
   },
 }
 
-/** Item `external` opens in a new tab with `rel="noopener noreferrer"`. */
 export const ExternalLinks: Story = {
   tags: ['api-ref', 'highlight'],
   argTypes: hide('children', 'className'),
@@ -125,7 +118,6 @@ export const ExternalLinks: Story = {
   },
 }
 
-/** Item `render` swaps the default `<a>` for a router-aware link, per item. */
 export const ItemRender: Story = {
   tags: ['api-ref', 'highlight'],
   argTypes: hide('children', 'className'),
@@ -137,7 +129,6 @@ export const ItemRender: Story = {
   },
 }
 
-/** `children` render below the list — app store badges, a short paragraph. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('links', 'className'),
@@ -150,10 +141,6 @@ export const Children: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('links', 'children'),
@@ -171,7 +158,6 @@ export const ClassName: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** The column, its heading, and the list of links inside it. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('title', 'links', 'children', 'className'),
@@ -196,7 +182,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** Mealdrop's footer link columns. */
 export const MealdropFooterRow: Story = {
   tags: ['examples'],
   argTypes: hide('title', 'links', 'children', 'className'),
@@ -274,9 +259,4 @@ export const TestItemRenderKeepsItsDestination: Story = {
 
     await expect(link).toHaveAttribute('href', '/categories')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { title: 'Legal mentions' },
 }

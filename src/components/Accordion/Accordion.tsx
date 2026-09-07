@@ -5,18 +5,14 @@ import theme from '../../theme'
 import { cx } from '../../utils/cx'
 
 export type AccordionItem = {
-  /** Identifies this item in `value`/`defaultValue`/`onValueChange`. Falls back to the item's index. */
   value?: string
-  /** Rendered inside the header trigger, alongside the expand/collapse icon. */
   title: ReactNode
-  /** Rendered inside the panel when the item is open. */
   content: ReactNode
   disabled?: boolean
 }
 
 export type AccordionProps = {
   items: AccordionItem[]
-  /** Allows more than one item to stay open at once. */
   openMultiple?: boolean
   defaultValue?: string[]
   value?: string[]
@@ -45,14 +41,6 @@ const PlusIcon = (props: ComponentProps<'svg'>) => (
   </svg>
 )
 
-/**
- * A stack of collapsible sections, each labelled by a header — an FAQ list,
- * a set of grouped filters, a details panel with several independent parts.
- *
- * Base UI's `Accordion` supplies the expand/collapse behaviour and the
- * animated panel height; this covers the common case of a static list of
- * items with a title and content each.
- */
 export const Accordion = ({
   items,
   openMultiple,

@@ -39,11 +39,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A divider between two stacked blocks. `orientation` is set below, so the
- * controls start populated — flip it to vertical and the demo lays out
- * horizontally to match.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { orientation: 'horizontal' },
@@ -69,7 +64,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `orientation` drives the ARIA attribute and the data attribute together. */
 export const Orientation: Story = {
   tags: ['api-ref'],
   argTypes: hide('orientation', 'className'),
@@ -89,10 +83,6 @@ export const Orientation: Story = {
   ),
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('orientation'),
@@ -112,7 +102,6 @@ export const ClassName: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A single part: one `<div>` with `role="separator"` and no children. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('orientation', 'className'),
@@ -147,7 +136,6 @@ const summaryLines = [
   { name: 'Coca-Cola ×3', amount: '€5.25' },
 ]
 
-/** Dividers in Mealdrop's order summary. */
 export const MealdropOrderSummaryDividers: Story = {
   tags: ['examples'],
   argTypes: hide('orientation', 'style', 'className'),
@@ -213,8 +201,4 @@ export const TestIsNotFocusable: Story = {
     // permits — so it carries no tabIndex.
     await expect(canvas.getByRole('separator')).not.toHaveAttribute('tabindex')
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

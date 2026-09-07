@@ -40,11 +40,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * The page-width wrapper, tinted here so the bound is visible. Both props are
- * set below — toggle `desktopOnly` and resize to see where the constraint
- * starts applying.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { children: 'Page content', desktopOnly: false },
@@ -56,7 +51,6 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `children` render in normal flow — the wrapper only bounds the width. */
 export const Children: Story = {
   tags: ['api-ref'],
   argTypes: hide('desktopOnly', 'className'),
@@ -71,7 +65,6 @@ export const Children: Story = {
   render: (args) => <Container {...args} style={tinted} />,
 }
 
-/** `desktopOnly` defers the constraint until the desktop breakpoint. */
 export const DesktopOnly: Story = {
   tags: ['api-ref'],
   argTypes: hide('children', 'className'),
@@ -79,10 +72,6 @@ export const DesktopOnly: Story = {
   render: (args) => <Container {...args} style={tinted} />,
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('desktopOnly', 'children'),
@@ -102,7 +91,6 @@ export const ClassName: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** A single part: one `<div>` that bounds width and adds side padding. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('children', 'desktopOnly', 'className'),
@@ -141,5 +129,3 @@ export const TestMergesClassName: Story = {
     await expect(root).toHaveClass('container-demo-custom')
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }

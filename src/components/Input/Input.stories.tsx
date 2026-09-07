@@ -51,11 +51,6 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/**
- * A labelled text field. Label, type and placeholder are set below, so the
- * controls start populated — type an error message in to see the slot fill
- * without the layout moving.
- */
 export const Default: Story = {
   tags: ['showcase'],
   args: { label: 'Full name', type: 'text', placeholder: 'Ada Lovelace', disabled: false },
@@ -66,21 +61,18 @@ export const Default: Story = {
 /* api-ref — one story per prop                                        */
 /* ------------------------------------------------------------------ */
 
-/** `label` is both the visible label and the control's accessible name. */
 export const Label: Story = {
   tags: ['api-ref'],
   argTypes: hide('error', 'className'),
   args: { label: 'Delivery address' },
 }
 
-/** `error` fills the reserved slot beneath the control. */
 export const Error: Story = {
   tags: ['api-ref'],
   argTypes: hide('className'),
   args: { error: 'Enter your full name' },
 }
 
-/** `type` and the other native input props pass straight through. */
 export const Types: Story = {
   tags: ['api-ref'],
   argTypes: hide('type', 'error', 'className'),
@@ -93,24 +85,18 @@ export const Types: Story = {
   ),
 }
 
-/** `disabled` is the native attribute; Base UI's `Field` dims the label with it. */
 export const Disabled: Story = {
   tags: ['api-ref'],
   argTypes: hide('error', 'className'),
   args: { disabled: true, placeholder: 'Ada Lovelace' },
 }
 
-/** `placeholder` is native too — a hint, never a substitute for the label. */
 export const Placeholder: Story = {
   tags: ['api-ref'],
   argTypes: hide('error', 'className'),
   args: { placeholder: 'Ada Lovelace' },
 }
 
-/**
- * `className` merges with the component's own class rather than replacing it.
- * The demo class adds a margin, visible as the gap inside the bordered parent.
- */
 export const ClassName: Story = {
   tags: ['api-ref'],
   argTypes: hide('error'),
@@ -128,10 +114,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The error slot keeps its height whether or not a message is showing, so
- * validating one field never shifts the ones below it.
- */
 export const ErrorDoesNotShiftLayout: Story = {
   tags: ['highlight'],
   argTypes: hide('error', 'className'),
@@ -147,7 +129,6 @@ export const ErrorDoesNotShiftLayout: Story = {
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
 
-/** Field root, label, control, and the always-mounted error slot. */
 export const Anatomy: Story = {
   tags: ['anatomy'],
   argTypes: hide('label', 'error', 'className'),
@@ -176,7 +157,6 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** Mealdrop's checkout form, with two fields in error. */
 export const MealdropCheckoutForm: Story = {
   tags: ['examples'],
   argTypes: hide('label', 'error'),
@@ -241,5 +221,3 @@ export const TestErrorIsAnnounced: Story = {
     )
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }
