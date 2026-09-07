@@ -37,7 +37,7 @@ import { Review } from '@droppy/design-system'
 ## When not to use
 
 - A star-input control for a visitor to leave their own rating — `Review` is a read-only display,
-  not a form control.
+  not a form control. Use [ReviewInput](?path=/docs/forms-input-reviewinput--docs) instead.
 
 {/* END: when-to-use */}
 
@@ -177,6 +177,12 @@ Merged onto the root alongside the component's own `droppy-Review` class.
 - **2021-12**: the rating-to-label banding settled on exclusive ranges — below 2 "Very poor", 2–4 "Adequate", 4–5 "Very good", 5 "Excellent" — after two buggy iterations whose overlapping comparisons made 2 and 4 ambiguous; Droppy ports this final logic verbatim ([banding fix](https://github.com/yannbf/mealdrop/commit/1f5e590b8c73f2bd996b36e69e1a893d9dc13e35)).
 - **2026-08**: ported to Droppy on token-driven CSS with a new `color` escape hatch for opting out of the deliberately quiet default ink ([initial commit](https://github.com/yannbf/droppy-ds/commit/00b19b5a1be01ae266251a71bd074e28ad8cd267)).
 - **2026-08**: the review ink implements the brand's pale-blue exception asymmetrically per theme: light theme darkens the accent (`blue-700`) so it works as ink, dark theme uses the brand's pale blue verbatim — per the [brand guidelines](?path=/docs/brand-guidelines--docs), review-star text is one of the two deliberate exceptions to "accents are surfaces, not ink".
+- **2026-08-14**: kept `Review` display-only rather than adding an `editable` mode, after
+  [issue #298](https://github.com/yannbf/droppy-ds/issues/298) reported agents on Mealdrop
+  hand-rolling their own editable review widget to rate a past order. The editable rating input
+  and review-text field shipped as a sibling component,
+  [ReviewInput](?path=/docs/forms-input-reviewinput--docs), instead of bolting a second,
+  input-shaped meaning onto this component's closed, read-only prop surface.
 - **Built on `Body`, sized `S` and rendered as a `span`.** Droppy supplies the props, the theme classes, and the copy around it.
 
 {/* END: history */}
@@ -197,5 +203,7 @@ Merged onto the root alongside the component's own `droppy-Review` class.
 ## Related
 
 - [Body](?path=/docs/typography-body--docs) — the typography primitive `Review` builds on.
+- [ReviewInput](?path=/docs/forms-input-reviewinput--docs) — the editable sibling: a star rating
+  input and a review-text field, for rating something rather than displaying its aggregate score.
 
 {/* END: when-to-use */}

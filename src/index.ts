@@ -104,3 +104,6 @@ export type { FooterCardProps, FooterCardLink } from './components/FooterCard'
 
 export { Review } from './components/Review'
 export type { ReviewProps } from './components/Review'
+
+export { ReviewInput } from './components/ReviewInput'
+export type { ReviewInputProps, ReviewInputValue } from './components/ReviewInput'

@@ -1,0 +1,90 @@
+.droppy-ReviewInput {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-md);
+  font-family: var(--ds-type-family-body);
+}
+
+/* Fieldset.Root/Legend carry real `<fieldset>`/legend-association semantics,
+   but their shipped theme look (h4 + a rule beneath) is built for a full
+   settings section, not a compact rating control — so this component styles
+   its own legend to match Field's small caption instead of pulling in
+   theme.FieldsetRoot/FieldsetLegend. */
+.droppy-ReviewInput-ratingField {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ds-space-2xs);
+}
+
+.droppy-ReviewInput-ratingLabel {
+  color: var(--ds-color-text-label);
+  font-size: var(--ds-type-size-md);
+  font-weight: var(--ds-type-weight-regular);
+}
+
+.droppy-ReviewInput-ratingLabel::first-letter {
+  text-transform: uppercase;
+}
+
+.droppy-ReviewInput-stars {
+  display: flex;
+  align-items: center;
+  /* Negative margin cancels the hit-target padding on the outer stars, so
+     the row's visible edges line up with the label above it. */
+  margin: 0 -0.5rem;
+}
+
+/* Each star gets a real 48×48 hit target per the accessibility guidelines'
+   touch-target rule, even though the visible glyph is smaller — matching
+   IconButton's `small` size. */
+.droppy-ReviewInput-star {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--ds-radius-round);
+  background: none;
+  cursor: pointer;
+}
+
+.droppy-ReviewInput-star .droppy-Icon {
+  stroke: var(--ds-color-icon-default);
+  transition:
+    fill var(--ds-motion-fast) var(--ds-motion-ease),
+    stroke var(--ds-motion-fast) var(--ds-motion-ease);
+}
+
+/* Every star at or below the current rating renders filled, in the same
+   ink Review itself uses for its star glyph — so a 3-star rating shows
+   three filled stars, not just the third one lit. */
+.droppy-ReviewInput-star[data-filled] .droppy-Icon {
+  fill: var(--ds-color-text-review);
+  stroke: var(--ds-color-text-review);
+}
+
+.droppy-ReviewInput-star:focus-visible {
+  outline: none;
+  box-shadow: var(--ds-shadow-focus);
+}
+
+.droppy-ReviewInput-star[data-disabled] {
+  cursor: not-allowed;
+}
+
+.droppy-ReviewInput-star[data-disabled] .droppy-Icon {
+  stroke: var(--ds-color-icon-default);
+  opacity: 0.5;
+}
+
+.droppy-ReviewInput-body {
+  resize: vertical;
+  min-height: 6rem;
+  width: 100%;
+}
