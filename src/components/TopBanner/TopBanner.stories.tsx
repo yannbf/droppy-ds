@@ -173,7 +173,8 @@ export const Anatomy: Story = {
         {
           id: 'title',
           name: 'Title',
-          description: 'The heading (`h1` by default), switched to its on-photo treatment when there is a photo.',
+          description:
+            'The heading (`h1` by default), switched to its on-photo treatment when there is a photo.',
         },
       ],
     } satisfies AnatomyParameters,
@@ -241,8 +242,4 @@ export const TestTitleIsOptional: Story = {
   play: async ({ canvas }) => {
     await expect(canvas.queryByRole('heading')).not.toBeInTheDocument()
   },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
 }

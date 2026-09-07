@@ -243,7 +243,3 @@ export const TestCustomMaxRescalesPercentage: Story = {
     await expect(canvas.getByText('75%')).toBeVisible()
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-}

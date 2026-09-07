@@ -253,11 +253,3 @@ export const TestTriggerKeepsItsOwnName: Story = {
     await expect(trigger).toHaveAttribute('data-part', 'trigger')
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: {
-    label: 'turn on dark mode',
-    children: <Button round clear icon="moon" aria-label="turn on dark mode" />,
-  },
-}

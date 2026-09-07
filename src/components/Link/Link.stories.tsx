@@ -232,5 +232,3 @@ export const TestMergesClassName: Story = {
     await expect(link).toHaveClass('link-demo-custom')
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }

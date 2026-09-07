@@ -241,5 +241,3 @@ export const TestErrorIsAnnounced: Story = {
     )
   },
 }
-
-export const Empty: Story = { tags: ['empty'] }
