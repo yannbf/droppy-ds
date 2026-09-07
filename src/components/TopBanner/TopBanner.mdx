@@ -4,8 +4,6 @@ import * as TopBannerStories from './TopBanner.stories'
 
 <Meta of={TopBannerStories} />
 
-# TopBanner
-
 {/* BEGIN: general */}
 
 A full-width band at the top of a page, with a centered title over either a theme color or a
@@ -14,8 +12,6 @@ background photo — a category page's header, a restaurant's hero image.
 ```tsx
 import { TopBanner } from '@droppy/design-system'
 ```
-
-<Canvas of={TopBannerStories.Default} />
 
 ## Features
 
@@ -55,7 +51,6 @@ import { TopBanner } from '@droppy/design-system'
 With a photo behind it the heading takes its on-photo treatment, so the text holds contrast
 against arbitrary imagery rather than trusting the surface token underneath.
 
-<Canvas of={TopBannerStories.HeadingOverPhoto} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -68,22 +63,16 @@ against arbitrary imagery rather than trusting the surface token underneath.
 
 <span className="sb-sr-only">
 
-| Part  | `data-part` | Renders | Purpose                                                        |
-| :---- | :---------- | :------ | :------------------------------------------------------------- |
-| Root  | `root`      | `<div>` | The band, carrying the background image when `photoUrl` is set |
-| Title | `title`     | `<h1>`–`<h5>` per `level` | Switched to its on-photo treatment when there is a photo |
+| Part  | `data-part` | Renders                   | Purpose                                                        |
+| :---- | :---------- | :------------------------ | :------------------------------------------------------------- |
+| Root  | `root`      | `<div>`                   | The band, carrying the background image when `photoUrl` is set |
+| Title | `title`     | `<h1>`–`<h5>` per `level` | Switched to its on-photo treatment when there is a photo       |
 
 </span>
 
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop restaurant detail page
-
-<Canvas of={TopBannerStories.MealdropRestaurantHeader} />
 
 {/* END: examples */}
 
@@ -164,33 +153,24 @@ The 240px band height is a literal value — no token in the current scale match
 
 Rendered as a heading at `level` inside the band. Omitted, the band is bare.
 
-<Canvas of={TopBannerStories.Title} />
-
 ### `level`
 
 Heading level of the title, defaulting to 1: the banner sits at the top of the page and usually
 carries its primary title, so the outline starts here.
 
-<Canvas of={TopBannerStories.Level} />
-
 ### `photoUrl`
 
 Sets the background and switches the heading to its on-photo treatment.
-
-<Canvas of={TopBannerStories.PhotoUrl} />
 
 ### `onBackClick`
 
 Accepted for call-site parity with Mealdrop's own `TopBanner`, whose back button is commented out
 in its source. Nothing here renders a control, so the callback never fires.
 
-<Canvas of={TopBannerStories.OnBackClick} />
-
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-TopBanner` class.
 
-<Canvas of={TopBannerStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

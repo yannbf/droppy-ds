@@ -4,8 +4,6 @@ import * as ProgressStories from './Progress.stories'
 
 <Meta of={ProgressStories} />
 
-# Progress
-
 {/* BEGIN: general */}
 
 A track-and-fill indicator for progress through a known or unknown-length task — an upload, an
@@ -14,8 +12,6 @@ export, a multi-step process.
 ```tsx
 import { Progress } from '@droppy/design-system'
 ```
-
-<Canvas of={ProgressStories.Default} />
 
 ## Features
 
@@ -61,14 +57,11 @@ import { Progress } from '@droppy/design-system'
 sets `[data-indeterminate]` for the animation to hang off. This is the case
 [ProgressBar](?path=/docs/feedback-status-progressbar--docs) has no way to express.
 
-<Canvas of={ProgressStories.Indeterminate} />
-
 ### Complete
 
 At the top of the range the root gains `[data-complete]`, so a finished state can be styled
 without the caller tracking it separately.
 
-<Canvas of={ProgressStories.Complete} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -94,12 +87,6 @@ without the caller tracking it separately.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### DropBoard photo upload
-
-<Canvas of={ProgressStories.DropBoardPhotoUpload} />
 
 {/* END: examples */}
 
@@ -163,31 +150,22 @@ the root.
 
 Positions the indicator. `null` or omitted switches to indeterminate.
 
-<Canvas of={ProgressStories.Value} />
-
 ### `max`
 
 Rescales the range — the reported percentage follows it.
-
-<Canvas of={ProgressStories.Max} />
 
 ### `label`
 
 The accessible name, and the visible caption above the track.
 
-<Canvas of={ProgressStories.Label} />
-
 ### `showValue`
 
 Renders the formatted value beside the label.
-
-<Canvas of={ProgressStories.ShowValue} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-Progress` class.
 
-<Canvas of={ProgressStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}

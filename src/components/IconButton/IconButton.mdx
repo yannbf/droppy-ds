@@ -4,8 +4,6 @@ import * as IconButtonStories from './IconButton.stories'
 
 <Meta of={IconButtonStories} />
 
-# IconButton
-
 {/* BEGIN: general */}
 
 A circular icon-only control for floating affordances — carousel arrows, overlay dismissals —
@@ -14,8 +12,6 @@ that stays legible over arbitrary imagery instead of following the page's theme.
 ```tsx
 import { IconButton } from '@droppy/design-system'
 ```
-
-<Canvas of={IconButtonStories.Default} />
 
 ## Features
 
@@ -62,7 +58,6 @@ imagery. Only the radius and focus ring are tokens; the glyph resolves to `curre
 inherits the button's own fixed `color` rather than the swappable icon token — so the icon stays
 readable on the pill instead of flipping to the theme's colour underneath it.
 
-<Canvas of={IconButtonStories.StaysLightOnAnySurface} />
 {/* END: behavior */}
 
 {/* BEGIN: anatomy */}
@@ -85,12 +80,6 @@ readable on the pill instead of flipping to the theme's colour underneath it.
 {/* END: anatomy */}
 
 {/* BEGIN: examples */}
-
-## Examples
-
-### Mealdrop carousel arrows
-
-<Canvas of={IconButtonStories.MealdropCarouselArrows} />
 
 {/* END: examples */}
 
@@ -164,19 +153,14 @@ readable on the pill instead of flipping to the theme's colour underneath it.
 
 Picks the glyph. The button is icon-only, so pass `aria-label` alongside it.
 
-<Canvas of={IconButtonStories.Name} />
-
 ### `small`
 
 Swaps the 4rem control for the 3rem one, glyph included.
-
-<Canvas of={IconButtonStories.Small} />
 
 ### `className`
 
 Merged onto the root alongside the component's own `droppy-IconButton` class.
 
-<Canvas of={IconButtonStories.ClassName} />
 {/* END: props */}
 
 {/* BEGIN: history */}
