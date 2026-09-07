@@ -1,7 +1,6 @@
 import type { ComponentProps } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
 
 import type { FooterCardProps } from './FooterCard'
 import { FooterCard } from './FooterCard'
@@ -71,23 +70,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * One column of a page footer. Title and links are both set below, so the
- * controls start populated — edit the list to add or remove entries.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: {
-    title: 'Discover us',
-    links: [
-      { name: 'Home', href: '/' },
-      { name: 'Categories', href: '/categories' },
-      { name: 'About', href: '/about' },
-    ],
-  },
-  argTypes: hide('children', 'className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -196,87 +178,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** Mealdrop's footer link columns. */
-export const MealdropFooterRow: Story = {
-  tags: ['examples'],
-  argTypes: hide('title', 'links', 'children', 'className'),
-  render: () => (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3rem' }}>
-      <FooterCard
-        title="Discover us"
-        links={[
-          { name: 'Home', href: '/' },
-          { name: 'Categories', href: '/categories' },
-          { name: 'About', href: '/about' },
-        ]}
-      />
-
-      <FooterCard
-        title="Our social media"
-        links={[
-          { name: 'Facebook', href: 'https://facebook.com', external: true },
-          { name: 'Instagram', href: 'https://instagram.com', external: true },
-          { name: 'Twitter', href: 'https://twitter.com', external: true },
-        ]}
-      />
-
-      <FooterCard title="Check our apps">
-        <div style={{ display: 'grid', gap: '0.5rem' }}>
-          <img src="https://placehold.co/120x40?text=App+Store" alt="Download on the App Store" />
-          <img src="https://placehold.co/120x40?text=Google+Play" alt="Get it on Google Play" />
-        </div>
-      </FooterCard>
-    </div>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestLinksResolve: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('link', { name: 'Categories' })).toHaveAttribute(
-      'href',
-      '/categories'
-    )
-  },
-}
-
-export const TestExternalLinksAreSafe: Story = {
-  tags: ['tests'],
-  args: {
-    links: [{ name: 'Facebook', href: 'https://facebook.com', external: true }],
-  },
-  play: async ({ canvas }) => {
-    const link = canvas.getByRole('link', { name: 'Facebook' })
-
-    await expect(link).toHaveAttribute('target', '_blank')
-    await expect(link).toHaveAttribute('rel', 'noopener noreferrer')
-  },
-}
-
-export const TestEmptyLinksRendersNoList: Story = {
-  tags: ['tests'],
-  args: { links: [] },
-  play: async ({ canvas }) => {
-    await expect(canvas.queryByRole('list')).not.toBeInTheDocument()
-    await expect(canvas.getByRole('heading', { level: 2 })).toBeInTheDocument()
-  },
-}
-
-export const TestItemRenderKeepsItsDestination: Story = {
-  tags: ['tests'],
-  args: { links: [{ name: 'Categories', render: <RouterLink to="/categories" /> }] },
-  play: async ({ canvasElement }) => {
-    const link = canvasElement.querySelector('[data-router-link]')
-
-    await expect(link).toHaveAttribute('href', '/categories')
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { title: 'Legal mentions' },
-}

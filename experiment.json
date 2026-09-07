@@ -1,0 +1,18 @@
+{
+  "branchName": "experiment/stories-api-ref",
+  "baseCommit": "24f722b0450cf74bce18d168303f0690feb7e9a1",
+  "keptFacets": [
+    "csf-jsdoc.meta",
+    "csf-jsdoc.story",
+    "general.general-brand",
+    "general.general-setup",
+    "mdx.anatomy",
+    "source-jsdoc.component",
+    "source-jsdoc.props",
+    "story.anatomy",
+    "story.api-ref"
+  ],
+  "createdAt": "2026-09-07T10:57:06.620Z",
+  "version": 1,
+  "purgeAllDocgen": false
+}

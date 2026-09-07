@@ -1,11 +1,6 @@
 import type { ComponentProps } from 'react'
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
-
-import { Body } from '../Body'
-import { Card } from '../Card'
-import { Heading } from '../Heading'
 
 import type { LinkProps } from './Link'
 import { Link } from './Link'
@@ -54,16 +49,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * A plain sentence link. Text and destination are set below, so the controls
- * start populated.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { children: 'Order again', href: '/orders' },
-  argTypes: hide('render', 'className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -117,33 +102,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/** Inline inside a sentence, inheriting the surrounding text's font. */
-export const Inline: Story = {
-  tags: ['highlight'],
-  argTypes: hide('render', 'className'),
-  render: (args) => (
-    <p>
-      Your order is on its way. <Link {...args}>Track it</Link> or view the receipt.
-    </p>
-  ),
-}
-
-/**
- * On a dark surface, `Link` inherits `currentColor` from the wrapping context
- * rather than fighting it with a hard-coded light-mode token.
- */
-export const OnDarkSurface: Story = {
-  tags: ['highlight'],
-  argTypes: hide('render', 'className'),
-  render: (args) => (
-    <div
-      style={{ background: '#1a1a1a', color: '#fff', padding: '1.5rem', borderRadius: '0.5rem' }}
-    >
-      <Link {...args} style={{ color: 'inherit' }} />
-    </div>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
@@ -169,68 +127,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** An order-confirmation paragraph with an inline link. */
-export const MealdropOrderConfirmationLink: Story = {
-  tags: ['examples'],
-  argTypes: hide('href', 'render', 'children', 'className'),
-  render: () => (
-    <Card padded style={{ maxWidth: '28rem' }}>
-      <Heading level={3} size={4}>
-        Thanks, your order is on its way
-      </Heading>
-
-      <div style={{ display: 'grid', gap: '1rem', marginTop: '1rem' }}>
-        <Body size="S">
-          Burger Kingdom is preparing order DB-2291.{' '}
-          <Link href="https://example.com/orders/DB-2291">Track it</Link> on the courier&apos;s
-          site.
-        </Body>
-
-        <Body size="S">
-          Or follow it in the app —{' '}
-          <Link render={<RouterLink to="/orders/DB-2291" />}>track it here</Link> without leaving
-          Mealdrop.
-        </Body>
-      </div>
-    </Card>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestRendersAnAnchor: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(canvas.getByRole('link', { name: 'Order again' })).toHaveAttribute(
-      'href',
-      '/orders'
-    )
-  },
-}
-
-export const TestRenderKeepsItsOwnDestination: Story = {
-  tags: ['tests'],
-  args: { href: undefined, render: <RouterLink to="/orders" /> },
-  play: async ({ canvasElement }) => {
-    const link = canvasElement.querySelector('[data-router-link]')
-
-    // `href` is omitted rather than spread as undefined, which would clobber
-    // the destination the router element computes from `to`.
-    await expect(link).toHaveAttribute('href', '/orders')
-  },
-}
-
-export const TestMergesClassName: Story = {
-  tags: ['tests'],
-  args: { className: 'link-demo-custom' },
-  play: async ({ canvas }) => {
-    const link = canvas.getByRole('link', { name: 'Order again' })
-
-    await expect(link).toHaveClass('droppy-Link')
-    await expect(link).toHaveClass('link-demo-custom')
-  },
-}
-
-export const Empty: Story = { tags: ['empty'] }

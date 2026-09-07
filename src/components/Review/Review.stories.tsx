@@ -1,11 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
-
-import { Badge } from '../Badge'
-import { Body } from '../Body'
-import { Card } from '../Card'
-import { Heading } from '../Heading'
 
 import type { ReviewProps } from './Review'
 import { Review } from './Review'
@@ -43,16 +37,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * A restaurant's score line. Drag the rating control across the bands to watch
- * the label change — and past zero to see the empty state.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { rating: 4.5 },
-  argTypes: hide('color', 'className'),
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -102,30 +86,6 @@ export const ClassName: Story = {
 /* highlight — features and behaviours worth calling out               */
 /* ------------------------------------------------------------------ */
 
-/**
- * The bands are fixed: under 2 is "Very poor", 2–4 "Adequate", 4–5 "Very
- * good", and exactly 5 "Excellent". The number is always shown to one decimal,
- * so 4 and 4.0 read the same.
- */
-export const RatingBands: Story = {
-  tags: ['highlight'],
-  argTypes: hide('rating', 'color', 'className'),
-  render: (args) => (
-    <div style={{ display: 'grid', gap: '0.25rem' }}>
-      {[1, 1.9, 2, 3.9, 4, 4.9, 5].map((rating) => (
-        <Review {...args} key={rating} rating={rating} />
-      ))}
-    </div>
-  ),
-}
-
-/** No rating renders a plain fallback line instead of a zero-star score. */
-export const NoReviews: Story = {
-  tags: ['highlight'],
-  argTypes: hide('color', 'className'),
-  args: { rating: undefined },
-}
-
 /* ------------------------------------------------------------------ */
 /* anatomy — the rendered part tree                                    */
 /* ------------------------------------------------------------------ */
@@ -152,78 +112,5 @@ export const Anatomy: Story = {
 /* examples — Mealdrop / DropBoard compositions                        */
 /* ------------------------------------------------------------------ */
 
-/** Rated and unrated restaurant tiles. */
-export const MealdropRestaurantScores: Story = {
-  tags: ['examples'],
-  argTypes: hide('rating', 'color', 'className'),
-  render: () => (
-    <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-      <Card padded style={{ width: '16rem' }}>
-        <Heading level={2} size={4}>
-          Burger Kingdom
-        </Heading>
-        <Review rating={4.2} />
-        <Body size="S">Nicest place for burgers</Body>
-        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
-          <Badge text="burgers" />
-          <Badge text="comfort food" />
-        </div>
-      </Card>
-
-      <Card padded style={{ width: '16rem' }}>
-        <Heading level={2} size={4}>
-          &apos;t Kuyltje
-        </Heading>
-        <Review color="var(--ds-color-text-primary)" />
-        <Body size="S">Pastrami sandwiches</Body>
-        <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
-          <Badge text="new" variant="positive" />
-          <Badge text="comfort food" />
-        </div>
-      </Card>
-    </div>
-  ),
-}
-
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestFormatsTheScoreLine: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(canvas.getByText('★ 4.5 Very good')).toBeInTheDocument()
-  },
-}
-
-export const TestBandBoundaries: Story = {
-  tags: ['tests'],
-  render: () => (
-    <>
-      <Review rating={1.9} />
-      <Review rating={2} />
-      <Review rating={3.9} />
-      <Review rating={4} />
-      <Review rating={5} />
-    </>
-  ),
-  play: async ({ canvas }) => {
-    await expect(canvas.getByText('★ 1.9 Very poor')).toBeInTheDocument()
-    await expect(canvas.getByText('★ 2.0 Adequate')).toBeInTheDocument()
-    await expect(canvas.getByText('★ 3.9 Adequate')).toBeInTheDocument()
-    await expect(canvas.getByText('★ 4.0 Very good')).toBeInTheDocument()
-    await expect(canvas.getByText('★ 5.0 Excellent')).toBeInTheDocument()
-  },
-}
-
-export const TestNoReviewsFallback: Story = {
-  tags: ['tests'],
-  args: { rating: undefined },
-  play: async ({ canvas }) => {
-    await expect(canvas.getByText('No reviews yet')).toBeInTheDocument()
-  },
-}
-
-export const Empty: Story = {
-  tags: ['empty'],
-}

@@ -1,6 +1,5 @@
 import type { AnatomyParameters } from '@component-anatomy/storybook'
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
 
 import type { ContainerProps } from './Container'
 import { Container } from './Container'
@@ -39,18 +38,6 @@ const meta = {
 
 export default meta
 type Story = StoryObj<typeof meta>
-
-/**
- * The page-width wrapper, tinted here so the bound is visible. Both props are
- * set below — toggle `desktopOnly` and resize to see where the constraint
- * starts applying.
- */
-export const Default: Story = {
-  tags: ['showcase'],
-  args: { children: 'Page content', desktopOnly: false },
-  argTypes: hide('className'),
-  render: (args) => <Container {...args} style={tinted} />,
-}
 
 /* ------------------------------------------------------------------ */
 /* api-ref — one story per prop                                        */
@@ -122,24 +109,3 @@ export const Anatomy: Story = {
 
 /* ------------------------------------------------------------------ */
 /* tests — assertions only, one behaviour each                         */
-/* ------------------------------------------------------------------ */
-
-export const TestBoundsPageWidth: Story = {
-  tags: ['tests'],
-  play: async ({ canvas }) => {
-    await expect(getComputedStyle(canvas.getByText('Page content')).maxWidth).toBe('1600px')
-  },
-}
-
-export const TestMergesClassName: Story = {
-  tags: ['tests'],
-  args: { className: 'container-demo-custom' },
-  play: async ({ canvas }) => {
-    const root = canvas.getByText('Page content')
-
-    await expect(root).toHaveClass('droppy-Container')
-    await expect(root).toHaveClass('container-demo-custom')
-  },
-}
-
-export const Empty: Story = { tags: ['empty'] }
