@@ -268,7 +268,3 @@ export const TestLabelNamesTheControl: Story = {
     await expect(canvas.getByLabelText('servings').tagName).toBe('SELECT')
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-}

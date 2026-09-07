@@ -9,21 +9,12 @@ import { useContainer } from '../../utils/useContainer'
 export type ModalProps = {
   isOpen: boolean
   onClose: () => void
-  /** Where to portal. Accepts an element or a selector; defaults to the body. */
   container?: HTMLElement | string | null
-  /** Accessible name for the dialog. */
   'aria-label'?: string
   className?: string
   children?: ReactNode
 }
 
-/**
- * A centred overlay on desktop, a bottom sheet on mobile.
- *
- * Base UI's `Dialog` supplies the modal behaviour — focus trap, Escape to
- * close, outside-press dismissal, scroll lock, `aria-modal` — so this only
- * adds the shape, the motion and the close affordance.
- */
 export const Modal = ({
   children,
   isOpen,

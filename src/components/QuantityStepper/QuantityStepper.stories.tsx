@@ -286,8 +286,3 @@ export const TestGroupIsNamed: Story = {
     await expect(canvas.getByRole('group', { name: 'Cheeseburger quantity' })).toBeInTheDocument()
   },
 }
-
-export const Empty: Story = {
-  tags: ['empty'],
-  args: { value: 1, onChange: fn() },
-}
