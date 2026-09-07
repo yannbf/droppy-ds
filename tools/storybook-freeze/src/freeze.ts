@@ -53,6 +53,7 @@ export async function buildExperimentBranch(opts: {
   branchName: string
   facets: string[]
   keepEmptyCsf: boolean
+  purgeAllDocgen: boolean
   labels: Labels
   baseRef: string
   baseCommit: string
@@ -80,6 +81,7 @@ export async function buildExperimentBranch(opts: {
     keptFacets: opts.facets,
     createdAt: opts.now,
     version: opts.version,
+    purgeAllDocgen: opts.purgeAllDocgen,
   })
   await writeManifest(opts.cwd, manifest)
 
@@ -113,6 +115,7 @@ export async function regenerateExperiments(opts: {
       branchName: experiment.branchName,
       facets: experiment.facets,
       keepEmptyCsf: experiment.keepEmptyCsf,
+      purgeAllDocgen: experiment.purgeAllDocgen,
       labels: opts.labels,
       baseRef,
       baseCommit,

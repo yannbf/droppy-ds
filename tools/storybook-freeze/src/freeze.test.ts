@@ -15,8 +15,18 @@ const labels: Labels = {
 }
 
 const experiments = [
-  { branchName: 'experiment/showcase', facets: ['story.showcase'], keepEmptyCsf: false },
-  { branchName: 'experiment/apiref', facets: ['story.api-ref'], keepEmptyCsf: false },
+  {
+    branchName: 'experiment/showcase',
+    facets: ['story.showcase'],
+    keepEmptyCsf: false,
+    purgeAllDocgen: false,
+  },
+  {
+    branchName: 'experiment/apiref',
+    facets: ['story.api-ref'],
+    keepEmptyCsf: false,
+    purgeAllDocgen: true,
+  },
 ]
 
 const STORY_PATH = 'src/components/Checkbox/Checkbox.stories.tsx'
@@ -83,6 +93,15 @@ describe('regenerateExperiments', () => {
     expect(manifest.keptFacets).toEqual(['story.showcase'])
     expect(manifest.version).toBe(1)
     expect(manifest.baseCommit).toHaveLength(40)
+    expect(manifest.purgeAllDocgen).toBe(false)
+  })
+
+  it("records each branch's own purgeAllDocgen in its manifest", async () => {
+    await run()
+    const git = simpleGit(dir)
+    await git.checkout('experiment/apiref')
+    const manifest = JSON.parse(await readFile(path.join(dir, 'experiment.json'), 'utf8'))
+    expect(manifest.purgeAllDocgen).toBe(true)
   })
 
   it('leaves each generated branch with a clean tree', async () => {
@@ -105,7 +124,9 @@ describe('regenerateExperiments', () => {
   })
 
   it('refuses a branch that would keep no story files', async () => {
-    const storyless = [{ branchName: 'experiment/none', facets: [], keepEmptyCsf: false }]
+    const storyless = [
+      { branchName: 'experiment/none', facets: [], keepEmptyCsf: false, purgeAllDocgen: false },
+    ]
     await expect(
       regenerateExperiments({
         cwd: dir,

@@ -22,6 +22,8 @@ interface Experiment {
   facets: string[]
   /** Keep stories tagged `empty` instead of deleting them. Defaults to false. */
   keepEmptyCsf?: boolean
+  /** Strip all docgen output from the branch's Storybook build. Defaults to false. */
+  purgeAllDocgen?: boolean
 }
 
 /** Documentation every branch keeps, so branches differ only in the facets under test. */
@@ -70,6 +72,9 @@ const ALL_STORIES = [
   'story.anatomy',
 ]
 
+/** The whole corpus: what `full` keeps, and what `purge-docgen` keeps minus the docgen. */
+const FULL_FACETS = [...new Set([...BASE_FACETS, ...ALL_MDX, ...ALL_GENERAL, ...ALL_STORIES])]
+
 const experiments: Experiment[] = [
   {
     branchName: 'experiment/empty',
@@ -78,7 +83,7 @@ const experiments: Experiment[] = [
   },
   {
     branchName: 'experiment/full',
-    facets: [...new Set([...BASE_FACETS, ...ALL_MDX, ...ALL_GENERAL, ...ALL_STORIES])],
+    facets: FULL_FACETS,
   },
   {
     branchName: 'experiment/basic-docs',
@@ -143,6 +148,12 @@ const experiments: Experiment[] = [
     // Everything except the JSDoc in the component sources, to isolate what that JSDoc is worth.
     branchName: 'experiment/purge-jsdoc',
     facets: ['csf-jsdoc.meta', 'csf-jsdoc.story', ...ALL_MDX, ...ALL_GENERAL, ...ALL_STORIES],
+  },
+  {
+    // Removes ALL docgen, including automatic docgen that can't otherwise be targeted.
+    branchName: 'experiment/purge-docgen',
+    facets: FULL_FACETS,
+    purgeAllDocgen: true,
   },
 ]
 
